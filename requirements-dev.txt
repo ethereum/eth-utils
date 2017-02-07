@@ -1,0 +1,5 @@
+pytest>=2.8.2
+pytest-pythonpath>=0.3
+tox>=1.8.0
+hypothesis>=3.4.2
+flake8==3.0.4
