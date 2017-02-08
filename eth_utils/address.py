@@ -119,7 +119,7 @@ def _normalize_32byte_address(address):
 
 @coerce_args_to_text
 @coerce_return_to_text
-def normalize_address(address):
+def to_normalized_address(address):
     """
     Converts an address to it's normalized hexidecimal representation.
     """
@@ -140,22 +140,22 @@ def is_normalized_address(value):
     if not is_address(value):
         return False
     else:
-        return value == normalize_address(value)
+        return value == to_normalized_address(value)
 
 
 @coerce_args_to_bytes
 @coerce_return_to_bytes
-def canonicalize_address(address):
+def to_canonical_address(address):
     """
     """
-    return decode_hex(normalize_address(address))
+    return decode_hex(to_normalized_address(address))
 
 
 def is_canonical_address(value):
     if not is_address(value):
         return False
     else:
-        return value == canonicalize_address(value)
+        return value == to_canonical_address(value)
 
 
 @coerce_args_to_text
@@ -166,7 +166,7 @@ def is_same_address(left, right):
     if not is_address(left) or not is_address(right):
         raise ValueError("Both values must be valid addresses")
     else:
-        return normalize_address(left) == normalize_address(right)
+        return to_normalized_address(left) == to_normalized_address(right)
 
 
 @coerce_args_to_text
@@ -178,7 +178,7 @@ def to_checksum_address(address):
     if not is_address(address):
         raise TypeError("Malformed address: {0}".format(address))
 
-    norm_address = normalize_address(address)
+    norm_address = to_normalized_address(address)
     address_hash = encode_hex(keccak(remove_0x_prefix(norm_address)))
 
     checksum_address = add_0x_prefix(''.join(

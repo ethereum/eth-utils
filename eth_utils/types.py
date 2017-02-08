@@ -35,11 +35,11 @@ def is_boolean(value):
     return isinstance(value, bool)
 
 
-def is_object(obj):
+def is_dict(obj):
     return isinstance(obj, collections.Mapping)
 
 
-def is_array(obj):
+def is_list_like(obj):
     return not is_string(obj) and isinstance(obj, collections.Sequence)
 
 

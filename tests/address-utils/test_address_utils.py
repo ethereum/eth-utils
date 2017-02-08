@@ -4,8 +4,8 @@ import pytest
 
 from eth_utils.address import (
     is_address,
-    normalize_address,
-    canonicalize_address,
+    to_normalized_address,
+    to_canonical_address,
     is_normalized_address,
     is_canonical_address,
     is_checksum_address,
@@ -123,8 +123,8 @@ def test_is_normalized_address(value, expected):
         ),
     )
 )
-def test_normalize_address(value, expected):
-    assert normalize_address(value) == expected
+def test_to_normalized_address(value, expected):
+    assert to_normalized_address(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -215,8 +215,8 @@ def test_is_same_address(address1, address2, expected):
         ),
     ),
 )
-def test_canonicalize_address(value, expected):
-    actual = canonicalize_address(value)
+def test_to_canonical_address(value, expected):
+    actual = to_canonical_address(value)
     assert actual == expected
 
 

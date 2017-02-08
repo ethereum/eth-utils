@@ -4,8 +4,8 @@ from eth_utils.types import (
     is_integer,
     is_boolean,
     is_string,
-    is_array,
-    is_object,
+    is_list_like,
+    is_dict,
 )
 
 
@@ -52,8 +52,8 @@ def test_is_string(value, expected):
         ({"test": 3}, True),
     ]
 )
-def test_is_object(value, expected):
-    assert is_object(value) == expected
+def test_is_dict(value, expected):
+    assert is_dict(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -88,5 +88,5 @@ def test_is_boolean(value, expected):
         ([(1, 2)], True),
     ]
 )
-def test_is_array(value, expected):
-    assert is_array(value) == expected
+def test_is_list_like(value, expected):
+    assert is_list_like(value) == expected
