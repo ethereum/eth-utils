@@ -1,6 +1,8 @@
+from __future__ import unicode_literals
+
 import pytest
 
-from eth_utils.formatting import (
+from eth_utils.hexidecimal import (
     add_0x_prefix,
     remove_0x_prefix,
 )

@@ -3,9 +3,11 @@ from __future__ import absolute_import
 import re
 
 from .crypto import keccak
-from .encoding import (
+from .hexidecimal import (
     decode_hex,
     encode_hex,
+    add_0x_prefix,
+    remove_0x_prefix,
 )
 from .string import (
     coerce_args_to_text,
@@ -17,8 +19,6 @@ from .types import (
     is_string,
 )
 from .formatting import (
-    add_0x_prefix,
-    remove_0x_prefix,
     is_prefixed,
 )
 

@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.encoding import (
+from eth_utils.hexidecimal import (
     encode_hex,
 )
 from eth_utils.abi import (
