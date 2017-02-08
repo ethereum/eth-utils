@@ -1,20 +1,11 @@
-sudo: false
 language: python
 python:
   - "3.5"
-dist: trusty
-sudo: required
-before_install:
-  - travis_retry sudo add-apt-repository -y ppa:ethereum/ethereum
-  - travis_retry sudo apt-get update
 env:
   matrix:
-    - TOX_ENV=py27-all-stdlib
-    - TOX_ENV=py34-all-stdlib
-    - TOX_ENV=py35-all-stdlib
-    - TOX_ENV=py27-all-gevent
-    - TOX_ENV=py34-all-gevent
-    - TOX_ENV=py35-all-gevent
+    - TOX_ENV=py27
+    - TOX_ENV=py34
+    - TOX_ENV=py35
     - TOX_ENV=flake8
 cache:
   pip: true

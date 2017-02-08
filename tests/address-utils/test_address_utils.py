@@ -4,8 +4,8 @@ import pytest
 
 from eth_utils.address import (
     is_address,
-    normalize_address,
-    canonicalize_address,
+    to_normalized_address,
+    to_canonical_address,
     is_normalized_address,
     is_canonical_address,
     is_checksum_address,
@@ -36,6 +36,11 @@ from eth_utils.address import (
         # padded hex
         ("0x000000000000000000000000c305c901078781c232a2a521c2af7980f8385ee9", True),
         # binary (TODO)
+        (b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', True),
+        (b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', True),
+        # null 30 bytes
+        ('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', False),
+        ('0x0000000000000000000000000000000000000000000000000000000000000000', False),
     ]
 )
 def test_is_address(value, expected):
@@ -123,8 +128,8 @@ def test_is_normalized_address(value, expected):
         ),
     )
 )
-def test_normalize_address(value, expected):
-    assert normalize_address(value) == expected
+def test_to_normalized_address(value, expected):
+    assert to_normalized_address(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -198,11 +203,36 @@ def test_is_same_address(address1, address2, expected):
     assert is_same_address(address1, address2) == expected
 
 
-def test_canonicalize_address():
-    # TODO
-    assert False
+@pytest.mark.parametrize(
+    'value,expected',
+    (
+        (
+            '0xd3cda913deb6f67967b99d67acdfa1712c293601',
+            b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+        ),
+        (
+            b'0xd3cda913deb6f67967b99d67acdfa1712c293601',
+            b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+        ),
+        (
+            '\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+            b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+        ),
+    ),
+)
+def test_to_canonical_address(value, expected):
+    actual = to_canonical_address(value)
+    assert actual == expected
 
 
-def test_is_canonical_address():
-    # TODO
-    assert False
+@pytest.mark.parametrize(
+    'value,expected',
+    (
+        (b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', True),
+        ('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', False),
+        ('0xd3cda913deb6f67967b99d67acdfa1712c293601', False),
+    )
+)
+def test_is_canonical_address(value, expected):
+    actual = is_canonical_address(value)
+    assert actual is expected

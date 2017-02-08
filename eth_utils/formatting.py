@@ -7,49 +7,33 @@ from .types import (
 )
 
 
-def pad_left(string, chars, filler="0"):
+def pad_left(value, to_size, pad_with):
     """
-    Should be called to pad string to expected length
+    Should be called to pad value to expected length
     """
-    numchars = chars - len(string)
-    head = b"" if is_bytes(string) else ""
-    filler_value = force_bytes(filler) if is_bytes(string) else force_text(filler)
-    if numchars > 0:
-        head = filler_value * numchars
-    return head + string
+    pad_amount = to_size - len(value)
+    head = b"" if is_bytes(value) else ""
+    pad_with_value = force_bytes(pad_with) if is_bytes(value) else force_text(pad_with)
+    if pad_amount > 0:
+        head = pad_with_value * (pad_amount // len(pad_with_value))
+        head += pad_with_value[:(pad_amount % len(pad_with_value))]
+    return head + value
 
 
-def pad_right(string, chars, filler="0"):
+def pad_right(value, to_size, pad_with):
     """
-    Should be called to pad string to expected length
+    Should be called to pad value to expected length
     """
-    numchars = chars - len(string)
-    tail = b"" if is_bytes(string) else ""
-    filler_value = force_bytes(filler) if is_bytes(string) else force_text(filler)
-    if numchars > 0:
-        tail = filler_value * numchars
-    return string + tail
+    pad_amount = to_size - len(value)
+    tail = b"" if is_bytes(value) else ""
+    pad_with_value = force_bytes(pad_with) if is_bytes(value) else force_text(pad_with)
+    if pad_amount > 0:
+        tail = pad_with_value * (pad_amount // len(pad_with_value))
+        tail += pad_with_value[:(pad_amount % len(pad_with_value))]
+    return value + tail
 
 
 def is_prefixed(value, prefix):
     return value.startswith(
         force_bytes(prefix) if is_bytes(value) else force_text(prefix)
     )
-
-
-def is_0x_prefixed(value):
-    return is_prefixed(value, '0x')
-
-
-def remove_0x_prefix(value):
-    if is_0x_prefixed(value):
-        return value[2:]
-    return value
-
-
-def add_0x_prefix(value):
-    if is_0x_prefixed(value):
-        return value
-
-    prefix = b'0x' if is_bytes(value) else '0x'
-    return prefix + value
