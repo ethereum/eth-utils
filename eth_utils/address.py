@@ -67,7 +67,10 @@ def _is_32byte_address(value):
         return False
 
     if is_prefixed(value_as_hex, '0x000000000000000000000000'):
-        return True
+        try:
+            return int(value_as_hex, 16) > 0
+        except ValueError:
+            return False
     else:
         return False
 

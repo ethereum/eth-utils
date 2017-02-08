@@ -36,6 +36,11 @@ from eth_utils.address import (
         # padded hex
         ("0x000000000000000000000000c305c901078781c232a2a521c2af7980f8385ee9", True),
         # binary (TODO)
+        (b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', True),
+        (b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', True),
+        # null 30 bytes
+        ('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', False),
+        ('0x0000000000000000000000000000000000000000000000000000000000000000', False),
     ]
 )
 def test_is_address(value, expected):

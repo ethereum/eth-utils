@@ -33,6 +33,7 @@ from .formatting import (  # noqa: F401
 from .functional import (  # noqa: F401
     compose,
     flatten_return,
+    reversed_return,
     sort_return,
     to_dict,
     to_list,
