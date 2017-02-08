@@ -5,6 +5,8 @@ from .types import (
     is_bytes,
     is_text,
     is_string,
+    is_dict,
+    is_list_like,
 )
 
 
@@ -29,11 +31,11 @@ def force_text(value, encoding='iso-8859-1'):
 def force_obj_to_bytes(obj):
     if is_string(obj):
         return force_bytes(obj)
-    elif isinstance(obj, dict):
+    elif is_dict(obj):
         return {
             k: force_obj_to_bytes(v) for k, v in obj.items()
         }
-    elif isinstance(obj, (list, tuple)):
+    elif is_list_like(obj):
         return type(obj)(force_obj_to_bytes(v) for v in obj)
     else:
         return obj
@@ -42,11 +44,11 @@ def force_obj_to_bytes(obj):
 def force_obj_to_text(obj):
     if is_string(obj):
         return force_text(obj)
-    elif isinstance(obj, dict):
+    elif is_dict(obj):
         return {
             k: force_obj_to_text(v) for k, v in obj.items()
         }
-    elif isinstance(obj, (list, tuple)):
+    elif is_list_like(obj):
         return type(obj)(force_obj_to_text(v) for v in obj)
     else:
         return obj
