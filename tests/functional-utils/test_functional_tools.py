@@ -18,3 +18,10 @@ def test_composition_multiple_function():
         return x + 1
 
     assert compose(fn, fn, fn)(5) == 8
+
+
+def test_ordering_is_preserved():
+    assert compose(
+        lambda v: v * 3,
+        lambda v: v + 1,
+    )(1) == 4

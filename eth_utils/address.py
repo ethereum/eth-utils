@@ -18,6 +18,7 @@ from .types import (
 )
 from .formatting import (
     add_0x_prefix,
+    remove_0x_prefix,
     is_prefixed,
 )
 
@@ -31,7 +32,7 @@ def _is_hex_address(value):
         return False
     elif len(value) not in {42, 40}:
         return False
-    elif re.match(r"^(0x)?[0-9a-fA-F]{40}", value):
+    elif re.match(r"^((0x)|(0X))?[0-9a-fA-F]{40}", value):
         return True
     else:
         return False
@@ -92,7 +93,7 @@ def _normalize_hex_address(address):
     """
     Returns a hexidecimal address in it's normalized hexidecimal representation.
     """
-    return add_0x_prefix(address).lower()
+    return add_0x_prefix(address.lower())
 
 
 @coerce_args_to_text
@@ -177,16 +178,16 @@ def to_checksum_address(address):
     if not is_address(address):
         raise TypeError("Malformed address: {0}".format(address))
 
-    normalized_address = normalize_address(address)
-    address_hash = encode_hex(keccak(normalize_address))
+    norm_address = normalize_address(address)
+    address_hash = encode_hex(keccak(remove_0x_prefix(norm_address)))
 
     checksum_address = add_0x_prefix(''.join(
         (
-            normalized_address[i + 2].upper()
+            norm_address[i].upper()
             if int(address_hash[i], 16) > 7
-            else normalize_address[i]
+            else norm_address[i]
         )
-        for i in range(40)
+        for i in range(2, 42)
     ))
     return checksum_address
 

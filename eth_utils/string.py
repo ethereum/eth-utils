@@ -8,23 +8,20 @@ from .types import (
 )
 
 
-def force_bytes(value):
+def force_bytes(value, encoding='iso-8859-1'):
     if is_bytes(value):
         return bytes(value)
     elif is_text(value):
-        try:
-            return codecs.encode(value, "iso-8859-1")
-        except UnicodeEncodeError:
-            return codecs.encode(value, "utf8")
+        return codecs.encode(value, encoding)
     else:
         raise TypeError("Unsupported type: {0}".format(type(value)))
 
 
-def force_text(value):
+def force_text(value, encoding='iso-8859-1'):
     if is_text(value):
         return value
     elif is_bytes(value):
-        return codecs.decode(value, "iso-8859-1")
+        return codecs.decode(value, encoding)
     else:
         raise TypeError("Unsupported type: {0}".format(type(value)))
 

@@ -27,10 +27,13 @@ def test_is_integer(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-    ("3", True),
-    (None, False),
-    (3, False),
-    ({}, False),
+        ("3", True),
+        (b"3", True),
+        (b"", True),
+        ("", True),
+        (None, False),
+        (3, False),
+        ({}, False),
     ]
 )
 def test_is_string(value, expected):
@@ -40,13 +43,13 @@ def test_is_string(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-    (lambda : None, False),
-    (3, False),
-    (None, False),
-    ("3", False),
-    ("0x3", False),
-    ({}, True),
-    ({"test": 3}, True),
+        (lambda : None, False),
+        (3, False),
+        (None, False),
+        ("3", False),
+        ("0x3", False),
+        ({}, True),
+        ({"test": 3}, True),
     ]
 )
 def test_is_object(value, expected):
@@ -56,13 +59,13 @@ def test_is_object(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-    (lambda : None, False),
-    (3, False),
-    (None, False),
-    ("3", False),
-    ("0x3", False),
-    (True, True),
-    (False, True),
+        (lambda : None, False),
+        (3, False),
+        (None, False),
+        ("3", False),
+        ("0x3", False),
+        (True, True),
+        (False, True),
     ]
 )
 def test_is_boolean(value, expected):

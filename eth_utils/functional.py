@@ -1,5 +1,6 @@
 import functools
 import itertools
+import collections
 
 
 def identity(value):
@@ -14,17 +15,19 @@ def compose(*functions):
     return functools.reduce(combine, reversed(functions), identity)
 
 
-def cast_return(_type):
+def apply_to_return_value(callback):
     def outer(fn):
         @functools.wraps(fn)
         def inner(*args, **kwargs):
-            return _type(fn(*args, **kwargs))
+            return callback(fn(*args, **kwargs))
 
         return inner
     return outer
 
 
-cast_return_to_tuple = cast_return(tuple)
-cast_return_to_dict = cast_return(dict)
-sort_return = cast_return(sorted)
-flatten_return = cast_return(itertools.chain.from_iterable)
+to_tuple = apply_to_return_value(tuple)
+to_list = apply_to_return_value(list)
+to_dict = apply_to_return_value(dict)
+to_ordered_dict = apply_to_return_value(collections.OrderedDict)
+sort_return = apply_to_return_value(sorted)
+flatten_return = apply_to_return_value(itertools.chain.from_iterable)

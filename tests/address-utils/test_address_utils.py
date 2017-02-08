@@ -198,11 +198,36 @@ def test_is_same_address(address1, address2, expected):
     assert is_same_address(address1, address2) == expected
 
 
-def test_canonicalize_address():
-    # TODO
-    assert False
+@pytest.mark.parametrize(
+    'value,expected',
+    (
+        (
+            '0xd3cda913deb6f67967b99d67acdfa1712c293601',
+            b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+        ),
+        (
+            b'0xd3cda913deb6f67967b99d67acdfa1712c293601',
+            b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+        ),
+        (
+            '\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+            b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01',
+        ),
+    ),
+)
+def test_canonicalize_address(value, expected):
+    actual = canonicalize_address(value)
+    assert actual == expected
 
 
-def test_is_canonical_address():
-    # TODO
-    assert False
+@pytest.mark.parametrize(
+    'value,expected',
+    (
+        (b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', True),
+        ('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01', False),
+        ('0xd3cda913deb6f67967b99d67acdfa1712c293601', False),
+    )
+)
+def test_is_canonical_address(value, expected):
+    actual = is_canonical_address(value)
+    assert actual is expected
