@@ -219,14 +219,16 @@ Given any valid representation of an address return the checksummed representati
 Given any valid representation of an address return the normalized representation.
 
 ```python
->>> to_checksum_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
+>>> to_normalized_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')  # raw bytes
 '0xd3cda913deb6f67967b99d67acdfa1712c293601'
->>> to_checksum_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
-'0xd3cda913deb6f67967b99d67acdfa1712c293601'
->>> to_checksum_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
-'0xd3cda913deb6f67967b99d67acdfa1712c293601'
->>> to_checksum_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd')
-'0xd3cda913deb6f67967b99d67acdfa1712c293601'
+>>> to_normalized_address(b'0xc6d9d2cd449a754c494264e1809c50e34d64562b')  # hex encoded (as byte string)
+'0xc6d9d2cd449a754c494264e1809c50e34d64562b'
+>>> to_normalized_address('0xc6d9d2cd449a754c494264e1809c50e34d64562b')  # hex encoded
+'0xc6d9d2cd449a754c494264e1809c50e34d64562b'
+>>> to_normalized_address('0XC6D9D2CD449A754C494264E1809C50E34D64562B')  # cap-cased
+'0xc6d9d2cd449a754c494264e1809c50e34d64562b'
+>>> to_normalized_address('0x000000000000000000000000c305c901078781c232a2a521c2af7980f8385ee9')  # padded to 32 bytes
+'0xc305c901078781c232a2a521c2af7980f8385ee9',
 ```
 
 ### Crypto Utils
