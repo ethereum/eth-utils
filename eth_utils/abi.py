@@ -14,7 +14,7 @@ def _abi_to_signature(abi):
 
 
 def function_signature_to_4byte_selector(event_signature):
-    return keccak(event_signature)[:4]
+    return keccak(event_signature.replace(' ', ''))[:4]
 
 
 def function_abi_to_4byte_selector(function_abi):

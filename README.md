@@ -54,7 +54,7 @@ b'\xc3x\n:'
 Returns the 4 byte function selector for the given function signature.
 
 ```python
->>> function_abi_to_4byte_selector('myFunction()')
+>>> function_signature_to_4byte_selector('myFunction()')
 b'\xc3x\n:'
 ```
 
@@ -240,7 +240,7 @@ Given any string returns the `sha3/keccak` hash.  If `value` is not a byte
 string it will be converted using the `force_bytes` function.
 
 ```python
->>> keccak('') 
+>>> keccak('')
 b"\xc5\xd2F\x01\x86\xf7#<\x92~}\xb2\xdc\xc7\x03\xc0\xe5\x00\xb6S\xca\x82';{\xfa\xd8\x04]\x85\xa4p"
 ```
 
