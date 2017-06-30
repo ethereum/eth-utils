@@ -1,6 +1,11 @@
 0.2.1
 -----
 
+* Strip whitespace from event signatures in `event_signature_to_log_topic`
+
+0.2.1
+-----
+
 * Strip whitespace from event signatures in `function_signature_to_4byte_selector`
 
 0.2.0
