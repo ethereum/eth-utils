@@ -23,7 +23,7 @@ def function_abi_to_4byte_selector(function_abi):
 
 
 def event_signature_to_log_topic(event_signature):
-    return keccak(event_signature)
+    return keccak(event_signature.replace(' ', ''))
 
 
 def event_abi_to_log_topic(event_abi):
