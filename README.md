@@ -719,7 +719,7 @@ Returns `True` if `value` is of any string type.
 True
 >>> is_string(b'abcd')
 True
->>> is_string(bytearra((1, 2, 3)))
+>>> is_string(bytearray((1, 2, 3)))
 True
 ```
 
@@ -728,10 +728,10 @@ True
 Returns `True` if `value` is a text string.
 
 ```python
->>> is_string('abcd')
+>>> is_text(u'abcd')
 True
->>> is_string(b'abcd')
-True
->>> is_string(bytearra((1, 2, 3)))
-True
+>>> is_text(b'abcd')
+False
+>>> is_text(bytearray((1, 2, 3)))
+False
 ```
