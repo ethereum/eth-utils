@@ -3,14 +3,15 @@ import numbers
 import collections
 
 
+bytes_types = (bytes, bytearray)
+
+
 if sys.version_info.major == 2:
     integer_types = (int, long)  # noqa: F821
-    bytes_types = (bytes, bytearray)
     text_types = (unicode,)  # noqa: F821
     string_types = (basestring, bytearray)  # noqa: F821
 else:
     integer_types = (int,)
-    bytes_types = (bytes, bytearray)
     text_types = (str,)
     string_types = (bytes, str, bytearray)
 
@@ -41,6 +42,14 @@ def is_dict(obj):
 
 def is_list_like(obj):
     return not is_string(obj) and isinstance(obj, collections.Sequence)
+
+
+def is_list(obj):
+    return isinstance(obj, list)
+
+
+def is_tuple(obj):
+    return isinstance(obj, tuple)
 
 
 def is_null(obj):

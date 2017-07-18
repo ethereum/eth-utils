@@ -4,6 +4,7 @@ from eth_utils import (
     to_tuple,
     to_list,
     to_dict,
+    to_set,
     to_ordered_dict,
     sort_return,
     flatten_return,
@@ -39,6 +40,12 @@ def test_to_ordered_dict():
     actual = fn(('b', 2), ('d', 4), ('a', 1), ('c', 3))
     assert actual == collections.OrderedDict((('b', 2), ('d', 4), ('a', 1), ('c', 3)))
     assert tuple(actual.items()) == (('b', 2), ('d', 4), ('a', 1), ('c', 3))
+
+
+def test_to_set():
+    fn = to_set(yield_things)
+    actual = fn('a', 'b', 'a', 'c')
+    assert actual == {'a', 'b', 'c'}
 
 
 def test_sorted_return():

@@ -9,9 +9,13 @@ from .abi import (  # noqa: F401
     function_signature_to_4byte_selector,
 )
 from .address import (  # noqa: F401
+    is_32byte_address,
     is_address,
+    is_binary_address,
     is_canonical_address,
     is_checksum_address,
+    is_checksum_formatted_address,
+    is_hex_address,
     is_normalized_address,
     is_same_address,
     to_canonical_address,
@@ -31,6 +35,7 @@ from .formatting import (  # noqa: F401
     pad_right,
 )
 from .functional import (  # noqa: F401
+    apply_to_return_value,
     compose,
     flatten_return,
     reversed_return,
@@ -38,6 +43,7 @@ from .functional import (  # noqa: F401
     to_dict,
     to_list,
     to_ordered_dict,
+    to_set,
     to_tuple,
 )
 from .hexidecimal import (  # noqa: F401

@@ -24,7 +24,7 @@ from .formatting import (
 
 
 @coerce_args_to_text
-def _is_hex_address(value):
+def is_hex_address(value):
     """
     Checks if the given string is an address in hexidecimal encoded form.
     """
@@ -39,7 +39,7 @@ def _is_hex_address(value):
 
 
 @coerce_args_to_bytes
-def _is_binary_address(value):
+def is_binary_address(value):
     """
     Checks if the given string is an address in raw bytes form.
     """
@@ -52,7 +52,7 @@ def _is_binary_address(value):
 
 
 @coerce_args_to_text
-def _is_32byte_address(value):
+def is_32byte_address(value):
     """
     Checks if the given string is an address in hexidecimal encoded form padded to 32 bytes.
     """
@@ -80,11 +80,11 @@ def is_address(value):
     """
     Checks if the given string is an address in any of the known formats.
     """
-    if _is_hex_address(value):
+    if is_hex_address(value):
         return True
-    elif _is_binary_address(value):
+    elif is_binary_address(value):
         return True
-    elif _is_32byte_address(value):
+    elif is_32byte_address(value):
         return True
     else:
         return False
@@ -126,11 +126,11 @@ def to_normalized_address(address):
     """
     Converts an address to it's normalized hexidecimal representation.
     """
-    if _is_hex_address(address):
+    if is_hex_address(address):
         return _normalize_hex_address(address)
-    elif _is_binary_address(address):
+    elif is_binary_address(address):
         return _normalize_binary_address(address)
-    elif _is_32byte_address(address):
+    elif is_32byte_address(address):
         return _normalize_32byte_address(address)
 
     raise ValueError("Unknown address format")
@@ -200,3 +200,15 @@ def is_checksum_address(value):
     if not is_address(value):
         return False
     return value == to_checksum_address(value)
+
+
+@coerce_args_to_text
+def is_checksum_formatted_address(value):
+    if not is_hex_address(value):
+        return False
+    elif remove_0x_prefix(value) == remove_0x_prefix(value).lower():
+        return False
+    elif remove_0x_prefix(value) == remove_0x_prefix(value).upper():
+        return False
+    else:
+        return True

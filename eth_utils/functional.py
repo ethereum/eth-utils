@@ -1,6 +1,11 @@
+import collections
 import functools
 import itertools
-import collections
+import warnings
+
+from toolz.functoolz import (
+    compose as _compose,
+)
 
 
 def identity(value):
@@ -12,6 +17,12 @@ def combine(f, g):
 
 
 def compose(*functions):
+    warnings.warn(DeprecationWarning(
+        "The `compose` function has been deprecated and will be removed in a "
+        "subsequent release of `ethereum-utils`.  It is recommended that you "
+        "switch to use a library like `toolz` which provides similar "
+        "functionality through the `toolz.functoolz.compose` function."
+    ))
     return functools.reduce(combine, reversed(functions), identity)
 
 
@@ -29,6 +40,7 @@ to_tuple = apply_to_return_value(tuple)
 to_list = apply_to_return_value(list)
 to_dict = apply_to_return_value(dict)
 to_ordered_dict = apply_to_return_value(collections.OrderedDict)
-sort_return = compose(apply_to_return_value(sorted), to_tuple)
-flatten_return = compose(apply_to_return_value(itertools.chain.from_iterable), to_tuple)
-reversed_return = compose(to_tuple, apply_to_return_value(reversed), to_tuple)
+to_set = apply_to_return_value(set)
+sort_return = _compose(to_tuple, apply_to_return_value(sorted))
+flatten_return = _compose(to_tuple, apply_to_return_value(itertools.chain.from_iterable))
+reversed_return = _compose(to_tuple, apply_to_return_value(reversed), to_tuple)
