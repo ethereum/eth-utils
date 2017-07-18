@@ -14,6 +14,7 @@ from .address import (  # noqa: F401
     is_binary_address,
     is_canonical_address,
     is_checksum_address,
+    is_checksum_formatted_address,
     is_hex_address,
     is_normalized_address,
     is_same_address,

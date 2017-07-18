@@ -262,6 +262,24 @@ True
 True
 ```
 
+#### `is_checksum_formatted_address(value)` -> bool
+
+Returns `True` if the `value` is formatted as an
+[ERC55](https://github.com/ethereum/EIPs/issues/55) checksum address.
+
+```python
+>>> is_checksum_formatted_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
+True
+>>> is_checksum_formatted_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_checksum_formatted_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
+False
+>>> is_checksum_formatted_address('0x52908400098527886E0F7030069857D2E4169EE7')
+False
+>>> is_checksum_formatted_address('0xde709f2102306220921060314715629080e2fb77')
+False
+```
+
 #### `is_normalized_address(value)` -> bool
 
 Returns `True` if the `value` is an address in its normalized form.
