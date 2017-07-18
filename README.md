@@ -439,6 +439,8 @@ Returns `value` padded to the length specified by `to_size` with the string `pad
 
 #### `compose(*callables)` -> callable
 
+> **DEPRECATED** in 0.3.0.
+
 Returns a single function which is the composition of the given callables.
 
 ```
@@ -532,7 +534,7 @@ Decorator which casts the return value from the given `callable` to a list.
 Decorator which casts the return value from the given `callable` to an ordered dictionary of type `collections.OrderedDict`.
 
 ```python
->>> @to_dict
+>>> @to_ordered_dict
 ... def build_thing():
 ...     yield 'd', 4
 ...     yield 'a', 1
@@ -556,6 +558,24 @@ Decorator which casts the return value from the given `callable` to a tuple.
 ...
 >>> build_thing()
 ('a', 'b', 'c')
+```
+
+### `apply_to_return_value(callable)` => decorator_fn
+
+This function takes a single callable and returns a decorator.  The returned
+decorator, when applied to a function, will incercept the function's return
+value, pass it to the callable, and return the value returned by the callable.
+
+```python
+>>> double = apply_to_return_value(lambda v: v * 2)
+>>> @double
+... def f(v):
+...     return v
+...
+>>> f(2)
+4
+>>> f(3)
+6
 ```
 
 
