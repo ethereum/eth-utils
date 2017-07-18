@@ -42,6 +42,7 @@ from .functional import (  # noqa: F401
     to_list,
     to_ordered_dict,
     to_tuple,
+    apply_to_return_value,
 )
 from .hexidecimal import (  # noqa: F401
     add_0x_prefix,
