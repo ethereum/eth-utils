@@ -560,6 +560,22 @@ Decorator which casts the return value from the given `callable` to a tuple.
 ('a', 'b', 'c')
 ```
 
+#### `to_set(callable)` => callable() -> set
+
+Decorator which casts the return value from the given `callable` to a set.
+
+```python
+>>> @to_set
+... def build_thing():
+...     yield 'a'
+...     yield 'b'
+...     yield 'a'  # duplicate
+...     yield 'c'
+...
+>>> build_thing()
+{'a', 'b', 'c'}
+```
+
 ### `apply_to_return_value(callable)` => decorator_fn
 
 This function takes a single callable and returns a decorator.  The returned
@@ -806,7 +822,7 @@ False
 
 #### `is_list_like(value)` -> bool
 
-Returns `True` if `value` is a non-string sequence such as a list or tuple.
+Returns `True` if `value` is a non-string sequence such as a sequence (such as a list or tuple).
 
 ```python
 >>> is_list_like('abcd')
@@ -814,6 +830,32 @@ False
 >>> is_list_like([])
 True
 >>> is_list_like(tuple())
+True
+```
+
+#### `is_list(value)` -> bool
+
+Returns `True` if `value` is a non-string sequence such as a list.
+
+```python
+>>> is_list('abcd')
+False
+>>> is_list([])
+True
+>>> is_list(tuple())
+False
+```
+
+#### `is_tuple(value)` -> bool
+
+Returns `True` if `value` is a non-string sequence such as a tuple.
+
+```python
+>>> is_tuple('abcd')
+False
+>>> is_tuple([])
+False
+>>> is_tuple(tuple())
 True
 ```
 
