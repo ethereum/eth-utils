@@ -31,7 +31,7 @@ def encode_hex(value):
 
 
 def is_0x_prefixed(value):
-    return is_prefixed(value, '0x')
+    return is_prefixed(value, '0x') or is_prefixed(value, '0X')
 
 
 def remove_0x_prefix(value):

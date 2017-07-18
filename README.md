@@ -114,6 +114,119 @@ False
 False
 ```
 
+#### `is_hex_address(value)` => bool
+
+Return `True` if the value is a 20 byte hexidecimal encoded string in any of
+upper/lower/mixed casing, with or without the `0x` prefix.  Otherwise return
+`False`
+
+- `'d3cda913deb6f67967b99d67acdfa1712c293601'`
+- `'0xd3cda913deb6f67967b99d67acdfa1712c293601'`
+- `'0xD3CDA913DEB6F67967B99D67ACDFA1712C293601'`
+- `'0xd3CdA913deB6f67967B99D67aCDFa1712C293601'`
+
+```python
+>>> is_hex_address('d3cda913deb6f67967b99d67acdfa1712c293601')
+True
+>>> is_hex_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
+True
+>>> is_hex_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
+True
+>>> is_hex_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
+True
+>>> is_hex_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_hex_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_hex_address('0x000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_hex_address('0x000000000000000000000000D3CDA913DEB6F67967B99D67ACDFA1712C293601')
+False
+>>> is_hex_address('0x000000000000000000000000d3CdA913deB6f67967B99D67aCDFa1712C293601')
+False
+>>> is_hex_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+False
+>>> is_hex_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+False
+>>> is_hex_address('0x0000000000000000000000000000000000000000000000000000000000000000')
+False
+>>> is_hex_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+False
+```
+
+
+#### `is_binary_address(value)` -> bool
+
+Return `True` if the value is a 20 byte string.
+
+```python
+>>> is_binary_address('d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_binary_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_binary_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
+False
+>>> is_binary_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
+False
+>>> is_binary_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_binary_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_binary_address('0x000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_binary_address('0x000000000000000000000000D3CDA913DEB6F67967B99D67ACDFA1712C293601')
+False
+>>> is_binary_address('0x000000000000000000000000d3CdA913deB6f67967B99D67aCDFa1712C293601')
+False
+>>> is_binary_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+True
+>>> is_binary_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+False
+>>> is_binary_address('0x0000000000000000000000000000000000000000000000000000000000000000')
+False
+>>> is_binary_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+False
+```
+
+#### `is_32byte_address(value)` -> bool
+
+Return `True` if the value is a 20 byte address that has been padded to 32
+bytes.  This function allows both bytes or hexidecimal encoded strings.
+Hexidecimal strings may optionally be `0x` prefixed.  The padding bytes
+**must** be zeros.
+
+> Note: this method returns false for the zero address.
+
+```python
+>>> is_32byte_address('d3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_32byte_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
+False
+>>> is_32byte_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
+False
+>>> is_32byte_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
+False
+>>> is_32byte_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+True
+>>> is_32byte_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+True
+>>> is_32byte_address('0x000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
+True
+>>> is_32byte_address('0x000000000000000000000000D3CDA913DEB6F67967B99D67ACDFA1712C293601')
+True
+>>> is_32byte_address('0x000000000000000000000000d3CdA913deB6f67967B99D67aCDFa1712C293601')
+True
+>>> is_32byte_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+False
+>>> is_32byte_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+True
+>>> is_32byte_address('0x0000000000000000000000000000000000000000000000000000000000000000')
+False
+>>> is_32byte_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+False
+```
+
+
 #### `is_canonical_address(value)` -> bool
 
 Returns `True` if the `value` is an address in it's canonical form.

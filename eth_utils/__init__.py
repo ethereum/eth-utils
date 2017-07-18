@@ -10,6 +10,9 @@ from .abi import (  # noqa: F401
 )
 from .address import (  # noqa: F401
     is_address,
+    is_hex_address,
+    is_binary_address,
+    is_32byte_address,
     is_canonical_address,
     is_checksum_address,
     is_normalized_address,
