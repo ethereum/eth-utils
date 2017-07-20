@@ -30,6 +30,10 @@ from .currency import (  # noqa: F401
     from_wei,
     to_wei,
 )
+from .encoding import (  # noqa: F401
+    big_endian_to_int,
+    int_to_big_endian,
+)
 from .formatting import (  # noqa: F401
     pad_left,
     pad_right,

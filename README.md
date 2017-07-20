@@ -421,6 +421,37 @@ Available denominations are:
 ```
 
 
+### Encoding Utils
+
+#### `big_endian_to_int(value)` -> integer
+
+Returns `value` converted to an integer (from a big endian representation).
+
+
+```python
+>>> big_endian_to_int(b'\x00')
+0
+>>> big_endian_to_int(b'\x01')
+1
+>>> big_endian_to_int(b'\x01\x00')
+256
+```
+
+#### `int_to_big_endian(value)` -> bytes
+
+Returns `value` converted to the big endian representation.
+
+
+```python
+>>> int_to_big_endian(0)
+b'\x00'
+>>> int_to_big_endian(1)
+b'\x01'
+>>> int_to_big_endian(256)
+b'\x01\x00'
+```
+
+
 ### Formatting Utils
 
 #### `pad_left(value, to_size, pad_with)` -> string
