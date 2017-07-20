@@ -1,3 +1,8 @@
+0.3.1
+-----
+
+* Added `big_endian_to_int` and `int_to_big_endian`
+
 0.3.0
 -----
 
