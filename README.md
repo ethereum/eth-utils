@@ -691,6 +691,37 @@ True
 True
 ```
 
+#### `is_hex(value)` -> bool
+
+Returns `True` if `value` is a valid hexidecimal encoded string of length >= 1.
+
+```python
+>>> is_hex('')
+False
+>>> is_hex(b'')
+False
+>>> is_hex('0x')
+False
+>>> is_hex(b'0x')
+False
+>>> is_hex('0X')
+False
+>>> is_hex(b'0X')
+False
+>>> is_hex('1234567890abcdef')
+True
+>>> is_hex('0x1234567890abcdef')
+True
+>>> is_hex('0x1234567890ABCDEF')
+True
+>>> is_hex('0x1234567890AbCdEf')
+True
+>>> is_hex('12345')  # odd length
+False
+>>> is_hex('123456__abcdef')  # non hex characters
+False
+```
+
 #### `remove_0x_prefix(value)` -> string
 
 Returns `value` with the `0x` prefix stripped.  If the value does not have a

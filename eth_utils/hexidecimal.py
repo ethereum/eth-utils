@@ -1,5 +1,6 @@
 # String encodings and numeric representations
 import codecs
+import binascii
 
 from .types import (
     is_string,
@@ -46,3 +47,12 @@ def add_0x_prefix(value):
 
     prefix = b'0x' if is_bytes(value) else '0x'
     return prefix + value
+
+
+def is_hex(value):
+    try:
+        value_as_bytes = codecs.decode(remove_0x_prefix(value), 'hex')
+    except binascii.Error:
+        return False
+    else:
+        return bool(value_as_bytes)
