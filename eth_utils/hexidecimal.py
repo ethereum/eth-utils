@@ -54,5 +54,7 @@ def is_hex(value):
         value_as_bytes = codecs.decode(remove_0x_prefix(value), 'hex')
     except binascii.Error:
         return False
+    except TypeError:
+        return False
     else:
         return bool(value_as_bytes)
