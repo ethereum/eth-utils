@@ -55,6 +55,7 @@ from .hexidecimal import (  # noqa: F401
     decode_hex,
     encode_hex,
     is_0x_prefixed,
+    is_hex,
     remove_0x_prefix,
 )
 from .string import (  # noqa: F401

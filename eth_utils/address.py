@@ -1,12 +1,11 @@
 from __future__ import absolute_import
 
-import re
-
 from .crypto import keccak
 from .hexidecimal import (
+    add_0x_prefix,
     decode_hex,
     encode_hex,
-    add_0x_prefix,
+    is_hex,
     remove_0x_prefix,
 )
 from .string import (
@@ -32,7 +31,7 @@ def is_hex_address(value):
         return False
     elif len(value) not in {42, 40}:
         return False
-    elif re.match(r"^((0x)|(0X))?[0-9a-fA-F]{40}", value):
+    elif is_hex(value):
         return True
     else:
         return False
