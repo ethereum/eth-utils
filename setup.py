@@ -25,7 +25,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "pysha3>=0.3",
-        "toolz==0.8.2",
+        "cytoolz==0.8.2",
     ],
     py_modules=['eth_utils'],
     license="MIT",
