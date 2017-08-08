@@ -3,7 +3,7 @@ import functools
 import itertools
 import warnings
 
-from toolz.functoolz import (
+from cytoolz.functoolz import (
     compose as _compose,
 )
 
@@ -20,8 +20,8 @@ def compose(*functions):
     warnings.warn(DeprecationWarning(
         "The `compose` function has been deprecated and will be removed in a "
         "subsequent release of `ethereum-utils`.  It is recommended that you "
-        "switch to use a library like `toolz` which provides similar "
-        "functionality through the `toolz.functoolz.compose` function."
+        "switch to use a library like `cytoolz` which provides similar "
+        "functionality through the `cytoolz.functoolz.compose` function."
     ))
     return functools.reduce(combine, reversed(functions), identity)
 
