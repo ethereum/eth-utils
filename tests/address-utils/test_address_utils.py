@@ -19,7 +19,7 @@ from eth_utils.address import (
 
 
 @pytest.mark.parametrize(
-    "value,is_any_address, is_hex,is_binary,is_32byte",
+    "value,is_any_address,is_hex,is_binary,is_32byte",
     [
         (lambda : None, False, False, False, False),
         ("function", False, False, False, False),
