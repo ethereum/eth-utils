@@ -81,8 +81,10 @@ Returns `True` if the `value` is one of the following accepted address formats.
 - 20 text or bytes string padded to 32 bytes with null bytes.
     - `'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'`
 
-This function has one special case, which is that it will return false for a 32
-byte value that is all null bytes.
+This function has two special cases when it will return False:
+
+- a 20-byte hex string that has mixed case, with an invalid checksum
+- a 32-byte value that is all null bytes
 
 
 ```python
