@@ -1,3 +1,8 @@
+0.4.0
+-----
+
+* `is_address` will now verify the checksum on any address which passes the `is_checksum_formatted_address` check.
+
 0.3.2
 -----
 
