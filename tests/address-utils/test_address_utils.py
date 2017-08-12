@@ -19,7 +19,7 @@ from eth_utils.address import (
 
 
 @pytest.mark.parametrize(
-    "value,is_any_address, is_hex,is_binary,is_32byte",
+    "value,is_any_address,is_hex,is_binary,is_32byte",
     [
         (lambda : None, False, False, False, False),
         ("function", False, False, False, False),
@@ -30,6 +30,9 @@ from eth_utils.address import (
         ("0xc6d9d2cd449a754c494264e1809c50e34d64562b", True, True, False, False),
         # normalized (unprefixed)
         ("c6d9d2cd449a754c494264e1809c50e34d64562b", True, True, False, False),
+        # checksummed
+        ("0x5B2063246F2191f18F2675ceDB8b28102e957458", True, True, False, False),   # valid
+        ("0x5b2063246F2191f18F2675ceDB8b28102e957458", False, True, False, False),  # invalid
         # malformed hex
         ("c6d9d2cd449a754c494264e1809c50e34d64562", False, False, False, False),  # too short
         ("0xc6d9d2cd449a754c494264e1809c50e34d64562", False, False, False, False),

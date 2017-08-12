@@ -79,7 +79,9 @@ def is_address(value):
     """
     Checks if the given string is an address in any of the known formats.
     """
-    if is_hex_address(value):
+    if is_checksum_formatted_address(value):
+        return is_checksum_address(value)
+    elif is_hex_address(value):
         return True
     elif is_binary_address(value):
         return True
@@ -132,7 +134,7 @@ def to_normalized_address(address):
     elif is_32byte_address(address):
         return _normalize_32byte_address(address)
 
-    raise ValueError("Unknown address format")
+    raise ValueError("Unknown address format {0}".format(address))
 
 
 def is_normalized_address(value):
@@ -177,9 +179,6 @@ def to_checksum_address(address):
     """
     Makes a checksum address
     """
-    if not is_address(address):
-        raise TypeError("Malformed address: {0}".format(address))
-
     norm_address = to_normalized_address(address)
     address_hash = encode_hex(keccak(remove_0x_prefix(norm_address)))
 
@@ -196,7 +195,7 @@ def to_checksum_address(address):
 
 @coerce_args_to_text
 def is_checksum_address(value):
-    if not is_address(value):
+    if not is_hex_address(value):
         return False
     return value == to_checksum_address(value)
 
