@@ -19,10 +19,36 @@ from eth_utils.currency import (
     amount_in_wei=st.integers(min_value=MIN_WEI, max_value=MAX_WEI),
     intermediate_unit=st.sampled_from(tuple(units.keys())),
 )
-def test_conversion_rount_trip(amount_in_wei, intermediate_unit):
+def test_conversion_round_trip(amount_in_wei, intermediate_unit):
     intermediate_amount = from_wei(amount_in_wei, intermediate_unit)
     result_amount = to_wei(intermediate_amount, intermediate_unit)
     assert result_amount == amount_in_wei
+
+
+MAX_ETHER_WHOLE = 115792089237316195423570985008687907853269984665640564039457
+MAX_ETHER_DECIMAL_MAX = 584007913129639935
+MAX_ETHER_DECIMAL = 999999999999999999
+
+
+def make_ether_string_value(amount_in_wei):
+    s_amount_in_wei = str(amount_in_wei)
+    whole_part = s_amount_in_wei[:-18] or '0'
+    decimal_part = s_amount_in_wei[-18:]
+
+    s_amount_in_ether = "{0}.{1}".format(
+        whole_part,
+        decimal_part.zfill(18).rstrip('0'),
+    ).rstrip('.')
+    return s_amount_in_ether
+
+
+@given(
+    st.integers(min_value=0, max_value=MAX_WEI).map(make_ether_string_value)
+)
+def test_conversion_revers_round_trip_trip(amount_in_ether):
+    intermediate_amount = to_wei(amount_in_ether, 'ether')
+    result_amount = from_wei(intermediate_amount, 'ether')
+    assert decimal.Decimal(result_amount) == decimal.Decimal(str(amount_in_ether))
 
 
 @pytest.mark.parametrize(
