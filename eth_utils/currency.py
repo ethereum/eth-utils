@@ -1,4 +1,5 @@
 import decimal
+from _decimal import localcontext
 
 
 # Set the decimal precision
@@ -70,11 +71,20 @@ def to_wei(number, unit):
             "Unknown unit.  Must be one of {0}".format('/'.join(units.keys()))
         )
 
-    if number == 0:
+    d_number = decimal.Decimal(value=number)
+    s_number = str(number)
+
+    if d_number == 0:
         return 0
 
-    d_number = decimal.Decimal(number)
     unit_value = units[unit.lower()]
+
+    if d_number < 1 and '.' in s_number:
+        with localcontext() as ctx:
+            multiplier = len(s_number) - s_number.index('.') - 1
+            ctx.prec = multiplier
+            d_number = decimal.Decimal(value=number, context = ctx) * 10**multiplier
+        unit_value /= 10**multiplier
 
     result_value = d_number * unit_value
 
