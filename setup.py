@@ -16,7 +16,7 @@ readme = open(os.path.join(DIR, 'README.md')).read()
 
 setup(
     name='ethereum-utils',
-    version='0.4.0',
+    version='0.4.1',
     description="""Common utility functions for ethereum codebases.""",
     long_description=readme,
     author='Piper Merriam',
