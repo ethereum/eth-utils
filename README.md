@@ -422,6 +422,28 @@ Available denominations are:
 1000000000000000000
 ```
 
+#### `to_wei(value, denomination)` -> integer
+
+Converts `value` in the given `denomination` to its equivalent in the *wei* denomination.
+
+```python
+>>> to_wei(1, 'ether')
+1000000000000000000
+```
+
+#### `from_wei(value, denomination)` -> decimal.Decimal
+
+Converts the `value` in the *wei* denomination to its equivalent in the given
+`denomination`.  Return value is a `decimal.Decimal` with the appropriate
+precision to be a lossless conversion.
+
+```python
+>>> from_wei(1000000000000000000, 'ether')
+Decimal('1')
+>>> from_wei(123456789, 'ether')
+Decimal('1.23456789E-10')
+```
+
 
 ### Encoding Utils
 
