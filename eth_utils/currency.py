@@ -1,5 +1,5 @@
 import decimal
-from _decimal import localcontext
+from decimal import localcontext
 
 
 # Set the decimal precision
