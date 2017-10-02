@@ -50,8 +50,19 @@ def add_0x_prefix(value):
 
 
 def is_hex(value):
+    if not is_string(value):
+        return False
+    elif value.lower() in {b'0x', '0x'}:
+        return True
+
+    unprefixed_value = remove_0x_prefix(value)
+    if len(unprefixed_value) % 2 != 0:
+        value_to_decode = (b'0' if is_bytes(unprefixed_value) else '0') + unprefixed_value
+    else:
+        value_to_decode = unprefixed_value
+
     try:
-        value_as_bytes = codecs.decode(remove_0x_prefix(value), 'hex')
+        value_as_bytes = codecs.decode(value_to_decode, 'hex')
     except binascii.Error:
         return False
     except TypeError:
