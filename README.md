@@ -717,7 +717,7 @@ True
 
 #### `is_hex(value)` -> bool
 
-Returns `True` if `value` is a valid hexidecimal encoded string of length >= 1.
+Returns `True` if `value` is a hexidecimal encoded string.
 
 ```python
 >>> is_hex('')
@@ -725,13 +725,13 @@ False
 >>> is_hex(b'')
 False
 >>> is_hex('0x')
-False
+True
 >>> is_hex(b'0x')
-False
+True
 >>> is_hex('0X')
-False
+True
 >>> is_hex(b'0X')
-False
+True
 >>> is_hex('1234567890abcdef')
 True
 >>> is_hex('0x1234567890abcdef')
@@ -740,8 +740,10 @@ True
 True
 >>> is_hex('0x1234567890AbCdEf')
 True
->>> is_hex('12345')  # odd length
-False
+>>> is_hex('12345')  # odd length is ok
+True
+>>> is_hex('0x12345')  # odd length is ok
+True
 >>> is_hex('123456__abcdef')  # non hex characters
 False
 ```
