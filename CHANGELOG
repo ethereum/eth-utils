@@ -1,3 +1,8 @@
+0.5.0
+-----
+
+* `is_hex` now supports both empty string as `0x` and odd length hexidecimal strings.
+
 0.4.1
 -----
 
