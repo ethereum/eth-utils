@@ -1,6 +1,10 @@
 # String encodings and numeric representations
-import codecs
+
+from __future__ import absolute_import
+
 import binascii
+import codecs
+import string
 
 from .types import (
     is_string,
@@ -10,6 +14,7 @@ from .string import (
     coerce_args_to_bytes,
     coerce_return_to_text,
     coerce_return_to_bytes,
+    force_obj_to_text,
 )
 from .formatting import (
     is_prefixed,
@@ -61,15 +66,14 @@ def is_hex(value):
     else:
         value_to_decode = unprefixed_value
 
+    if any(char not in string.hexdigits for char in force_obj_to_text(value_to_decode)):
+        return False
+
     try:
         value_as_bytes = codecs.decode(value_to_decode, 'hex')
     except binascii.Error:
         return False
     except TypeError:
-        return False
-    except UnicodeEncodeError:
-        return False
-    except ValueError:
         return False
     else:
         return bool(value_as_bytes)
