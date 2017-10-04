@@ -36,6 +36,7 @@ from eth_utils import (
         (b'123456xx', False),  # non-hex character
         ('0x123456xx', False),  # non-hex character
         (b'0x123456xx', False),  # non-hex character
+        ('0\u0080', False),  # triggers different exceptions in py2 and py3
     ),
 )
 def test_is_hex(value, expected):

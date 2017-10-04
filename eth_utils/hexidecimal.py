@@ -67,5 +67,9 @@ def is_hex(value):
         return False
     except TypeError:
         return False
+    except UnicodeEncodeError:
+        return False
+    except ValueError:
+        return False
     else:
         return bool(value_as_bytes)
