@@ -1,7 +1,12 @@
+0.5.1
+-----
+
+* Bugfix for `is_hex` to prevent exceptions from being raised for non-hexadecimal inputs.
+
 0.5.0
 -----
 
-* `is_hex` now supports both empty string as `0x` and odd length hexidecimal strings.
+* `is_hex` now supports both empty string as `0x` and odd length hexadecimal strings.
 
 0.4.1
 -----
