@@ -45,7 +45,7 @@ def test_is_string(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-        (lambda : None, False),
+        (lambda: None, False),
         (3, False),
         (None, False),
         ("3", False),
@@ -61,7 +61,7 @@ def test_is_dict(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-        (lambda : None, False),
+        (lambda: None, False),
         (3, False),
         (None, False),
         ("3", False),
@@ -77,7 +77,7 @@ def test_is_boolean(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-        (lambda : None, False),
+        (lambda: None, False),
         (3, False),
         (None, False),
         ("3", False),
@@ -103,7 +103,7 @@ def test_is_list_like(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-        (lambda : None, False),
+        (lambda: None, False),
         (3, False),
         (None, False),
         ("3", False),
@@ -129,7 +129,7 @@ def test_is_list(value, expected):
 @pytest.mark.parametrize(
     "value,expected",
     [
-        (lambda : None, False),
+        (lambda: None, False),
         (3, False),
         (None, False),
         ("3", False),
