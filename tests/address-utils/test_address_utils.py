@@ -61,6 +61,7 @@ def test_is_address(value, is_any_address, is_hex, is_binary, is_32byte):
     "value,expected",
     [
         ('0x52908400098527886E0F7030069857D2E4169EE7', True),
+        ('52908400098527886E0F7030069857D2E4169EE7', True),
         ('0x8617E340B3D01FA5F11F306F4090FD50E238070D', True),
         ('0xde709f2102306220921060314715629080e2fb77', True),
         ('0x27b1fdb04752bbc536007a920d24acb045561c26', True),

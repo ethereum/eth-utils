@@ -197,7 +197,7 @@ def to_checksum_address(address):
 def is_checksum_address(value):
     if not is_hex_address(value):
         return False
-    return value == to_checksum_address(value)
+    return add_0x_prefix(value) == to_checksum_address(value)
 
 
 @coerce_args_to_text
