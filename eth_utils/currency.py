@@ -1,6 +1,11 @@
 import decimal
 from decimal import localcontext
 
+from .types import (
+    is_integer,
+    is_string,
+)
+
 
 # Set the decimal precision
 decimal.DefaultContext.prec = 999
@@ -71,7 +76,15 @@ def to_wei(number, unit):
             "Unknown unit.  Must be one of {0}".format('/'.join(units.keys()))
         )
 
-    d_number = decimal.Decimal(value=number)
+    if is_integer(number) or is_string(number):
+        d_number = decimal.Decimal(value=number)
+    elif isinstance(number, float):
+        d_number = decimal.Decimal(value=str(number))
+    elif isinstance(number, decimal.Decimal):
+        d_number = number
+    else:
+        raise TypeError("Unsupported type.  Must be one of integer, float, or string")
+
     s_number = str(number)
 
     if d_number == 0:
