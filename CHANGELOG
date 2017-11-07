@@ -1,3 +1,8 @@
+0.6.0
+-----
+
+* Bugfix for `to_wei` to handle floating point inputs in a manner consistent with what users would expect.
+
 0.5.1
 -----
 
