@@ -40,7 +40,6 @@ from .formatting import (  # noqa: F401
 )
 from .functional import (  # noqa: F401
     apply_to_return_value,
-    compose,
     flatten_return,
     reversed_return,
     sort_return,
@@ -81,4 +80,4 @@ from .types import (  # noqa: F401
 )
 
 
-__version__ = pkg_resources.get_distribution("ethereum-utils").version
+__version__ = pkg_resources.get_distribution("eth_utils").version

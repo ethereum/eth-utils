@@ -1,8 +1,8 @@
 # Ethereum Utils
 
-[![Join the chat at https://gitter.im/pipermerriam/ethereum-utils](https://badges.gitter.im/pipermerriam/ethereum-utils.svg)](https://gitter.im/pipermerriam/ethereum-utils?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/ethereum/eth_utils](https://badges.gitter.im/ethereum/eth_utils.svg)](https://gitter.im/ethereum/eth_utils?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/pipermerriam/ethereum-utils.png)](https://travis-ci.org/pipermerriam/ethereum-utils)
+[![Build Status](https://travis-ci.org/ethereum/eth_utils.png)](https://travis-ci.org/ethereum/eth_utils)
 
 
 Common utility functions for codebases which interact with ethereum.
@@ -11,7 +11,7 @@ Common utility functions for codebases which interact with ethereum.
 ## Installation
 
 ```sh
-pip install ethereum-utils
+pip install eth-utils
 ```
 
 
@@ -233,7 +233,7 @@ False
 
 Returns `True` if the `value` is an address in it's canonical form.
 
-The canonical representation of an address according to `ethereum-utils` is a
+The canonical representation of an address according to `eth_utils` is a
 20 byte long string of bytes, eg:
 `b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'`
 
