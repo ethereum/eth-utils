@@ -15,13 +15,13 @@ readme = open(os.path.join(DIR, 'README.md')).read()
 
 
 setup(
-    name='ethereum-utils',
-    version='0.6.0',
+    name='eth-utils',
+    version='0.7.0',
     description="""Common utility functions for ethereum codebases.""",
     long_description=readme,
     author='Piper Merriam',
     author_email='pipermerriam@gmail.com',
-    url='https://github.com/pipermerriam/ethereum-utils',
+    url='https://github.com/ethereum/eth_utils',
     include_package_data=True,
     install_requires=[
         "pysha3>=0.3",
