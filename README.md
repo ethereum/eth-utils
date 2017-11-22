@@ -14,6 +14,51 @@ Common utility functions for codebases which interact with ethereum.
 pip install eth-utils
 ```
 
+## Development
+
+Clone the repository and then run:
+
+```sh
+pip install -e . -r requirements-dev.txt
+```
+
+
+### Running the tests
+
+You can run the tests with:
+
+```sh
+py.test tests
+```
+
+Or you can install `tox` to run the full test suite.
+
+
+### Releasing
+
+Pandoc is required for transforming the markdown README to the proper format to
+render correctly on pypi.
+
+For Debian-like systems:
+
+```
+apt install pandoc
+```
+
+Or on OSX:
+
+```sh
+brew install pandoc
+```
+
+To release a new version:
+
+```sh
+bumpversion $$VERSION_PART_TO_BUMP$$
+git push && git push --tags
+make release
+```
+
 
 ## Documentation
 
