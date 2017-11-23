@@ -11,14 +11,12 @@ from setuptools import (
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-readme = open(os.path.join(DIR, 'README.md')).read()
-
-
 setup(
     name='eth-utils',
+    # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version='0.7.0',
     description="""Common utility functions for ethereum codebases.""",
-    long_description=readme,
+    long_description_markdown_filename='README.md',
     author='Piper Merriam',
     author_email='pipermerriam@gmail.com',
     url='https://github.com/ethereum/eth_utils',
@@ -27,13 +25,13 @@ setup(
         "pysha3>=0.3",
         "cytoolz>=0.8.2",
     ],
+    setup_requires=['setuptools-markdown'],
     py_modules=['eth_utils'],
     license="MIT",
     zip_safe=False,
     keywords='ethereum',
     packages=find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
