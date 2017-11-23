@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-
 from setuptools import (
     setup,
     find_packages,
 )
-
-
-DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 setup(
