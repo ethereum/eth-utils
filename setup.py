@@ -14,7 +14,7 @@ DIR = os.path.dirname(os.path.abspath(__file__))
 setup(
     name='eth-utils',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='0.7.0',
+    version='0.6.0',
     description="""Common utility functions for ethereum codebases.""",
     long_description_markdown_filename='README.md',
     author='Piper Merriam',
