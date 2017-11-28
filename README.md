@@ -1,8 +1,8 @@
 # Ethereum Utils
 
-[![Join the chat at https://gitter.im/ethereum/eth_utils](https://badges.gitter.im/ethereum/eth_utils.svg)](https://gitter.im/ethereum/eth_utils?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/ethereum/eth_utils](https://badges.gitter.im/ethereum/eth-utils.svg)](https://gitter.im/ethereum/eth-utils)
 
-[![Build Status](https://travis-ci.org/ethereum/eth_utils.png)](https://travis-ci.org/ethereum/eth_utils)
+[![Build Status](https://travis-ci.org/ethereum/eth_utils.png)](https://travis-ci.org/ethereum/eth-utils)
 
 
 Common utility functions for codebases which interact with ethereum.
