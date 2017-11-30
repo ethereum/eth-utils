@@ -1,15 +1,32 @@
-import functools
 import codecs
+import functools
+import warnings
 
 from .types import (
     is_bytes,
-    is_text,
-    is_string,
     is_dict,
     is_list_like,
+    is_string,
+    is_text,
 )
 
 
+def _deprecated(fn):
+    def inner(*args, **kwargs):
+        warnings.simplefilter('always', DeprecationWarning)
+        warnings.warn(DeprecationWarning(
+            "The `{0}` function has been deprecated and will be removed in a "
+            "subsequent release of the eth-utils libary.  UTF8 cannot encode "
+            "some byte values in the 0-255 range which makes naive coersion between "
+            "bytes and text representations impossible without explicitly "
+            "declared encodings.".format(fn.__name__)
+        ))
+        warnings.resetwarnings()
+        return fn(*args, **kwargs)
+    return inner
+
+
+@_deprecated
 def force_bytes(value, encoding='iso-8859-1'):
     if is_bytes(value):
         return bytes(value)
@@ -19,6 +36,7 @@ def force_bytes(value, encoding='iso-8859-1'):
         raise TypeError("Unsupported type: {0}".format(type(value)))
 
 
+@_deprecated
 def force_text(value, encoding='iso-8859-1'):
     if is_text(value):
         return value
@@ -28,6 +46,7 @@ def force_text(value, encoding='iso-8859-1'):
         raise TypeError("Unsupported type: {0}".format(type(value)))
 
 
+@_deprecated
 def force_obj_to_bytes(obj):
     if is_string(obj):
         return force_bytes(obj)
@@ -41,6 +60,7 @@ def force_obj_to_bytes(obj):
         return obj
 
 
+@_deprecated
 def force_obj_to_text(obj):
     if is_string(obj):
         return force_text(obj)
@@ -54,6 +74,7 @@ def force_obj_to_text(obj):
         return obj
 
 
+@_deprecated
 def coerce_args_to_bytes(fn):
     @functools.wraps(fn)
     def inner(*args, **kwargs):
@@ -63,6 +84,7 @@ def coerce_args_to_bytes(fn):
     return inner
 
 
+@_deprecated
 def coerce_args_to_text(fn):
     @functools.wraps(fn)
     def inner(*args, **kwargs):
@@ -72,6 +94,7 @@ def coerce_args_to_text(fn):
     return inner
 
 
+@_deprecated
 def coerce_return_to_bytes(fn):
     @functools.wraps(fn)
     def inner(*args, **kwargs):
@@ -79,6 +102,7 @@ def coerce_return_to_bytes(fn):
     return inner
 
 
+@_deprecated
 def coerce_return_to_text(fn):
     @functools.wraps(fn)
     def inner(*args, **kwargs):
