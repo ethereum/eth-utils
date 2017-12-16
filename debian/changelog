@@ -1,0 +1,5 @@
+python3-eth-utils (1.0.0-1) UNRELEASED; urgency=high
+
+  * new package
+
+ -- Jeff Cliff <jeffrey.cliff@gmail.com>  Sat, 25 Nov 2017 14:16:28 +0500
