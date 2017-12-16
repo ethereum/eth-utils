@@ -1,0 +1,20 @@
+# ------------------------------------------------------------------------- #
+# DEBIAN PACKAGE CONTROL FILE                                               #
+#                                                                           #
+# This file is a Debian control file. For more information on the config in #
+# this file, please run `man deb-control`.                                  #
+# ------------------------------------------------------------------------- #
+
+Source: python3-eth-utils
+Section: contrib/python
+Priority: optional
+Maintainer: Jeff Cliff <jeffrey.cliff@gmail.com>
+Build-Depends: debhelper(>= 9), python3, dh-python, python3-all, python3-pytest (>= 3.1.2), python3-pytest-pythonpath(>= 0.3), python-tox(>= 1.8.0), python3-hypothesis(>= 3.4.2), python3-flake8(>= 3.0.4), bumpversion(>= 0.5.3)
+Standards-Version: 3.9.5
+
+Package: python3-eth-utils
+Architecture: any
+Pre-Depends: dpkg (>= 1.16.1),  python3
+Depends: make,  python3-pytest (>= 3.1.2),  python3-pytest-pythonpath(>= 0.3), python-tox(>= 1.8.0), python3-hypothesis(>= 3.4.2), python3-flake8(>= 3.0.4), bumpversion(>= 0.5.3)
+Description: python ethereum helper functions
+	that for whatever reason are not in the ethereum library
