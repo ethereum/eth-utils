@@ -9,7 +9,7 @@ from setuptools import (
 setup(
     name='eth-utils',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='0.7.1',
+    version='0.7.2',
     description="""Common utility functions for ethereum codebases.""",
     long_description_markdown_filename='README.md',
     author='Piper Merriam',
