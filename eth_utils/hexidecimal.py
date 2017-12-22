@@ -21,8 +21,9 @@ from .formatting import (
 )
 
 
+from typing import Union
 @coerce_return_to_bytes
-def decode_hex(value):
+def decode_hex(value: str) -> bytes:
     if not is_string(value):
         raise TypeError('Value must be an instance of str or unicode')
     return codecs.decode(remove_0x_prefix(value), 'hex')
@@ -30,23 +31,23 @@ def decode_hex(value):
 
 @coerce_args_to_bytes
 @coerce_return_to_text
-def encode_hex(value):
+def encode_hex(value: bytes) -> bytes:
     if not is_string(value):
         raise TypeError('Value must be an instance of str or unicode')
     return add_0x_prefix(codecs.encode(value, 'hex'))
 
 
-def is_0x_prefixed(value):
+def is_0x_prefixed(value: Union[bytes, str]) -> bool:
     return is_prefixed(value, '0x') or is_prefixed(value, '0X')
 
 
-def remove_0x_prefix(value):
+def remove_0x_prefix(value: Union[bytes, str]) -> Union[bytes, str]:
     if is_0x_prefixed(value):
         return value[2:]
     return value
 
 
-def add_0x_prefix(value):
+def add_0x_prefix(value: Union[bytes, str]) -> Union[bytes, str]:
     if is_0x_prefixed(value):
         return value
 
@@ -54,7 +55,7 @@ def add_0x_prefix(value):
     return prefix + value
 
 
-def is_hex(value):
+def is_hex(value: Union[bytes, str]) -> bool:
     if not is_string(value):
         return False
     elif value.lower() in {b'0x', '0x'}:

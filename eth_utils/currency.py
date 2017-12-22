@@ -8,6 +8,8 @@ from .types import (
 
 
 # Set the decimal precision
+from decimal import Decimal
+from typing import Union
 decimal.DefaultContext.prec = 999
 
 units = {
@@ -46,7 +48,7 @@ MIN_WEI = 0
 MAX_WEI = 2 ** 256 - 1
 
 
-def from_wei(number, unit):
+def from_wei(number: int, unit: str) -> Union[Decimal, int]:
     """
     Takes a number of wei and converts it to any other ether unit.
     """
@@ -67,7 +69,7 @@ def from_wei(number, unit):
     return d_number / unit_value
 
 
-def to_wei(number, unit):
+def to_wei(number: Union[float, Decimal, str, int], unit: str) -> int:
     """
     Takes a number of a unit and converts it to wei.
     """

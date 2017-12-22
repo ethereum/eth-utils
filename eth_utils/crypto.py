@@ -10,7 +10,7 @@ from .string import (
 )
 
 
-def keccak(value):
+def keccak(value: str) -> bytes:
     return keccak_256(force_bytes(value)).digest()
 
 

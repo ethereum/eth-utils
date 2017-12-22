@@ -22,8 +22,9 @@ from .formatting import (
 )
 
 
+from typing import Callable, Union
 @coerce_args_to_text
-def is_hex_address(value):
+def is_hex_address(value: Union[Callable, str]) -> bool:
     """
     Checks if the given string is an address in hexidecimal encoded form.
     """
@@ -38,7 +39,7 @@ def is_hex_address(value):
 
 
 @coerce_args_to_bytes
-def is_binary_address(value):
+def is_binary_address(value: Union[bytes, Callable]) -> bool:
     """
     Checks if the given string is an address in raw bytes form.
     """
@@ -51,7 +52,7 @@ def is_binary_address(value):
 
 
 @coerce_args_to_text
-def is_32byte_address(value):
+def is_32byte_address(value: Union[Callable, str]) -> bool:
     """
     Checks if the given string is an address in hexidecimal encoded form padded to 32 bytes.
     """
@@ -75,7 +76,7 @@ def is_32byte_address(value):
 
 
 @coerce_args_to_text
-def is_address(value):
+def is_address(value: Union[Callable, str]) -> bool:
     """
     Checks if the given string is an address in any of the known formats.
     """
@@ -93,7 +94,7 @@ def is_address(value):
 
 @coerce_args_to_text
 @coerce_return_to_text
-def _normalize_hex_address(address):
+def _normalize_hex_address(address: str) -> str:
     """
     Returns a hexidecimal address in it's normalized hexidecimal representation.
     """
@@ -102,7 +103,7 @@ def _normalize_hex_address(address):
 
 @coerce_args_to_text
 @coerce_return_to_text
-def _normalize_binary_address(address):
+def _normalize_binary_address(address: str) -> str:
     """
     Returns a raw binary address in it's normalized hexidecimal representation.
     """
@@ -112,7 +113,7 @@ def _normalize_binary_address(address):
 
 @coerce_args_to_text
 @coerce_return_to_text
-def _normalize_32byte_address(address):
+def _normalize_32byte_address(address: str) -> str:
     if len(address) == 32:
         return _normalize_binary_address(address[-20:])
     elif len(address) in {66, 64}:
@@ -123,7 +124,7 @@ def _normalize_32byte_address(address):
 
 @coerce_args_to_text
 @coerce_return_to_text
-def to_normalized_address(address):
+def to_normalized_address(address: str) -> str:
     """
     Converts an address to it's normalized hexidecimal representation.
     """
@@ -137,7 +138,7 @@ def to_normalized_address(address):
     raise ValueError("Unknown address format {0}".format(address))
 
 
-def is_normalized_address(value):
+def is_normalized_address(value: Union[Callable, str]) -> bool:
     """
     Returns whether the provided value is an address in it's normalized form.
     """
@@ -149,13 +150,13 @@ def is_normalized_address(value):
 
 @coerce_args_to_bytes
 @coerce_return_to_bytes
-def to_canonical_address(address):
+def to_canonical_address(address: bytes) -> bytes:
     """
     """
     return decode_hex(to_normalized_address(address))
 
 
-def is_canonical_address(value):
+def is_canonical_address(value: Union[bytes, str]) -> bool:
     if not is_address(value):
         return False
     else:
@@ -163,7 +164,7 @@ def is_canonical_address(value):
 
 
 @coerce_args_to_text
-def is_same_address(left, right):
+def is_same_address(left: str, right: str) -> bool:
     """
     Checks if both addresses are same or not
     """
@@ -175,7 +176,7 @@ def is_same_address(left, right):
 
 @coerce_args_to_text
 @coerce_return_to_text
-def to_checksum_address(address):
+def to_checksum_address(address: str) -> str:
     """
     Makes a checksum address
     """
@@ -194,14 +195,14 @@ def to_checksum_address(address):
 
 
 @coerce_args_to_text
-def is_checksum_address(value):
+def is_checksum_address(value: str) -> bool:
     if not is_hex_address(value):
         return False
     return value == to_checksum_address(value)
 
 
 @coerce_args_to_text
-def is_checksum_formatted_address(value):
+def is_checksum_formatted_address(value: Union[Callable, str]) -> bool:
     if not is_hex_address(value):
         return False
     elif remove_0x_prefix(value) == remove_0x_prefix(value).lower():
