@@ -1,8 +1,42 @@
 import pytest
 
 from eth_utils import (
+    decode_hex,
+    encode_hex,
     is_hex,
 )
+
+
+@pytest.mark.parametrize(
+    'value,expected',
+    (
+        ('123456', b'\x124V'),
+        (b'123456', b'\x124V'),
+        ('0x123456', b'\x124V'),
+        (b'0x123456', b'\x124V'),
+    ),
+)
+def test_decode_hex(value, expected):
+    actual = decode_hex(value)
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'value,expected',
+    (
+        ({'primitive': b'foo'}, '0x666f6f'),
+        ({'primitive': b'\x01\x02\x03'}, '0x010203'),
+        ({'primitive': 0}, '0x00'),
+        ({'hexstr': '0x000F'}, '0x000f'),
+        ({'hexstr': '666f6f'}, '0x666f6f'),
+        ({'text': '\x01\x02\x03'}, '0x010203'),
+        ({'text': 'foo'}, '0x666f6f'),
+        ({'text': ''}, '0x'),
+    )
+)
+def test_encode_hex(value, expected):
+    actual = encode_hex(**value)
+    assert actual == expected
 
 
 @pytest.mark.parametrize(
@@ -34,7 +68,6 @@ from eth_utils import (
         (b'123456xx', False),  # non-hex character
         ('0x123456xx', False),  # non-hex character
         (b'0x123456xx', False),  # non-hex character
-        ('0\u0080', False),  # triggers different exceptions in py2 and py3
     ),
 )
 def test_is_hex(value, expected):

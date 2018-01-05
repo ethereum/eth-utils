@@ -6,13 +6,12 @@ from .hexidecimal import (
     is_hex,
     remove_0x_prefix,
 )
-from .string import (
-    coerce_args_to_text,
-    coerce_args_to_bytes,
-    coerce_return_to_text,
-    coerce_return_to_bytes,
+from .conversions import (
+    to_bytes,
+    to_text,
 )
 from .types import (
+    is_bytes,
     is_string,
 )
 from .formatting import (
@@ -20,11 +19,12 @@ from .formatting import (
 )
 
 
-@coerce_args_to_text
-def is_hex_address(value):
+def is_hex_address(primitive=None, hexstr=None, text=None):
     """
-    Checks if the given string is an address in hexidecimal encoded form.
+    Checks if a given string in a supported value
+    is an address in hexidecimal encoded form.
     """
+    value = to_text(primitive=primitive, hexstr=hexstr, text=text)
     if not is_string(value):
         return False
     elif len(value) not in {42, 40}:
@@ -35,11 +35,12 @@ def is_hex_address(value):
         return False
 
 
-@coerce_args_to_bytes
-def is_binary_address(value):
+def is_binary_address(primitive=None, hexstr=None, text=None):
     """
-    Checks if the given string is an address in raw bytes form.
+    Checks if a given string in a supported value
+    is an address in raw bytes form.
     """
+    value = to_bytes(primitive, hexstr, text)
     if not is_string(value):
         return False
     elif len(value) != 20:
@@ -48,16 +49,17 @@ def is_binary_address(value):
         return True
 
 
-@coerce_args_to_text
-def is_32byte_address(value):
+def is_32byte_address(primitive=None, hexstr=None, text=None):
     """
-    Checks if the given string is an address in hexidecimal encoded form padded to 32 bytes.
+    Checks if a given string in a supported value
+    is an address in hexidecimal encoded form padded to 32 bytes.
     """
+    value = to_text(primitive, hexstr, text)
     if not is_string(value):
         return False
 
     if len(value) == 32:
-        value_as_hex = encode_hex(value)
+        value_as_hex = encode_hex(text=value)
     elif len(value) in {66, 64}:
         value_as_hex = add_0x_prefix(value)
     else:
@@ -72,44 +74,41 @@ def is_32byte_address(value):
         return False
 
 
-@coerce_args_to_text
-def is_address(value):
+def is_address(primitive=None, hexstr=None, text=None):
     """
-    Checks if the given string is an address in any of the known formats.
+    Checks if a given string in a supported value
+    is an address in any of the known formats.
     """
-    if is_checksum_formatted_address(value):
-        return is_checksum_address(value)
-    elif is_hex_address(value):
+    value = to_text(primitive, hexstr, text)
+    if is_checksum_formatted_address(text=value):
+        return is_checksum_address(text=value)
+    elif is_hex_address(text=value):
         return True
-    elif is_binary_address(value):
+    elif is_binary_address(text=value):
         return True
-    elif is_32byte_address(value):
+    elif is_32byte_address(text=value):
         return True
     else:
         return False
 
 
-@coerce_args_to_text
-@coerce_return_to_text
 def _normalize_hex_address(address):
     """
     Returns a hexidecimal address in it's normalized hexidecimal representation.
     """
-    return add_0x_prefix(address.lower())
+    value = add_0x_prefix(address.lower())
+    return_value = to_text(value) if is_bytes(value) else to_text(text=value)
+    return return_value
 
 
-@coerce_args_to_text
-@coerce_return_to_text
 def _normalize_binary_address(address):
     """
     Returns a raw binary address in it's normalized hexidecimal representation.
     """
-    hex_address = encode_hex(address)
+    hex_address = encode_hex(text=address)
     return _normalize_hex_address(hex_address)
 
 
-@coerce_args_to_text
-@coerce_return_to_text
 def _normalize_32byte_address(address):
     if len(address) == 32:
         return _normalize_binary_address(address[-20:])
@@ -119,65 +118,72 @@ def _normalize_32byte_address(address):
         raise ValueError("Invalid address.  Must be 32 byte value")
 
 
-@coerce_args_to_text
-@coerce_return_to_text
-def to_normalized_address(address):
+def to_normalized_address(primitive=None, hexstr=None, text=None):
     """
     Converts an address to it's normalized hexidecimal representation.
     """
-    if is_hex_address(address):
+    address = to_text(primitive, hexstr, text)
+    if is_hex_address(text=address):
         return _normalize_hex_address(address)
-    elif is_binary_address(address):
+    elif is_binary_address(text=address):
         return _normalize_binary_address(address)
-    elif is_32byte_address(address):
+    elif is_32byte_address(text=address):
         return _normalize_32byte_address(address)
 
     raise ValueError("Unknown address format {0}".format(address))
 
 
-def is_normalized_address(value):
+def is_normalized_address(primitive=None, hexstr=None, text=None):
     """
     Returns whether the provided value is an address in it's normalized form.
     """
-    if not is_address(value):
+    if not is_address(primitive, hexstr, text):
         return False
     else:
-        return value == to_normalized_address(value)
+        value = next(item for item in [primitive, hexstr, text] if item is not None)
+        return value == to_normalized_address(primitive, hexstr, text)
 
 
-@coerce_args_to_bytes
-@coerce_return_to_bytes
-def to_canonical_address(address):
+def to_canonical_address(primitive=None, hexstr=None, text=None):
     """
+    Given any supported representation of an address
+    returns it's canonical form (20 byte long string).
     """
-    return decode_hex(to_normalized_address(address))
+    byte_address = to_bytes(primitive, hexstr, text)
+    return decode_hex(to_normalized_address(byte_address))
 
 
-def is_canonical_address(value):
-    if not is_address(value):
+def is_canonical_address(primitive=None, hexstr=None, text=None):
+    """
+    Returns `True` if the `value` is an address in it's canonical form.
+    """
+    if not is_address(primitive, hexstr, text):
         return False
     else:
-        return value == to_canonical_address(value)
+        value = next(item for item in [primitive, hexstr, text] if item is not None)
+        return value == to_canonical_address(primitive, hexstr, text)
 
 
-@coerce_args_to_text
 def is_same_address(left, right):
     """
-    Checks if both addresses are same or not
+    Checks if both addresses are same or not.
+    Accepts explicit arguments in the format:
+    {'type': 'address'}
+    Where type is one of: 'primitive', 'hexstr', 'text'
+    and address is in the form of: bytestring, hexstring, string
     """
-    if not is_address(left) or not is_address(right):
+    if not is_address(**left) or not is_address(**right):
         raise ValueError("Both values must be valid addresses")
     else:
-        return to_normalized_address(left) == to_normalized_address(right)
+        return to_normalized_address(**left) == to_normalized_address(**right)
 
 
-@coerce_args_to_text
-@coerce_return_to_text
-def to_checksum_address(address):
+def to_checksum_address(primitive=None, hexstr=None, text=None):
     """
-    Makes a checksum address
+    Makes a checksum address given a supported format.
     """
-    norm_address = to_normalized_address(address)
+    address = to_text(primitive, hexstr, text)
+    norm_address = to_normalized_address(text=address)
     address_hash = encode_hex(keccak(remove_0x_prefix(norm_address)))
 
     checksum_address = add_0x_prefix(''.join(
@@ -188,19 +194,22 @@ def to_checksum_address(address):
         )
         for i in range(2, 42)
     ))
-    return checksum_address
+    if is_bytes(checksum_address):
+        return to_text(primitive=checksum_address)
+    else:
+        return to_text(text=checksum_address)
 
 
-@coerce_args_to_text
-def is_checksum_address(value):
-    if not is_hex_address(value):
+def is_checksum_address(primitive=None, hexstr=None, text=None):
+    value = to_text(primitive, hexstr, text)
+    if not is_hex_address(text=value):
         return False
-    return value == to_checksum_address(value)
+    return value == to_checksum_address(text=value)
 
 
-@coerce_args_to_text
-def is_checksum_formatted_address(value):
-    if not is_hex_address(value):
+def is_checksum_formatted_address(primitive=None, hexstr=None, text=None):
+    value = to_text(primitive, hexstr, text)
+    if not is_hex_address(text=value):
         return False
     elif remove_0x_prefix(value) == remove_0x_prefix(value).lower():
         return False

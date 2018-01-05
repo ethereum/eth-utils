@@ -2,36 +2,41 @@
 
 import binascii
 import codecs
-import string
 
 from .types import (
-    is_string,
     is_bytes,
+    is_string,
 )
-from .string import (
-    coerce_args_to_bytes,
-    coerce_return_to_text,
-    coerce_return_to_bytes,
-    force_obj_to_text,
+from .conversions import (
+    to_bytes,
+    to_text,
 )
 from .formatting import (
     is_prefixed,
 )
 
 
-@coerce_return_to_bytes
 def decode_hex(value):
+    """
+    Returns `value` decoded into a byte string.
+    Accepts any string with or without the `0x` prefix.
+    """
     if not is_string(value):
         raise TypeError('Value must be an instance of str or unicode')
-    return codecs.decode(remove_0x_prefix(value), 'hex')
+    decoded = codecs.decode(remove_0x_prefix(value), 'hex')
+    return to_bytes(primitive=decoded)
 
 
-@coerce_args_to_bytes
-@coerce_return_to_text
-def encode_hex(value):
+def encode_hex(primitive=None, hexstr=None, text=None):
+    """
+    Returns any supported value encoded into a hexidecimal representation
+    with a `0x` prefix.
+    """
+    value = to_bytes(primitive, hexstr, text)
     if not is_string(value):
         raise TypeError('Value must be an instance of str or unicode')
-    return add_0x_prefix(codecs.encode(value, 'hex'))
+    encoded = add_0x_prefix(codecs.encode(value, 'hex'))
+    return to_text(primitive=encoded)
 
 
 def is_0x_prefixed(value):
@@ -63,9 +68,6 @@ def is_hex(value):
         value_to_decode = (b'0' if is_bytes(unprefixed_value) else '0') + unprefixed_value
     else:
         value_to_decode = unprefixed_value
-
-    if any(char not in string.hexdigits for char in force_obj_to_text(value_to_decode)):
-        return False
 
     try:
         value_as_bytes = codecs.decode(value_to_decode, 'hex')
