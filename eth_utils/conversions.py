@@ -9,13 +9,6 @@ from .encoding import (
     big_endian_to_int,
     int_to_big_endian,
 )
-from .hexidecimal import (
-    add_0x_prefix,
-    decode_hex,
-    encode_hex,
-    is_hex,
-    remove_0x_prefix,
-)
 from .types import (
     is_boolean,
     is_integer,
@@ -31,6 +24,10 @@ def to_hex(value=None, hexstr=None, text=None):
     Trims leading zeros, as defined in:
     https://github.com/ethereum/wiki/wiki/JSON-RPC#hex-value-encoding
     """
+    from .hexidecimal import (
+        add_0x_prefix,
+        encode_hex,
+    )
     if hexstr is not None:
         return add_0x_prefix(hexstr.lower())
 
@@ -81,6 +78,10 @@ def to_int(value=None, hexstr=None, text=None):
 
 @assert_one_arg
 def to_bytes(primitive=None, hexstr=None, text=None):
+    from .hexidecimal import (
+        remove_0x_prefix,
+        decode_hex,
+    )
     if is_boolean(primitive):
         return b'\x01' if primitive else b'\x00'
     elif isinstance(primitive, bytes):
@@ -137,6 +138,10 @@ def hexstr_if_str(to_type, hexstr_or_primitive):
         eg~ to_bytes, to_text, to_hex, to_int, etc
     @param text_or_primitive in bytes, str, or int.
     '''
+    from .hexidecimal import (
+        remove_0x_prefix,
+        is_hex,
+    )
     if isinstance(hexstr_or_primitive, str):
         (primitive, hexstr) = (None, hexstr_or_primitive)
         if remove_0x_prefix(hexstr) and not is_hex(hexstr):

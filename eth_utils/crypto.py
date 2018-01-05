@@ -3,13 +3,13 @@ try:
 except ImportError:
     from sha3 import sha3_256 as keccak_256
 
-from .string import (
-    force_bytes,
+from .conversions import (
+    to_bytes,
 )
 
 
 def keccak(value):
-    return keccak_256(force_bytes(value)).digest()
+    return keccak_256(to_bytes(text=value)).digest()
 
 
 # ensure we have the *correct* hash function
