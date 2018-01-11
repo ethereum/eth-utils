@@ -1,19 +1,11 @@
-import sys
 import numbers
 import collections
 
 
 bytes_types = (bytes, bytearray)
-
-
-if sys.version_info.major == 2:
-    integer_types = (int, long)  # noqa: F821
-    text_types = (unicode,)  # noqa: F821
-    string_types = (basestring, bytearray)  # noqa: F821
-else:
-    integer_types = (int,)
-    text_types = (str,)
-    string_types = (bytes, str, bytearray)
+integer_types = (int,)
+text_types = (str,)
+string_types = (bytes, str, bytearray)
 
 
 def is_integer(value):
