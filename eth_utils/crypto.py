@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 try:
     from sha3 import keccak_256
 except ImportError:

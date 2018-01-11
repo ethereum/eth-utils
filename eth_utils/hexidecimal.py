@@ -1,7 +1,5 @@
 # String encodings and numeric representations
 
-from __future__ import absolute_import
-
 import binascii
 import codecs
 import string
