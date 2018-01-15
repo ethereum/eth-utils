@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import pkg_resources
 import sys
 import warnings
