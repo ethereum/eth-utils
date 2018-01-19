@@ -7,6 +7,7 @@ from cytoolz.functoolz import (
 )
 
 
+from typing import Any, Callable
 def identity(value):
     return value
 
@@ -15,7 +16,7 @@ def combine(f, g):
     return lambda x: f(g(x))
 
 
-def apply_to_return_value(callback):
+def apply_to_return_value(callback: Any) -> Callable:
     def outer(fn):
         @functools.wraps(fn)
         def inner(*args, **kwargs):

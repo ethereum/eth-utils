@@ -7,7 +7,8 @@ from .types import (
 )
 
 
-def pad_left(value, to_size, pad_with):
+from typing import Union
+def pad_left(value: Union[bytes, str], to_size: int, pad_with: Union[bytes, str]) -> Union[bytes, str]:
     """
     Should be called to pad value to expected length
     """
@@ -20,7 +21,7 @@ def pad_left(value, to_size, pad_with):
     return head + value
 
 
-def pad_right(value, to_size, pad_with):
+def pad_right(value: Union[bytes, str], to_size: int, pad_with: Union[bytes, str]) -> Union[bytes, str]:
     """
     Should be called to pad value to expected length
     """
@@ -33,7 +34,7 @@ def pad_right(value, to_size, pad_with):
     return value + tail
 
 
-def is_prefixed(value, prefix):
+def is_prefixed(value: Union[bytes, str], prefix: str) -> bool:
     return value.startswith(
         force_bytes(prefix) if is_bytes(value) else force_text(prefix)
     )

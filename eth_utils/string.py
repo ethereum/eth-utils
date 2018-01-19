@@ -10,7 +10,8 @@ from .types import (
 )
 
 
-def force_bytes(value, encoding='iso-8859-1'):
+from typing import Any, Callable, Dict, Tuple, Union
+def force_bytes(value: Union[bytes, str], encoding: str = 'iso-8859-1') -> bytes:
     if is_bytes(value):
         return bytes(value)
     elif is_text(value):
@@ -19,7 +20,7 @@ def force_bytes(value, encoding='iso-8859-1'):
         raise TypeError("Unsupported type: {0}".format(type(value)))
 
 
-def force_text(value, encoding='iso-8859-1'):
+def force_text(value: Union[bytes, str], encoding: str = 'iso-8859-1') -> str:
     if is_text(value):
         return value
     elif is_bytes(value):
@@ -28,7 +29,7 @@ def force_text(value, encoding='iso-8859-1'):
         raise TypeError("Unsupported type: {0}".format(type(value)))
 
 
-def force_obj_to_bytes(obj):
+def force_obj_to_bytes(obj: Any) -> Union[Tuple[bytes], bytes, Tuple[Dict[Any, Any]], Callable, Tuple[Callable]]:
     if is_string(obj):
         return force_bytes(obj)
     elif is_dict(obj):
@@ -41,7 +42,7 @@ def force_obj_to_bytes(obj):
         return obj
 
 
-def force_obj_to_text(obj):
+def force_obj_to_text(obj: Any) -> Any:
     if is_string(obj):
         return force_text(obj)
     elif is_dict(obj):
@@ -54,7 +55,7 @@ def force_obj_to_text(obj):
         return obj
 
 
-def coerce_args_to_bytes(fn):
+def coerce_args_to_bytes(fn: Callable) -> Callable:
     @functools.wraps(fn)
     def inner(*args, **kwargs):
         bytes_args = force_obj_to_bytes(args)
@@ -63,7 +64,7 @@ def coerce_args_to_bytes(fn):
     return inner
 
 
-def coerce_args_to_text(fn):
+def coerce_args_to_text(fn: Callable) -> Callable:
     @functools.wraps(fn)
     def inner(*args, **kwargs):
         text_args = force_obj_to_text(args)
@@ -72,14 +73,14 @@ def coerce_args_to_text(fn):
     return inner
 
 
-def coerce_return_to_bytes(fn):
+def coerce_return_to_bytes(fn: Callable) -> Callable:
     @functools.wraps(fn)
     def inner(*args, **kwargs):
         return force_obj_to_bytes(fn(*args, **kwargs))
     return inner
 
 
-def coerce_return_to_text(fn):
+def coerce_return_to_text(fn: Callable) -> Callable:
     @functools.wraps(fn)
     def inner(*args, **kwargs):
         return force_obj_to_text(fn(*args, **kwargs))
