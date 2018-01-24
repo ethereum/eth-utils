@@ -567,6 +567,12 @@ Returns `value` padded to the length specified by `to_size` with the string `pad
 'test12312'
 ```
 
+#### `zpad_bytes(to_size, value)`
+
+A convenience method, easily curry-able for passing a value through a pipeline of formatters.
+
+Equivalent to `pad_left(value, to_size, b'\x00')`, but accepting only `bytes` arguments.
+
 
 ### Functional Utils
 

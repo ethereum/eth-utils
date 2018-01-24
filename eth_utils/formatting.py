@@ -1,3 +1,7 @@
+from cytoolz import (
+    curry,
+)
+
 from .string import (
     force_bytes,
     force_text,
@@ -37,3 +41,11 @@ def is_prefixed(value, prefix):
     return value.startswith(
         force_bytes(prefix) if is_bytes(value) else force_text(prefix)
     )
+
+
+@curry
+def pad_bytes(fill_with, num_bytes, unpadded):
+    return unpadded.rjust(num_bytes, fill_with)
+
+
+zpad_bytes = pad_bytes(b'\0')

@@ -37,6 +37,7 @@ from .encoding import (  # noqa: F401
 from .formatting import (  # noqa: F401
     pad_left,
     pad_right,
+    zpad_bytes,
 )
 from .functional import (  # noqa: F401
     apply_to_return_value,
