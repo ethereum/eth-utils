@@ -425,6 +425,27 @@ Given any valid representation of an address return the normalized representatio
 '0xc305c901078781c232a2a521c2af7980f8385ee9',
 ```
 
+### Conversion Utils
+
+
+These methods convert values using standard practices in the Ethereum ecosystem.
+For example, strings are encoded to binary using UTF-8.
+
+See the
+[web3.py docs](http://web3py.readthedocs.io/en/stable/overview.html#overview-type-conversions)
+for examples of the available type conversions.
+
+Only supply one of the argument options:
+
+#### `to_int(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> int
+#### `to_bytes(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> bytes
+#### `to_text(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
+#### `to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
+
+Because there is no reliable way to distinguish between text and a hex-encoded
+bytestring, you must explicitly specify which of the two is being supplied when
+passing in a `str`.
+
 ### Crypto Utils
 
 
