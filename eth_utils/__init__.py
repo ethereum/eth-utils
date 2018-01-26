@@ -22,6 +22,9 @@ from .address import (  # noqa: F401
     to_checksum_address,
     to_normalized_address,
 )
+from .applicators import (  # noqa: F401
+    apply_formatters_to_dict,
+)
 from .conversions import (  # noqa: F401
     to_bytes,
     to_hex,
