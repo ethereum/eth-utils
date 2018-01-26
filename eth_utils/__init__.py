@@ -38,6 +38,9 @@ from .currency import (  # noqa: F401
     from_wei,
     to_wei,
 )
+from .decorators import (  # noqa: F401
+    combomethod,
+)
 from .encoding import (  # noqa: F401
     big_endian_to_int,
     int_to_big_endian,

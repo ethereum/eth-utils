@@ -643,6 +643,46 @@ virtualenv==15.1.0
 ```
 
 
+### Decorators
+
+#### `@combomethod`
+
+Decorates methods in a class that can be called as both an instance method
+or a `@classmethod`.
+
+Use the decorator like so:
+
+```py
+from eth_utils import combomethod
+
+class Storage:
+    val = 1
+
+    @combomethod
+    def get(combo):
+        if isinstance(combo, type):
+            print("classmethod call")
+        elif isinstance(combo, Storage):
+            print("instance method call")
+        else:
+            raise TypeError("Unreachable, unless you really monkey around")
+        return combo.val
+```
+
+As usual, instances create their own copy on assignment.
+
+```py
+>>> store = Storage()
+>>> store.val = 2
+>>> store.get()
+instance method call
+2
+>>> Storage.get()
+classmethod call
+1
+```
+
+
 ### Encoding Utils
 
 #### `big_endian_to_int(value)` -> integer

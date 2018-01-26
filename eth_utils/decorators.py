@@ -2,6 +2,20 @@ import functools
 import itertools
 
 
+class combomethod(object):
+    def __init__(self, method):
+        self.method = method
+
+    def __get__(self, obj=None, objtype=None):
+        @functools.wraps(self.method)
+        def _wrapper(*args, **kwargs):
+            if obj is not None:
+                return self.method(obj, *args, **kwargs)
+            else:
+                return self.method(objtype, *args, **kwargs)
+        return _wrapper
+
+
 def _has_one_val(*args, **kwargs):
     vals = itertools.chain(args, kwargs.values())
     not_nones = list(filter(lambda val: val is not None, vals))
