@@ -1,6 +1,7 @@
 import pytest
 
 from eth_utils import (
+    apply_formatter_at_index,
     apply_formatter_if,
     apply_formatters_to_dict,
     apply_one_of_formatters,
@@ -62,3 +63,22 @@ def test_apply_one_of_formatters(condition_formatters, value, expected):
         # must be able to curry
         apply_one = apply_one_of_formatters(condition_formatters)
         assert apply_one(value) == expected
+
+
+@pytest.mark.parametrize(
+    'formatter, index, value, expected',
+    (
+        (bool, 1, (1, 2, 3), [1, True, 3]),
+        (bool, 3, (1, 2, 3), IndexError),
+    ),
+)
+def test_apply_formatter_at_index(formatter, index, value, expected):
+    if isinstance(expected, type) and issubclass(expected, Exception):
+        with pytest.raises(expected):
+            apply_formatter_at_index(formatter, index, value)
+    else:
+        assert apply_formatter_at_index(formatter, index, value) == expected
+
+        # must be able to curry
+        targetted_formatter = apply_formatter_at_index(formatter, index)
+        assert targetted_formatter(value) == expected

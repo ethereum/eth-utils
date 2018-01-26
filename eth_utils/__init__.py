@@ -23,8 +23,9 @@ from .address import (  # noqa: F401
     to_normalized_address,
 )
 from .applicators import (  # noqa: F401
-    apply_formatters_to_dict,
+    apply_formatter_at_index,
     apply_formatter_if,
+    apply_formatters_to_dict,
     apply_one_of_formatters,
 )
 from .conversions import (  # noqa: F401

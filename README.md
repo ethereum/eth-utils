@@ -140,7 +140,7 @@ def i_put_my_thing_down_flip_it_and_reverse_it(lyric):
 
 #### `apply_formatter_if(condition, formatter, value)` -> new_value
 
-This curried function will apply the formatter only if `bool(condition()) is True`.
+This curry-able function will apply the formatter only if `bool(condition()) is True`.
 
 ```py
 >>> from eth_utils import apply_formatter_if, is_string
@@ -158,7 +158,7 @@ False
 
 #### `apply_one_of_formatters(condition_formatter_pairs, value)` -> new_value
 
-This curried function will iterate through `condition_formatter_pairs`, and
+This curry-able function will iterate through `condition_formatter_pairs`, and
 apply the first formatter which has a truthy condition. One of the formatters
 *must* match, or this function will raise a `ValueError`.
 
@@ -175,6 +175,21 @@ apply the first formatter which has a truthy condition. One of the formatters
 (1, 2)
 >>> multi_formatter(54)
 ValueError("The provided value did not satisfy any of the formatter conditions")
+```
+
+
+#### `apply_formatter_at_index(formatter, at_index, <list_like>)` -> <new_list>
+
+This curry-able function will apply the formatter to one element of `list_like`,
+at position `at_index`, and return a new list with that element replaced.
+
+```py
+>>> from eth_utils import apply_formatter_at_index
+
+>>> targetted_formatter = apply_formatter_at_index(bool, 1)
+
+>>> targetted_formatter((1, 2, 3))
+[1, True, 3]
 ```
 
 
