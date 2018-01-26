@@ -506,6 +506,32 @@ Decimal('1.23456789E-10')
 ```
 
 
+### Debug Utils
+
+#### Generate environment info
+
+At the shell:
+
+```sh
+$ python -m eth_utils
+
+Python version:
+3.5.3 (default, Nov 23 2017, 11:34:05) 
+[GCC 6.3.0 20170406]
+
+Operating System: Linux-4.10.0-42-generic-x86_64-with-Ubuntu-17.04-zesty
+
+pip freeze result:
+bumpversion==0.5.3
+cytoolz==0.9.0
+flake8==3.4.1
+ipython==6.2.1
+pytest==3.3.2
+virtualenv==15.1.0
+... etc
+```
+
+
 ### Encoding Utils
 
 #### `big_endian_to_int(value)` -> integer
