@@ -22,6 +22,14 @@ from .address import (  # noqa: F401
     to_checksum_address,
     to_normalized_address,
 )
+from .conversions import (  # noqa: F401
+    to_bytes,
+    to_hex,
+    to_int,
+    to_text,
+    hexstr_if_str,
+    text_if_str,
+)
 from .crypto import (  # noqa: F401
     keccak,
 )
