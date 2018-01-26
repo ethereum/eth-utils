@@ -24,6 +24,7 @@ from .address import (  # noqa: F401
 )
 from .applicators import (  # noqa: F401
     apply_formatters_to_dict,
+    apply_formatter_if,
 )
 from .conversions import (  # noqa: F401
     to_bytes,

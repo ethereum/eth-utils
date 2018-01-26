@@ -119,6 +119,42 @@ Returns the 4 byte function selector for the given function signature.
 b'\xc3x\n:'
 ```
 
+### Applicators
+
+Applicators help you apply "formatters" in various ways, most notably:
+
+- apply formatters to values by key
+- apply formatters to lists by index
+- conditionally applying a formatter
+- conditionally applying one of several formatters.
+
+Here we define a "formatter" as any `callable` that may be called with a single positional argument.
+It returns the "formatted" result. For example `int()` could be used as a formatter.
+
+Defining your own formatter is easy:
+
+```py
+def i_put_my_thing_down_flip_it_and_reverse_it(lyric):
+    return ''.join(reversed(lyric))
+```
+
+#### `apply_formatter_if(condition, formatter, value)` -> new_value
+
+This curried function will apply the formatter only if `bool(condition()) is True`.
+
+```py
+>>> from eth_utils import apply_formatter_if, is_string
+
+>>> bool_if_string = apply_formatter_if(is_string, bool)
+
+>>> bool_if_string(1)
+1
+>>> bool_if_string('1')
+True
+>>> bool_if_string('')
+False
+```
+
 
 ### Address Utils
 
