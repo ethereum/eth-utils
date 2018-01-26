@@ -62,7 +62,7 @@ def apply_formatter_to_array(formatter, value):
 
 @curry
 def apply_one_of_formatters(formatter_condition_pairs, value):
-    for formatter, condition in formatter_condition_pairs:
+    for condition, formatter in formatter_condition_pairs:
         if condition(value):
             return formatter(value)
     else:

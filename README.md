@@ -156,6 +156,28 @@ False
 ```
 
 
+#### `apply_one_of_formatters(condition_formatter_pairs, value)` -> new_value
+
+This curried function will iterate through `condition_formatter_pairs`, and
+apply the first formatter which has a truthy condition. One of the formatters
+*must* match, or this function will raise a `ValueError`.
+
+```py
+>>> from eth_utils import apply_one_of_formatters, is_string, is_list_like
+
+>>> multi_formatter = apply_one_of_formatters((
+    (is_list_like, tuple),
+    (is_string, i_put_my_thing_down_flip_it_and_reverse_it),
+)
+>>> multi_formatter('my thing')
+'gniht ym'
+>>> multi_formatter([1, 2])
+(1, 2)
+>>> multi_formatter(54)
+ValueError("The provided value did not satisfy any of the formatter conditions")
+```
+
+
 ### Address Utils
 
 #### `is_address(value)` -> bool
