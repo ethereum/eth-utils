@@ -431,20 +431,110 @@ Given any valid representation of an address return the normalized representatio
 These methods convert values using standard practices in the Ethereum ecosystem.
 For example, strings are encoded to binary using UTF-8.
 
-See the
-[web3.py docs](http://web3py.readthedocs.io/en/stable/overview.html#overview-type-conversions)
-for examples of the available type conversions.
-
-Only supply one of the argument options:
-
-#### `to_int(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> int
-#### `to_bytes(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> bytes
-#### `to_text(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
-#### `to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
-
 Because there is no reliable way to distinguish between text and a hex-encoded
 bytestring, you must explicitly specify which of the two is being supplied when
 passing in a `str`.
+
+Only supply one of the arguments:
+
+#### `to_bytes(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> bytes
+
+Takes a variety of inputs and returns its bytes equivalent. Text gets encoded as UTF-8.
+
+```py
+>>> to_bytes(0)
+b'\x00'
+>>> to_bytes(0x000F)
+b'\x0f'
+>>> to_bytes(b'')
+b''
+>>> to_bytes(b'\x00\x0F')
+b'\x00\x0f'
+>>> to_bytes(False)
+b'\x00'
+>>> to_bytes(True)
+b'\x01'
+>>> to_bytes(hexstr='0x000F')
+b'\x00\x0f'
+>>> to_bytes(hexstr='000F')
+b'\x00\x0f'
+>>> to_bytes(text='')
+b''
+>>> to_bytes(text='cowmö')
+b'cowm\xc3\xb6'
+```
+
+#### `to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
+
+Takes a variety of inputs and returns it in its hexidecimal representation.
+It follows the rules for converting to hex in the JSON-RPC spec. Roughly,
+it leaves leading 0s on bytes input, and trims leading zeros on int input.
+
+```py
+>>> to_hex(0)
+'0x0'
+>>> to_hex(1)
+'0x1'
+>>> to_hex(0x0)
+'0x0'
+>>> to_hex(0x000F)
+'0xf'
+>>> to_hex(b'')
+'0x'
+>>> to_hex(b'\x00\x0F')
+'0x000f'
+>>> to_hex(False)
+'0x0'
+>>> to_hex(True)
+'0x1'
+>>> to_hex(hexstr='0x000F')
+'0x000f'
+>>> to_hex(hexstr='000F')
+'0x000f'
+>>> to_hex(text='')
+'0x'
+>>> to_hex(text='cowmö')
+'0x636f776dc3b6'
+```
+
+#### `to_int(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> int
+
+Takes a variety of inputs and returns its integer equivalent.
+
+
+```py
+>>> to_int(0)
+0
+>>> to_int(0x000F)
+15
+>>> to_int(b'\x00\x0F')
+15
+>>> to_int(False)
+0
+>>> to_int(True)
+1
+>>> to_int(hexstr='0x000F')
+15
+>>> to_int(hexstr='000F')
+15
+```
+
+#### `to_text(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
+
+Takes a variety of inputs and returns its string equivalent. Text gets decoded as UTF-8.
+
+```py
+>>> Web3.toText(0x636f776dc3b6)
+'cowmö'
+>>> Web3.toText(b'cowm\xc3\xb6')
+'cowmö'
+>>> Web3.toText(hexstr='0x636f776dc3b6')
+'cowmö'
+>>> Web3.toText(hexstr='636f776dc3b6')
+'cowmö'
+>>> Web3.toText(text='cowmö')
+'cowmö'
+```
 
 ### Crypto Utils
 
