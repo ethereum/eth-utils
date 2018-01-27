@@ -253,6 +253,32 @@ have no matching formatter.
 ```
 
 
+#### `apply_key_map(formatter_dict, <dict_like>)` -> `dict`
+
+This curry-able function will rename keys from <dict_like> using the
+lookups provided in `formatter_dict`. It will pass through any unspecified keys.
+
+```py
+>>> from eth_utils import apply_key_map
+
+>>> dict_key_map = apply_key_map({
+    'black': 'orange',
+    'Internet': 'Ethereum',
+})
+
+>>> dict_key_map({
+    'black': 1.2,
+    'Internet': 3.4,
+    'pass_through': 5.6,
+})
+{
+    'orange': 1.2,
+    'Ethereum': 3.4,
+    'pass_through': 5.6,
+}
+```
+
+
 
 ### Address Utils
 

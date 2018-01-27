@@ -5,6 +5,7 @@ from eth_utils import (
     apply_formatter_if,
     apply_formatter_to_array,
     apply_formatters_to_dict,
+    apply_key_map,
     apply_one_of_formatters,
     combine_argument_formatters,
     is_list_like,
@@ -47,6 +48,22 @@ def test_apply_formatters_to_dict(formatter, value, expected):
     mapper = apply_formatters_to_dict(formatter)
     assert mapper(value) == expected
 
+
+@pytest.mark.parametrize(
+    'formatter, value, expected',
+    (
+        (
+            {'black': 'orange', 'Internet': 'Ethereum'},
+            {'black': 1.2, 'Internet': 3.4, 'pass_through': 5.6},
+            {'orange': 1.2, 'Ethereum': 3.4, 'pass_through': 5.6},
+        ),
+    ),
+)
+def test_apply_key_map(formatter, value, expected):
+    assert apply_key_map(formatter, value) == expected
+
+    mapper = apply_key_map(formatter)
+    assert mapper(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -102,7 +119,6 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
         # must be able to curry
         targetted_formatter = apply_formatter_at_index(formatter, index)
         assert targetted_formatter(value) == expected
-
 
 
 @pytest.mark.parametrize(
