@@ -193,6 +193,20 @@ at position `at_index`, and return a new list with that element replaced.
 ```
 
 
+#### `apply_formatter_to_array(formatter, <list_like>)` -> <new_list>
+
+This curry-able function will apply the formatter to each element of `list_like`.
+
+```py
+>>> from eth_utils import apply_formatter_to_array
+
+>>> map_int = apply_formatter_to_array(int)
+
+>>> map_int((1.2, 3.4, 5.6))
+[1, 3, 5]
+```
+
+
 #### `combine_argument_formatters(*formatters)` -> lambda <list_like>: list
 
 Combine several formatters to be applied to a list-like value, each formatter

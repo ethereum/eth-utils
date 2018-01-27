@@ -3,6 +3,7 @@ import pytest
 from eth_utils import (
     apply_formatter_at_index,
     apply_formatter_if,
+    apply_formatter_to_array,
     apply_formatters_to_dict,
     apply_one_of_formatters,
     combine_argument_formatters,
@@ -113,3 +114,20 @@ def test_combine_argument_formatters(formatters, value, expected):
             list_formatter(value)
     else:
         assert list_formatter(value) == expected
+
+
+@pytest.mark.parametrize(
+    'formatter, value, expected',
+    (
+        (
+            int,
+            (1.2, 3.4, 5.6),
+            [1, 3, 5],
+        ),
+    ),
+)
+def test_apply_formatter_to_array(formatter, value, expected):
+    assert apply_formatter_to_array(formatter, value) == expected
+
+    mapper = apply_formatter_to_array(formatter)
+    assert mapper(value) == expected
