@@ -5,6 +5,7 @@ from eth_utils import (
     apply_formatter_if,
     apply_formatters_to_dict,
     apply_one_of_formatters,
+    combine_argument_formatters,
     is_list_like,
     is_string,
 )
@@ -82,3 +83,33 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
         # must be able to curry
         targetted_formatter = apply_formatter_at_index(formatter, index)
         assert targetted_formatter(value) == expected
+
+
+
+@pytest.mark.parametrize(
+    'formatters, value, expected',
+    (
+        (
+            [bool, int, str],
+            (1.2, 3.4, 5.6),
+            [True, 3, '5.6'],
+        ),
+        (
+            [bool, int],
+            (1.2, 3.4, 5.6),
+            [True, 3, 5.6],
+        ),
+        (
+            [bool, int, str, float],
+            (1.2, 3.4, 5.6),
+            IndexError,
+        ),
+    ),
+)
+def test_combine_argument_formatters(formatters, value, expected):
+    list_formatter = combine_argument_formatters(*formatters)
+    if isinstance(expected, type) and issubclass(expected, Exception):
+        with pytest.raises(expected):
+            list_formatter(value)
+    else:
+        assert list_formatter(value) == expected

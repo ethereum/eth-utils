@@ -24,7 +24,7 @@ def apply_formatter_at_index(formatter, at_index, value):
             yield item
 
 
-def apply_formatters_to_args(*formatters):
+def combine_argument_formatters(*formatters):
     return compose(*(
         apply_formatter_at_index(formatter, index)
         for index, formatter

@@ -193,6 +193,25 @@ at position `at_index`, and return a new list with that element replaced.
 ```
 
 
+#### `combine_argument_formatters(*formatters)` -> lambda <list_like>: list
+
+Combine several formatters to be applied to a list-like value, each formatter
+at the position it was supplied. For example:
+
+```py
+>>> from eth_utils import combine_argument_formatters
+
+>>> list_formatter = combine_argument_formatters(bool, int, str)
+
+>>> list_formatter((1.2, 3.4, 5.6))
+[True, 3, '5.6']
+
+# it will pass through items longer than the number of formatters supplied
+>>> list_formatter((1.2, 3.4, 5.6, 7.8))
+[True, 3, '5.6', 7.8]
+```
+
+
 ### Address Utils
 
 #### `is_address(value)` -> bool
