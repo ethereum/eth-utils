@@ -226,6 +226,34 @@ at the position it was supplied. For example:
 ```
 
 
+#### `apply_formatters_to_dict(formatter_dict, <dict_like>)` -> `dict`
+
+This curry-able function will apply the formatter to the element with
+the matching key in `dict_like`, passing through values with keys that
+have no matching formatter.
+
+```py
+>>> from eth_utils import apply_formatters_to_dict
+
+>>> dict_formatter = apply_formatters_to_dict({
+    'should_be_int': int,
+    'should_be_bool': bool,
+})
+
+>>> dict_formatter({
+    'should_be_int': 1.2,
+    'should_be_bool': 3.4,
+    'pass_through': 5.6,
+})
+{
+    'should_be_int': 1,
+    'should_be_bool': True,
+    'pass_through': 5.6,
+}
+```
+
+
+
 ### Address Utils
 
 #### `is_address(value)` -> bool

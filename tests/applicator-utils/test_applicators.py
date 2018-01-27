@@ -32,6 +32,24 @@ def test_format_dict_error():
 
 
 @pytest.mark.parametrize(
+    'formatter, value, expected',
+    (
+        (
+            {'should_be_int': int, 'should_be_bool': bool},
+            {'should_be_int': 1.2, 'should_be_bool': 3.4, 'pass_through': 5.6},
+            {'should_be_int': 1, 'should_be_bool': True, 'pass_through': 5.6},
+        ),
+    ),
+)
+def test_apply_formatters_to_dict(formatter, value, expected):
+    assert apply_formatters_to_dict(formatter, value) == expected
+
+    mapper = apply_formatters_to_dict(formatter)
+    assert mapper(value) == expected
+
+
+
+@pytest.mark.parametrize(
     'condition, formatter, value, expected',
     (
         (is_string, bool, 1, 1),
