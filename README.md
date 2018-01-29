@@ -80,6 +80,12 @@ new version explicitly, like `bumpversion --new-version 4.0.0-alpha.1 devnum`
 
 All functions can be imported directly from the `eth_utils` module
 
+Alternatively, you can get the curried version of the functions by importing them
+through the `curried` module like so:
+
+```py
+from eth_utils.curried import apply_formatters_to_dict
+```
 
 ### ABI Utils
 
@@ -138,12 +144,15 @@ def i_put_my_thing_down_flip_it_and_reverse_it(lyric):
     return ''.join(reversed(lyric))
 ```
 
+These tools often work nicely when curried. Import them from the `curried` module to get that
+capability built in, like `from eth_utils.curried import apply_formatter_if`.
+
 #### `apply_formatter_if(condition, formatter, value)` -> new_value
 
-This curry-able function will apply the formatter only if `bool(condition()) is True`.
+This function will apply the formatter only if `bool(condition()) is True`.
 
 ```py
->>> from eth_utils import apply_formatter_if, is_string
+>>> from eth_utils.curried import apply_formatter_if, is_string
 
 >>> bool_if_string = apply_formatter_if(is_string, bool)
 
@@ -158,12 +167,12 @@ False
 
 #### `apply_one_of_formatters(condition_formatter_pairs, value)` -> new_value
 
-This curry-able function will iterate through `condition_formatter_pairs`, and
+This function will iterate through `condition_formatter_pairs`, and
 apply the first formatter which has a truthy condition. One of the formatters
 *must* match, or this function will raise a `ValueError`.
 
 ```py
->>> from eth_utils import apply_one_of_formatters, is_string, is_list_like
+>>> from eth_utils.curried import apply_one_of_formatters, is_string, is_list_like
 
 >>> multi_formatter = apply_one_of_formatters((
     (is_list_like, tuple),
@@ -180,12 +189,12 @@ ValueError("The provided value did not satisfy any of the formatter conditions")
 
 #### `apply_formatter_at_index(formatter, at_index, <list_like>)` -> <new_list_like>
 
-This curry-able function will apply the formatter to one element of `list_like`,
+This function will apply the formatter to one element of `list_like`,
 at position `at_index`, and return a new iterable with that element replaced.
 The returned value will be the same type as the one passed into the third argument.
 
 ```py
->>> from eth_utils import apply_formatter_at_index
+>>> from eth_utils.curried import apply_formatter_at_index
 
 >>> targetted_formatter = apply_formatter_at_index(bool, 1)
 
@@ -199,11 +208,11 @@ The returned value will be the same type as the one passed into the third argume
 
 #### `apply_formatter_to_array(formatter, <list_like>)` -> <new_list_like>
 
-This curry-able function will apply the formatter to each element of `list_like`.
+This function will apply the formatter to each element of `list_like`.
 It returns the same type as the `list_like` argument
 
 ```py
->>> from eth_utils import apply_formatter_to_array
+>>> from eth_utils.curried import apply_formatter_to_array
 
 >>> map_int = apply_formatter_to_array(int)
 
@@ -240,12 +249,12 @@ it was supplied. For example:
 
 #### `apply_formatters_to_dict(formatter_dict, <dict_like>)` -> `dict`
 
-This curry-able function will apply the formatter to the element with
+This function will apply the formatter to the element with
 the matching key in `dict_like`, passing through values with keys that
 have no matching formatter.
 
 ```py
->>> from eth_utils import apply_formatters_to_dict
+>>> from eth_utils.curried import apply_formatters_to_dict
 
 >>> dict_formatter = apply_formatters_to_dict({
     'should_be_int': int,
@@ -267,11 +276,11 @@ have no matching formatter.
 
 #### `apply_key_map(formatter_dict, <dict_like>)` -> `dict`
 
-This curry-able function will rename keys from <dict_like> using the
+This function will rename keys from <dict_like> using the
 lookups provided in `formatter_dict`. It will pass through any unspecified keys.
 
 ```py
->>> from eth_utils import apply_key_map
+>>> from eth_utils.curried import apply_key_map
 
 >>> dict_key_map = apply_key_map({
     'black': 'orange',

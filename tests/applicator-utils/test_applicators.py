@@ -1,13 +1,14 @@
 import pytest
 
-from eth_utils import (
+import eth_utils
+
+from eth_utils.curried import (
     apply_formatter_at_index,
     apply_formatter_if,
     apply_formatter_to_array,
     apply_formatters_to_dict,
     apply_key_map,
     apply_one_of_formatters,
-    combine_argument_formatters,
     is_list_like,
     is_string,
 )
@@ -29,6 +30,11 @@ def test_format_dict_error():
             {'myfield': int},
             {'myfield': 'a'},
         )
+    with pytest.raises(ValueError) as exc_info:
+        eth_utils.apply_formatters_to_dict(
+            {'myfield': int},
+            {'myfield': 'a'},
+        )
     assert 'myfield' in str(exc_info.value)
 
 
@@ -43,7 +49,7 @@ def test_format_dict_error():
     ),
 )
 def test_apply_formatters_to_dict(formatter, value, expected):
-    assert apply_formatters_to_dict(formatter, value) == expected
+    assert eth_utils.apply_formatters_to_dict(formatter, value) == expected
 
     mapper = apply_formatters_to_dict(formatter)
     assert mapper(value) == expected
@@ -60,7 +66,7 @@ def test_apply_formatters_to_dict(formatter, value, expected):
     ),
 )
 def test_apply_key_map(formatter, value, expected):
-    assert apply_key_map(formatter, value) == expected
+    assert eth_utils.apply_key_map(formatter, value) == expected
 
     mapper = apply_key_map(formatter)
     assert mapper(value) == expected
@@ -75,7 +81,7 @@ def test_apply_key_map(formatter, value, expected):
     ),
 )
 def test_apply_formatter_if(condition, formatter, value, expected):
-    assert apply_formatter_if(condition, formatter, value) == expected
+    assert eth_utils.apply_formatter_if(condition, formatter, value) == expected
 
     # must be able to curry
     conditional_formatter = apply_formatter_if(condition, formatter)
@@ -94,8 +100,10 @@ def test_apply_one_of_formatters(condition_formatters, value, expected):
     if isinstance(expected, type) and issubclass(expected, Exception):
         with pytest.raises(expected):
             apply_one_of_formatters(condition_formatters, value)
+        with pytest.raises(expected):
+            eth_utils.apply_one_of_formatters(condition_formatters, value)
     else:
-        assert apply_one_of_formatters(condition_formatters, value) == expected
+        assert eth_utils.apply_one_of_formatters(condition_formatters, value) == expected
 
         # must be able to curry
         apply_one = apply_one_of_formatters(condition_formatters)
@@ -114,8 +122,10 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
     if isinstance(expected, type) and issubclass(expected, Exception):
         with pytest.raises(expected):
             apply_formatter_at_index(formatter, index, value)
+        with pytest.raises(expected):
+            eth_utils.apply_formatter_at_index(formatter, index, value)
     else:
-        assert apply_formatter_at_index(formatter, index, value) == expected
+        assert eth_utils.apply_formatter_at_index(formatter, index, value) == expected
 
         # must be able to curry
         targetted_formatter = apply_formatter_at_index(formatter, index)
@@ -148,7 +158,7 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
     ),
 )
 def test_combine_argument_formatters(formatters, value, expected):
-    list_formatter = combine_argument_formatters(*formatters)
+    list_formatter = eth_utils.combine_argument_formatters(*formatters)
     if isinstance(expected, type) and issubclass(expected, Exception):
         with pytest.raises(expected):
             list_formatter(value)
@@ -172,7 +182,7 @@ def test_combine_argument_formatters(formatters, value, expected):
     ),
 )
 def test_apply_formatter_to_array(formatter, value, expected):
-    assert apply_formatter_to_array(formatter, value) == expected
+    assert eth_utils.apply_formatter_to_array(formatter, value) == expected
 
     mapper = apply_formatter_to_array(formatter)
     assert mapper(value) == expected
