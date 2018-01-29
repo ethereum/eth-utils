@@ -178,10 +178,11 @@ ValueError("The provided value did not satisfy any of the formatter conditions")
 ```
 
 
-#### `apply_formatter_at_index(formatter, at_index, <list_like>)` -> <new_list>
+#### `apply_formatter_at_index(formatter, at_index, <list_like>)` -> <new_list_like>
 
 This curry-able function will apply the formatter to one element of `list_like`,
-at position `at_index`, and return a new list with that element replaced.
+at position `at_index`, and return a new iterable with that element replaced.
+The returned value will be the same type as the one passed into the third argument.
 
 ```py
 >>> from eth_utils import apply_formatter_at_index
@@ -189,6 +190,9 @@ at position `at_index`, and return a new list with that element replaced.
 >>> targetted_formatter = apply_formatter_at_index(bool, 1)
 
 >>> targetted_formatter((1, 2, 3))
+(1, True, 3)
+
+>>> targetted_formatter([1, 2, 3])
 [1, True, 3]
 ```
 

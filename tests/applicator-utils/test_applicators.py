@@ -105,7 +105,8 @@ def test_apply_one_of_formatters(condition_formatters, value, expected):
 @pytest.mark.parametrize(
     'formatter, index, value, expected',
     (
-        (bool, 1, (1, 2, 3), [1, True, 3]),
+        (bool, 1, [1, 2, 3], [1, True, 3]),
+        (bool, 1, (1, 2, 3), (1, True, 3)),
         (bool, 3, (1, 2, 3), IndexError),
     ),
 )

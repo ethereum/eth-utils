@@ -3,14 +3,16 @@ from cytoolz.functoolz import (
     compose,
 )
 
+from .decorators import (
+    return_arg_type,
+)
 from .functional import (
-    to_list,
     to_dict,
 )
 
 
 @curry
-@to_list
+@return_arg_type(2)
 def apply_formatter_at_index(formatter, at_index, value):
     if at_index + 1 > len(value):
         raise IndexError(
