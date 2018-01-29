@@ -128,11 +128,16 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
         (
             [bool, int, str],
             (1.2, 3.4, 5.6),
-            [True, 3, '5.6'],
+            (True, 3, '5.6'),
         ),
         (
             [bool, int],
             (1.2, 3.4, 5.6),
+            (True, 3, 5.6),
+        ),
+        (
+            [bool, int],
+            [1.2, 3.4, 5.6],
             [True, 3, 5.6],
         ),
         (

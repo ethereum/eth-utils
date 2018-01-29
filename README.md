@@ -211,18 +211,22 @@ This curry-able function will apply the formatter to each element of `list_like`
 ```
 
 
-#### `combine_argument_formatters(*formatters)` -> lambda <list_like>: list
+#### `combine_argument_formatters(*formatters)` -> lambda <list_like>: <new_list_like>
 
 Combine several formatters to be applied to a list-like value, each formatter
-at the position it was supplied. For example:
+at the position it was supplied. The new formatter will return the same type as
+it was supplied. For example:
 
 ```py
 >>> from eth_utils import combine_argument_formatters
 
 >>> list_formatter = combine_argument_formatters(bool, int, str)
 
->>> list_formatter((1.2, 3.4, 5.6))
+>>> list_formatter([1.2, 3.4, 5.6])
 [True, 3, '5.6']
+
+>>> list_formatter((1.2, 3.4, 5.6))
+(True, 3, '5.6')
 
 # it will pass through items longer than the number of formatters supplied
 >>> list_formatter((1.2, 3.4, 5.6, 7.8))
