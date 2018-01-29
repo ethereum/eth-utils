@@ -1,6 +1,6 @@
-from .string import (
-    force_bytes,
-    force_text,
+from .conversions import (
+    to_text,
+    to_bytes,
 )
 from .types import (
     is_bytes,
@@ -13,7 +13,9 @@ def pad_left(value, to_size, pad_with):
     """
     pad_amount = to_size - len(value)
     head = b"" if is_bytes(value) else ""
-    pad_with_value = force_bytes(pad_with) if is_bytes(value) else force_text(pad_with)
+    pad_args = {'primitive': pad_with} if is_bytes(pad_with) else {'text': pad_with}
+    pad_value = to_bytes(**pad_args) if is_bytes(value) else to_text(**pad_args)
+    pad_with_value = to_text(text=pad_value)
     if pad_amount > 0:
         head = pad_with_value * (pad_amount // len(pad_with_value))
         head += pad_with_value[:(pad_amount % len(pad_with_value))]
@@ -26,7 +28,9 @@ def pad_right(value, to_size, pad_with):
     """
     pad_amount = to_size - len(value)
     tail = b"" if is_bytes(value) else ""
-    pad_with_value = force_bytes(pad_with) if is_bytes(value) else force_text(pad_with)
+    pad_args = {'primitive': pad_with} if is_bytes(pad_with) else {'text': pad_with}
+    pad_value = to_bytes(**pad_args) if is_bytes(value) else to_text(**pad_args)
+    pad_with_value = to_text(text=pad_value)
     if pad_amount > 0:
         tail = pad_with_value * (pad_amount // len(pad_with_value))
         tail += pad_with_value[:(pad_amount % len(pad_with_value))]
@@ -34,6 +38,6 @@ def pad_right(value, to_size, pad_with):
 
 
 def is_prefixed(value, prefix):
-    return value.startswith(
-        force_bytes(prefix) if is_bytes(value) else force_text(prefix)
-    )
+    prefix_args = {'primitive': prefix} if is_bytes(prefix) else {'text': prefix}
+    prefix_value = to_bytes(**prefix_args) if is_bytes(value) else to_text(**prefix_args)
+    return value.startswith(prefix_value)
