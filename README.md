@@ -84,7 +84,7 @@ Alternatively, you can get the curried version of the functions by importing the
 through the `curried` module like so:
 
 ```py
-from eth_utils.curried import apply_formatters_to_dict
+from eth_utils.curried import hexstr_if_str
 ```
 
 ### ABI Utils

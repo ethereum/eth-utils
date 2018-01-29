@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from cytoolz import (
     curry,
 )
@@ -85,11 +87,13 @@ flatten_return = curry(flatten_return)
 force_bytes = curry(force_bytes)
 force_text = curry(force_text)
 from_wei = curry(from_wei)
+hexstr_if_str = curry(hexstr_if_str)
 is_same_address = curry(is_same_address)
 pad_left = curry(pad_left)
 pad_right = curry(pad_right)
 reversed_return = curry(reversed_return)
 sort_return = curry(sort_return)
+text_if_str = curry(text_if_str)
 to_wei = curry(to_wei)
 
 del curry
