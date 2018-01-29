@@ -197,9 +197,10 @@ The returned value will be the same type as the one passed into the third argume
 ```
 
 
-#### `apply_formatter_to_array(formatter, <list_like>)` -> <new_list>
+#### `apply_formatter_to_array(formatter, <list_like>)` -> <new_list_like>
 
 This curry-able function will apply the formatter to each element of `list_like`.
+It returns the same type as the `list_like` argument
 
 ```py
 >>> from eth_utils import apply_formatter_to_array
@@ -207,6 +208,9 @@ This curry-able function will apply the formatter to each element of `list_like`
 >>> map_int = apply_formatter_to_array(int)
 
 >>> map_int((1.2, 3.4, 5.6))
+(1, 3, 5)
+
+>>> map_int([1.2, 3.4, 5.6])
 [1, 3, 5]
 ```
 

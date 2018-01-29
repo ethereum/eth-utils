@@ -161,8 +161,13 @@ def test_combine_argument_formatters(formatters, value, expected):
     (
         (
             int,
-            (1.2, 3.4, 5.6),
+            [1.2, 3.4, 5.6],
             [1, 3, 5],
+        ),
+        (
+            int,
+            (1.2, 3.4, 5.6),
+            (1, 3, 5),
         ),
     ),
 )

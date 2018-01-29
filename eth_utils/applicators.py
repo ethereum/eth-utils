@@ -56,7 +56,7 @@ def apply_formatters_to_dict(formatters, value):
 
 
 @curry
-@to_list
+@return_arg_type(1)
 def apply_formatter_to_array(formatter, value):
     for item in value:
         yield formatter(item)
