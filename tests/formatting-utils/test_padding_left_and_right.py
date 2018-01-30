@@ -1,6 +1,7 @@
 import pytest
 
 from eth_utils.formatting import (
+    is_prefixed,
     pad_left,
     pad_right,
 )
@@ -36,3 +37,17 @@ def test_pad_left(value, to_size, pad_with, expected):
 def test_pad_right(value, to_size, pad_with, expected):
     actual = pad_right(value, to_size, pad_with)
     assert actual == expected
+
+
+@pytest.mark.parametrize(
+    'value,prefix,expected',
+    (
+        (b'test', b't', True),
+        (b'test', b'0', False),
+        ('test', 't', True),
+        ('test', '0', False),
+        ('test', b'0', False),
+    )
+)
+def test_is_prefixed(value, prefix, expected):
+    assert is_prefixed(value, prefix) is expected
