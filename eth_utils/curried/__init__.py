@@ -36,7 +36,6 @@ from eth_utils import (
     hexstr_if_str,
     int_to_big_endian,
     is_0x_prefixed,
-    is_32byte_address,
     is_address,
     is_binary_address,
     is_boolean,

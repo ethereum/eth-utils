@@ -9,7 +9,6 @@ from .abi import (  # noqa: F401
     function_signature_to_4byte_selector,
 )
 from .address import (  # noqa: F401
-    is_32byte_address,
     is_address,
     is_binary_address,
     is_canonical_address,
