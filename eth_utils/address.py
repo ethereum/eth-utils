@@ -112,7 +112,7 @@ def to_checksum_address(address):
     Makes a checksum address given a supported format.
     """
     norm_address = to_normalized_address(address)
-    address_hash = encode_hex(keccak(remove_0x_prefix(norm_address)))
+    address_hash = encode_hex(keccak(text=remove_0x_prefix(norm_address)))
 
     checksum_address = add_0x_prefix(''.join(
         (
