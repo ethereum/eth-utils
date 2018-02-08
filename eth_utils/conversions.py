@@ -5,17 +5,17 @@ from .encoding import (
     big_endian_to_int,
     int_to_big_endian,
 )
+from .types import (
+    is_boolean,
+    is_integer,
+    is_string,
+)
 from .hexidecimal import (
     add_0x_prefix,
     decode_hex,
     encode_hex,
     is_hex,
     remove_0x_prefix,
-)
-from .types import (
-    is_boolean,
-    is_integer,
-    is_string,
 )
 
 
