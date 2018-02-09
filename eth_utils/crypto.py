@@ -1,7 +1,4 @@
-try:
-    from sha3 import keccak_256
-except ImportError:
-    from sha3 import sha3_256 as keccak_256
+from eth_hash.auto import keccak as keccak_256
 
 from .conversions import (
     to_bytes,
@@ -9,7 +6,7 @@ from .conversions import (
 
 
 def keccak(primitive=None, hexstr=None, text=None):
-    return keccak_256(to_bytes(primitive, hexstr, text)).digest()
+    return keccak_256(to_bytes(primitive, hexstr, text))
 
 
 # ensure we have the *correct* hash function

@@ -17,7 +17,7 @@ setup(
     url='https://github.com/ethereum/eth_utils',
     include_package_data=True,
     install_requires=[
-        "pysha3>=1.0.0,<2.0.0",
+        "eth-hash>=0.1.0a3,<0.2.0",
         "cytoolz>=0.8.2,<1.0.0",
     ],
     setup_requires=['setuptools-markdown'],
