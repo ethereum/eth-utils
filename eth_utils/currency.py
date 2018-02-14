@@ -7,9 +7,6 @@ from .types import (
 )
 
 
-# Set the decimal precision
-decimal.DefaultContext.prec = 999
-
 units = {
     'wei':          decimal.Decimal('1'),  # noqa: E241
     'kwei':         decimal.Decimal('1000'),  # noqa: E241
@@ -61,10 +58,14 @@ def from_wei(number, unit):
     if number < MIN_WEI or number > MAX_WEI:
         raise ValueError("value must be between 1 and 2**256 - 1")
 
-    d_number = decimal.Decimal(number)
     unit_value = units[unit.lower()]
 
-    return d_number / unit_value
+    with localcontext() as ctx:
+        ctx.prec = 999
+        d_number = decimal.Decimal(value=number, context=ctx)
+        result_value = d_number / unit_value
+
+    return result_value
 
 
 def to_wei(number, unit):
@@ -86,11 +87,10 @@ def to_wei(number, unit):
         raise TypeError("Unsupported type.  Must be one of integer, float, or string")
 
     s_number = str(number)
+    unit_value = units[unit.lower()]
 
     if d_number == 0:
         return 0
-
-    unit_value = units[unit.lower()]
 
     if d_number < 1 and '.' in s_number:
         with localcontext() as ctx:
@@ -99,7 +99,9 @@ def to_wei(number, unit):
             d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier
         unit_value /= 10**multiplier
 
-    result_value = d_number * unit_value
+    with localcontext() as ctx:
+        ctx.prec = 999
+        result_value = decimal.Decimal(value=d_number, context=ctx) * unit_value
 
     if result_value < MIN_WEI or result_value > MAX_WEI:
         raise ValueError("Resulting wei value must be between 1 and 2**256 - 1")
