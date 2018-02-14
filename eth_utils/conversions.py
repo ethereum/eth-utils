@@ -1,5 +1,5 @@
 from .decorators import (
-    assert_one_arg,
+    validate_conversion_arguments,
 )
 from .encoding import (
     big_endian_to_int,
@@ -19,7 +19,7 @@ from .types import (
 )
 
 
-@assert_one_arg
+@validate_conversion_arguments
 def to_hex(value=None, hexstr=None, text=None):
     """
     Auto converts any supported value into it's hex representation.
@@ -50,7 +50,7 @@ def to_hex(value=None, hexstr=None, text=None):
     )
 
 
-@assert_one_arg
+@validate_conversion_arguments
 def to_int(value=None, hexstr=None, text=None):
     """
     Converts value to it's integer representation.
@@ -75,7 +75,7 @@ def to_int(value=None, hexstr=None, text=None):
         return int(value)
 
 
-@assert_one_arg
+@validate_conversion_arguments
 def to_bytes(primitive=None, hexstr=None, text=None):
     if is_boolean(primitive):
         return b'\x01' if primitive else b'\x00'
@@ -92,7 +92,7 @@ def to_bytes(primitive=None, hexstr=None, text=None):
     raise TypeError("expected an int in first arg, or keyword of hexstr or text")
 
 
-@assert_one_arg
+@validate_conversion_arguments
 def to_text(primitive=None, hexstr=None, text=None):
     if hexstr is not None:
         return to_bytes(hexstr=hexstr).decode('utf-8')

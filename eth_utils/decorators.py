@@ -5,6 +5,10 @@ from cytoolz import (
     identity,
 )
 
+from .types import (
+    is_text,
+)
+
 
 class combomethod(object):
     def __init__(self, method):
@@ -34,10 +38,30 @@ def _assert_one_val(*args, **kwargs):
         )
 
 
-def assert_one_arg(to_wrap):
+def _hexstr_or_text_kwarg_is_text_type(**kwargs):
+    value = kwargs['hexstr'] if 'hexstr' in kwargs else kwargs['text']
+    return is_text(value)
+
+
+def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs):
+    if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
+        raise TypeError(
+            "Arguments passed as hexstr or text must be of text type. "
+            "Instead, value was: %r" % (repr(next(list(kwargs.values()))))
+        )
+
+
+def validate_conversion_arguments(to_wrap):
+    """
+    Validates arguments for conversion functions.
+    - Only a single argument is present
+    - If it is 'hexstr' or 'text' that it is a text type
+    """
     @functools.wraps(to_wrap)
     def wrapper(*args, **kwargs):
         _assert_one_val(*args, **kwargs)
+        if len(args) is 0 and 'primitive' not in kwargs:
+            _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
         return to_wrap(*args, **kwargs)
     return wrapper
 
