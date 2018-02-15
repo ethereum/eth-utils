@@ -13,7 +13,7 @@ from .types import (
 def _deprecated(fn):
     @functools.wraps(fn)
     def inner(*args, **kwargs):
-        warnings.simplefilter('always', DeprecationWarning)
+        warnings.simplefilter('ignore', DeprecationWarning)
         warnings.warn(DeprecationWarning(
             "The `{0}` function has been deprecated and will be removed in a "
             "subsequent release of the eth-utils library. Now that eth-utils "
