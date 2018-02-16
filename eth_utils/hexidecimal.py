@@ -6,16 +6,12 @@ import string
 
 from .types import (
     is_string,
-    is_bytes,
+    is_text,
 )
 from .string import (
     coerce_args_to_bytes,
     coerce_return_to_text,
     coerce_return_to_bytes,
-    force_obj_to_text,
-)
-from .formatting import (
-    is_prefixed,
 )
 
 
@@ -31,11 +27,16 @@ def decode_hex(value):
 def encode_hex(value):
     if not is_string(value):
         raise TypeError('Value must be an instance of str or unicode')
-    return add_0x_prefix(codecs.encode(value, 'hex'))
+    binary_hex = codecs.encode(value, 'hex')
+    return add_0x_prefix(binary_hex.decode('ascii'))
 
 
 def is_0x_prefixed(value):
-    return is_prefixed(value, '0x') or is_prefixed(value, '0X')
+    if not is_text(value):
+        raise TypeError(
+            "is_0x_prefixed requires text typed arguments. Got: {0}".format(repr(value))
+        )
+    return value.startswith('0x') or value.startswith('0X')
 
 
 def remove_0x_prefix(value):
@@ -47,24 +48,22 @@ def remove_0x_prefix(value):
 def add_0x_prefix(value):
     if is_0x_prefixed(value):
         return value
-
-    prefix = b'0x' if is_bytes(value) else '0x'
-    return prefix + value
+    return '0x' + value
 
 
 def is_hex(value):
-    if not is_string(value):
-        return False
-    elif value.lower() in {b'0x', '0x'}:
+    if not is_text(value):
+        raise TypeError('is_hex requires text typed arguments. Got: {0}'.format(repr(value)))
+    elif value.lower() == '0x':
         return True
 
     unprefixed_value = remove_0x_prefix(value)
     if len(unprefixed_value) % 2 != 0:
-        value_to_decode = (b'0' if is_bytes(unprefixed_value) else '0') + unprefixed_value
+        value_to_decode = '0' + unprefixed_value
     else:
         value_to_decode = unprefixed_value
 
-    if any(char not in string.hexdigits for char in force_obj_to_text(value_to_decode)):
+    if any(char not in string.hexdigits for char in value_to_decode):
         return False
 
     try:
