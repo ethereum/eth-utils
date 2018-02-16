@@ -51,15 +51,27 @@ def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs):
         )
 
 
+def _validate_supported_kwarg(kwargs):
+    if next(iter(kwargs)) not in ['primitive', 'hexstr', 'text']:
+        raise TypeError(
+            "Kwarg must be 'primitive', 'hexstr', or 'text'. "
+            "Instead, kwarg was: %r" % (next(iter(kwargs)))
+        )
+
+
 def validate_conversion_arguments(to_wrap):
     """
     Validates arguments for conversion functions.
     - Only a single argument is present
+    - Kwarg must be 'primitive' 'hexstr' or 'text'
     - If it is 'hexstr' or 'text' that it is a text type
     """
     @functools.wraps(to_wrap)
     def wrapper(*args, **kwargs):
         _assert_one_val(*args, **kwargs)
+        if kwargs:
+            _validate_supported_kwarg(kwargs)
+
         if len(args) is 0 and 'primitive' not in kwargs:
             _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
         return to_wrap(*args, **kwargs)
