@@ -14,7 +14,6 @@ from .types import (
 def _deprecated(fn):
     @functools.wraps(fn)
     def inner(*args, **kwargs):
-        warnings.simplefilter('ignore', DeprecationWarning)
         warnings.warn(DeprecationWarning(
             "The `{0}` function has been deprecated and will be removed in a "
             "subsequent release of the eth-utils library. UTF8 cannot encode "
@@ -22,7 +21,6 @@ def _deprecated(fn):
             "bytes and text representations impossible without explicitly "
             "declared encodings.".format(fn.__name__)
         ))
-        warnings.resetwarnings()
         return fn(*args, **kwargs)
     return inner
 
