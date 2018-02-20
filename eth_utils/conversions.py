@@ -20,7 +20,7 @@ from .hexidecimal import (
 
 
 @validate_conversion_arguments
-def to_hex(value=None, hexstr=None, text=None):
+def to_hex(primitive=None, hexstr=None, text=None):
     """
     Auto converts any supported value into it's hex representation.
 
@@ -33,31 +33,31 @@ def to_hex(value=None, hexstr=None, text=None):
     if text is not None:
         return encode_hex(text.encode('utf-8'))
 
-    if is_boolean(value):
-        return "0x1" if value else "0x0"
+    if is_boolean(primitive):
+        return "0x1" if primitive else "0x0"
 
-    if isinstance(value, bytes):
-        return encode_hex(value)
-    elif is_string(value):
-        return to_hex(text=value)
+    if isinstance(primitive, bytes):
+        return encode_hex(primitive)
+    elif is_string(primitive):
+        return to_hex(text=primitive)
 
-    if is_integer(value):
-        return hex(value)
+    if is_integer(primitive):
+        return hex(primitive)
 
     raise TypeError(
         "Unsupported type: '{0}'.  Must be one of: bool, str, bytes"
-        "or int.".format(repr(type(value)))
+        "or int.".format(repr(type(primitive)))
     )
 
 
 @validate_conversion_arguments
-def to_int(value=None, hexstr=None, text=None):
+def to_int(primitive=None, hexstr=None, text=None):
     """
     Converts value to it's integer representation.
 
     Values are converted this way:
 
-     * value:
+     * primitive:
        * bytes: big-endian integer
        * bool: True => 1, False => 0
      * hexstr: interpret hex as integer
@@ -67,12 +67,12 @@ def to_int(value=None, hexstr=None, text=None):
         return int(hexstr, 16)
     elif text is not None:
         return int(text)
-    elif isinstance(value, bytes):
-        return big_endian_to_int(value)
-    elif isinstance(value, str):
+    elif isinstance(primitive, bytes):
+        return big_endian_to_int(primitive)
+    elif isinstance(primitive, str):
         raise TypeError("Pass in strings with keyword hexstr or text")
     else:
-        return int(value)
+        return int(primitive)
 
 
 @validate_conversion_arguments
