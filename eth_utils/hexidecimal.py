@@ -17,8 +17,8 @@ from .string import (
 
 @coerce_return_to_bytes
 def decode_hex(value):
-    if not is_string(value):
-        raise TypeError('Value must be an instance of str or unicode')
+    if not is_text(value):
+        raise TypeError('Value must be an instance of str')
     return codecs.decode(remove_0x_prefix(value), 'hex')
 
 
