@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.hexidecimal import (
+from eth_utils.hexadecimal import (
     add_0x_prefix,
     remove_0x_prefix,
 )

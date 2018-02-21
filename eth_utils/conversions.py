@@ -10,7 +10,7 @@ from .types import (
     is_integer,
     is_string,
 )
-from .hexidecimal import (
+from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
     encode_hex,
