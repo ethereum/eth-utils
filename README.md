@@ -430,44 +430,6 @@ False
 False
 ```
 
-#### `is_32byte_address(value)` -> bool
-
-Return `True` if the value is a 20 byte address that has been padded to 32
-bytes.  This function allows both bytes or hexidecimal encoded strings.
-Hexidecimal strings may optionally be `0x` prefixed.  The padding bytes
-**must** be zeros.
-
-> Note: this method returns false for the zero address.
-
-```python
->>> is_32byte_address('d3cda913deb6f67967b99d67acdfa1712c293601')
-False
->>> is_32byte_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
-False
->>> is_32byte_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
-False
->>> is_32byte_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
-False
->>> is_32byte_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
-True
->>> is_32byte_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
-True
->>> is_32byte_address('0x000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
-True
->>> is_32byte_address('0x000000000000000000000000D3CDA913DEB6F67967B99D67ACDFA1712C293601')
-True
->>> is_32byte_address('0x000000000000000000000000d3CdA913deB6f67967B99D67aCDFa1712C293601')
-True
->>> is_32byte_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
-False
->>> is_32byte_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
-True
->>> is_32byte_address('0x0000000000000000000000000000000000000000000000000000000000000000')
-False
->>> is_32byte_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-False
-```
-
 
 #### `is_canonical_address(value)` -> bool
 
@@ -717,11 +679,13 @@ Takes a variety of inputs and returns its string equivalent. Text gets decoded a
 
 ### Crypto Utils
 
+Because there is no reliable way to distinguish between text and a hex-encoded
+bytestring, you must explicitly specify which of the two is being supplied when
+passing in a `str`.
 
-#### `keccak(value)` -> bytes
+Only supply one of the arguments:
 
-Given any string returns the `sha3/keccak` hash.  If `value` is not a byte
-string it will be converted using the `force_bytes` function.
+#### `keccak(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> bytes
 
 ```python
 >>> keccak('')
@@ -890,37 +854,6 @@ b'\x00'
 b'\x01'
 >>> int_to_big_endian(256)
 b'\x01\x00'
-```
-
-
-### Formatting Utils
-
-#### `pad_left(value, to_size, pad_with)` -> string
-
-Returns `value` padded to the length specified by `to_size` with the string `pad_with`.  
-
-
-```python
->>> pad_left('test', 6, '0')
-'00test'
->>> pad_left('testing', 6, '0')
-'testing'
->>> pad_left('test', 8, '123')
-'12312test'
-```
-
-#### `pad_right(value, to_size, pad_with)` -> string
-
-Returns `value` padded to the length specified by `to_size` with the string `pad_with`.  
-
-
-```python
->>> pad_right('test', 6, '0')
-'test00'
->>> pad_right('testing', 6, '0')
-'testing'
->>> pad_right('test', 8, '123')
-'test12312'
 ```
 
 
@@ -1134,7 +1067,7 @@ True
 
 #### `is_hex(value)` -> bool
 
-Returns `True` if `value` is a hexidecimal encoded string.
+Returns `True` if `value` is a hexidecimal encoded string of text type.
 
 ```python
 >>> is_hex('')
@@ -1144,11 +1077,11 @@ False
 >>> is_hex('0x')
 True
 >>> is_hex(b'0x')
-True
+False
 >>> is_hex('0X')
 True
 >>> is_hex(b'0X')
-True
+False
 >>> is_hex('1234567890abcdef')
 True
 >>> is_hex('0x1234567890abcdef')
@@ -1177,115 +1110,6 @@ Returns `value` with the `0x` prefix stripped.  If the value does not have a
 '12345'
 >>> remove_0x_prefix(b'0x12345')
 b'12345'
-```
-
-
-### String Utils
-
-#### `coerce_args_to_bytes(callable)` -> callable
-
-Decorator which will convert any string arguments both positional or keyword
-into byte strings using the `force_bytes` function.  This is a recursive
-operation which will reach down into mappings and list-like objects as well.
-
-```python
->>> @coerce_args_to_bytes
-... def do_thing(*args):
-...     return args
-...
->>> do_thing('a', 1, b'a-byte-string', ['a', b'b', 1], {'a': 'a', 'b': ['x', b'y']})
-(b'a', 1, b'a-byte-string', [b'a', b'b', 1], {'a': b'a', 'b': [b'x', b'y']})
-```
-
-#### `coerce_args_to_text(callable)` -> callable
-
-Decorator which will convert any string arguments both positional or keyword
-into text strings using the `force_text` function.  This is a recursive
-operation which will reach down into mappings and list-like objects as well.
-
-```python
->>> @coerce_args_to_text
-... def do_thing(*args):
-...     return args
-...
->>> do_thing('a', 1, b'a-byte-string', ['a', b'b', 1], {'a': 'a', 'b': ['x', b'y']})
-('a', 1, 'a-byte-string', ['a', 'b', 1], {'a': 'a', 'b': ['x', 'y']})
-```
-
-#### `coerce_return_to_bytes(callable)` -> callable
-
-Decorator which will convert any string return values into byte strings using
-the `force_text` function.  This is a recursive operation which will reach down
-into mappings and list-like objects as well.
-
-```python
->>> @coerce_return_to_bytes
-... def do_thing(*args):
-...     return args
-...
->>> do_thing('a', 1, b'a-byte-string', ['a', b'b', 1], {'a': 'a', 'b': ['x', b'y']})
-(b'a', 1, b'a-byte-string', [b'a', b'b', 1], {'a': b'a', 'b': [b'x', b'y']})
-```
-
-#### `coerce_return_to_text(callable)` -> callable
-
-Decorator which will convert any string return values into text strings using
-the `force_text` function.  This is a recursive operation which will reach down
-into mappings and list-like objects as well.
-
-```python
->>> @coerce_return_to_bytes
-... def do_thing(*args):
-...     return args
-...
->>> do_thing('a', 1, b'a-byte-string', ['a', b'b', 1], {'a': 'a', 'b': ['x', b'y']})
-('a', 1, 'a-byte-string', ['a', 'b', 1], {'a': 'a', 'b': ['x', 'y']})
-```
-
-#### `force_bytes(value, encoding='iso-8859-1')` -> text
-
-Returns `value` encoded into a byte string using the provided encoding.  By
-default this uses `iso-8859-1` as it can handle all byte values between `0-255`
-(unlike `utf8`)
-
-```python
->>> force_bytes('abcd')
-b'abcd'
->>> force_bytes(b'abcd')
-b'abcd'
-```
-
-#### `force_obj_to_bytes(value)` -> value
-
-Returns `value` with all string elements converted to byte strings by
-recursivly traversing mappings and list-like elements.
-
-```python
->>> force_obj_to_bytes(('a', 1, b'a-byte-string', ['a', b'b', 1], {'a': 'a', 'b': ['x', b'y']}))
-(b'a', 1, b'a-byte-string', [b'a', b'b', 1], {'a': b'a', 'b': [b'x', b'y']})
-```
-
-#### `force_obj_to_text(value)` -> value
-
-Returns `value` with all string elements converted to text strings by
-recursivly traversing mappings and list-like elements.
-
-```python
->>> force_obj_to_text(('a', 1, b'a-byte-string', ['a', b'b', 1], {'a': 'a', 'b': ['x', b'y']}))
-('a', 1, 'a-byte-string', ['a', 'b', 1], {'a': 'a', 'b': ['x', 'y']})
-```
-
-#### `force_text(value, encoding='iso-8859-1')` -> text
-
-Returns `value` decoded into a text string using the provided encoding.  By
-default this uses `iso-8859-1` as it can handle all byte values between `0-255`
-(unlike `utf8`)
-
-```python
->>> force_text(b'abcd')
-'abcd'
->>> force_text('abcd')
-'abcd'
 ```
 
 

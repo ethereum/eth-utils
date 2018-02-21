@@ -14,10 +14,6 @@ from eth_utils import (
     apply_one_of_formatters,
     apply_to_return_value,
     big_endian_to_int,
-    coerce_args_to_bytes,
-    coerce_args_to_text,
-    coerce_return_to_bytes,
-    coerce_return_to_text,
     combine_argument_formatters,
     combomethod,
     decode_hex,
@@ -26,10 +22,6 @@ from eth_utils import (
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     flatten_return,
-    force_bytes,
-    force_obj_to_bytes,
-    force_obj_to_text,
-    force_text,
     from_wei,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
@@ -81,8 +73,6 @@ apply_formatters_to_dict = curry(apply_formatters_to_dict)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(apply_one_of_formatters)
 flatten_return = curry(flatten_return)
-force_bytes = curry(force_bytes)
-force_text = curry(force_text)
 from_wei = curry(from_wei)
 hexstr_if_str = curry(hexstr_if_str)
 is_same_address = curry(is_same_address)
