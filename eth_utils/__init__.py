@@ -64,7 +64,7 @@ from .functional import (  # noqa: F401
     to_set,
     to_tuple,
 )
-from .hexidecimal import (  # noqa: F401
+from .hexadecimal import (  # noqa: F401
     add_0x_prefix,
     decode_hex,
     encode_hex,

@@ -1,5 +1,5 @@
 from .crypto import keccak
-from .hexidecimal import (
+from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
     encode_hex,
@@ -18,7 +18,7 @@ from .types import (
 
 def is_hex_address(value):
     """
-    Checks if the given string of text type is an address in hexidecimal encoded form.
+    Checks if the given string of text type is an address in hexadecimal encoded form.
     """
     if not is_text(value):
         return False
@@ -59,7 +59,7 @@ def is_address(value):
 
 def to_normalized_address(address):
     """
-    Converts an address to it's normalized hexidecimal representation.
+    Converts an address to it's normalized hexadecimal representation.
     """
     hex_address = hexstr_if_str(to_hex, address).lower()
     if is_address(hex_address):

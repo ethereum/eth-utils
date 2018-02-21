@@ -305,12 +305,12 @@ lookups provided in `formatter_dict`. It will pass through any unspecified keys.
 
 Returns `True` if the `value` is one of the following accepted address formats.
 
-- 20 byte hexidecimal, upper/lower/mixed case, with or without `0x` prefix:
+- 20 byte hexadecimal, upper/lower/mixed case, with or without `0x` prefix:
     - `'d3cda913deb6f67967b99d67acdfa1712c293601'`
     - `'0xd3cda913deb6f67967b99d67acdfa1712c293601'`
     - `'0xD3CDA913DEB6F67967B99D67ACDFA1712C293601'`
     - `'0xd3CdA913deB6f67967B99D67aCDFa1712C293601'`
-- 20 byte hexidecimal padded to 32 bytes with null bytes, upper/lower/mixed case, with or without `0x` prefix:
+- 20 byte hexadecimal padded to 32 bytes with null bytes, upper/lower/mixed case, with or without `0x` prefix:
     - `'000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601'`
     - `'000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601'`
     - `'0x000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601'`
@@ -358,7 +358,7 @@ False
 
 #### `is_hex_address(value)` => bool
 
-Return `True` if the value is a 20 byte hexidecimal encoded string in any of
+Return `True` if the value is a 20 byte hexadecimal encoded string in any of
 upper/lower/mixed casing, with or without the `0x` prefix.  Otherwise return
 `False`
 
@@ -489,7 +489,7 @@ False
 Returns `True` if the `value` is an address in its normalized form.
 
 The normalized representation of an address is the lowercased 20 byte
-hexidecimal format.
+hexadecimal format.
 
 ```python
 >>> is_normalized_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
@@ -607,7 +607,7 @@ b'cowm\xc3\xb6'
 
 #### `to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)` -> str
 
-Takes a variety of inputs and returns it in its hexidecimal representation.
+Takes a variety of inputs and returns it in its hexadecimal representation.
 It follows the rules for converting to hex in the JSON-RPC spec. Roughly,
 it leaves leading 0s on bytes input, and trims leading zeros on int input.
 
@@ -1045,7 +1045,7 @@ b'\x124V'
 
 #### `encode_hex(value)` -> string
 
-Returns `value` encoded into a hexidecimal representation with a `0x` prefix
+Returns `value` encoded into a hexadecimal representation with a `0x` prefix
 
 ```python
 >>> encode_hex('\x01\x02\x03')
@@ -1067,7 +1067,7 @@ True
 
 #### `is_hex(value)` -> bool
 
-Returns `True` if `value` is a hexidecimal encoded string of text type.
+Returns `True` if `value` is a hexadecimal encoded string of text type.
 
 ```python
 >>> is_hex('')
