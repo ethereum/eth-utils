@@ -34,8 +34,21 @@ def combine_argument_formatters(*formatters):
     ))
 
 
+@return_arg_type(1)
 def apply_formatters_to_sequence(formatters, sequence):
-    return combine_argument_formatters(*formatters)(sequence)
+    if len(formatters) > len(sequence):
+        raise IndexError("Too many formatters for sequence: {} formatters for {!r}".format(
+            len(formatters),
+            sequence,
+        ))
+    elif len(formatters) < len(sequence):
+        raise IndexError("Too few formatters for sequence: {} formatters for {!r}".format(
+            len(formatters),
+            sequence,
+        ))
+    else:
+        for formatter, item in zip(formatters, sequence):
+            yield formatter(item)
 
 
 def apply_formatter_if(condition, formatter, value):

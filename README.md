@@ -239,9 +239,13 @@ For example:
 >>> list_formatter((1.2, 3.4, 5.6))
 (True, 3, '5.6')
 
-# it will pass through items longer than the number of formatters supplied
+# Formatters and list-like value must be the same length
+
 >>> list_formatter((1.2, 3.4, 5.6, 7.8))
-[True, 3, '5.6', 7.8]
+IndexError: Too few formatters for sequence: 3 formatters for (1.2, 3.4, 5.6, 7.8)
+
+>>> list_formatter((1.2, 3.4))
+IndexError: Too many formatters for sequence: 3 formatters for (1.2, 3.4)
 ```
 
 
@@ -797,7 +801,7 @@ At the shell:
 $ python -m eth_utils
 
 Python version:
-3.5.3 (default, Nov 23 2017, 11:34:05) 
+3.5.3 (default, Nov 23 2017, 11:34:05)
 [GCC 6.3.0 20170406]
 
 Operating System: Linux-4.10.0-42-generic-x86_64-with-Ubuntu-17.04-zesty

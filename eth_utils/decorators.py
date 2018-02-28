@@ -1,10 +1,6 @@
 import functools
 import itertools
 
-from cytoolz import (
-    identity,
-)
-
 from .types import (
     is_text,
 )
@@ -85,11 +81,8 @@ def return_arg_type(at_position):
     def decorator(to_wrap):
         @functools.wraps(to_wrap)
         def wrapper(*args, **kwargs):
-            try:
-                ReturnType = type(args[at_position])
-            except IndexError:
-                ReturnType = identity
             result = to_wrap(*args, **kwargs)
+            ReturnType = type(args[at_position])
             return ReturnType(result)
         return wrapper
     return decorator
