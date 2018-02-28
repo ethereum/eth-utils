@@ -1,3 +1,5 @@
+import warnings
+
 from cytoolz.functoolz import (
     compose,
     curry,
@@ -26,6 +28,14 @@ def apply_formatter_at_index(formatter, at_index, value):
 
 
 def combine_argument_formatters(*formatters):
+    warnings.warn(DeprecationWarning(
+        "combine_argument_formatters(formatter1, formatter2)([item1, item2])"
+        "has been deprecated and will be removed in a subsequent major version "
+        "release of the eth-utils library. Update your calls to use "
+        "apply_formatters_to_sequence([formatter1, formatter2], [item1, item2]) "
+        "instead."
+    ))
+
     _formatter_at_index = curry(apply_formatter_at_index)
     return compose(*(
         _formatter_at_index(formatter, index)

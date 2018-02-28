@@ -251,9 +251,25 @@ IndexError: Too many formatters for sequence: 3 formatters for (1.2, 3.4)
 
 #### `combine_argument_formatters(*formatters)` -> lambda <list_like>: <new_list_like>
 
-*This is a bit like a curried version of `apply_formatters_to_sequence`, but
-you supply the functions as `*args`, and so you **must** create the combined
-formatter function and then apply it.*
+**DEPRECATED**
+
+You can replace all current versions of:
+
+```py
+>>> from eth_utils import combine_argument_formatters
+
+>>> list_formatter = combine_argument_formatters(bool, int, str)
+```
+
+With the newer, preferred:
+
+```py
+>>> from eth_utils.curried import apply_formatters_to_sequence
+
+>>> list_formatter = apply_formatters_to_sequence((bool, int, str))
+```
+
+The old usage works like:
 
 Combine several formatters to be applied to a list-like value, each formatter
 at the position it was supplied. The new formatter will return the same type as
