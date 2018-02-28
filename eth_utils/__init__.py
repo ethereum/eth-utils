@@ -26,6 +26,7 @@ from .applicators import (  # noqa: F401
     apply_formatter_if,
     apply_formatter_to_array,
     apply_formatters_to_dict,
+    apply_formatters_to_sequence,
     apply_key_map,
     apply_one_of_formatters,
     combine_argument_formatters,

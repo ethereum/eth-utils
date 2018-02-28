@@ -1,3 +1,5 @@
+import warnings
+
 from cytoolz.functoolz import (
     compose,
     curry,
@@ -26,12 +28,37 @@ def apply_formatter_at_index(formatter, at_index, value):
 
 
 def combine_argument_formatters(*formatters):
+    warnings.warn(DeprecationWarning(
+        "combine_argument_formatters(formatter1, formatter2)([item1, item2])"
+        "has been deprecated and will be removed in a subsequent major version "
+        "release of the eth-utils library. Update your calls to use "
+        "apply_formatters_to_sequence([formatter1, formatter2], [item1, item2]) "
+        "instead."
+    ))
+
     _formatter_at_index = curry(apply_formatter_at_index)
     return compose(*(
         _formatter_at_index(formatter, index)
         for index, formatter
         in enumerate(formatters)
     ))
+
+
+@return_arg_type(1)
+def apply_formatters_to_sequence(formatters, sequence):
+    if len(formatters) > len(sequence):
+        raise IndexError("Too many formatters for sequence: {} formatters for {!r}".format(
+            len(formatters),
+            sequence,
+        ))
+    elif len(formatters) < len(sequence):
+        raise IndexError("Too few formatters for sequence: {} formatters for {!r}".format(
+            len(formatters),
+            sequence,
+        ))
+    else:
+        for formatter, item in zip(formatters, sequence):
+            yield formatter(item)
 
 
 def apply_formatter_if(condition, formatter, value):
