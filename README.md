@@ -222,7 +222,34 @@ It returns the same type as the `list_like` argument
 ```
 
 
+#### `apply_formatters_to_sequence(formatters, <list_like>)` -> <new_list_like>
+
+This function will apply each formatter at to the list-like value, at the
+position it was supplied. It returns the same time as the `list_like` argument.
+For example:
+
+```py
+>>> from eth_utils.curried import apply_formatters_to_sequence
+
+>>> list_formatter = apply_formatters_to_sequence([bool, int, str])
+
+>>> list_formatter([1.2, 3.4, 5.6])
+[True, 3, '5.6']
+
+>>> list_formatter((1.2, 3.4, 5.6))
+(True, 3, '5.6')
+
+# it will pass through items longer than the number of formatters supplied
+>>> list_formatter((1.2, 3.4, 5.6, 7.8))
+[True, 3, '5.6', 7.8]
+```
+
+
 #### `combine_argument_formatters(*formatters)` -> lambda <list_like>: <new_list_like>
+
+*This is a bit like a curried version of `apply_formatters_to_sequence`, but
+you supply the functions as `*args`, and so you **must** create the combined
+formatter function and then apply it.*
 
 Combine several formatters to be applied to a list-like value, each formatter
 at the position it was supplied. The new formatter will return the same type as
