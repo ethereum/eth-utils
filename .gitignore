@@ -47,6 +47,7 @@ docs/_build
 
 # tox/pytest cache
 .cache
+.pytest_cache
 
 # Test output logs
 logs
@@ -100,4 +101,4 @@ fabric.properties
 *.swp
 
 # virtualenv default location
-venv
+venv*
