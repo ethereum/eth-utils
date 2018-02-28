@@ -7,6 +7,7 @@ from eth_utils.curried import (
     apply_formatter_if,
     apply_formatter_to_array,
     apply_formatters_to_dict,
+    apply_formatters_to_sequence,
     apply_key_map,
     apply_one_of_formatters,
     is_list_like,
@@ -132,31 +133,30 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
         assert targetted_formatter(value) == expected
 
 
-@pytest.mark.parametrize(
-    'formatters, value, expected',
+SEQUENCE_FORMATTER_PARAMETERS = (
     (
-        (
-            [bool, int, str],
-            (1.2, 3.4, 5.6),
-            (True, 3, '5.6'),
-        ),
-        (
-            [bool, int],
-            (1.2, 3.4, 5.6),
-            (True, 3, 5.6),
-        ),
-        (
-            [bool, int],
-            [1.2, 3.4, 5.6],
-            [True, 3, 5.6],
-        ),
-        (
-            [bool, int, str, float],
-            (1.2, 3.4, 5.6),
-            IndexError,
-        ),
+        [bool, int, str],
+        (1.2, 3.4, 5.6),
+        (True, 3, '5.6'),
+    ),
+    (
+        [bool, int],
+        (1.2, 3.4, 5.6),
+        (True, 3, 5.6),
+    ),
+    (
+        [bool, int],
+        [1.2, 3.4, 5.6],
+        [True, 3, 5.6],
+    ),
+    (
+        [bool, int, str, float],
+        (1.2, 3.4, 5.6),
+        IndexError,
     ),
 )
+
+@pytest.mark.parametrize('formatters, value, expected', SEQUENCE_FORMATTER_PARAMETERS)
 def test_combine_argument_formatters(formatters, value, expected):
     list_formatter = eth_utils.combine_argument_formatters(*formatters)
     if isinstance(expected, type) and issubclass(expected, Exception):
@@ -164,6 +164,25 @@ def test_combine_argument_formatters(formatters, value, expected):
             list_formatter(value)
     else:
         assert list_formatter(value) == expected
+
+
+@pytest.mark.parametrize('formatters, value, expected', SEQUENCE_FORMATTER_PARAMETERS)
+def test_apply_formatters_to_sequence_curried(formatters, value, expected):
+    list_formatter = apply_formatters_to_sequence(formatters)
+    if isinstance(expected, type) and issubclass(expected, Exception):
+        with pytest.raises(expected):
+            list_formatter(value)
+    else:
+        assert list_formatter(value) == expected
+
+
+@pytest.mark.parametrize('formatters, value, expected', SEQUENCE_FORMATTER_PARAMETERS)
+def test_apply_formatters_to_sequence(formatters, value, expected):
+    if isinstance(expected, type) and issubclass(expected, Exception):
+        with pytest.raises(expected):
+            eth_utils.apply_formatters_to_sequence(formatters, value)
+    else:
+        assert eth_utils.apply_formatters_to_sequence(formatters, value) == expected
 
 
 @pytest.mark.parametrize(

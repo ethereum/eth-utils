@@ -10,6 +10,7 @@ from eth_utils import (
     apply_formatter_if,
     apply_formatter_to_array,
     apply_formatters_to_dict,
+    apply_formatters_to_sequence,
     apply_key_map,
     apply_one_of_formatters,
     apply_to_return_value,
@@ -70,6 +71,7 @@ apply_formatter_at_index = curry(apply_formatter_at_index)
 apply_formatter_if = curry(apply_formatter_if)
 apply_formatter_to_array = curry(apply_formatter_to_array)
 apply_formatters_to_dict = curry(apply_formatters_to_dict)
+apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(apply_one_of_formatters)
 flatten_return = curry(flatten_return)

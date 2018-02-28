@@ -34,6 +34,10 @@ def combine_argument_formatters(*formatters):
     ))
 
 
+def apply_formatters_to_sequence(formatters, sequence):
+    return combine_argument_formatters(*formatters)(sequence)
+
+
 def apply_formatter_if(condition, formatter, value):
     if condition(value):
         return formatter(value)
