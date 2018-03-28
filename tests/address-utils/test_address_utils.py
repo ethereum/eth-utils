@@ -24,22 +24,22 @@ from eth_utils.address import (
         ( 'function', False, False, False),
         (b'function', False, False, False),
         # null address
-        ( '0x0000000000000000000000000000000000000000', True, True, False), 
-        (b'0x0000000000000000000000000000000000000000', False, False, False), 
+        ( '0x0000000000000000000000000000000000000000', True, True, False),
+        (b'0x0000000000000000000000000000000000000000', False, False, False),
         # normalized
-        ( '0xc6d9d2cd449a754c494264e1809c50e34d64562b', True, True, False), 
+        ( '0xc6d9d2cd449a754c494264e1809c50e34d64562b', True, True, False),
         (b'0xc6d9d2cd449a754c494264e1809c50e34d64562b', False, False, False),
         # normalized - unprefixed
         ( 'c6d9d2cd449a754c494264e1809c50e34d64562b', True, True, False),
         (b'c6d9d2cd449a754c494264e1809c50e34d64562b', False, False, False),
         # checksummed - valid
-        ( '0x5B2063246F2191f18F2675ceDB8b28102e957458', True, True, False), 
+        ( '0x5B2063246F2191f18F2675ceDB8b28102e957458', True, True, False),
         (b'0x5B2063246F2191f18F2675ceDB8b28102e957458', False, False, False),
         # checksummed - invalid
         ( '0x5b2063246F2191f18F2675ceDB8b28102e957458', False, True, False),
         (b'0x5b2063246F2191f18F2675ceDB8b28102e957458', False, False, False),
         # too short - unprefixed
-        ( 'c6d9d2cd449a754c494264e1809c50e34d64562', False, False, False), 
+        ( 'c6d9d2cd449a754c494264e1809c50e34d64562', False, False, False),
         (b'c6d9d2cd449a754c494264e1809c50e34d64562', False, False, False),
         # too short
         ( '0xc6d9d2cd449a754c494264e1809c50e34d64562', False, False, False),
