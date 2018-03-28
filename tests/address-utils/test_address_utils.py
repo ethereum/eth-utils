@@ -58,6 +58,7 @@ from eth_utils.address import (
         (b'0x0000000000000000000000000000000000000000000000000000000000000000', False, False, False),
         (b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', False, False, False),
         # too short
+        ( '0xc6d9d2cd449a754c494264e1809c50e34d6456', False, False, False),
         ( '0xc6d9d2cd449a754c494264e1809c50e34d64562', False, False, False),
         (b'0xc6d9d2cd449a754c494264e1809c50e34d64562', False, False, False),
         # hexstr
