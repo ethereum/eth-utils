@@ -22,12 +22,11 @@ def is_hex_address(value):
     """
     if not is_text(value):
         return False
-    elif len(value) not in {42, 40}:
+    elif not is_hex(value):
         return False
-    elif is_hex(value):
-        return True
     else:
-        return False
+        unprefixed = remove_0x_prefix(value)
+        return len(unprefixed) == 40
 
 
 def is_binary_address(value):
