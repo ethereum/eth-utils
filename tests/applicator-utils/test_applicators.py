@@ -1,3 +1,4 @@
+import collections
 import pytest
 
 import eth_utils
@@ -71,6 +72,32 @@ def test_apply_key_map(formatter, value, expected):
 
     mapper = apply_key_map(formatter)
     assert mapper(value) == expected
+
+
+@pytest.mark.parametrize(
+    'formatter, value',
+    (
+        (
+            {'a': 'b'},
+            {'b': 3},
+        ),
+        (
+            {'a': 'b'},
+            {'a': 2, 'b': 3},
+        ),
+        (
+            {'a': 'b'},
+            collections.OrderedDict((('a', 2), ('b', 3))),
+        ),
+        (
+            {'a': 'b'},
+            collections.OrderedDict((('b', 3), ('a', 2))),
+        ),
+    ),
+)
+def test_apply_key_map_with_key_conflicts_raises_exception(formatter, value):
+    with pytest.raises(KeyError):
+        eth_utils.apply_key_map(formatter, value)
 
 
 @pytest.mark.parametrize(

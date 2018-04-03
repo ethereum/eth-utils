@@ -96,6 +96,21 @@ def apply_one_of_formatters(formatter_condition_pairs, value):
 
 @to_dict
 def apply_key_map(key_mappings, value):
+    key_conflicts = set(
+        value.keys()
+    ).difference(
+        key_mappings.keys()
+    ).intersection(
+        v
+        for k, v
+        in key_mappings.items()
+        if v in value
+    )
+    if key_conflicts:
+        raise KeyError(
+            "Could not apply key map due to conflicting key(s): {}".format(key_conflicts)
+        )
+
     for key, item in value.items():
         if key in key_mappings:
             yield key_mappings[key], item
