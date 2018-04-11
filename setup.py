@@ -22,9 +22,9 @@ extras_require = {
 }
 
 extras_require['dev'] = (
-    extras_require['lint']
-    + extras_require['test']
-    + extras_require['deploy']
+    extras_require['lint'] +
+    extras_require['test'] +
+    extras_require['deploy']
 )
 
 setup(
@@ -39,7 +39,8 @@ setup(
     include_package_data=True,
     install_requires=[
         "eth-hash>=0.1.0,<1.0.0",
-        "cytoolz>=0.8.2,<1.0.0",
+        "toolz>0.8.2,<1;implementation_name=='pypy'",
+        "cytoolz>=0.8.2,<1.0.0;implementation_name=='cpython'",
     ],
     setup_requires=['setuptools-markdown'],
     extras_require=extras_require,

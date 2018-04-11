@@ -1,6 +1,5 @@
 # flake8: noqa
-
-from cytoolz import (
+from eth_utils.toolz import (
     curry,
 )
 
@@ -74,12 +73,9 @@ apply_formatters_to_dict = curry(apply_formatters_to_dict)
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(apply_one_of_formatters)
-flatten_return = curry(flatten_return)
 from_wei = curry(from_wei)
 hexstr_if_str = curry(hexstr_if_str)
 is_same_address = curry(is_same_address)
-reversed_return = curry(reversed_return)
-sort_return = curry(sort_return)
 text_if_str = curry(text_if_str)
 to_wei = curry(to_wei)
 
