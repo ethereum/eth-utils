@@ -39,7 +39,10 @@ def to_hex(primitive=None, hexstr=None, text=None):
     if isinstance(primitive, (bytes, bytearray)):
         return encode_hex(primitive)
     elif is_string(primitive):
-        return to_hex(text=primitive)
+        raise TypeError(
+            "Unsupported type: The primitive argument must be one of: bytes,"
+            "bytearray, int or bool and not str"
+        )
 
     if is_integer(primitive):
         return hex(primitive)

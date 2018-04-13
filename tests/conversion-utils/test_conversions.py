@@ -212,3 +212,8 @@ def test_to_hex_text(val, expected):
 )
 def test_to_hex_cleanup_only(val, expected):
     assert to_hex(hexstr=val) == expected
+
+
+def test_to_hex_exception():
+    with pytest.raises(TypeError, match="Unsupported type: The primitive argument"):
+        to_hex(primitive='string')
