@@ -130,7 +130,7 @@ def is_checksum_address(value):
 
     if not is_hex_address(value):
         return False
-    return value == to_checksum_address(value)
+    return value.lower() == to_checksum_address(value).lower()
 
 
 def is_checksum_formatted_address(value):
