@@ -22,7 +22,7 @@ from .hexadecimal import (
 @validate_conversion_arguments
 def to_hex(primitive=None, hexstr=None, text=None):
     """
-    Auto converts any supported value into it's hex representation.
+    Auto converts any supported value into its hex representation.
 
     Trims leading zeros, as defined in:
     https://github.com/ethereum/wiki/wiki/JSON-RPC#hex-value-encoding
@@ -56,7 +56,7 @@ def to_hex(primitive=None, hexstr=None, text=None):
 @validate_conversion_arguments
 def to_int(primitive=None, hexstr=None, text=None):
     """
-    Converts value to it's integer representation.
+    Converts value to its integer representation.
 
     Values are converted this way:
 
