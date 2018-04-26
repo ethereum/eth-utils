@@ -2,8 +2,7 @@
 
 [![Join the chat at https://gitter.im/ethereum/eth-utils](https://badges.gitter.im/ethereum/eth-utils.svg)](https://gitter.im/ethereum/eth-utils)
 
-[![Build Status](https://travis-ci.org/ethereum/eth-utils.png)](https://travis-ci.org/ethereum/eth-utils)
-
+[![Build Status](https://circleci.com/gh/ethereum/eth-utils.svg?style=shield)](https://circleci.com/gh/ethereum/eth-utils)
 
 Common utility functions for codebases which interact with ethereum.
 
