@@ -479,7 +479,7 @@ False
 
 #### `is_canonical_address(value)` -> bool
 
-Returns `True` if the `value` is an address in it's canonical form.
+Returns `True` if the `value` is an address in its canonical form.
 
 The canonical representation of an address according to `eth_utils` is a
 20 byte long string of bytes, eg:
@@ -567,7 +567,7 @@ True
 
 #### `to_canonical_address(value)` -> bytes
 
-Given any valid representation of an address return it's canonical form.
+Given any valid representation of an address return its canonical form.
 
 ```python
 >>> to_canonical_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')

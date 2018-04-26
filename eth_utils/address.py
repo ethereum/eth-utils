@@ -58,7 +58,7 @@ def is_address(value):
 
 def to_normalized_address(address):
     """
-    Converts an address to it's normalized hexadecimal representation.
+    Converts an address to its normalized hexadecimal representation.
     """
     hex_address = hexstr_if_str(to_hex, address).lower()
     if is_address(hex_address):
@@ -71,7 +71,7 @@ def to_normalized_address(address):
 
 def is_normalized_address(value):
     """
-    Returns whether the provided value is an address in it's normalized form.
+    Returns whether the provided value is an address in its normalized form.
     """
     if not is_address(value):
         return False
@@ -82,14 +82,14 @@ def is_normalized_address(value):
 def to_canonical_address(address):
     """
     Given any supported representation of an address
-    returns it's canonical form (20 byte long string).
+    returns its canonical form (20 byte long string).
     """
     return decode_hex(to_normalized_address(address))
 
 
 def is_canonical_address(address):
     """
-    Returns `True` if the `value` is an address in it's canonical form.
+    Returns `True` if the `value` is an address in its canonical form.
     """
     if not is_bytes(address) or len(address) != 20:
         return False
