@@ -1,10 +1,9 @@
 import warnings
 
-from cytoolz.functoolz import (
+from .toolz import (
     compose,
-    curry,
+    curry
 )
-
 from .decorators import (
     return_arg_type,
 )
