@@ -1,4 +1,5 @@
-from .crypto import keccak
+from eth_hash.auto import keccak
+
 from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
@@ -8,6 +9,7 @@ from .hexadecimal import (
 )
 from .conversions import (
     hexstr_if_str,
+    to_bytes,
     to_hex,
 )
 from .types import (
@@ -111,7 +113,7 @@ def to_checksum_address(address):
     Makes a checksum address given a supported format.
     """
     norm_address = to_normalized_address(address)
-    address_hash = encode_hex(keccak(text=remove_0x_prefix(norm_address)))
+    address_hash = encode_hex(keccak(to_bytes(text=remove_0x_prefix(norm_address))))
 
     checksum_address = add_0x_prefix(''.join(
         (
