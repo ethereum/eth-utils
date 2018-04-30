@@ -46,7 +46,6 @@ from eth_utils import (
     is_same_address,
     is_string,
     is_text,
-    keccak,
     remove_0x_prefix,
     reversed_return,
     sort_return,

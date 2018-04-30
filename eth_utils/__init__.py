@@ -39,9 +39,6 @@ from .conversions import (  # noqa: F401
     hexstr_if_str,
     text_if_str,
 )
-from .crypto import (  # noqa: F401
-    keccak,
-)
 from .currency import (  # noqa: F401
     denoms,
     from_wei,
