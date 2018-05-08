@@ -23,9 +23,9 @@ from .types import (
 )
 
 
-Address = bytes  # for canonical addresses
-HexAddress = str  # for hex encoded addresses
-ChecksumAddress = NewType('ChecksumAddress', Address)  # for hex addresses with checksums
+Address = NewType('Address', bytes)  # for canonical addresses
+HexAddress = NewType('HexAddress', str)  # for hex encoded addresses
+ChecksumAddress = NewType('ChecksumAddress', HexAddress)  # for hex addresses with checksums
 AnyAddress = TypeVar('AnyAddress', Address, HexAddress, ChecksumAddress)
 
 
@@ -97,7 +97,7 @@ def to_canonical_address(address: AnyStr) -> Address:
     Given any supported representation of an address
     returns its canonical form (20 byte long string).
     """
-    return decode_hex(to_normalized_address(address))
+    return Address(decode_hex(to_normalized_address(address)))
 
 
 def is_canonical_address(address: Any) -> bool:
@@ -119,7 +119,7 @@ def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
         return to_normalized_address(left) == to_normalized_address(right)
 
 
-def to_checksum_address(value: AnyStr) -> HexAddress:
+def to_checksum_address(value: AnyStr) -> ChecksumAddress:
     """
     Makes a checksum address given a supported format.
     """
@@ -134,7 +134,7 @@ def to_checksum_address(value: AnyStr) -> HexAddress:
         )
         for i in range(2, 42)
     ))
-    return checksum_address
+    return ChecksumAddress(HexAddress(checksum_address))
 
 
 def is_checksum_address(value: Any) -> bool:
