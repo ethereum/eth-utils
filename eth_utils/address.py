@@ -23,8 +23,8 @@ from .types import (
 )
 
 
-Address = NewType('Address', bytes)  # for canonical addresses
-HexAddress = NewType('HexAddress', str)  # for hex encoded addresses
+Address = bytes  # for canonical addresses
+HexAddress = str  # for hex encoded addresses
 ChecksumAddress = NewType('ChecksumAddress', Address)  # for hex addresses with checksums
 AnyAddress = TypeVar('AnyAddress', Address, HexAddress, ChecksumAddress)
 
@@ -119,7 +119,7 @@ def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
         return to_normalized_address(left) == to_normalized_address(right)
 
 
-def to_checksum_address(value: AnyStr) -> Address:
+def to_checksum_address(value: AnyStr) -> HexAddress:
     """
     Makes a checksum address given a supported format.
     """

@@ -1110,7 +1110,7 @@ value, pass it to the callable, and return the value returned by the callable.
 
 #### `add_0x_prefix(value)` -> string
 
-Returns `value` with a `0x` prefix.  If the value is already prefixed it is returned as-is.
+Returns `value` with a `0x` prefix.  If the value is already prefixed it is returned as-is. Value must be a string literal.
 
 ```python
 >>> add_0x_prefix('12345')
@@ -1141,14 +1141,12 @@ Returns `value` encoded into a hexadecimal representation with a `0x` prefix
 
 #### `is_0x_prefixed(value)` -> bool
 
-Returns `True` if `value` has a `0x` prefix.
+Returns `True` if `value` has a `0x` prefix. Value must be a string literal.
 
 ```python
 >>> is_0x_prefixed('12345')
 False
 >>> is_0x_prefixed('0x12345')
-True
->>> is_0x_prefixed(b'0x12345')
 True
 ```
 
@@ -1188,15 +1186,13 @@ False
 #### `remove_0x_prefix(value)` -> string
 
 Returns `value` with the `0x` prefix stripped.  If the value does not have a
-`0x` prefix it is returned as-is.
+`0x` prefix it is returned as-is. Value must be string literal.
 
 ```python
 >>> remove_0x_prefix('12345')
 '12345'
 >>> remove_0x_prefix('0x12345')
 '12345'
->>> remove_0x_prefix(b'0x12345')
-b'12345'
 ```
 
 
