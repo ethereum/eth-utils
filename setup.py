@@ -8,6 +8,7 @@ from setuptools import (
 extras_require = {
     'lint': [
         'flake8>=3.5.0,<4.0.0',
+        "mypy<0.600",
     ],
     'test': [
         'hypothesis>=3.4.2,<4.0.0',

@@ -1,3 +1,10 @@
+from typing import (
+    Any,
+    AnyStr,
+    NewType,
+    TypeVar,
+)
+
 from .crypto import keccak
 from .hexadecimal import (
     add_0x_prefix,
@@ -16,7 +23,13 @@ from .types import (
 )
 
 
-def is_hex_address(value):
+Address = NewType('Address', bytes)  # for canonical addresses
+HexAddress = NewType('HexAddress', str)  # for hex encoded addresses
+ChecksumAddress = NewType('ChecksumAddress', Address)  # for hex addresses with checksums
+AnyAddress = TypeVar('AnyAddress', Address, HexAddress, ChecksumAddress)
+
+
+def is_hex_address(value: Any) -> bool:
     """
     Checks if the given string of text type is an address in hexadecimal encoded form.
     """
@@ -29,7 +42,7 @@ def is_hex_address(value):
         return len(unprefixed) == 40
 
 
-def is_binary_address(value):
+def is_binary_address(value: Any) -> bool:
     """
     Checks if the given string is an address in raw bytes form.
     """
@@ -41,7 +54,7 @@ def is_binary_address(value):
         return True
 
 
-def is_address(value):
+def is_address(value: Any) -> bool:
     """
     Checks if the given string in a supported value
     is an address in any of the known formats.
@@ -56,20 +69,20 @@ def is_address(value):
         return False
 
 
-def to_normalized_address(address):
+def to_normalized_address(value: AnyStr) -> HexAddress:
     """
     Converts an address to its normalized hexadecimal representation.
     """
-    hex_address = hexstr_if_str(to_hex, address).lower()
+    hex_address = hexstr_if_str(to_hex, value).lower()
     if is_address(hex_address):
         return hex_address
     else:
         raise ValueError(
-            "Unknown format {}, attempted to normalize to {}".format(address, hex_address)
+            "Unknown format {}, attempted to normalize to {}".format(value, hex_address)
         )
 
 
-def is_normalized_address(value):
+def is_normalized_address(value: Any) -> bool:
     """
     Returns whether the provided value is an address in its normalized form.
     """
@@ -79,7 +92,7 @@ def is_normalized_address(value):
         return value == to_normalized_address(value)
 
 
-def to_canonical_address(address):
+def to_canonical_address(address: AnyStr) -> Address:
     """
     Given any supported representation of an address
     returns its canonical form (20 byte long string).
@@ -87,7 +100,7 @@ def to_canonical_address(address):
     return decode_hex(to_normalized_address(address))
 
 
-def is_canonical_address(address):
+def is_canonical_address(address: Any) -> bool:
     """
     Returns `True` if the `value` is an address in its canonical form.
     """
@@ -96,7 +109,7 @@ def is_canonical_address(address):
     return address == to_canonical_address(address)
 
 
-def is_same_address(left, right):
+def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
     """
     Checks if both addresses are same or not.
     """
@@ -106,11 +119,11 @@ def is_same_address(left, right):
         return to_normalized_address(left) == to_normalized_address(right)
 
 
-def to_checksum_address(address):
+def to_checksum_address(value: AnyStr) -> Address:
     """
     Makes a checksum address given a supported format.
     """
-    norm_address = to_normalized_address(address)
+    norm_address = to_normalized_address(value)
     address_hash = encode_hex(keccak(text=remove_0x_prefix(norm_address)))
 
     checksum_address = add_0x_prefix(''.join(
@@ -124,7 +137,7 @@ def to_checksum_address(address):
     return checksum_address
 
 
-def is_checksum_address(value):
+def is_checksum_address(value: Any) -> bool:
     if not is_text(value):
         return False
 
@@ -133,7 +146,7 @@ def is_checksum_address(value):
     return value == to_checksum_address(value)
 
 
-def is_checksum_formatted_address(value):
+def is_checksum_formatted_address(value: Any) -> bool:
     if not is_text(value):
         return False
 
