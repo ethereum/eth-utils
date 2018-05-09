@@ -4,26 +4,33 @@ import binascii
 import codecs
 import string
 
+from typing import (
+    Any,
+    AnyStr,
+)
+
 from .types import (
     is_string,
     is_text,
 )
 
 
-def decode_hex(value):
+# Type ignored for `codecs.decode()` due to lack of mypy support for 'hex' encoding
+# https://github.com/python/typeshed/issues/300
+def decode_hex(value: str) -> bytes:
     if not is_text(value):
         raise TypeError('Value must be an instance of str')
-    return codecs.decode(remove_0x_prefix(value), 'hex')
+    return codecs.decode(remove_0x_prefix(value), 'hex')  # type: ignore
 
 
-def encode_hex(value):
+def encode_hex(value: AnyStr) -> str:
     if not is_string(value):
         raise TypeError('Value must be an instance of str or unicode')
-    binary_hex = codecs.encode(value, 'hex')
+    binary_hex = codecs.encode(value, 'hex')  # type: ignore
     return add_0x_prefix(binary_hex.decode('ascii'))
 
 
-def is_0x_prefixed(value):
+def is_0x_prefixed(value: Any) -> bool:
     if not is_text(value):
         raise TypeError(
             "is_0x_prefixed requires text typed arguments. Got: {0}".format(repr(value))
@@ -31,19 +38,19 @@ def is_0x_prefixed(value):
     return value.startswith('0x') or value.startswith('0X')
 
 
-def remove_0x_prefix(value):
+def remove_0x_prefix(value: str) -> str:
     if is_0x_prefixed(value):
         return value[2:]
     return value
 
 
-def add_0x_prefix(value):
+def add_0x_prefix(value: str) -> str:
     if is_0x_prefixed(value):
         return value
     return '0x' + value
 
 
-def is_hex(value):
+def is_hex(value: Any) -> bool:
     if not is_text(value):
         raise TypeError('is_hex requires text typed arguments. Got: {0}'.format(repr(value)))
     elif value.lower() == '0x':
@@ -59,7 +66,7 @@ def is_hex(value):
         return False
 
     try:
-        value_as_bytes = codecs.decode(value_to_decode, 'hex')
+        value_as_bytes = codecs.decode(value_to_decode, 'hex')  # type: ignore
     except binascii.Error:
         return False
     except TypeError:

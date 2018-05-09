@@ -1,6 +1,8 @@
 import decimal
 from decimal import localcontext
 
+from typing import Union
+
 from .types import (
     is_integer,
     is_string,
@@ -43,7 +45,7 @@ MIN_WEI = 0
 MAX_WEI = 2 ** 256 - 1
 
 
-def from_wei(number, unit):
+def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     """
     Takes a number of wei and converts it to any other ether unit.
     """
@@ -68,7 +70,7 @@ def from_wei(number, unit):
     return result_value
 
 
-def to_wei(number, unit):
+def to_wei(number: int, unit: str) -> int:
     """
     Takes a number of a unit and converts it to wei.
     """
