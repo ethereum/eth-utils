@@ -100,6 +100,11 @@ def test_from_wei(value, expected):
 def test_to_wei(value, expected):
     assert to_wei(*value) == decimal.Decimal(expected)
 
+@given(
+    value=st.floats(min_value=0, max_value=1),
+)
+def test_to_wei_float(value):
+    assert from_wei(to_wei(value, 'ether'), 'ether') == decimal.Decimal(str(value))
 
 @pytest.mark.parametrize(
     'value,unit',
