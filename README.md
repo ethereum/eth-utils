@@ -1157,16 +1157,10 @@ Returns `True` if `value` is a hexadecimal encoded string of text type.
 ```python
 >>> is_hex('')
 False
->>> is_hex(b'')
-False
 >>> is_hex('0x')
 True
->>> is_hex(b'0x')
-False
 >>> is_hex('0X')
 True
->>> is_hex(b'0X')
-False
 >>> is_hex('1234567890abcdef')
 True
 >>> is_hex('0x1234567890abcdef')
@@ -1181,6 +1175,11 @@ True
 True
 >>> is_hex('123456__abcdef')  # non hex characters
 False
+
+# invalid, will raise TypeError:
+>>> is_hex(b'')
+>>> is_hex(b'0x')
+>>> is_hex(b'0X')
 ```
 
 #### `remove_0x_prefix(value)` -> string
