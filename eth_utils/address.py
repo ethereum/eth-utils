@@ -73,9 +73,9 @@ def to_normalized_address(value: AnyStr) -> HexAddress:
     """
     Converts an address to its normalized hexadecimal representation.
     """
-    hex_address = hexstr_if_str(to_hex, value).lower()
+    hex_address = hexstr_if_str(to_hex, value).lower()  # type: ignore
     if is_address(hex_address):
-        return hex_address
+        return HexAddress(str(hex_address))
     else:
         raise ValueError(
             "Unknown format {}, attempted to normalize to {}".format(value, hex_address)
