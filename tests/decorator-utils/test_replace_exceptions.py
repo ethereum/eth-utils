@@ -1,30 +1,22 @@
 import pytest
 
-from eth_utils.decorators import replace_exceptions
+from eth_utils import replace_exceptions
 
 
-class ValidationError(Exception):
-    pass
-
-
-class BlockNotFound(Exception):
-    pass
-
-    
 @pytest.fixture()
 def mock_function_with_exception(old_to_new):
     @replace_exceptions(old_to_new)
-    def function_with_exception(val=True):
-        raise BlockNotFound
+    def function_with_exception(x):
+        raise TypeError
     return function_with_exception
 
 
 @pytest.mark.parametrize(
-    'old_to_new, new',
+    'old_to_new,new',
     (
-        ({BlockNotFound: ValidationError}, ValidationError),
-        ({BlockNotFound: TypeError}, TypeError),
-        ({ValidationError: BlockNotFound, BlockNotFound: TypeError}, TypeError),
+        ({TypeError: AttributeError}, AttributeError),
+        ({TypeError: NameError}, NameError),
+        ({ValueError: AttributeError, TypeError: NameError}, NameError),
     )
 )
 def test_decorator_replaces_exceptions(mock_function_with_exception, old_to_new, new):

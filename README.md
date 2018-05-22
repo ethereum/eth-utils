@@ -912,6 +912,25 @@ classmethod call
 1
 ```
 
+#### `@replace_exceptions`
+
+Replaces `Old` exceptions in a method with `New` exceptions.
+Accepts a Dict, with `Old` exceptions pointing to 
+`New` exceptions. 
+
+i.e. `{old1: new1, old2: new2, . . . }`
+
+```py
+from eth_utils import replace_exceptions
+
+@replace_exceptions({TypeError: AttributeError})
+def thing(x=True):
+    if x:
+        raise TypeError
+```
+
+Calling `thing()` will raise an `AttributeError`
+
 
 ### Encoding Utils
 
