@@ -1,8 +1,6 @@
 from typing import (
     Any,
     AnyStr,
-    NewType,
-    TypeVar,
 )
 
 from .crypto import keccak
@@ -21,12 +19,12 @@ from .types import (
     is_bytes,
     is_text,
 )
-
-
-Address = NewType('Address', bytes)  # for canonical addresses
-HexAddress = NewType('HexAddress', str)  # for hex encoded addresses
-ChecksumAddress = NewType('ChecksumAddress', HexAddress)  # for hex addresses with checksums
-AnyAddress = TypeVar('AnyAddress', Address, HexAddress, ChecksumAddress)
+from .typing import (
+    Address,
+    AnyAddress,
+    ChecksumAddress,
+    HexAddress,
+)
 
 
 def is_hex_address(value: Any) -> bool:
@@ -73,9 +71,9 @@ def to_normalized_address(value: AnyStr) -> HexAddress:
     """
     Converts an address to its normalized hexadecimal representation.
     """
-    hex_address = hexstr_if_str(to_hex, value).lower()  # type: ignore
+    hex_address = hexstr_if_str(to_hex, value).lower()
     if is_address(hex_address):
-        return HexAddress(str(hex_address))
+        return HexAddress(hex_address)
     else:
         raise ValueError(
             "Unknown format {}, attempted to normalize to {}".format(value, hex_address)

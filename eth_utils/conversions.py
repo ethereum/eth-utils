@@ -1,7 +1,5 @@
 from typing import (
     Callable,
-    NewType,
-    TypeVar,
     Union,
 )
 
@@ -12,11 +10,6 @@ from .encoding import (
     big_endian_to_int,
     int_to_big_endian,
 )
-from .types import (
-    is_boolean,
-    is_integer,
-    is_string,
-)
 from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
@@ -24,11 +17,16 @@ from .hexadecimal import (
     is_hex,
     remove_0x_prefix,
 )
-
-
-HexStr = NewType('HexStr', str)
-Primitives = Union[bytes, int, bool]
-T = TypeVar('T')
+from .types import (
+    is_boolean,
+    is_integer,
+    is_string,
+)
+from .typing import (
+    HexStr,
+    Primitives,
+    T,
+)
 
 
 @validate_conversion_arguments
@@ -99,6 +97,7 @@ def to_bytes(primitive: Primitives=None, hexstr: HexStr=None, text: str=None) ->
         return to_bytes(hexstr=to_hex(primitive))
     elif hexstr is not None:
         if len(hexstr) % 2:
+            # type check ignored here because casting an Optional arg to str is not possible
             hexstr = '0x0' + remove_0x_prefix(hexstr)  # type: ignore
         return decode_hex(hexstr)
     elif text is not None:
