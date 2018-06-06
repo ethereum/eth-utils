@@ -23,10 +23,15 @@ extras_require = {
     'dev': [
         "twine",
     ],
+    'doc': [
+        'Sphinx>=1.5.5,<2',
+        'sphinx_rtd_theme>=0.1.9,<2',
+    ],
 }
 
 extras_require['dev'] = (
     extras_require['dev'] +
+    extras_require['doc'] +
     extras_require['lint'] +
     extras_require['test'] +
     extras_require['deploy']
