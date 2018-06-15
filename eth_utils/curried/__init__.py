@@ -48,6 +48,7 @@ from eth_utils import (
     is_text,
     keccak,
     remove_0x_prefix,
+    replace_exceptions,
     reversed_return,
     sort_return,
     text_if_str,

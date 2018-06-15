@@ -1,6 +1,12 @@
 import functools
 import itertools
 
+from typing import (
+    Any,
+    Callable,
+    Dict,
+)
+
 from .types import (
     is_text,
 )
@@ -84,5 +90,29 @@ def return_arg_type(at_position):
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)
+        return wrapper
+    return decorator
+
+
+def replace_exceptions(
+        old_to_new_exceptions: Dict[BaseException, BaseException]) -> Callable[..., Any]:
+    '''
+    Replaces old exceptions with new exceptions to be raised in their place.
+    '''
+    old_exceptions = tuple(old_to_new_exceptions.keys())
+
+    def decorator(to_wrap: Callable[..., Any]) -> Callable[..., Any]:
+        @functools.wraps(to_wrap)
+        # String type b/c pypy3 throws SegmentationFault with Iterable as arg on nested fn
+        # Ignore so we don't have to import `Iterable`
+        def wrapper(*args: 'Iterable[Any]',  # type: ignore
+                    **kwargs: 'Dict[str, Any]') -> Callable[..., Any]:
+            try:
+                return to_wrap(*args, **kwargs)
+            except old_exceptions as e:  # type: ignore
+                try:
+                    raise old_to_new_exceptions[type(e)] from e  # type: ignore
+                except KeyError:
+                    raise TypeError("could not look up new exception to use for %r" % e) from e
         return wrapper
     return decorator
