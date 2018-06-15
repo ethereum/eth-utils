@@ -4,8 +4,9 @@ from typing import (
     Union,
 )
 
+from eth_typing import Address
 
-Address = NewType('Address', bytes)  # for canonical addresses
+
 HexAddress = NewType('HexAddress', str)  # for hex encoded addresses
 ChecksumAddress = NewType('ChecksumAddress', HexAddress)  # for hex addresses with checksums
 AnyAddress = TypeVar('AnyAddress', Address, HexAddress, ChecksumAddress)
