@@ -5,6 +5,7 @@ import itertools
 from typing import (
     Any,
     Callable,
+    TypeVar,
 )
 
 from .toolz import (
@@ -13,9 +14,10 @@ from .toolz import (
 
 
 AnyCallable = Callable[..., Any]
+T = TypeVar('T')
 
 
-def identity(value: Any) -> Any:
+def identity(value: T) -> T:
     return value
 
 
