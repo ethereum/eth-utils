@@ -74,6 +74,9 @@ from .hexadecimal import (  # noqa: F401
     is_hex,
     remove_0x_prefix,
 )
+from .module_loading import (  # noqa: F401
+    import_string,
+)
 from .types import (  # noqa: F401
     is_boolean,
     is_bytes,
