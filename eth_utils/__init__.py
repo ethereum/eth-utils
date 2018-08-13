@@ -55,6 +55,9 @@ from .encoding import (  # noqa: F401
     big_endian_to_int,
     int_to_big_endian,
 )
+from .exceptions import (  # noqa: F401
+    ValidationError,
+)
 from .functional import (  # noqa: F401
     apply_to_return_value,
     flatten_return,
