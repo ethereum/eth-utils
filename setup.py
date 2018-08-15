@@ -20,9 +20,13 @@ extras_require = {
         'tox>=2.9.1,<3.0.0',
         'wheel>=0.30.0,<1.0.0',
     ],
+    'dev': [
+        "twine",
+    ],
 }
 
 extras_require['dev'] = (
+    extras_require['dev'] +
     extras_require['lint'] +
     extras_require['test'] +
     extras_require['deploy']
