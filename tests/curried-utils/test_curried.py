@@ -46,6 +46,8 @@ def test_curried_namespace():
     def should_curry(func):
         if not callable(func) or isinstance(func, curry):
             return False
+        if isinstance(func, type) and issubclass(func, Exception):
+            return False
         nargs = enhanced_num_required_args(func)
         if nargs is None or nargs > 1:
             return True

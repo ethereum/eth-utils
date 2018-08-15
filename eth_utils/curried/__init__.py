@@ -66,6 +66,7 @@ from eth_utils import (
     to_text,
     to_tuple,
     to_wei,
+    ValidationError,
 )
 
 apply_formatter_at_index = curry(apply_formatter_at_index)
