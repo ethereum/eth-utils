@@ -1,3 +1,8 @@
+1.0.4
+-----
+
+* Add `ValidationError` exception
+
 0.7.3
 -----
 
