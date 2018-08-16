@@ -22,10 +22,14 @@ lib64
 # Installer logs
 pip-log.txt
 
-# Unit test / coverage reports
+# Testing
 .coverage
 .tox
 nosetests.xml
+.mypy_cache
+.hypothesis
+.cache  # tox cache
+.pytest_cache
 
 # Translations
 *.mo
@@ -41,13 +45,6 @@ output/*/index.html
 
 # Sphinx
 docs/_build
-
-# Hypothese Property base testing
-.hypothesis
-
-# tox/pytest cache
-.cache
-.pytest_cache
 
 # Test output logs
 logs
