@@ -1,3 +1,9 @@
+1.2.0
+-----
+
+* Import more resources from implementation-specific "toolz" library in
+  "toolz" wrapper module
+
 1.1.2
 -----
 
