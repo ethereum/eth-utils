@@ -1358,17 +1358,3 @@ False
 >>> is_text(bytearray((1, 2, 3)))
 False
 ```
-
-
-#### How to bumpversion
-
-The version format for this repo is `{major}.{minor}.{patch}` for stable, and
-`{major}.{minor}.{patch}-{stage}.{devnum}` for unstable (`stage` can be alpha or beta).
-
-To issue the next version in line, use bumpversion and specify which part to bump,
-like `bumpversion minor` or `bumpversion devnum`.
-
-If you are in a beta version, `bumpversion stage` will switch to a stable.
-
-To issue an unstable version when the current version is stable, specify the
-new version explicitly, like `bumpversion --new-version 4.0.0-alpha.1 devnum`
