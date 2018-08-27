@@ -85,11 +85,13 @@ from .types import (  # noqa: F401
     is_bytes,
     is_dict,
     is_integer,
+    is_list,
     is_list_like,
     is_null,
     is_number,
     is_string,
     is_text,
+    is_tuple,
 )
 
 

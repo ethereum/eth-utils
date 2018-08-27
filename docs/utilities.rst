@@ -6,9 +6,9 @@ All functions can be imported directly from the ``eth_utils`` module
 Alternatively, you can get the curried version of the functions by
 importing them through the ``curried`` module like so:
 
-.. code:: py
+.. doctest::
 
-   from eth_utils.curried import hexstr_if_str
+   >>> from eth_utils.curried import hexstr_if_str
 
 ABI Utils
 ~~~~~~~~~
@@ -18,8 +18,9 @@ ABI Utils
 
 Returns the 32 byte log topic for the given event abi.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import event_abi_to_log_topic
    >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})
    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
 
@@ -28,8 +29,9 @@ Returns the 32 byte log topic for the given event abi.
 
 Returns the 32 byte log topic for the given event signature.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import event_signature_to_log_topic
    >>> event_signature_to_log_topic('MyEvent()')
    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
 
@@ -38,8 +40,9 @@ Returns the 32 byte log topic for the given event signature.
 
 Returns the 4 byte function selector for the given function abi.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import function_abi_to_4byte_selector
    >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})
    b'\xc3x\n:'
 
@@ -48,8 +51,9 @@ Returns the 4 byte function selector for the given function abi.
 
 Returns the 4 byte function selector for the given function signature.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import function_signature_to_4byte_selector
    >>> function_signature_to_4byte_selector('myFunction()')
    b'\xc3x\n:'
 
@@ -84,7 +88,7 @@ These tools often work nicely when curried. Import them from the
 This function will apply the formatter only if
 ``bool(condition()) is True``.
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_formatter_if, is_string
 
@@ -127,7 +131,7 @@ at position ``at_index``, and return a new iterable with that element
 replaced. The returned value will be the same type as the one passed
 into the third argument.
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_formatter_at_index
 
@@ -145,7 +149,7 @@ into the third argument.
 This function will apply the formatter to each element of ``list_like``.
 It returns the same type as the ``list_like`` argument
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_formatter_to_array
 
@@ -164,7 +168,7 @@ This function will apply each formatter at to the list-like value, at
 the position it was supplied. It returns the same time as the
 ``list_like`` argument. For example:
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_formatters_to_sequence
 
@@ -179,9 +183,11 @@ the position it was supplied. It returns the same time as the
    # Formatters and list-like value must be the same length
 
    >>> list_formatter((1.2, 3.4, 5.6, 7.8))
+   Traceback (most recent call last):
    IndexError: Too few formatters for sequence: 3 formatters for (1.2, 3.4, 5.6, 7.8)
 
    >>> list_formatter((1.2, 3.4))
+   Traceback (most recent call last):
    IndexError: Too many formatters for sequence: 3 formatters for (1.2, 3.4)
 
 ``combine_argument_formatters(*formatters)`` -> lambda <list_like>: <new_list_like>
@@ -191,7 +197,7 @@ the position it was supplied. It returns the same time as the
 
 You can replace all current versions of:
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils import combine_argument_formatters
 
@@ -199,7 +205,7 @@ You can replace all current versions of:
 
 With the newer, preferred:
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_formatters_to_sequence
 
@@ -211,7 +217,7 @@ Combine several formatters to be applied to a list-like value, each
 formatter at the position it was supplied. The new formatter will return
 the same type as it was supplied. For example:
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils import combine_argument_formatters
 
@@ -225,7 +231,7 @@ the same type as it was supplied. For example:
 
    # it will pass through items longer than the number of formatters supplied
    >>> list_formatter((1.2, 3.4, 5.6, 7.8))
-   [True, 3, '5.6', 7.8]
+   (True, 3, '5.6', 7.8)
 
 ``apply_formatters_to_dict(formatter_dict, <dict_like>)`` -> dict
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -234,25 +240,22 @@ This function will apply the formatter to the element with the matching
 key in ``dict_like``, passing through values with keys that have no
 matching formatter.
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_formatters_to_dict
 
    >>> dict_formatter = apply_formatters_to_dict({
-       'should_be_int': int,
-       'should_be_bool': bool,
-   })
+   ...    'should_be_int': int,
+   ...    'should_be_bool': bool,
+   ... })
 
-   >>> dict_formatter({
-       'should_be_int': 1.2,
-       'should_be_bool': 3.4,
-       'pass_through': 5.6,
-   })
-   {
-       'should_be_int': 1,
-       'should_be_bool': True,
-       'pass_through': 5.6,
-   }
+   >>> result = dict_formatter({
+   ...    'should_be_int': 1.2,
+   ...    'should_be_bool': 3.4,
+   ...    'pass_through': 5.6,
+   ... })
+   >>> result == {'should_be_int': 1, 'should_be_bool': True, 'pass_through': 5.6}
+   True
 
 ``apply_key_map(formatter_dict, <dict_like>)`` -> dict
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -260,25 +263,22 @@ matching formatter.
 This function will rename keys from using the lookups provided in
 ``formatter_dict``. It will pass through any unspecified keys.
 
-.. code:: py
+.. doctest::
 
    >>> from eth_utils.curried import apply_key_map
 
    >>> dict_key_map = apply_key_map({
-       'black': 'orange',
-       'Internet': 'Ethereum',
-   })
+   ...    'black': 'orange',
+   ...    'Internet': 'Ethereum',
+   ... })
 
-   >>> dict_key_map({
-       'black': 1.2,
-       'Internet': 3.4,
-       'pass_through': 5.6,
-   })
-   {
-       'orange': 1.2,
-       'Ethereum': 3.4,
-       'pass_through': 5.6,
-   }
+   >>> result = dict_key_map({
+   ...    'black': 1.2,
+   ...    'Internet': 3.4,
+   ...    'pass_through': 5.6,
+   ... })
+   >>> result == {'orange': 1.2, 'Ethereum': 3.4, 'pass_through': 5.6}
+   True
 
 Address Utils
 ~~~~~~~~~~~~~
@@ -310,17 +310,14 @@ address formats.
 
    -  ``'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'``
 
--  20 text or bytes string padded to 32 bytes with null bytes.
-
-   -  ``'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'``
-
 This function has two special cases when it will return False:
 
 -  a 20-byte hex string that has mixed case, with an invalid checksum
 -  a 32-byte value that is all null bytes
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_address
    >>> is_address('d3cda913deb6f67967b99d67acdfa1712c293601')
    True
    >>> is_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
@@ -330,19 +327,19 @@ This function has two special cases when it will return False:
    >>> is_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
    True
    >>> is_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
-   True
+   False
    >>> is_address('000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
-   True
+   False
    >>> is_address('0x000000000000000000000000d3cda913deb6f67967b99d67acdfa1712c293601')
-   True
+   False
    >>> is_address('0x000000000000000000000000D3CDA913DEB6F67967B99D67ACDFA1712C293601')
-   True
+   False
    >>> is_address('0x000000000000000000000000d3CdA913deB6f67967B99D67aCDFa1712C293601')
-   True
-   >>> is_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+   False
+   >>> is_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    True
    >>> is_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
-   True
+   False
    >>> is_address('0x0000000000000000000000000000000000000000000000000000000000000000')
    False
    >>> is_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
@@ -360,8 +357,9 @@ Otherwise return ``False``
 -  ``'0xD3CDA913DEB6F67967B99D67ACDFA1712C293601'``
 -  ``'0xd3CdA913deB6f67967B99D67aCDFa1712C293601'``
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_hex_address
    >>> is_hex_address('d3cda913deb6f67967b99d67acdfa1712c293601')
    True
    >>> is_hex_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
@@ -394,8 +392,9 @@ Otherwise return ``False``
 
 Return ``True`` if the value is a 20 byte string.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_binary_address
    >>> is_binary_address('d3cda913deb6f67967b99d67acdfa1712c293601')
    False
    >>> is_binary_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
@@ -414,7 +413,7 @@ Return ``True`` if the value is a 20 byte string.
    False
    >>> is_binary_address('0x000000000000000000000000d3CdA913deB6f67967B99D67aCDFa1712C293601')
    False
-   >>> is_binary_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+   >>> is_binary_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    True
    >>> is_binary_address('\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    False
@@ -432,11 +431,12 @@ The canonical representation of an address according to ``eth_utils`` is
 a 20 byte long string of bytes, eg:
 ``b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'``
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_canonical_address
    >>> is_canonical_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
    False
-   >>> is_canonical_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd')
+   >>> is_canonical_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    True
    >>> is_canonical_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd')
    False
@@ -447,8 +447,9 @@ a 20 byte long string of bytes, eg:
 Returns ``True`` if the ``value`` is a checksummed address as specified
 by `ERC55 <https://github.com/ethereum/EIPs/issues/55>`__
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_checksum_address
    >>> is_checksum_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
    True
    >>> is_checksum_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
@@ -466,8 +467,9 @@ by `ERC55 <https://github.com/ethereum/EIPs/issues/55>`__
 Returns ``True`` if the ``value`` is formatted as an
 `ERC55 <https://github.com/ethereum/EIPs/issues/55>`__ checksum address.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_checksum_formatted_address
    >>> is_checksum_formatted_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
    True
    >>> is_checksum_formatted_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
@@ -487,8 +489,9 @@ Returns ``True`` if the ``value`` is an address in its normalized form.
 The normalized representation of an address is the lowercased 20 byte
 hexadecimal format.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_normalized_address
    >>> is_normalized_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
    False
    >>> is_normalized_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
@@ -507,13 +510,14 @@ Returns ``True`` if both ``a`` and ``b`` are valid addresses according
 to the ``is_address`` function and that they are both representations of
 the same address.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_same_address
    >>> is_same_address('0xd3cda913deb6f67967b99d67acdfa1712c293601', '0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
    True
    >>> is_same_address('0xd3cda913deb6f67967b99d67acdfa1712c293601', '0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
    True
-   >>> is_same_address('0xd3cda913deb6f67967b99d67acdfa1712c293601', '\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd')
+   >>> is_same_address('0xd3cda913deb6f67967b99d67acdfa1712c293601', b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    True
 
 ``to_canonical_address(value)`` -> bytes
@@ -521,16 +525,17 @@ the same address.
 
 Given any valid representation of an address return its canonical form.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_canonical_address
    >>> to_canonical_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
-   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd'
+   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'
    >>> to_canonical_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
-   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd'
+   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'
    >>> to_canonical_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
-   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd'
-   >>> to_canonical_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd')
-   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd'
+   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'
+   >>> to_canonical_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
+   b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'
 
 ``to_checksum_address(value)`` -> text
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -538,15 +543,16 @@ Given any valid representation of an address return its canonical form.
 Given any valid representation of an address return the checksummed
 representation.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_checksum_address
    >>> to_checksum_address('0xd3cda913deb6f67967b99d67acdfa1712c293601')
    '0xd3CdA913deB6f67967B99D67aCDFa1712C293601'
    >>> to_checksum_address('0xD3CDA913DEB6F67967B99D67ACDFA1712C293601')
    '0xd3CdA913deB6f67967B99D67aCDFa1712C293601'
    >>> to_checksum_address('0xd3CdA913deB6f67967B99D67aCDFa1712C293601')
    '0xd3CdA913deB6f67967B99D67aCDFa1712C293601'
-   >>> to_checksum_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01xd')
+   >>> to_checksum_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    '0xd3CdA913deB6f67967B99D67aCDFa1712C293601'
 
 ``to_normalized_address(value)`` -> text
@@ -555,18 +561,17 @@ representation.
 Given any valid representation of an address return the normalized
 representation.
 
-.. code:: python
+.. doctest::
 
-   >>> to_normalized_address('\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')  # raw bytes
+   >>> from eth_utils import to_normalized_address
+   >>> to_normalized_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')  # raw bytes
    '0xd3cda913deb6f67967b99d67acdfa1712c293601'
-   >>> to_normalized_address(b'0xc6d9d2cd449a754c494264e1809c50e34d64562b')  # hex encoded (as byte string)
+   >>> to_normalized_address('c6d9d2cd449a754c494264e1809c50e34d64562b')  # hex encoded
    '0xc6d9d2cd449a754c494264e1809c50e34d64562b'
    >>> to_normalized_address('0xc6d9d2cd449a754c494264e1809c50e34d64562b')  # hex encoded
    '0xc6d9d2cd449a754c494264e1809c50e34d64562b'
    >>> to_normalized_address('0XC6D9D2CD449A754C494264E1809C50E34D64562B')  # cap-cased
    '0xc6d9d2cd449a754c494264e1809c50e34d64562b'
-   >>> to_normalized_address('0x000000000000000000000000c305c901078781c232a2a521c2af7980f8385ee9')  # padded to 32 bytes
-   '0xc305c901078781c232a2a521c2af7980f8385ee9',
 
 Conversion Utils
 ~~~~~~~~~~~~~~~~
@@ -586,8 +591,9 @@ being supplied when passing in a ``str``.
 Takes a variety of inputs and returns its bytes equivalent. Text gets
 encoded as UTF-8.
 
-.. code:: py
+.. doctest::
 
+   >>> from eth_utils import to_bytes
    >>> to_bytes(0)
    b'\x00'
    >>> to_bytes(0x000F)
@@ -617,8 +623,9 @@ representation. It follows the rules for converting to hex in the
 JSON-RPC spec. Roughly, it leaves leading 0s on bytes input, and trims
 leading zeros on int input.
 
-.. code:: py
+.. doctest::
 
+   >>> from eth_utils import to_hex
    >>> to_hex(0)
    '0x0'
    >>> to_hex(1)
@@ -649,8 +656,9 @@ leading zeros on int input.
 
 Takes a variety of inputs and returns its integer equivalent.
 
-.. code:: py
+.. doctest::
 
+   >>> from eth_utils import to_int
    >>> to_int(0)
    0
    >>> to_int(0x000F)
@@ -672,17 +680,18 @@ Takes a variety of inputs and returns its integer equivalent.
 Takes a variety of inputs and returns its string equivalent. Text gets
 decoded as UTF-8.
 
-.. code:: py
+.. doctest::
 
-   >>> Web3.toText(0x636f776dc3b6)
+   >>> from eth_utils import to_text
+   >>> to_text(0x636f776dc3b6)
    'cowmö'
-   >>> Web3.toText(b'cowm\xc3\xb6')
+   >>> to_text(b'cowm\xc3\xb6')
    'cowmö'
-   >>> Web3.toText(hexstr='0x636f776dc3b6')
+   >>> to_text(hexstr='0x636f776dc3b6')
    'cowmö'
-   >>> Web3.toText(hexstr='636f776dc3b6')
+   >>> to_text(hexstr='636f776dc3b6')
    'cowmö'
-   >>> Web3.toText(text='cowmö')
+   >>> to_text(text='cowmö')
    'cowmö'
 
 Crypto Utils
@@ -697,8 +706,9 @@ Only supply one of the arguments:
 ``keccak(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> bytes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import keccak
    >>> keccak(text='')
    b"\xc5\xd2F\x01\x86\xf7#<\x92~}\xb2\xdc\xc7\x03\xc0\xe5\x00\xb6S\xca\x82';{\xfa\xd8\x04]\x85\xa4p"
 
@@ -721,7 +731,7 @@ converts the hex to an int, so leading 0 bytes are truncated. But all
 other formats maintain zeros on the left. Hex literals are only padded
 until a whole number of bytes are provided to keccak. For example:
 
-.. code:: py
+.. doctest::
 
    >>> keccak(0xe298a2)
    b'\x85\xe8\x07"\xeb\x93\r\xe9;\xcc\xa8{\xa5\xdf\xda\x89\n\xa12\x95\xae\xad.\xec\xc9\x0b\xb2\xd9z\x14\x93\x16'
@@ -803,8 +813,9 @@ ether. Available denominations are:
 | tether       | 1000000000000000000000000000000 |
 +--------------+---------------------------------+
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import denoms
    >>> denoms.wei
    1
    >>> denoms.finney
@@ -818,8 +829,9 @@ ether. Available denominations are:
 Converts ``value`` in the given ``denomination`` to its equivalent in
 the *wei* denomination.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_wei
    >>> to_wei(1, 'ether')
    1000000000000000000
 
@@ -830,8 +842,9 @@ Converts the ``value`` in the *wei* denomination to its equivalent in
 the given ``denomination``. Return value is a ``decimal.Decimal`` with
 the appropriate precision to be a lossless conversion.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import from_wei
    >>> from_wei(1000000000000000000, 'ether')
    Decimal('1')
    >>> from_wei(123456789, 'ether')
@@ -875,32 +888,35 @@ method or a ``@classmethod``.
 
 Use the decorator like so:
 
-.. code:: py
+.. doctest::
 
-   from eth_utils import combomethod
+   >>> from eth_utils import combomethod
 
-   class Storage:
-       val = 1
-
-       @combomethod
-       def get(combo):
-           if isinstance(combo, type):
-               print("classmethod call")
-           elif isinstance(combo, Storage):
-               print("instance method call")
-           else:
-               raise TypeError("Unreachable, unless you really monkey around")
-           return combo.val
+   >>> class Storage:
+   ...    val = 1
+   ...
+   ...    @combomethod
+   ...    def get(combo):
+   ...        if isinstance(combo, type):
+   ...            print("classmethod call")
+   ...        elif isinstance(combo, Storage):
+   ...            print("instance method call")
+   ...        else:
+   ...            raise TypeError("Unreachable, unless you really monkey around")
+   ...        return combo.val
+   ...
 
 As usual, instances create their own copy on assignment.
 
-.. code:: py
+.. doctest::
 
    >>> store = Storage()
    >>> store.val = 2
+
    >>> store.get()
    instance method call
    2
+
    >>> Storage.get()
    classmethod call
    1
@@ -914,8 +930,9 @@ Encoding Utils
 Returns ``value`` converted to an integer (from a big endian
 representation).
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import big_endian_to_int
    >>> big_endian_to_int(b'\x00')
    0
    >>> big_endian_to_int(b'\x01')
@@ -928,8 +945,9 @@ representation).
 
 Returns ``value`` converted to the big endian representation.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import int_to_big_endian
    >>> int_to_big_endian(0)
    b'\x00'
    >>> int_to_big_endian(1)
@@ -1013,16 +1031,17 @@ Decorator which reverses the return value from the given ``callable``.
 Decorator which casts the return value from the given ``callable`` to a
 dictionary.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_dict
    >>> @to_dict
    ... def build_thing():
    ...     yield 'a', 1
    ...     yield 'b', 2
    ...     yield 'c', 3
    ...
-   >>> build_thing()
-   {'a': 1, 'b': 2, 'c': 3}
+   >>> build_thing() == {'a': 1, 'b': 2, 'c': 3}
+   True
 
 ``to_list(callable)`` => callable() -> list
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1030,8 +1049,9 @@ dictionary.
 Decorator which casts the return value from the given ``callable`` to a
 list.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_list
    >>> @to_list
    ... def build_thing():
    ...     yield 'a'
@@ -1047,8 +1067,9 @@ list.
 Decorator which casts the return value from the given ``callable`` to an
 ordered dictionary of type ``collections.OrderedDict``.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_ordered_dict
    >>> @to_ordered_dict
    ... def build_thing():
    ...     yield 'd', 4
@@ -1065,8 +1086,9 @@ ordered dictionary of type ``collections.OrderedDict``.
 Decorator which casts the return value from the given ``callable`` to a
 tuple.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_tuple
    >>> @to_tuple
    ... def build_thing():
    ...     yield 'a'
@@ -1082,8 +1104,9 @@ tuple.
 Decorator which casts the return value from the given ``callable`` to a
 set.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import to_set
    >>> @to_set
    ... def build_thing():
    ...     yield 'a'
@@ -1091,8 +1114,8 @@ set.
    ...     yield 'a'  # duplicate
    ...     yield 'c'
    ...
-   >>> build_thing()
-   {'a', 'b', 'c'}
+   >>> build_thing() == {'c', 'b', 'a'} 
+   True 
 
 ``apply_to_return_value(callable)`` => decorator_fn
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1102,8 +1125,9 @@ returned decorator, when applied to a function, will incercept the
 function’s return value, pass it to the callable, and return the value
 returned by the callable.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import apply_to_return_value
    >>> double = apply_to_return_value(lambda v: v * 2)
    >>> @double
    ... def f(v):
@@ -1123,8 +1147,9 @@ Hexidecimal Utils
 Returns ``value`` with a ``0x`` prefix. If the value is already prefixed
 it is returned as-is. Value must be a string literal.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import add_0x_prefix
    >>> add_0x_prefix('12345')
    '0x12345'
    >>> add_0x_prefix('0x12345')
@@ -1136,8 +1161,9 @@ it is returned as-is. Value must be a string literal.
 Returns ``value`` decoded into a byte string. Accepts any string with or
 without the ``0x`` prefix.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import decode_hex
    >>> decode_hex('0x123456')
    b'\x124V'
    >>> decode_hex('123456')
@@ -1149,9 +1175,10 @@ without the ``0x`` prefix.
 Returns ``value`` encoded into a hexadecimal representation with a
 ``0x`` prefix
 
-.. code:: python
+.. doctest::
 
-   >>> encode_hex('\x01\x02\x03')
+   >>> from eth_utils import encode_hex
+   >>> encode_hex(b'\x01\x02\x03')
    '0x010203'
 
 ``is_0x_prefixed(value)`` -> bool
@@ -1160,8 +1187,9 @@ Returns ``value`` encoded into a hexadecimal representation with a
 Returns ``True`` if ``value`` has a ``0x`` prefix. Value must be a
 string literal.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_0x_prefixed
    >>> is_0x_prefixed('12345')
    False
    >>> is_0x_prefixed('0x12345')
@@ -1173,8 +1201,9 @@ string literal.
 Returns ``True`` if ``value`` is a hexadecimal encoded string of text
 type.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_hex
    >>> is_hex('')
    False
    >>> is_hex('0x')
@@ -1198,8 +1227,14 @@ type.
 
    # invalid, will raise TypeError:
    >>> is_hex(b'')
+   Traceback (most recent call last):
+   TypeError: is_hex requires text typed arguments.
    >>> is_hex(b'0x')
+   Traceback (most recent call last):
+   TypeError: is_hex requires text typed arguments.
    >>> is_hex(b'0X')
+   Traceback (most recent call last):
+   TypeError: is_hex requires text typed arguments.
 
 ``remove_0x_prefix(value)`` -> string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1207,8 +1242,9 @@ type.
 Returns ``value`` with the ``0x`` prefix stripped. If the value does not
 have a ``0x`` prefix it is returned as-is. Value must be string literal.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import remove_0x_prefix
    >>> remove_0x_prefix('12345')
    '12345'
    >>> remove_0x_prefix('0x12345')
@@ -1222,12 +1258,13 @@ Type Utils
 
 Returns ``True`` if ``value`` is of type ``bool``
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_boolean
    >>> is_boolean(True)
    True
    >>> is_boolean(False)
-   False
+   True
    >>> is_boolean(1)
    False
 
@@ -1236,8 +1273,9 @@ Returns ``True`` if ``value`` is of type ``bool``
 
 Returns ``True`` if ``value`` is a byte string or a byte array.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_bytes
    >>> is_bytes('abcd')
    False
    >>> is_bytes(b'abcd')
@@ -1250,8 +1288,9 @@ Returns ``True`` if ``value`` is a byte string or a byte array.
 
 Returns ``True`` if ``value`` is a mapping type.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_dict
    >>> is_dict({'a': 1})
    True
    >>> is_dict([1, 2, 3])
@@ -1262,8 +1301,9 @@ Returns ``True`` if ``value`` is a mapping type.
 
 Returns ``True`` if ``value`` is an integer
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_integer
    >>> is_integer(0)
    True
    >>> is_integer(1)
@@ -1279,8 +1319,9 @@ Returns ``True`` if ``value`` is an integer
 Returns ``True`` if ``value`` is a non-string sequence such as a
 sequence (such as a list or tuple).
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_list_like
    >>> is_list_like('abcd')
    False
    >>> is_list_like([])
@@ -1293,8 +1334,9 @@ sequence (such as a list or tuple).
 
 Returns ``True`` if ``value`` is a non-string sequence such as a list.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_list
    >>> is_list('abcd')
    False
    >>> is_list([])
@@ -1307,8 +1349,9 @@ Returns ``True`` if ``value`` is a non-string sequence such as a list.
 
 Returns ``True`` if ``value`` is a non-string sequence such as a tuple.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_tuple
    >>> is_tuple('abcd')
    False
    >>> is_tuple([])
@@ -1321,8 +1364,9 @@ Returns ``True`` if ``value`` is a non-string sequence such as a tuple.
 
 Returns ``True`` if ``value`` is ``None``
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_null
    >>> is_null(None)
    True
    >>> is_null(False)
@@ -1333,15 +1377,17 @@ Returns ``True`` if ``value`` is ``None``
 
 Returns ``True`` if ``value`` is numeric
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_number
    >>> is_number(1)
    True
    >>> is_number(1.1)
    True
    >>> is_number('1')
    False
-   >>> is_number(decimal.Decimal('1'))
+   >>> from decimal import Decimal
+   >>> is_number(Decimal('1'))
    True
 
 ``is_string(value)`` -> bool
@@ -1349,8 +1395,9 @@ Returns ``True`` if ``value`` is numeric
 
 Returns ``True`` if ``value`` is of any string type.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_string
    >>> is_string('abcd')
    True
    >>> is_string(b'abcd')
@@ -1363,8 +1410,9 @@ Returns ``True`` if ``value`` is of any string type.
 
 Returns ``True`` if ``value`` is a text string.
 
-.. code:: python
+.. doctest::
 
+   >>> from eth_utils import is_text
    >>> is_text(u'abcd')
    True
    >>> is_text(b'abcd')
