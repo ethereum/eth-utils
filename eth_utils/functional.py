@@ -2,9 +2,7 @@ import collections
 import functools
 import itertools
 
-from .toolz import (
-    compose as _compose,
-)
+from .toolz import compose as _compose
 
 
 def identity(value):
@@ -22,6 +20,7 @@ def apply_to_return_value(callback):
             return callback(fn(*args, **kwargs))
 
         return inner
+
     return outer
 
 
@@ -31,5 +30,7 @@ to_dict = apply_to_return_value(dict)
 to_ordered_dict = apply_to_return_value(collections.OrderedDict)
 to_set = apply_to_return_value(set)
 sort_return = _compose(to_tuple, apply_to_return_value(sorted))
-flatten_return = _compose(to_tuple, apply_to_return_value(itertools.chain.from_iterable))
+flatten_return = _compose(
+    to_tuple, apply_to_return_value(itertools.chain.from_iterable)
+)
 reversed_return = _compose(to_tuple, apply_to_return_value(reversed), to_tuple)

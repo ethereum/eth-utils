@@ -20,7 +20,7 @@ from eth_utils.types import (
         ("0x3", False),
         (True, False),
         (False, False),
-    ]
+    ],
 )
 def test_is_integer(value, expected):
     assert is_integer(value) == expected
@@ -36,7 +36,7 @@ def test_is_integer(value, expected):
         (None, False),
         (3, False),
         ({}, False),
-    ]
+    ],
 )
 def test_is_string(value, expected):
     assert is_string(value) == expected
@@ -52,7 +52,7 @@ def test_is_string(value, expected):
         ("0x3", False),
         ({}, True),
         ({"test": 3}, True),
-    ]
+    ],
 )
 def test_is_dict(value, expected):
     assert is_dict(value) == expected
@@ -68,7 +68,7 @@ def test_is_dict(value, expected):
         ("0x3", False),
         (True, True),
         (False, True),
-    ]
+    ],
 )
 def test_is_boolean(value, expected):
     assert is_boolean(value) == expected
@@ -94,7 +94,7 @@ def test_is_boolean(value, expected):
         ((None,), True),
         ((tuple(),), True),
         (((1, 2),), True),
-    ]
+    ],
 )
 def test_is_list_like(value, expected):
     assert is_list_like(value) == expected
@@ -120,7 +120,7 @@ def test_is_list_like(value, expected):
         ((None,), False),
         ((tuple(),), False),
         (((1, 2),), False),
-    ]
+    ],
 )
 def test_is_list(value, expected):
     assert is_list(value) == expected
@@ -146,7 +146,7 @@ def test_is_list(value, expected):
         ((None,), True),
         ((tuple(),), True),
         (((1, 2),), True),
-    ]
+    ],
 )
 def test_is_tuple(value, expected):
     assert is_tuple(value) == expected

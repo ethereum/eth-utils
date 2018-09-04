@@ -1,15 +1,9 @@
 import functools
 import itertools
 
-from typing import (
-    Any,
-    Callable,
-    Dict,
-)
+from typing import Any, Callable, Dict
 
-from .types import (
-    is_text,
-)
+from .types import is_text
 
 
 class combomethod(object):
@@ -23,6 +17,7 @@ class combomethod(object):
                 return self.method(obj, *args, **kwargs)
             else:
                 return self.method(objtype, *args, **kwargs)
+
         return _wrapper
 
 
@@ -41,7 +36,7 @@ def _assert_one_val(*args, **kwargs):
 
 
 def _hexstr_or_text_kwarg_is_text_type(**kwargs):
-    value = kwargs['hexstr'] if 'hexstr' in kwargs else kwargs['text']
+    value = kwargs["hexstr"] if "hexstr" in kwargs else kwargs["text"]
     return is_text(value)
 
 
@@ -54,7 +49,7 @@ def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs):
 
 
 def _validate_supported_kwarg(kwargs):
-    if next(iter(kwargs)) not in ['primitive', 'hexstr', 'text']:
+    if next(iter(kwargs)) not in ["primitive", "hexstr", "text"]:
         raise TypeError(
             "Kwarg must be 'primitive', 'hexstr', or 'text'. "
             "Instead, kwarg was: %r" % (next(iter(kwargs)))
@@ -68,51 +63,62 @@ def validate_conversion_arguments(to_wrap):
     - Kwarg must be 'primitive' 'hexstr' or 'text'
     - If it is 'hexstr' or 'text' that it is a text type
     """
+
     @functools.wraps(to_wrap)
     def wrapper(*args, **kwargs):
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
 
-        if len(args) is 0 and 'primitive' not in kwargs:
+        if len(args) is 0 and "primitive" not in kwargs:
             _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
         return to_wrap(*args, **kwargs)
+
     return wrapper
 
 
 def return_arg_type(at_position):
-    '''
+    """
     Wrap the return value with the result of `type(args[at_position])`
-    '''
+    """
+
     def decorator(to_wrap):
         @functools.wraps(to_wrap)
         def wrapper(*args, **kwargs):
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)
+
         return wrapper
+
     return decorator
 
 
 def replace_exceptions(
-        old_to_new_exceptions: Dict[BaseException, BaseException]) -> Callable[..., Any]:
-    '''
+    old_to_new_exceptions: Dict[BaseException, BaseException]
+) -> Callable[..., Any]:
+    """
     Replaces old exceptions with new exceptions to be raised in their place.
-    '''
+    """
     old_exceptions = tuple(old_to_new_exceptions.keys())
 
     def decorator(to_wrap: Callable[..., Any]) -> Callable[..., Any]:
         @functools.wraps(to_wrap)
         # String type b/c pypy3 throws SegmentationFault with Iterable as arg on nested fn
         # Ignore so we don't have to import `Iterable`
-        def wrapper(*args: 'Iterable[Any]',  # type: ignore
-                    **kwargs: 'Dict[str, Any]') -> Callable[..., Any]:
+        def wrapper(
+            *args: "Iterable[Any]", **kwargs: "Dict[str, Any]"  # type: ignore
+        ) -> Callable[..., Any]:
             try:
                 return to_wrap(*args, **kwargs)
             except old_exceptions as e:  # type: ignore
                 try:
                     raise old_to_new_exceptions[type(e)] from e  # type: ignore
                 except KeyError:
-                    raise TypeError("could not look up new exception to use for %r" % e) from e
+                    raise TypeError(
+                        "could not look up new exception to use for %r" % e
+                    ) from e
+
         return wrapper
+
     return decorator

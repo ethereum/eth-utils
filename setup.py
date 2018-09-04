@@ -7,6 +7,7 @@ from setuptools import (
 
 extras_require = {
     'lint': [
+        'black>=18.6b4,<19',
         'flake8>=3.5.0,<4.0.0',
         "mypy<0.600",
     ],
