@@ -39,25 +39,11 @@ from .conversions import (  # noqa: F401
     hexstr_if_str,
     text_if_str,
 )
-from .crypto import (  # noqa: F401
-    keccak,
-)
-from .currency import (  # noqa: F401
-    denoms,
-    from_wei,
-    to_wei,
-)
-from .decorators import (  # noqa: F401
-    combomethod,
-    replace_exceptions,
-)
-from .encoding import (  # noqa: F401
-    big_endian_to_int,
-    int_to_big_endian,
-)
-from .exceptions import (  # noqa: F401
-    ValidationError,
-)
+from .crypto import keccak  # noqa: F401
+from .currency import denoms, from_wei, to_wei  # noqa: F401
+from .decorators import combomethod, replace_exceptions  # noqa: F401
+from .encoding import big_endian_to_int, int_to_big_endian  # noqa: F401
+from .exceptions import ValidationError  # noqa: F401
 from .functional import (  # noqa: F401
     apply_to_return_value,
     flatten_return,
@@ -77,9 +63,7 @@ from .hexadecimal import (  # noqa: F401
     is_hex,
     remove_0x_prefix,
 )
-from .module_loading import (  # noqa: F401
-    import_string,
-)
+from .module_loading import import_string  # noqa: F401
 from .types import (  # noqa: F401
     is_boolean,
     is_bytes,
@@ -96,10 +80,12 @@ from .types import (  # noqa: F401
 
 
 if sys.version_info.major < 3:
-    warnings.simplefilter('always', DeprecationWarning)
-    warnings.warn(DeprecationWarning(
-        "The `eth-utils` library has dropped support for Python 2. Upgrade to Python 3."
-    ))
+    warnings.simplefilter("always", DeprecationWarning)
+    warnings.warn(
+        DeprecationWarning(
+            "The `eth-utils` library has dropped support for Python 2. Upgrade to Python 3."
+        )
+    )
     warnings.resetwarnings()
 
 

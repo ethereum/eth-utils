@@ -24,7 +24,10 @@ common: &common
           fi
     - restore_cache:
         keys:
-          - cache-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+          - v1-cache-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+    - run:
+        name: upgrade pip
+        command: pip install --upgrade pip
     - run:
         name: install dependencies
         command: pip install --user tox
@@ -49,7 +52,7 @@ jobs:
   lint:
     <<: *common
     docker:
-      - image: circleci/python:3.5
+      - image: circleci/python:3.6
         environment:
           TOXENV: lint
   py35:

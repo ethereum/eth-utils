@@ -1,7 +1,5 @@
 # flake8: noqa
-from eth_utils.toolz import (
-    curry,
-)
+from eth_utils.toolz import curry
 
 from eth_utils import (
     add_0x_prefix,

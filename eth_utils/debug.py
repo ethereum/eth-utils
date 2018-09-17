@@ -4,7 +4,7 @@ import sys
 
 
 def pip_freeze() -> str:
-    result = subprocess.run('pip freeze'.split(), stdout=subprocess.PIPE)
+    result = subprocess.run("pip freeze".split(), stdout=subprocess.PIPE)
     return "pip freeze result:\n%s" % result.stdout.decode()
 
 
@@ -17,8 +17,4 @@ def platform_info() -> str:
 
 
 def get_environment_summary() -> str:
-    return '\n\n'.join([
-        python_version(),
-        platform_info(),
-        pip_freeze(),
-    ])
+    return "\n\n".join([python_version(), platform_info(), pip_freeze()])
