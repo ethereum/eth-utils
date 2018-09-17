@@ -9,7 +9,8 @@ extras_require = {
     'lint': [
         'black>=18.6b4,<19',
         'flake8>=3.5.0,<4.0.0',
-        "mypy<0.600",
+        'mypy<0.600',
+        'pytest>=3.4.1,<4.0.0',
     ],
     'test': [
         'hypothesis>=3.4.2,<4.0.0',
