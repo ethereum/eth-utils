@@ -2,23 +2,36 @@ import collections
 import functools
 import itertools
 
+from typing import (
+    Any,
+    Callable,
+    TypeVar,
+)
+
 from .toolz import (
     compose as _compose,
 )
 
 
-def identity(value):
+AnyCallable = Callable[..., Any]
+T = TypeVar('T')
+
+
+def identity(value: T) -> T:
     return value
 
 
-def combine(f, g):
+def combine(f: AnyCallable, g: AnyCallable) -> AnyCallable:
     return lambda x: f(g(x))
 
 
-def apply_to_return_value(callback):
-    def outer(fn):
+def apply_to_return_value(callback: AnyCallable) -> Any:
+    def outer(fn: AnyCallable) -> AnyCallable:
         @functools.wraps(fn)
-        def inner(*args, **kwargs):
+        # String type b/c pypy3 throws SegmentationFault with Iterable as arg on nested fn
+        # Ignore so we don't have to import `Iterable`
+        def inner(*args: 'Iterable[Any]',  # type: ignore
+                  **kwargs: Callable[..., Any]) -> Callable[..., Any]:
             return callback(fn(*args, **kwargs))
 
         return inner
