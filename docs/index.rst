@@ -12,6 +12,7 @@ Welcome to Eth-Utils's documentation!
 
    overview
    utilities
+   releases
 
 
 Indices and tables
