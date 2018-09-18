@@ -42,3 +42,15 @@ release: clean
 sdist: clean
 	python setup.py sdist bdist_wheel
 	ls -l dist
+
+build-docs:
+	sphinx-apidoc -o docs/ . setup.py "*conftest*" "tests"
+	$(MAKE) -C docs clean
+	$(MAKE) -C docs html
+	$(MAKE) -C docs doctest
+
+mac-docs: build-docs
+	open docs/_build/html/index.html
+
+linux-docs: build-docs
+	readlink -f docs/_build/html/index.html
