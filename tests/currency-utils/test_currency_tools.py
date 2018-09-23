@@ -1,7 +1,7 @@
 import decimal
 
 import pytest
-import given, strategies as st
+from hypothesis import given, strategies as st
 
 from eth_utils.currency import units, to_wei, from_wei, MIN_WEI, MAX_WEI
 
