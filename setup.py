@@ -51,7 +51,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "eth-hash>=0.1.0,<1.0.0",
-        "eth-typing>=2.0.0,<3.0.0",
+        "eth-typing>=1.0.0,<3.0.0",
         "toolz>0.8.2,<1;implementation_name=='pypy'",
         "cytoolz>=0.8.2,<1.0.0;implementation_name=='cpython'",
     ],
