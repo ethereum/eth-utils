@@ -1,7 +1,7 @@
 import functools
 import itertools
 
-from typing import Any, Callable, Dict
+from typing import Any, Callable, Dict, Iterable
 
 from .types import is_text
 
