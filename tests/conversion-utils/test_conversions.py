@@ -63,7 +63,7 @@ def test_to_text_identity():
         (b"cowm\xc3\xb6", "cowmö"),
         (bytearray(b"cowm\xc3\xb6"), "cowmö"),
         ("0x636f776dc3b6", "cowmö"),
-        (0x636f776dc3b6, "cowmö"),
+        (0x636F776DC3B6, "cowmö"),
         ("0xa", "\n"),
     ),
 )
