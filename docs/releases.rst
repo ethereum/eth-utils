@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+v1.3.0
+--------------
+
+- Misc
+
+  - Fix linting issues
+
 v1.3.0-beta.0
 --------------
 
