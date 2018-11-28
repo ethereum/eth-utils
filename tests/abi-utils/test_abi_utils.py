@@ -2,6 +2,7 @@ import pytest
 
 from eth_utils.hexadecimal import encode_hex
 from eth_utils.abi import (
+    _abi_to_signature,
     function_signature_to_4byte_selector,
     function_abi_to_4byte_selector,
     event_signature_to_log_topic,
@@ -19,6 +20,29 @@ FN_ABI_C = {
         {"type": "bytes32", "name": "b"},
         {"type": "address", "name": "c"},
     ],
+}
+FN_ABI_D = {
+    "inputs": [
+        {
+            "components": [
+                {"name": "anAddress", "type": "address"},
+                {"name": "anInt", "type": "uint256"},
+                {"name": "someBytes", "type": "bytes"},
+                {
+                    "name": "aTuple",
+                    "type": "tuple",
+                    "components": [
+                        {"name": "anAddress", "type": "address"},
+                        {"name": "anInt", "type": "uint256"},
+                        {"name": "someBytes", "type": "bytes"},
+                    ],
+                },
+            ],
+            "type": "tuple",
+        }
+    ],
+    "name": "getOrderInfo",
+    "type": "function",
 }
 
 
@@ -44,6 +68,14 @@ def test_fn_signature_to_4byte_selector(signature, expected):
     bytes_selector = function_signature_to_4byte_selector(signature)
     hex_selector = encode_hex(bytes_selector)
     assert hex_selector == expected
+
+
+@pytest.mark.parametrize(
+    "abi,expected",
+    ((FN_ABI_D, "getOrderInfo((address,uint256,bytes,(address,uint256,bytes)))"),),
+)
+def test__abi_to_signature(abi, expected):
+    assert _abi_to_signature(abi) == expected
 
 
 EVENT_ABI_A = {
