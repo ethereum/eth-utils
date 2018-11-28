@@ -28,19 +28,12 @@ def collapse_tuple_type(abi):
     return "(" + ",".join(component_types) + ")"
 
 
-def get_fn_input_types(abi):
-    fn_input_types = [arg["type"] for arg in abi.get("inputs", [])]
-
-    for i in range(0, len(fn_input_types)):
-        if fn_input_types[i] == "tuple":
-            fn_input_types[i] = collapse_tuple_type(abi["inputs"][i])
-
-    return ",".join(fn_input_types)
-
-
 def _abi_to_signature(abi: Dict[str, Any]) -> str:
     function_signature = "{fn_name}({fn_input_types})".format(
-        fn_name=abi["name"], fn_input_types=get_fn_input_types(abi)
+        fn_name=abi["name"],
+        fn_input_types=",".join(
+            [collapse_tuple_type(abi_input) for abi_input in abi["inputs"]]
+        ),
     )
     return function_signature
 
