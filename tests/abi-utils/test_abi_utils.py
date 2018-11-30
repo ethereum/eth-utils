@@ -45,6 +45,20 @@ FN_ABI_NESTED_TUPLE_INPUTS = {
     "type": "function",
 }
 FN_ABI_NO_INPUTS = {"name": "noInputs", "type": "function"}
+FN_ABI_ARRAY_OF_TUPLES = {
+    "name": "tupleArrayInput",
+    "type": "function",
+    "inputs": [
+        {
+            "type": "tuple[]",
+            "components": [
+                {"name": "anAddress", "type": "address"},
+                {"name": "anInt", "type": "uint256"},
+                {"name": "someBytes", "type": "bytes"},
+            ],
+        }
+    ],
+}
 
 
 @pytest.mark.parametrize(
@@ -79,6 +93,7 @@ def test_fn_signature_to_4byte_selector(signature, expected):
             "nestedTupleInputs((address,uint256,bytes,(address,uint256,bytes)))",
         ),
         (FN_ABI_NO_INPUTS, "noInputs()"),
+        (FN_ABI_ARRAY_OF_TUPLES, "tupleArrayInput((address,uint256,bytes)[])")
     ),
 )
 def test__abi_to_signature(abi, expected):

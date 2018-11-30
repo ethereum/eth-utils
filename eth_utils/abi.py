@@ -18,12 +18,17 @@ def collapse_if_tuple(abi):
     ... )
     '(address,uint256,bytes)'
     """
-    if abi["type"] != "tuple":
+    if not abi["type"].startswith("tuple"):
         return abi["type"]
 
     component_types = [collapse_if_tuple(component) for component in abi["components"]]
 
-    return "(" + ",".join(component_types) + ")"
+    collapsed = "(" + ",".join(component_types) + ")"
+
+    if abi["type"].endswith("[]"):
+        collapsed += "[]"
+
+    return collapsed
 
 
 def _abi_to_signature(abi: Dict[str, Any]) -> str:
