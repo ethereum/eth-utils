@@ -21,9 +21,7 @@ def collapse_if_tuple(abi):
     if abi["type"] != "tuple":
         return abi["type"]
 
-    component_types = [
-        collapse_if_tuple(component) for component in abi["components"]
-    ]
+    component_types = [collapse_if_tuple(component) for component in abi["components"]]
 
     return "(" + ",".join(component_types) + ")"
 

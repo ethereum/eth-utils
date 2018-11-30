@@ -78,10 +78,7 @@ def test_fn_signature_to_4byte_selector(signature, expected):
             FN_ABI_NESTED_TUPLE_INPUTS,
             "nestedTupleInputs((address,uint256,bytes,(address,uint256,bytes)))",
         ),
-        (
-            FN_ABI_NO_INPUTS,
-            "noInputs()",
-        )
+        (FN_ABI_NO_INPUTS, "noInputs()"),
     ),
 )
 def test__abi_to_signature(abi, expected):
