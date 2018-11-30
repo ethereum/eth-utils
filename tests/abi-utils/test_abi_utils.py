@@ -21,7 +21,7 @@ FN_ABI_C = {
         {"type": "address", "name": "c"},
     ],
 }
-FN_ABI_D = {
+FN_ABI_NESTED_TUPLE_INPUTS = {
     "inputs": [
         {
             "components": [
@@ -41,9 +41,10 @@ FN_ABI_D = {
             "type": "tuple",
         }
     ],
-    "name": "getOrderInfo",
+    "name": "nestedTupleInputs",
     "type": "function",
 }
+FN_ABI_NO_INPUTS = {"name": "noInputs", "type": "function"}
 
 
 @pytest.mark.parametrize(
@@ -72,7 +73,16 @@ def test_fn_signature_to_4byte_selector(signature, expected):
 
 @pytest.mark.parametrize(
     "abi,expected",
-    ((FN_ABI_D, "getOrderInfo((address,uint256,bytes,(address,uint256,bytes)))"),),
+    (
+        (
+            FN_ABI_NESTED_TUPLE_INPUTS,
+            "nestedTupleInputs((address,uint256,bytes,(address,uint256,bytes)))",
+        ),
+        (
+            FN_ABI_NO_INPUTS,
+            "noInputs()",
+        )
+    ),
 )
 def test__abi_to_signature(abi, expected):
     assert _abi_to_signature(abi) == expected
