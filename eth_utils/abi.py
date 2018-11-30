@@ -32,7 +32,7 @@ def _abi_to_signature(abi: Dict[str, Any]) -> str:
     function_signature = "{fn_name}({fn_input_types})".format(
         fn_name=abi["name"],
         fn_input_types=",".join(
-            [collapse_tuple_type(abi_input) for abi_input in abi["inputs"]]
+            [collapse_tuple_type(abi_input) for abi_input in abi.get("inputs", [])]
         ),
     )
     return function_signature
