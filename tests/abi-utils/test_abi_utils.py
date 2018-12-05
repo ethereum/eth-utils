@@ -2,6 +2,7 @@ import pytest
 
 from eth_utils.hexadecimal import encode_hex
 from eth_utils.abi import (
+    _abi_to_signature,
     function_signature_to_4byte_selector,
     function_abi_to_4byte_selector,
     event_signature_to_log_topic,
@@ -18,6 +19,44 @@ FN_ABI_C = {
         {"type": "address", "name": "a"},
         {"type": "bytes32", "name": "b"},
         {"type": "address", "name": "c"},
+    ],
+}
+FN_ABI_NESTED_TUPLE_INPUTS = {
+    "inputs": [
+        {
+            "components": [
+                {"name": "anAddress", "type": "address"},
+                {"name": "anInt", "type": "uint256"},
+                {"name": "someBytes", "type": "bytes"},
+                {
+                    "name": "aTuple",
+                    "type": "tuple",
+                    "components": [
+                        {"name": "anAddress", "type": "address"},
+                        {"name": "anInt", "type": "uint256"},
+                        {"name": "someBytes", "type": "bytes"},
+                    ],
+                },
+            ],
+            "type": "tuple",
+        }
+    ],
+    "name": "nestedTupleInputs",
+    "type": "function",
+}
+FN_ABI_NO_INPUTS = {"name": "noInputs", "type": "function"}
+FN_ABI_ARRAY_OF_TUPLES = {
+    "name": "tupleArrayInput",
+    "type": "function",
+    "inputs": [
+        {
+            "type": "tuple[]",
+            "components": [
+                {"name": "anAddress", "type": "address"},
+                {"name": "anInt", "type": "uint256"},
+                {"name": "someBytes", "type": "bytes"},
+            ],
+        }
     ],
 }
 
@@ -44,6 +83,21 @@ def test_fn_signature_to_4byte_selector(signature, expected):
     bytes_selector = function_signature_to_4byte_selector(signature)
     hex_selector = encode_hex(bytes_selector)
     assert hex_selector == expected
+
+
+@pytest.mark.parametrize(
+    "abi,expected",
+    (
+        (
+            FN_ABI_NESTED_TUPLE_INPUTS,
+            "nestedTupleInputs((address,uint256,bytes,(address,uint256,bytes)))",
+        ),
+        (FN_ABI_NO_INPUTS, "noInputs()"),
+        (FN_ABI_ARRAY_OF_TUPLES, "tupleArrayInput((address,uint256,bytes)[])"),
+    ),
+)
+def test__abi_to_signature(abi, expected):
+    assert _abi_to_signature(abi) == expected
 
 
 EVENT_ABI_A = {

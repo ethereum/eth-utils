@@ -3,10 +3,40 @@ from typing import Any, Dict
 from .crypto import keccak
 
 
+def collapse_if_tuple(abi):
+    """Converts a tuple from a dict to a parenthesized list of its types.
+
+    >>> collapse_if_tuple(
+    ...     {
+    ...         'components': [
+    ...             {'name': 'anAddress', 'type': 'address'},
+    ...             {'name': 'anInt', 'type': 'uint256'},
+    ...             {'name': 'someBytes', 'type': 'bytes'},
+    ...         ],
+    ...         'type': 'tuple',
+    ...     }
+    ... )
+    '(address,uint256,bytes)'
+    """
+    if not abi["type"].startswith("tuple"):
+        return abi["type"]
+
+    component_types = [collapse_if_tuple(component) for component in abi["components"]]
+
+    collapsed = "(" + ",".join(component_types) + ")"
+
+    if abi["type"].endswith("[]"):
+        collapsed += "[]"
+
+    return collapsed
+
+
 def _abi_to_signature(abi: Dict[str, Any]) -> str:
     function_signature = "{fn_name}({fn_input_types})".format(
         fn_name=abi["name"],
-        fn_input_types=",".join([arg["type"] for arg in abi.get("inputs", [])]),
+        fn_input_types=",".join(
+            [collapse_if_tuple(abi_input) for abi_input in abi.get("inputs", [])]
+        ),
     )
     return function_signature
 
