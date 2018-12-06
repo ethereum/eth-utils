@@ -49,7 +49,9 @@ def to_int(
     """
     Converts value to its integer representation.
     Values are converted this way:
+
      * primitive:
+
        * bytes, bytearrays: big-endian integer
        * bool: True => 1, False => 0
      * hexstr: interpret hex as integer
@@ -114,9 +116,10 @@ def text_if_str(
 ) -> T:
     """
     Convert to a type, assuming that strings can be only unicode text (not a hexstr)
-    @param to_type is a function that takes the arguments (primitive, hexstr=hexstr, text=text),
+
+    :param to_type function: takes the arguments (primitive, hexstr=hexstr, text=text),
         eg~ to_bytes, to_text, to_hex, to_int, etc
-    @param text_or_primitive in bytes, str, or int.
+    :param text_or_primitive bytes, str, int: value to convert
     """
     if isinstance(text_or_primitive, str):
         (primitive, text) = (None, text_or_primitive)
@@ -130,9 +133,10 @@ def hexstr_if_str(
 ) -> T:
     """
     Convert to a type, assuming that strings can be only hexstr (not unicode text)
-    @param to_type is a function that takes the arguments (primitive, hexstr=hexstr, text=text),
+
+    :param to_type function: takes the arguments (primitive, hexstr=hexstr, text=text),
         eg~ to_bytes, to_text, to_hex, to_int, etc
-    @param hexstr_or_primitive in bytes, str, or int.
+    :param hexstr_or_primitive bytes, str, int: value to convert
     """
     if isinstance(hexstr_or_primitive, str):
         (primitive, hexstr) = (None, hexstr_or_primitive)
