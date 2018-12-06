@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+v1.4.0
+--------------
+
+Released: Dec 6, 2018
+
+- Features
+
+  - Support tuples in :meth:`eth_utils.abi.function_abi_to_4byte_selector`
+    and a new :meth:`eth_utils.abi.collapse_if_tuple`
+    - `#141 <https://github.com/ethereum/eth-utils/pull/141>`_
+
 v1.3.0
 --------------
 
@@ -21,12 +32,12 @@ v1.2.2
 - Bugfixes
 
   - Prevent from installing with Python 3.5.2 which has a fatal bug when ``...`` is used in a type.
-    See [#125](https://github.com/ethereum/eth-utils/issues/125)
+    - `#125 <https://github.com/ethereum/eth-utils/issues/125>`_
 
 - Misc
 
   - Start using ``black`` for style checking.
-    See [#129](https://github.com/ethereum/eth-utils/pulls/129)
+    - `#129 <https://github.com/ethereum/eth-utils/pulls/129>`_
 
 1.2.1
 -----
