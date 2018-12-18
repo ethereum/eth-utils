@@ -59,6 +59,20 @@ FN_ABI_ARRAY_OF_TUPLES = {
         }
     ],
 }
+FN_ABI_FIXED_ARRAY_OF_TUPLES = {
+    "name": "tupleFixedArrayInput",
+    "type": "function",
+    "inputs": [
+        {
+            "type": "tuple[5]",
+            "components": [
+                {"name": "anAddress", "type": "address"},
+                {"name": "anInt", "type": "uint256"},
+                {"name": "someBytes", "type": "bytes"},
+            ],
+        }
+    ],
+}
 
 
 @pytest.mark.parametrize(
@@ -94,6 +108,10 @@ def test_fn_signature_to_4byte_selector(signature, expected):
         ),
         (FN_ABI_NO_INPUTS, "noInputs()"),
         (FN_ABI_ARRAY_OF_TUPLES, "tupleArrayInput((address,uint256,bytes)[])"),
+        (
+            FN_ABI_FIXED_ARRAY_OF_TUPLES,
+            "tupleFixedArrayInput((address,uint256,bytes)[5])",
+        ),
     ),
 )
 def test__abi_to_signature(abi, expected):

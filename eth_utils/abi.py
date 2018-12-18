@@ -19,15 +19,15 @@ def collapse_if_tuple(abi):
     ... )
     '(address,uint256,bytes)'
     """
-    if not abi["type"].startswith("tuple"):
-        return abi["type"]
+    typ = abi["type"]
+    if not typ.startswith("tuple"):
+        return typ
 
-    component_types = [collapse_if_tuple(component) for component in abi["components"]]
-
-    collapsed = "(" + ",".join(component_types) + ")"
-
-    if abi["type"].endswith("[]"):
-        collapsed += "[]"
+    delimited = ",".join(collapse_if_tuple(c) for c in abi["components"])
+    # Whatever comes after "tuple" is the array dims.  The ABI spec states that
+    # this will have the form "", "[]", or "[k]".
+    array_dim = typ[5:]
+    collapsed = "({}){}".format(delimited, array_dim)
 
     return collapsed
 
