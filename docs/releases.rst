@@ -1,6 +1,16 @@
 Release Notes
 =============
 
+v1.4.1
+--------------
+
+Released: Dec 18, 2018
+
+- Bugfixes
+
+  - Fixed `eth_utils.abi.collapse_if_tuple` not handling fixed-size
+    tuple arrays.
+
 v1.4.0
 --------------
 
