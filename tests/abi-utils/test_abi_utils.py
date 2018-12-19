@@ -45,6 +45,18 @@ FN_ABI_NESTED_TUPLE_INPUTS = {
     "type": "function",
 }
 FN_ABI_NO_INPUTS = {"name": "noInputs", "type": "function"}
+FN_ABI_ZERO_TUPLE_INPUT = {
+    "inputs": [{"components": [], "type": "tuple"}],
+    "name": "zeroTupleInput",
+    "type": "function",
+}
+FN_ABI_SINGLETON_TUPLE_INPUT = {
+    "inputs": [
+        {"components": [{"name": "anAddress", "type": "address"}], "type": "tuple"}
+    ],
+    "name": "singletonTupleInput",
+    "type": "function",
+}
 FN_ABI_ARRAY_OF_TUPLES = {
     "name": "tupleArrayInput",
     "type": "function",
@@ -112,6 +124,8 @@ def test_fn_signature_to_4byte_selector(signature, expected):
             FN_ABI_FIXED_ARRAY_OF_TUPLES,
             "tupleFixedArrayInput((address,uint256,bytes)[5])",
         ),
+        (FN_ABI_ZERO_TUPLE_INPUT, "zeroTupleInput(())"),
+        (FN_ABI_SINGLETON_TUPLE_INPUT, "singletonTupleInput((address))"),
     ),
 )
 def test__abi_to_signature(abi, expected):
