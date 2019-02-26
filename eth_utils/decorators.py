@@ -70,7 +70,7 @@ def validate_conversion_arguments(to_wrap):
         if kwargs:
             _validate_supported_kwarg(kwargs)
 
-        if len(args) is 0 and "primitive" not in kwargs:
+        if len(args) == 0 and "primitive" not in kwargs:
             _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
         return to_wrap(*args, **kwargs)
 
