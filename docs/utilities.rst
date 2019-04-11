@@ -1250,6 +1250,42 @@ have a ``0x`` prefix it is returned as-is. Value must be string literal.
    >>> remove_0x_prefix('0x12345')
    '12345'
 
+
+Humanize Utils
+~~~~~~~~~~~~~~~~~
+
+``humanize_seconds(seconds)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provide number of seconds as a shorthand string.
+
+.. doctest::
+
+   >>> from eth_utils import humanize_seconds
+   >>> humanize_seconds(0)
+   '0s'
+   >>> humanize_seconds(1)
+   '1s'
+   >>> humanize_seconds(60)
+   '1m'
+   >>> humanize_seconds(61)
+   '1m1s'
+
+
+``humanize_hash(bytes)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provide byte string, hex encoded (without a ``0x`` prefix) with the
+middle segment replaced by an ellipsis, only showing the first and last four
+hexidecimal digits.
+
+.. doctest::
+
+   >>> from eth_utils import humanize_hash
+   >>> humanize_hash(bytes(range(32)))
+    '0001..1e1f'
+
+
 Type Utils
 ~~~~~~~~~~
 

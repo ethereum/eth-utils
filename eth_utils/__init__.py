@@ -63,6 +63,7 @@ from .hexadecimal import (  # noqa: F401
     is_hex,
     remove_0x_prefix,
 )
+from .humanize import humanize_hash, humanize_seconds  # noqa: F401
 from .module_loading import import_string  # noqa: F401
 from .types import (  # noqa: F401
     is_boolean,
