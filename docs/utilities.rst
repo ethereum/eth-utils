@@ -1252,10 +1252,10 @@ have a ``0x`` prefix it is returned as-is. Value must be string literal.
 
 
 Humanize Utils
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 ``humanize_seconds(seconds)`` -> string
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Returns the provide number of seconds as a shorthand string.
 

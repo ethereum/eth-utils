@@ -44,7 +44,9 @@ def _consume_leading_zero_units(
             continue
         else:
             yield (amount, unit)
-            yield from units_iter
+            break
+
+    yield from units_iter
 
 
 def _humanize_seconds(seconds: int) -> Iterator[Tuple[int, str]]:
@@ -60,10 +62,11 @@ def _humanize_seconds(seconds: int) -> Iterator[Tuple[int, str]]:
         remainder %= duration
 
 
-DISPLAY_HASH_BYTES = 2
+DISPLAY_HASH_CHARS = 4
 
 
 def humanize_hash(value: Hash32) -> str:
-    head = value[:DISPLAY_HASH_BYTES]
-    tail = value[-1 * DISPLAY_HASH_BYTES :]  # noqa: E203
-    return "{0}..{1}".format(head.hex(), tail.hex())
+    value_as_hex = value.hex()
+    head = value_as_hex[:DISPLAY_HASH_CHARS]
+    tail = value_as_hex[-1 * DISPLAY_HASH_CHARS :]  # noqa: E203
+    return "{0}..{1}".format(head, tail)
