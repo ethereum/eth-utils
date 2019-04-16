@@ -68,5 +68,5 @@ DISPLAY_HASH_CHARS = 4
 def humanize_hash(value: Hash32) -> str:
     value_as_hex = value.hex()
     head = value_as_hex[:DISPLAY_HASH_CHARS]
-    tail = value_as_hex[-1 * DISPLAY_HASH_CHARS :]  # noqa: E203
+    tail = value_as_hex[-1 * DISPLAY_HASH_CHARS :]
     return "{0}..{1}".format(head, tail)
