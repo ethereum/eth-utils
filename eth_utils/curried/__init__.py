@@ -24,6 +24,8 @@ from eth_utils import (
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
     hexstr_if_str,
+    humanize_hash,
+    humanize_seconds,
     import_string,
     int_to_big_endian,
     is_0x_prefixed,
