@@ -34,7 +34,7 @@ def to_hex(
         )
 
     if is_integer(primitive):
-        return HexStr(hex(primitive))
+        return HexStr(hex(primitive))  # type: ignore
 
     raise TypeError(
         "Unsupported type: '{0}'.  Must be one of: bool, str, bytes, bytearray"
@@ -66,7 +66,7 @@ def to_int(
     elif isinstance(primitive, str):
         raise TypeError("Pass in strings with keyword hexstr or text")
     else:
-        return int(primitive)
+        return int(primitive)  # type: ignore
 
 
 @validate_conversion_arguments
@@ -106,7 +106,7 @@ def to_text(
     elif isinstance(primitive, (bytes, bytearray)):
         return primitive.decode("utf-8")
     elif is_integer(primitive):
-        byte_encoding = int_to_big_endian(primitive)
+        byte_encoding = int_to_big_endian(primitive)  # type: ignore
         return to_text(byte_encoding)
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 
@@ -122,10 +122,9 @@ def text_if_str(
     :param text_or_primitive bytes, str, int: value to convert
     """
     if isinstance(text_or_primitive, str):
-        (primitive, text) = (None, text_or_primitive)
+        return to_type(text=text_or_primitive)
     else:
-        (primitive, text) = (text_or_primitive, None)
-    return to_type(primitive, text=text)
+        return to_type(text_or_primitive)
 
 
 def hexstr_if_str(
@@ -139,13 +138,12 @@ def hexstr_if_str(
     :param hexstr_or_primitive bytes, str, int: value to convert
     """
     if isinstance(hexstr_or_primitive, str):
-        (primitive, hexstr) = (None, hexstr_or_primitive)
-        if remove_0x_prefix(hexstr) and not is_hex(hexstr):
+        if remove_0x_prefix(hexstr_or_primitive) and not is_hex(hexstr_or_primitive):
             raise ValueError(
                 "when sending a str, it must be a hex string. Got: {0!r}".format(
                     hexstr_or_primitive
                 )
             )
+        return to_type(hexstr=hexstr_or_primitive)
     else:
-        (primitive, hexstr) = (hexstr_or_primitive, None)
-    return to_type(primitive, hexstr=hexstr)
+        return to_type(hexstr_or_primitive)

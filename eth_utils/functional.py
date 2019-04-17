@@ -63,10 +63,10 @@ to_set = apply_to_return_value(
 )  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., Set[TVal]]]  # noqa: E501
 to_dict = apply_to_return_value(
     dict
-)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TVal, TKey], Tuple[TVal, TKey]]]]], Callable[..., Dict[TKey, TVal]]]  # noqa: E501
+)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TKey, TVal], Tuple[TKey, TVal]]]]], Callable[..., Dict[TKey, TVal]]]  # noqa: E501
 to_ordered_dict = apply_to_return_value(
     collections.OrderedDict
-)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TVal, TKey], Tuple[TVal, TKey]]]]], Callable[..., collections.OrderedDict[TKey, TVal]]]  # noqa: E501
+)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TKey, TVal], Tuple[TKey, TVal]]]]], Callable[..., collections.OrderedDict[TKey, TVal]]]  # noqa: E501
 sort_return = _compose(to_tuple, apply_to_return_value(sorted))
 flatten_return = _compose(
     to_tuple, apply_to_return_value(itertools.chain.from_iterable)
