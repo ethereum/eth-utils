@@ -1,4 +1,4 @@
-from typing import Callable, Union
+from typing import Callable, Union, cast
 
 from .decorators import validate_conversion_arguments
 from .encoding import big_endian_to_int, int_to_big_endian
@@ -34,7 +34,7 @@ def to_hex(
         )
 
     if is_integer(primitive):
-        return HexStr(hex(primitive))  # type: ignore
+        return HexStr(hex(cast(int, primitive)))
 
     raise TypeError(
         "Unsupported type: '{0}'.  Must be one of: bool, str, bytes, bytearray"
@@ -65,8 +65,13 @@ def to_int(
         return big_endian_to_int(primitive)
     elif isinstance(primitive, str):
         raise TypeError("Pass in strings with keyword hexstr or text")
+    elif isinstance(primitive, (int, bool)):
+        return int(primitive)
     else:
-        return int(primitive)  # type: ignore
+        raise TypeError(
+            "Invalid type.  Expected one of int/bool/str/bytes/bytearray.  Got "
+            "{0}".format(type(primitive))
+        )
 
 
 @validate_conversion_arguments
