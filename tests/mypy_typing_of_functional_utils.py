@@ -1,6 +1,14 @@
 from typing import List, Set, Iterable, Tuple, Dict, TYPE_CHECKING
 
-from eth_utils import denoms, to_dict, to_list, to_ordered_dict, to_set, to_tuple
+from eth_utils import (
+    denoms,
+    to_dict,
+    to_list,
+    to_ordered_dict,
+    to_set,
+    to_tuple,
+    replace_exceptions,
+)
 
 if TYPE_CHECKING:
     from collections import OrderedDict  # noqa: F401
@@ -57,3 +65,8 @@ v_ordered_dict: "OrderedDict[str, int]" = typing_to_ordered_dict()
 
 # verifies that the denoms object is properly typed.
 ether: int = denoms.ether
+
+
+@replace_exceptions({ValueError: TypeError})
+def example_replace_exceptions():
+    raise ValueError("The base exception")
