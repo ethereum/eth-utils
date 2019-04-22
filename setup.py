@@ -8,8 +8,8 @@ from setuptools import (
 extras_require = {
     'lint': [
         'black>=18.6b4,<19',
-        'flake8>=3.5.0,<4.0.0',
-        'mypy<0.701',
+        'flake8>=3.7.0,<4.0.0',
+        'mypy==0.701',
         'pytest>=3.4.1,<4.0.0',
     ],
     'test': [

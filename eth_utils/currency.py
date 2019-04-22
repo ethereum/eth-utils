@@ -7,7 +7,30 @@ from .types import is_integer, is_string
 from .units import units
 
 
-denoms = type("denoms", (object,), {key: int(value) for key, value in units.items()})
+class denoms:
+    wei = int(units["wei"])
+    kwei = int(units["kwei"])
+    babbage = int(units["babbage"])
+    femtoether = int(units["femtoether"])
+    mwei = int(units["mwei"])
+    lovelace = int(units["lovelace"])
+    picoether = int(units["picoether"])
+    gwei = int(units["gwei"])
+    shannon = int(units["shannon"])
+    nanoether = int(units["nanoether"])
+    nano = int(units["nano"])
+    szabo = int(units["szabo"])
+    microether = int(units["microether"])
+    micro = int(units["micro"])
+    finney = int(units["finney"])
+    milliether = int(units["milliether"])
+    milli = int(units["milli"])
+    ether = int(units["ether"])
+    kether = int(units["kether"])
+    grand = int(units["grand"])
+    mether = int(units["mether"])
+    gether = int(units["gether"])
+    tether = int(units["tether"])
 
 
 MIN_WEI = 0
