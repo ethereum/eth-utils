@@ -1,7 +1,18 @@
-import numbers
-from typing import TypeVar
+from abc import abstractmethod, ABC
+from typing import Any, TypeVar
 
-TValue = TypeVar("TValue", bound=numbers.Real)
+
+class Comparable(ABC):
+    @abstractmethod
+    def __lt__(self, other: Any) -> bool:
+        ...
+
+    @abstractmethod
+    def __gt__(self, other: Any) -> bool:
+        ...
+
+
+TValue = TypeVar("TValue", bound=Comparable)
 
 
 def clamp(lower_bound: TValue, upper_bound: TValue, value: TValue) -> TValue:
