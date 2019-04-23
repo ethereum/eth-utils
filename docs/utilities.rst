@@ -1286,6 +1286,31 @@ hexidecimal digits.
     '0001..1e1f'
 
 
+Numeric Utils
+~~~~~~~~~~~~~
+
+``clamp(lower_bound, upper_bound, value)`` -> result
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns ``value`` clamped within the inclusive range defined by ``[lower_bound,
+upper_bound]``.  The value can be any number type that supports ``<`` and ``>``
+comparisons against the provided bounds.
+
+.. doctest::
+
+   >>> from eth_utils import clamp
+   >>> clamp(5, 7, 4)
+   5
+   >>> clamp(5, 7, 5)
+   5
+   >>> clamp(5, 7, 6)
+   6
+   >>> clamp(5, 7, 7)
+   7
+   >>> clamp(5, 7, 8)
+   7
+
+
 Type Utils
 ~~~~~~~~~~
 

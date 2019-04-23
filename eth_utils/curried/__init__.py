@@ -12,6 +12,7 @@ from eth_utils import (
     apply_one_of_formatters,
     apply_to_return_value,
     big_endian_to_int,
+    clamp,
     combine_argument_formatters,
     combomethod,
     decode_hex,
@@ -83,5 +84,6 @@ hexstr_if_str = curry(hexstr_if_str)
 is_same_address = curry(is_same_address)
 text_if_str = curry(text_if_str)
 to_wei = curry(to_wei)
+clamp = curry(clamp)
 
 del curry

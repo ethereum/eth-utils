@@ -65,6 +65,7 @@ from .hexadecimal import (  # noqa: F401
 )
 from .humanize import humanize_hash, humanize_seconds  # noqa: F401
 from .module_loading import import_string  # noqa: F401
+from .numeric import clamp  # noqa: F401
 from .types import (  # noqa: F401
     is_boolean,
     is_bytes,
