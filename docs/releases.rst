@@ -1,6 +1,46 @@
 Release Notes
 =============
 
+v1.5.2
+--------------
+
+Released: April 30, 2019
+
+- Bugfix
+
+  - Fix `eth_utils.currency.denom` to be a real class with proper type declarations.
+    - `#154 <https://github.com/ethereum/eth-utils/pull/154>`_
+
+  - Fix `eth_utils.functional.replace_exceptions` type declarations.
+    - `#155 <https://github.com/ethereum/eth-utils/pull/155>`_
+
+- Feature
+
+  - Add new `eth_utils.clamp`
+    - `#150 <https://github.com/ethereum/eth-utils/pull/150>`_
+
+v1.5.1
+--------------
+
+Released: April 17, 2019
+
+- Bugfix
+
+  - Fix type declarations for `eth_utils.functional.to_dict` and `eth_utils.funcional.to_ordered_dict`
+    - `#151 <https://github.com/ethereum/eth-utils/pull/151>`_
+
+v1.5.0
+--------------
+
+Released: April 16, 2019
+
+- Features
+
+  - Add new `eth_utils.humanize.humanize_seconds` and `eth_utils.humanize.humanize_hash`.
+    - `#149 <https://github.com/ethereum/eth-utils/pull/149>`_
+  - Enable PEP561 type hints
+
+
 v1.4.1
 --------------
 
@@ -18,8 +58,7 @@ Released: Dec 6, 2018
 
 - Features
 
-  - Support tuples in :meth:`eth_utils.abi.function_abi_to_4byte_selector`
-    and a new :meth:`eth_utils.abi.collapse_if_tuple`
+  - Support tuples in `eth_utils.abi.function_abi_to_4byte_selector` and a new `eth_utils.abi.collapse_if_tuple`
     - `#141 <https://github.com/ethereum/eth-utils/pull/141>`_
 
 v1.3.0
