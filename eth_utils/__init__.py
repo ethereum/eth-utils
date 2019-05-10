@@ -64,6 +64,12 @@ from .hexadecimal import (  # noqa: F401
     remove_0x_prefix,
 )
 from .humanize import humanize_hash, humanize_seconds  # noqa: F401
+from .logging import (  # noqa: F401
+    setup_DEBUG2_logging,
+    ExtendedDebugLogger,
+    HasLogger,
+    HasExtendedDebugLogger,
+)
 from .module_loading import import_string  # noqa: F401
 from .numeric import clamp  # noqa: F401
 from .types import (  # noqa: F401

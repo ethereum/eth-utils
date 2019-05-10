@@ -1286,6 +1286,70 @@ hexidecimal digits.
     '0001..1e1f'
 
 
+Logging Utils
+~~~~~~~~~~~~~~
+
+``class HasLogger``
+^^^^^^^^^^^^^^^^^^^
+
+Classes which inherit from this class will have an instance of a logger
+available on the attribute ``logger``
+
+
+.. doctest::
+
+    >>> from eth_utils import HasLogger
+    >>> class MyClass(HasLogger):
+    ...     pass
+    ...
+    >>> hasattr(MyClass, 'logger')
+    True
+    >>> instance = MyClass()
+    >>> hasattr(instance, 'logger')
+    True
+
+The ``name`` of the logger instance is derived from the ``__qualname__`` for
+the class.
+
+
+``setup_DEBUG2_logging() -> None``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Installs the ``DEBUG2`` level to the standard library ``logging`` module which
+uses the numeric level of ``8``.  This includes adding it to the known levels
+as well as providing a ``logging.DEBUG2`` property on the logging module.
+
+.. note::  This function is idempotent
+
+
+.. doctest::
+
+    >>> from eth_utils import setup_DEBUG2_logging
+    >>> import logging
+    >>> logging.getLevelName(8)
+    'Level 8'
+    >>> setup_DEBUG2_logging()
+    >>> logging.getLevelName(8)
+    'DEBUG2'
+    >>> logging.DEBUG2
+    8
+
+
+``class ExtendedDebugLogger``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A subclass of ``logging.Logger`` which exposes a ``debug2`` function which can
+be used to log a message at the ``DEBUG2`` log level.  See also
+``eth_utils.setup_DEBUG2_logging``.
+
+
+``class HasExtendedDebugLogger``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Same as the ``HasLogger`` class except the logger it exposes is an instance of
+``ExtendedDebugLogger``
+
+
 Numeric Utils
 ~~~~~~~~~~~~~
 
