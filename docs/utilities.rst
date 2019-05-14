@@ -1302,14 +1302,39 @@ available on the attribute ``logger``
     >>> class MyClass(HasLogger):
     ...     pass
     ...
-    >>> hasattr(MyClass, 'logger')
-    True
+    >>> MyClass.logger.debug("This works")
     >>> instance = MyClass()
-    >>> hasattr(instance, 'logger')
-    True
+    >>> instance.logger.debug("This also works")
+
 
 The ``name`` of the logger instance is derived from the ``__qualname__`` for
 the class.
+
+.. warning:: 
+
+    This class will not behave nicely with the standard library
+    ``typing.Generic``.  If you need to create a ``Generic`` class then you'll
+    need to assign your logging instances manually.
+
+
+``class ExtendedDebugLogger``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A subclass of ``logging.Logger`` which exposes a ``debug2`` function which can
+be used to log a message at the ``DEBUG2`` log level.  
+
+.. note:: 
+
+    This class works fine on its own but will produce cleaner logs if you make
+    sure to call ``eth_utils.setup_DEBUG2_logging`` at least once before
+    issuing any ``debug2`` level logs.
+
+
+``class HasExtendedDebugLogger``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Same as the ``HasLogger`` class except the logger it exposes is an instance of
+``ExtendedDebugLogger``
 
 
 ``setup_DEBUG2_logging() -> None``
@@ -1317,9 +1342,11 @@ the class.
 
 Installs the ``DEBUG2`` level to the standard library ``logging`` module which
 uses the numeric level of ``8``.  This includes adding it to the known levels
-as well as providing a ``logging.DEBUG2`` property on the logging module.
+as well as providing a ``logging.DEBUG2`` convenience property on the logging
+module.
 
-.. note::  This function is idempotent
+This function is purely for convenience.  You can use ``ExtendedDebugLogger``
+without this, though your logs will be printed with the label ``'Level 8'``.
 
 
 .. doctest::
@@ -1335,19 +1362,7 @@ as well as providing a ``logging.DEBUG2`` property on the logging module.
     8
 
 
-``class ExtendedDebugLogger``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A subclass of ``logging.Logger`` which exposes a ``debug2`` function which can
-be used to log a message at the ``DEBUG2`` log level.  See also
-``eth_utils.setup_DEBUG2_logging``.
-
-
-``class HasExtendedDebugLogger``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Same as the ``HasLogger`` class except the logger it exposes is an instance of
-``ExtendedDebugLogger``
+.. note::  This function is idempotent
 
 
 Numeric Utils

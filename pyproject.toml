@@ -1,3 +1,0 @@
-# Exclude eth_utils.units from black 
-[tool.black]
-exclude = 'eth_utils/units.py'
