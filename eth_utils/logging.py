@@ -1,4 +1,3 @@
-from abc import ABCMeta
 import contextlib
 import logging
 from typing import Any, Type, Iterator
@@ -36,7 +35,7 @@ def _use_logger_class(logger_cls: Type[logging.Logger]) -> Iterator:
         logging.setLoggerClass(original_logger_cls)
 
 
-class HasLoggerMeta(ABCMeta):
+class HasLoggerMeta(type):
     """
     Metaclass which using the `__qualname__` to assign a logger instance to the
     class who's name corresponds to the import path for the class.
