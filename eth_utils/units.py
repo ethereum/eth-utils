@@ -2,6 +2,7 @@ import decimal
 
 # Units are in their own module here, so that they can keep this
 # formatting, as this module is excluded from black in pyproject.toml
+# fmt: off
 units = {
     'wei':          decimal.Decimal('1'),  # noqa: E241
     'kwei':         decimal.Decimal('1000'),  # noqa: E241
@@ -27,3 +28,4 @@ units = {
     'gether':       decimal.Decimal('1000000000000000000000000000'),  # noqa: E241
     'tether':       decimal.Decimal('1000000000000000000000000000000'),  # noqa: E241
 }
+# fmt: on

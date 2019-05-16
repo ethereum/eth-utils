@@ -25,16 +25,16 @@ def enhanced_has_keywords(func):
 
 # heavily inspired by https://github.com/pytoolz/toolz/blob/20d8aefc0a5/toolz/tests/test_curried.py
 def test_curried_namespace():
-    def should_curry(func):
-        if not callable(func) or isinstance(func, curry):
+    def should_curry(value):
+        if not callable(value) or isinstance(value, curry) or isinstance(value, type):
             return False
-        if isinstance(func, type) and issubclass(func, Exception):
+        if isinstance(value, type) and issubclass(value, Exception):
             return False
-        nargs = enhanced_num_required_args(func)
+        nargs = enhanced_num_required_args(value)
         if nargs is None or nargs > 1:
             return True
         else:
-            return nargs == 1 and enhanced_has_keywords(func)
+            return nargs == 1 and enhanced_has_keywords(value)
 
     def curry_namespace(ns):
         return dict(
