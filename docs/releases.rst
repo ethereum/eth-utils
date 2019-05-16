@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+v1.6.0
+--------------
+
+Released: May 16, 2019
+
+- Feature
+
+  - Add logging utilities ``HasLogger``, ``ExtendedDebugLogger``, ``HasExtendedDebugLogger`` and ``setup_DEBUG2_logging``
+    - `#158 <https://github.com/ethereum/eth-utils/pull/158>`_
+
+
 v1.5.2
 --------------
 
