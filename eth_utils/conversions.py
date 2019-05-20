@@ -1,10 +1,14 @@
-from typing import Callable, Union, cast
+from typing import Callable, Union, TypeVar, cast
 
 from .decorators import validate_conversion_arguments
 from .encoding import big_endian_to_int, int_to_big_endian
 from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
 from .types import is_boolean, is_integer, is_string
-from .typing import HexStr, Primitives, T
+
+from eth_typing import HexStr, Primitives
+
+
+T = TypeVar("T")
 
 
 @validate_conversion_arguments

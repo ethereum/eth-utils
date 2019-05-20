@@ -4,7 +4,8 @@ from .crypto import keccak
 from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
 from .conversions import hexstr_if_str, to_hex
 from .types import is_bytes, is_text
-from .typing import Address, AnyAddress, ChecksumAddress, HexAddress
+
+from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress
 
 
 def is_hex_address(value: Any) -> bool:
