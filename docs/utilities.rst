@@ -1275,7 +1275,7 @@ Returns the provide number of seconds as a shorthand string.
 ``humanize_hash(bytes)`` -> string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Returns the provide byte string, hex encoded (without a ``0x`` prefix) with the
+Returns the provided byte string, hex encoded (without a ``0x`` prefix) with the
 middle segment replaced by an ellipsis, only showing the first and last four
 hexidecimal digits.
 
@@ -1284,6 +1284,19 @@ hexidecimal digits.
    >>> from eth_utils import humanize_hash
    >>> humanize_hash(bytes(range(32)))
     '0001..1e1f'
+
+
+``humanize_ipfs_uri(string)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provided IPFS uri, with the middle segment of the hash replaced by an
+ellipsis, only showing the first and last four characters of the hash.
+
+.. doctest::
+
+   >>> from eth_utils import humanize_ipfs_uri
+   >>> humanize_ipfs_uri('ipfs://QmTKB75Y73zhNbD3Y73xeXGjYrZHmaXXNxoZqGCagu7r8u')
+    'ipfs://QmTK..7r8u'
 
 
 Logging Utils

@@ -1,6 +1,7 @@
-from typing import Iterator, Tuple, Union
+from typing import Any, Iterator, Tuple, Union
+from urllib import parse
 
-from eth_typing import Hash32
+from eth_typing import Hash32, URI
 
 from .toolz import take
 
@@ -70,3 +71,28 @@ def humanize_hash(value: Hash32) -> str:
     head = value_as_hex[:DISPLAY_HASH_CHARS]
     tail = value_as_hex[-1 * DISPLAY_HASH_CHARS :]
     return "{0}..{1}".format(head, tail)
+
+
+def humanize_ipfs_uri(uri: URI) -> str:
+    if not _is_ipfs_uri(uri):
+        raise TypeError("%s does not look like a valid IPFS uri." % uri)
+
+    parsed = parse.urlparse(uri)
+    ipfs_hash = parsed.netloc
+    head = ipfs_hash[:DISPLAY_HASH_CHARS]
+    tail = ipfs_hash[-1 * DISPLAY_HASH_CHARS :]
+    return "ipfs://{0}..{1}".format(head, tail)
+
+
+def _is_ipfs_uri(value: Any) -> bool:
+    if not isinstance(value, str):
+        return False
+
+    parsed = parse.urlparse(value)
+    if parsed.scheme != "ipfs" or not parsed.netloc:
+        return False
+
+    if parsed.netloc.startswith("Qm") and len(parsed.netloc) != 46:
+        return False
+
+    return True
