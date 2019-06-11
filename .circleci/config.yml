@@ -67,6 +67,12 @@ jobs:
       - image: circleci/python:3.6
         environment:
           TOXENV: py36
+  py36-typing1:
+    <<: *common
+    docker:
+      - image: circleci/python:3.6
+        environment:
+          TOXENV: py36-typing1
   pypy3:
     <<: *common
     docker:
@@ -81,4 +87,5 @@ workflows:
       - lint
       - py35
       - py36
+      - py36-typing1
       - pypy3
