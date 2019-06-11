@@ -1,6 +1,16 @@
 Release Notes
 =============
 
+v1.6.1
+--------------
+
+Released: June 11, 2019
+
+- Maintenance
+
+  - Use eth-typing types instead of eth-utils types, when available
+    - `#163 <https://github.com/ethereum/eth-utils/pull/163>`_
+
 v1.6.0
 --------------
 
