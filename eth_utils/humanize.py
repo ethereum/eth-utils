@@ -74,8 +74,11 @@ def humanize_hash(value: Hash32) -> str:
 
 
 def humanize_ipfs_uri(uri: URI) -> str:
-    if not _is_ipfs_uri(uri):
-        raise TypeError("%s does not look like a valid IPFS uri." % uri)
+    if not is_ipfs_uri(uri):
+        raise TypeError(
+            "%s does not look like a valid IPFS uri. Currently, "
+            "only CIDv0 hash schemes are supported." % uri
+        )
 
     parsed = parse.urlparse(uri)
     ipfs_hash = parsed.netloc
@@ -84,7 +87,7 @@ def humanize_ipfs_uri(uri: URI) -> str:
     return "ipfs://{0}..{1}".format(head, tail)
 
 
-def _is_ipfs_uri(value: Any) -> bool:
+def is_ipfs_uri(value: Any) -> bool:
     if not isinstance(value, str):
         return False
 
@@ -92,7 +95,10 @@ def _is_ipfs_uri(value: Any) -> bool:
     if parsed.scheme != "ipfs" or not parsed.netloc:
         return False
 
-    if parsed.netloc.startswith("Qm") and len(parsed.netloc) != 46:
-        return False
+    return _is_CIDv0_ipfs_hash(parsed.netloc)
 
-    return True
+
+def _is_CIDv0_ipfs_hash(ipfs_hash: str) -> bool:
+    if ipfs_hash.startswith("Qm") and len(ipfs_hash) == 46:
+        return True
+    return False

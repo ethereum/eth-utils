@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.humanize import humanize_ipfs_uri, _is_ipfs_uri
+from eth_utils.humanize import humanize_ipfs_uri, is_ipfs_uri
 
 
 @pytest.mark.parametrize(
@@ -32,5 +32,5 @@ def test_humanize_ipfs_uri(uri, expected):
     ),
 )
 def test_is_ipfs_uri(uri, expected):
-    actual = _is_ipfs_uri(uri)
+    actual = is_ipfs_uri(uri)
     assert actual == expected
