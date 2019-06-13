@@ -29,6 +29,7 @@ from eth_utils import (
     HasLogger,
     hexstr_if_str,
     humanize_hash,
+    humanize_ipfs_uri,
     humanize_seconds,
     import_string,
     int_to_big_endian,

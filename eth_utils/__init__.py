@@ -63,7 +63,7 @@ from .hexadecimal import (  # noqa: F401
     is_hex,
     remove_0x_prefix,
 )
-from .humanize import humanize_hash, humanize_seconds  # noqa: F401
+from .humanize import humanize_hash, humanize_ipfs_uri, humanize_seconds  # noqa: F401
 from .logging import (  # noqa: F401
     setup_DEBUG2_logging,
     ExtendedDebugLogger,
