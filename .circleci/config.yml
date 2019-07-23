@@ -27,7 +27,7 @@ common: &common
           - v1-cache-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
     - run:
         name: upgrade pip
-        command: pip install --upgrade pip
+        command: pip install --upgrade --user pip
     - run:
         name: install dependencies
         command: pip install --user tox
