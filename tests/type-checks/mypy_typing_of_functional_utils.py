@@ -1,6 +1,7 @@
 from typing import List, Set, Iterable, Tuple, Dict, TYPE_CHECKING
 
 from eth_utils import (
+    clamp,
     denoms,
     to_dict,
     to_list,
@@ -70,3 +71,17 @@ ether: int = denoms.ether
 @replace_exceptions({ValueError: TypeError})
 def example_replace_exceptions():
     raise ValueError("The base exception")
+
+
+def return_value_int(lower: int, upper: int, value: int) -> int:
+    return clamp(lower, upper, value)
+
+
+int_value: int = return_value_int(2, 5, 8)
+
+
+def return_value_float(lower: float, upper: float, value: float) -> float:
+    return clamp(lower, upper, value)
+
+
+float_value: float = return_value_float(2.0, 5.0, 8.0)
