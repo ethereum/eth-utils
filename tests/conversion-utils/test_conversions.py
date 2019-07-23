@@ -2,7 +2,7 @@
 
 import pytest
 
-from eth_utils import to_int, to_bytes, to_hex, to_text
+from eth_utils import to_bytes, to_hex, to_int, to_text
 
 
 @pytest.mark.parametrize(

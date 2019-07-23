@@ -1,8 +1,8 @@
+from hypothesis import given
+from hypothesis import strategies as st
 import pytest
 
-from hypothesis import strategies as st, given
-
-from eth_utils.encoding import int_to_big_endian, big_endian_to_int
+from eth_utils.encoding import big_endian_to_int, int_to_big_endian
 
 
 @pytest.mark.parametrize(

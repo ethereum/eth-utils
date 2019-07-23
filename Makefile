@@ -26,6 +26,11 @@ clean-pyc:
 lint:
 	flake8 eth_utils
 
+lint-roll:
+	isort --recursive eth_utils tests
+	black eth_utils tests
+	$(MAKE) lint
+
 test:
 	py.test tests
 

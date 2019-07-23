@@ -1,6 +1,7 @@
-import pkg_resources
 import sys
 import warnings
+
+import pkg_resources
 
 from .abi import (  # noqa: F401
     event_abi_to_log_topic,
@@ -32,12 +33,12 @@ from .applicators import (  # noqa: F401
     combine_argument_formatters,
 )
 from .conversions import (  # noqa: F401
+    hexstr_if_str,
+    text_if_str,
     to_bytes,
     to_hex,
     to_int,
     to_text,
-    hexstr_if_str,
-    text_if_str,
 )
 from .crypto import keccak  # noqa: F401
 from .currency import denoms, from_wei, to_wei  # noqa: F401
@@ -65,10 +66,10 @@ from .hexadecimal import (  # noqa: F401
 )
 from .humanize import humanize_hash, humanize_ipfs_uri, humanize_seconds  # noqa: F401
 from .logging import (  # noqa: F401
-    setup_DEBUG2_logging,
     ExtendedDebugLogger,
-    HasLogger,
     HasExtendedDebugLogger,
+    HasLogger,
+    setup_DEBUG2_logging,
 )
 from .module_loading import import_string  # noqa: F401
 from .numeric import clamp  # noqa: F401
@@ -85,7 +86,6 @@ from .types import (  # noqa: F401
     is_text,
     is_tuple,
 )
-
 
 if sys.version_info.major < 3:
     warnings.simplefilter("always", DeprecationWarning)

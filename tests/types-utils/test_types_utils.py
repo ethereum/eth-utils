@@ -1,13 +1,13 @@
 import pytest
 
 from eth_utils.types import (
-    is_integer,
     is_boolean,
-    is_string,
-    is_list_like,
-    is_list,
-    is_tuple,
     is_dict,
+    is_integer,
+    is_list,
+    is_list_like,
+    is_string,
+    is_tuple,
 )
 
 

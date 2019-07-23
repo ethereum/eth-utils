@@ -1,14 +1,14 @@
 import collections
 
 from eth_utils import (
-    to_tuple,
-    to_list,
-    to_dict,
-    to_set,
-    to_ordered_dict,
-    sort_return,
     flatten_return,
     reversed_return,
+    sort_return,
+    to_dict,
+    to_list,
+    to_ordered_dict,
+    to_set,
+    to_tuple,
 )
 
 

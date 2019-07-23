@@ -1,6 +1,6 @@
-import mypy.api
 from typing import List
 
+import mypy.api
 import pytest
 
 MYPY_ARGS = ["--ignore-missing-imports"]

@@ -1,7 +1,9 @@
 # flake8: noqa
-from eth_utils.toolz import curry
-
 from eth_utils import (
+    ExtendedDebugLogger,
+    HasExtendedDebugLogger,
+    HasLogger,
+    ValidationError,
     add_0x_prefix,
     apply_formatter_at_index,
     apply_formatter_if,
@@ -20,13 +22,10 @@ from eth_utils import (
     encode_hex,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
-    ExtendedDebugLogger,
     flatten_return,
     from_wei,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
-    HasExtendedDebugLogger,
-    HasLogger,
     hexstr_if_str,
     humanize_hash,
     humanize_ipfs_uri,
@@ -74,8 +73,8 @@ from eth_utils import (
     to_text,
     to_tuple,
     to_wei,
-    ValidationError,
 )
+from eth_utils.toolz import curry
 
 apply_formatter_at_index = curry(apply_formatter_at_index)
 apply_formatter_if = curry(apply_formatter_if)

@@ -3,7 +3,6 @@
 import binascii
 import codecs
 import string
-
 from typing import Any, AnyStr
 
 from .types import is_string, is_text

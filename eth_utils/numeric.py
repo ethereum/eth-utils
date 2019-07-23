@@ -1,4 +1,4 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 import decimal
 import numbers
 from typing import Any, TypeVar, Union
@@ -21,9 +21,9 @@ TValue = TypeVar("TValue", bound=TComparable)
 
 
 def clamp(lower_bound: TValue, upper_bound: TValue, value: TValue) -> TValue:
-    if value < lower_bound:
+    if value < lower_bound:  # type: ignore
         return lower_bound
-    elif value > upper_bound:
+    elif value > upper_bound:  # type: ignore
         return upper_bound
     else:
         return value

@@ -1,5 +1,6 @@
 import logging
-from eth_utils.logging import HasLogger, HasExtendedDebugLogger, ExtendedDebugLogger
+
+from eth_utils.logging import ExtendedDebugLogger, HasExtendedDebugLogger, HasLogger
 
 
 class DefinedAtModule(HasLogger):

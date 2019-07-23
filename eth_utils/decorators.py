@@ -1,6 +1,5 @@
 import functools
 import itertools
-
 from typing import Any, Callable, Dict, Iterable, Type
 
 from .types import is_text

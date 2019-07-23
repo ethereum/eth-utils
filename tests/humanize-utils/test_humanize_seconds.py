@@ -2,7 +2,6 @@ import pytest
 
 from eth_utils import humanize_seconds
 
-
 SECOND = 1
 MINUTE = 60
 HOUR = 60 * 60
