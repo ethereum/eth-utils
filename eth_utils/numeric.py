@@ -1,5 +1,7 @@
 from abc import abstractmethod, ABC
-from typing import Any, TypeVar
+import decimal
+import numbers
+from typing import Any, TypeVar, Union
 
 
 class Comparable(ABC):
@@ -12,7 +14,10 @@ class Comparable(ABC):
         ...
 
 
-TValue = TypeVar("TValue", bound=Comparable)
+TComparable = Union[Comparable, numbers.Real, int, float, decimal.Decimal]
+
+
+TValue = TypeVar("TValue", bound=TComparable)
 
 
 def clamp(lower_bound: TValue, upper_bound: TValue, value: TValue) -> TValue:

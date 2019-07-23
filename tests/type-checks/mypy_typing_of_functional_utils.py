@@ -1,3 +1,4 @@
+import decimal
 from typing import List, Set, Iterable, Tuple, Dict, TYPE_CHECKING
 
 from eth_utils import (
@@ -85,3 +86,16 @@ def return_value_float(lower: float, upper: float, value: float) -> float:
 
 
 float_value: float = return_value_float(2.0, 5.0, 8.0)
+
+
+def return_value_decimal(lower: decimal.Decimal,
+                         upper: decimal.Decimal,
+                         value: decimal.Decimal) -> decimal.Decimal:
+    return clamp(lower, upper, value)
+
+
+decimal_value: decimal.Decimal = return_value_decimal(
+    decimal.Decimal('2.0'),
+    decimal.Decimal('5.0'),
+    decimal.Decimal('8.0'),
+)
