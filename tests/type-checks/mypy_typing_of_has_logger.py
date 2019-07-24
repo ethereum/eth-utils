@@ -1,5 +1,6 @@
 import logging
-from eth_utils import HasLogger, HasExtendedDebugLogger, ExtendedDebugLogger
+
+from eth_utils import ExtendedDebugLogger, HasExtendedDebugLogger, HasLogger
 
 
 def verify_has_logger_type() -> logging.Logger:

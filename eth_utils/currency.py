@@ -1,6 +1,5 @@
 import decimal
 from decimal import localcontext
-
 from typing import Union
 
 from .types import is_integer, is_string

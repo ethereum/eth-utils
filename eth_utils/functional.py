@@ -16,7 +16,6 @@ from typing import (  # noqa: F401
 
 from .toolz import compose as _compose
 
-
 T = TypeVar("T")
 
 

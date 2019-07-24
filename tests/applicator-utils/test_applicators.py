@@ -1,8 +1,8 @@
 import collections
+
 import pytest
 
 import eth_utils
-
 from eth_utils.curried import (
     apply_formatter_at_index,
     apply_formatter_if,

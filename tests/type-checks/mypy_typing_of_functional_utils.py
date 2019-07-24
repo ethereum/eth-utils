@@ -1,13 +1,15 @@
-from typing import List, Set, Iterable, Tuple, Dict, TYPE_CHECKING
+import decimal
+from typing import TYPE_CHECKING, Dict, Iterable, List, Set, Tuple
 
 from eth_utils import (
+    clamp,
     denoms,
+    replace_exceptions,
     to_dict,
     to_list,
     to_ordered_dict,
     to_set,
     to_tuple,
-    replace_exceptions,
 )
 
 if TYPE_CHECKING:
@@ -70,3 +72,28 @@ ether: int = denoms.ether
 @replace_exceptions({ValueError: TypeError})
 def example_replace_exceptions():
     raise ValueError("The base exception")
+
+
+def return_value_int(lower: int, upper: int, value: int) -> int:
+    return clamp(lower, upper, value)
+
+
+int_value: int = return_value_int(2, 5, 8)
+
+
+def return_value_float(lower: float, upper: float, value: float) -> float:
+    return clamp(lower, upper, value)
+
+
+float_value: float = return_value_float(2.0, 5.0, 8.0)
+
+
+def return_value_decimal(
+    lower: decimal.Decimal, upper: decimal.Decimal, value: decimal.Decimal
+) -> decimal.Decimal:
+    return clamp(lower, upper, value)
+
+
+decimal_value: decimal.Decimal = return_value_decimal(
+    decimal.Decimal("2.0"), decimal.Decimal("5.0"), decimal.Decimal("8.0")
+)

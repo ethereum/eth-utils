@@ -1,7 +1,7 @@
 from typing import Any, Iterator, Tuple, Union
 from urllib import parse
 
-from eth_typing import Hash32, URI
+from eth_typing import URI, Hash32
 
 from .toolz import take
 

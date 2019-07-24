@@ -1,6 +1,6 @@
 import contextlib
 import logging
-from typing import Any, Type, Iterator
+from typing import Any, Iterator, Type
 
 from .toolz import assoc
 
