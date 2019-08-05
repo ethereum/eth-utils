@@ -63,14 +63,12 @@ class HasLoggerMeta(type):
     def replace_logger_class(
         mcls: Type[THasLoggerMeta], value: Type[logging.Logger]
     ) -> Type[THasLoggerMeta]:
-        # mypy can't tell this is a subclass of `HasLoggerMeta`  # noqa: E501
         return type(mcls.__name__, (mcls,), {"logger_class": value})
 
     @classmethod
     def meta_compat(
         mcls: Type[THasLoggerMeta], other: Type[type]
     ) -> Type[THasLoggerMeta]:
-        # mypy doesn't recognize the bases for this class as valid
         return type(mcls.__name__, (mcls, other), {})
 
 
@@ -85,7 +83,7 @@ class HasLogger(_BaseHasLogger):
     pass
 
 
-HasExtendedDebugLoggerMeta = HasLogger.replace_logger_class(ExtendedDebugLogger)
+HasExtendedDebugLoggerMeta = HasLoggerMeta.replace_logger_class(ExtendedDebugLogger)
 
 
 class _BaseHasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
