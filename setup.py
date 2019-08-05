@@ -43,7 +43,7 @@ extras_require['dev'] = (
 setup(
     name='eth-utils',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='1.6.3',
+    version='1.6.4',
     description="""Common utility functions for ethereum codebases.""",
     long_description_markdown_filename='README.md',
     author='Piper Merriam',
