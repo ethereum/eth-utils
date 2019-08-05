@@ -23,8 +23,13 @@ clean-pyc:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 
-lint:
-	tox -e lint
+lint36:
+	tox -e lint-py36
+
+lint37:
+	tox -e lint-py37
+
+lint: lint36 lint37
 
 lint-roll:
 	isort --recursive eth_utils tests
