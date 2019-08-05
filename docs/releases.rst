@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+v1.6.4
+--------------
+
+Released: August 5, 2019
+
+- Feature
+
+  - Caching for ``ExtendedDebugLogger.show_debug2`` property
+    - `#167 <https://github.com/ethereum/eth-utils/pull/167>`_
+
+
 v1.6.3
 --------------
 
