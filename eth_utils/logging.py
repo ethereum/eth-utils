@@ -1,19 +1,43 @@
 import contextlib
+import functools
 import logging
-from typing import Any, Iterator, Type, TypeVar
+from typing import Any, Callable, Iterator, Optional, Type, TypeVar
 
 from .toolz import assoc
 
 DEBUG2_LEVEL_NUM = 8
 
 
+class cached_show_debug2_property:
+    def __init__(self, func: Callable[[logging.Logger], bool]):
+        functools.update_wrapper(self, func)
+        self._func = func
+
+    def __get__(self, obj: Optional[logging.Logger], cls: Type[logging.Logger]) -> bool:
+        if obj is None:
+            return self
+
+        result = self._func(obj)
+        obj.__dict__[self._func.__name__] = result
+        return result
+
+
 class ExtendedDebugLogger(logging.Logger):
     """
     Logging class that can be used for lower level debug logging.
     """
+    @cached_show_debug2_property
+    def show_debug2(self) -> bool:
+        return self.isEnabledFor(DEBUG2_LEVEL_NUM)
 
     def debug2(self, message: str, *args: Any, **kwargs: Any) -> None:
-        self.log(DEBUG2_LEVEL_NUM, message, *args, **kwargs)
+        if self.show_debug2:
+            self.log(DEBUG2_LEVEL_NUM, message, *args, **kwargs)
+        else:
+            # When we find that `DEBUG2` isn't enabled we completely replace
+            # the `debug2` function in this instance of the logger with a noop
+            # lambda to further speed up
+            self.__dict__['debug2'] = lambda message, *args, **kwargs: None
 
 
 def setup_DEBUG2_logging() -> None:
