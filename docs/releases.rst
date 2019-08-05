@@ -1,6 +1,38 @@
 Release Notes
 =============
 
+v1.6.3
+--------------
+
+Released: August 5, 2019
+
+- Feature
+
+  - Add support for Python3.7
+    - `#165 <https://github.com/ethereum/eth-utils/pull/165>`_
+
+- Bugfix
+
+  - Fix ``HasLogger`` compatibility with other metaclasses.
+    - `#165 <https://github.com/ethereum/eth-utils/pull/165>`_
+
+v1.6.2
+--------------
+
+Released: July 24, 2019
+
+- Feature
+
+  - Add support for Python3.7
+    - `#165 <https://github.com/ethereum/eth-utils/pull/165>`_
+  - Add ``humanize_ipfs_uri``.
+    - `#162 <https://github.com/ethereum/eth-utils/pull/162>`_
+
+- Bugfix
+
+  - Fix typing of ``clamp`` numeric utility.
+    - `#164 <https://github.com/ethereum/eth-utils/pull/164>`_
+
 v1.6.1
 --------------
 
