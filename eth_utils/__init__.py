@@ -68,7 +68,9 @@ from .humanize import humanize_hash, humanize_ipfs_uri, humanize_seconds  # noqa
 from .logging import (  # noqa: F401
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
+    HasExtendedDebugLoggerMeta,
     HasLogger,
+    HasLoggerMeta,
     setup_DEBUG2_logging,
 )
 from .module_loading import import_string  # noqa: F401

@@ -2,7 +2,9 @@
 from eth_utils import (
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
+    HasExtendedDebugLoggerMeta,
     HasLogger,
+    HasLoggerMeta,
     ValidationError,
     add_0x_prefix,
     apply_formatter_at_index,

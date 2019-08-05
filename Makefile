@@ -24,7 +24,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 eth_utils
+	tox -e lint
 
 lint-roll:
 	isort --recursive eth_utils tests
