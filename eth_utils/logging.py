@@ -1,6 +1,6 @@
 import contextlib
 import logging
-from typing import Any, Iterator, Type
+from typing import Any, Iterator, Type, TypeVar
 
 from .toolz import assoc
 
@@ -35,6 +35,9 @@ def _use_logger_class(logger_cls: Type[logging.Logger]) -> Iterator:
         logging.setLoggerClass(original_logger_cls)
 
 
+THasLoggerMeta = TypeVar("THasLoggerMeta", bound="HasLoggerMeta")
+
+
 class HasLoggerMeta(type):
     """
     Metaclass which using the `__qualname__` to assign a logger instance to the
@@ -57,13 +60,18 @@ class HasLoggerMeta(type):
         return super().__new__(mcls, name, bases, assoc(namespace, "logger", logger))
 
     @classmethod
-    def _replace_logger_class(mcls, value: Type[logging.Logger]) -> "HasLoggerMeta":
+    def replace_logger_class(
+        mcls: Type[THasLoggerMeta], value: Type[logging.Logger]
+    ) -> Type[THasLoggerMeta]:
         # mypy can't tell this is a subclass of `HasLoggerMeta`  # noqa: E501
-        return type(mcls.__name__, (mcls,), {"logger_class": value})  # type: ignore
+        return type(mcls.__name__, (mcls,), {"logger_class": value})
 
-    def __getitem__(cls, value: Type[logging.Logger]) -> "HasLogger":
-        mcls = cls._replace_logger_class(value)
-        return mcls(cls.__name__, (cls,), cls.__dict__.copy())
+    @classmethod
+    def meta_compat(
+        mcls: Type[THasLoggerMeta], other: Type[type]
+    ) -> Type[THasLoggerMeta]:
+        # mypy doesn't recognize the bases for this class as valid
+        return type(mcls.__name__, (mcls, other), {})
 
 
 class _BaseHasLogger(metaclass=HasLoggerMeta):
@@ -77,7 +85,10 @@ class HasLogger(_BaseHasLogger):
     pass
 
 
-class _BaseHasExtendedDebugLogger(HasLogger[ExtendedDebugLogger]):  # type: ignore
+HasExtendedDebugLoggerMeta = HasLogger.replace_logger_class(ExtendedDebugLogger)
+
+
+class _BaseHasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
     # This class exists to a allow us to define the type of the logger.  Once
     # python3.5 is deprecated this can be removed in favor of a simple type
     # annotation on the main class.

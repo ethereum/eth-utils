@@ -1378,6 +1378,24 @@ without this, though your logs will be printed with the label ``'Level 8'``.
 .. note::  This function is idempotent
 
 
+``class HasLoggerMeta``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This is the metaclass which is responsible for adding the logger instance to
+the class.  It exposes two additional APIs.
+
+* ``HasLoggerMeta.replace_logger_class(cls: logging.Logger)``
+
+  Returns a new metaclass which will use the provided logger class.
+
+
+* ``HasLoggerMeta.meta_compat(other: type)``
+
+  Returns a new metaclass that derives from both metaclasses.  This is useful
+  when working in conjunction with ``abc.ABC`` or ``typing.Generic``.
+
+
+
 Numeric Utils
 ~~~~~~~~~~~~~
 

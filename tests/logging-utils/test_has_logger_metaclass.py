@@ -1,6 +1,11 @@
 import logging
 
-from eth_utils.logging import ExtendedDebugLogger, HasExtendedDebugLogger, HasLogger
+from eth_utils.logging import (
+    ExtendedDebugLogger,
+    HasExtendedDebugLogger,
+    HasLogger,
+    HasLoggerMeta,
+)
 
 
 class DefinedAtModule(HasLogger):
@@ -77,7 +82,7 @@ class FancyLogger(logging.Logger):
 
 
 def test_can_override_logging_class():
-    class HasFancyLogger(HasLogger[FancyLogger]):
+    class HasFancyLogger(metaclass=HasLoggerMeta.replace_logger_class(FancyLogger)):
         pass
 
     assert hasattr(HasFancyLogger, "logger")
