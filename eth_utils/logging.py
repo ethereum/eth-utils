@@ -51,13 +51,30 @@ def setup_DEBUG2_logging() -> None:
 
 
 @contextlib.contextmanager
-def _use_logger_class(logger_cls: Type[logging.Logger]) -> Iterator:
-    original_logger_cls = logging.getLoggerClass()
-    logging.setLoggerClass(logger_cls)
+def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator:
+    original_logger_class = logging.getLoggerClass()
+    logging.setLoggerClass(logger_class)
     try:
         yield
     finally:
-        logging.setLoggerClass(original_logger_cls)
+        logging.setLoggerClass(original_logger_class)
+
+
+TLogger = TypeVar("TLogger", bound=logging.Logger)
+
+
+def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
+    if logger_class is None:
+        return logging.getLogger(name)
+    else:
+        with _use_logger_class(logger_class):
+            if name in logging.Logger.manager.loggerDict:
+                del logging.Logger.manager.loggerDict[name]
+            return logging.getLogger(name)
+
+
+def get_extended_debug_logger(name: str) -> ExtendedDebugLogger:
+    return get_logger(name, ExtendedDebugLogger)
 
 
 THasLoggerMeta = TypeVar("THasLoggerMeta", bound="HasLoggerMeta")

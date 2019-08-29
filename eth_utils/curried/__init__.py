@@ -28,6 +28,8 @@ from eth_utils import (
     from_wei,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
+    get_extended_debug_logger,
+    get_logger,
     hexstr_if_str,
     humanize_hash,
     humanize_ipfs_uri,
@@ -86,6 +88,7 @@ apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(apply_one_of_formatters)
 from_wei = curry(from_wei)
+get_logger = curry(get_logger)
 hexstr_if_str = curry(hexstr_if_str)
 is_same_address = curry(is_same_address)
 text_if_str = curry(text_if_str)

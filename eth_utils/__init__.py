@@ -72,6 +72,8 @@ from .logging import (  # noqa: F401
     HasExtendedDebugLoggerMeta,
     HasLogger,
     HasLoggerMeta,
+    get_extended_debug_logger,
+    get_logger,
     setup_DEBUG2_logging,
 )
 from .module_loading import import_string  # noqa: F401
