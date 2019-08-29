@@ -6,7 +6,9 @@ import pytest
 from eth_utils import HasLoggerMeta
 
 
-@pytest.mark.skipif(sys.version_info[:2] >= (3, 7), reason="GenericMeta not present in Python 3.7+")
+@pytest.mark.skipif(
+    sys.version_info[:2] >= (3, 7), reason="GenericMeta not present in Python 3.7+"
+)
 def test_has_logger_compat_with_typing_Generic():
     from typing import GenericMeta
 
