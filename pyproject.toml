@@ -1,0 +1,6 @@
+[tool.towncrier]
+    package="eth_utils"
+    filename = "docs/releases.rst"
+    directory = "newsfragments"
+    underlines = ["-", "~", "^"]
+    issue_format = "`#{issue} <https://github.com/ethereum/eth-utils/issues/{issue}>`__"

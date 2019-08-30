@@ -71,6 +71,12 @@ To release a new version:
 ```sh
 make release bump=$$VERSION_PART_TO_BUMP$$
 ```
+To preview the upcoming release notes:
+
+```sh
+towncrier --draft
+```
+
 
 
 #### How to bumpversion
