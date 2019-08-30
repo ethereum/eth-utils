@@ -43,23 +43,23 @@ def test_caching_of_debug2_when_disabled(caplog, DEBUG2_installed):
 
     assert logger.isEnabledFor(DEBUG2_LEVEL_NUM) is False
 
-    assert 'show_debug2' not in logger.__dict__
+    assert "show_debug2" not in logger.__dict__
     assert logger.show_debug2 is False
     # cached property should have inserted it into the dict
-    assert 'show_debug2' in logger.__dict__
+    assert "show_debug2" in logger.__dict__
 
     # sanity pre-check
     assert len(caplog.records) == 0
 
-    assert 'debug2' not in logger.__dict__
-    assert logger.debug2('this should actually call the function') is None
-    assert 'debug2' in logger.__dict__
-    assert logger.debug2('should not do anything but hit the lambda') is None
+    assert "debug2" not in logger.__dict__
+    assert logger.debug2("this should actually call the function") is None
+    assert "debug2" in logger.__dict__
+    assert logger.debug2("should not do anything but hit the lambda") is None
 
     assert len(caplog.records) == 0
 
     # now see that it always returns the value from `__dict__`
-    logger.__dict__['show_debug2'] = 100
+    logger.__dict__["show_debug2"] = 100
     assert logger.show_debug2 == 100
 
 
@@ -73,21 +73,21 @@ def test_caching_of_debug2_when_enabled(caplog, DEBUG2_installed):
     logger.setLevel(DEBUG2_LEVEL_NUM)
     assert logger.isEnabledFor(DEBUG2_LEVEL_NUM) is True
 
-    assert 'show_debug2' not in logger.__dict__
+    assert "show_debug2" not in logger.__dict__
     assert logger.show_debug2 is True
     # cached property should have inserted it into the dict
-    assert 'show_debug2' in logger.__dict__
+    assert "show_debug2" in logger.__dict__
 
     # sanity pre-check
     assert len(caplog.records) == 0
 
-    assert 'debug2' not in logger.__dict__
-    assert logger.debug2('this should actually call the function') is None
-    assert 'debug2' not in logger.__dict__
-    assert logger.debug2('this should still call the function') is None
+    assert "debug2" not in logger.__dict__
+    assert logger.debug2("this should actually call the function") is None
+    assert "debug2" not in logger.__dict__
+    assert logger.debug2("this should still call the function") is None
 
     assert len(caplog.records) == 2
 
     # now see that it always returns the value from `__dict__`
-    logger.__dict__['show_debug2'] = 100
+    logger.__dict__["show_debug2"] = 100
     assert logger.show_debug2 == 100

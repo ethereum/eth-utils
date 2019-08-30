@@ -66,6 +66,7 @@ from .hexadecimal import (  # noqa: F401
 )
 from .humanize import humanize_hash, humanize_ipfs_uri, humanize_seconds  # noqa: F401
 from .logging import (  # noqa: F401
+    DEBUG2_LEVEL_NUM,
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
     HasExtendedDebugLoggerMeta,

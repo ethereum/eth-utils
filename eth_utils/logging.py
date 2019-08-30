@@ -26,6 +26,7 @@ class ExtendedDebugLogger(logging.Logger):
     """
     Logging class that can be used for lower level debug logging.
     """
+
     @cached_show_debug2_property
     def show_debug2(self) -> bool:
         return self.isEnabledFor(DEBUG2_LEVEL_NUM)
@@ -37,7 +38,7 @@ class ExtendedDebugLogger(logging.Logger):
             # When we find that `DEBUG2` isn't enabled we completely replace
             # the `debug2` function in this instance of the logger with a noop
             # lambda to further speed up
-            self.__dict__['debug2'] = lambda message, *args, **kwargs: None
+            self.__dict__["debug2"] = lambda message, *args, **kwargs: None
 
 
 def setup_DEBUG2_logging() -> None:
