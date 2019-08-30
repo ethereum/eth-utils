@@ -24,11 +24,12 @@ extras_require = {
         'wheel>=0.30.0,<1.0.0',
     ],
     'dev': [
-        "twine",
+        "twine>=1.13,<2",
     ],
     'doc': [
         'Sphinx>=1.5.5,<2',
         'sphinx_rtd_theme>=0.1.9,<2',
+        "towncrier>=19.2.0,<20",
     ],
 }
 

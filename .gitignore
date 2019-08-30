@@ -101,3 +101,6 @@ fabric.properties
 
 # virtualenv default location
 venv*
+
+# pip wheel metadata
+pip-wheel-metadata/
