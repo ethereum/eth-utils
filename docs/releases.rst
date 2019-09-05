@@ -1,3 +1,19 @@
+eth-utils 1.7.0 (2019-09-05)
+----------------------------
+
+Features
+~~~~~~~~
+
+- Expose ``DEBUG2`` log level as top level module import (`#117 <https://github.com/ethereum/eth-utils/issues/117>`__)
+- Add ``get_logger`` and ``get_extended_debug_logger`` utils (`#170 <https://github.com/ethereum/eth-utils/issues/170>`__)
+
+
+Improved Documentation
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Setup towncrier to improve the quality of the release notes (`#172 <https://github.com/ethereum/eth-utils/issues/172>`__)
+
+
 Release Notes
 =============
 
