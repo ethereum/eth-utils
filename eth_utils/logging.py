@@ -68,8 +68,14 @@ def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
         return logging.getLogger(name)
     else:
         with _use_logger_class(logger_class):
+            # The logging module caches logger instances.  The following code
+            # ensures that if there is a cached instance that we don't
+            # accidentally return the incorrect logger type because the logging
+            # module does not *update* the cached instance in the event that
+            # the global logging class changes.
             if name in logging.Logger.manager.loggerDict:
-                del logging.Logger.manager.loggerDict[name]
+                if type(logging.Logger.manager.loggerDict[name]) is not logger_class:
+                    del logging.Logger.manager.loggerDict[name]
             return logging.getLogger(name)
 
 
