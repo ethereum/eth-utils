@@ -1302,6 +1302,40 @@ ellipsis, only showing the first and last four characters of the hash.
 Logging Utils
 ~~~~~~~~~~~~~~
 
+
+``get_logger(string, [, logger_class]) -> logger``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This API is similar to the standard library ``logging.getLogger`` however, the
+logger it returns will be an instance of the provided ``logger_class``.  If
+``logger_class`` is not provided this returns an instance of whatever the
+current default logger class is set on the ``logging``.
+
+
+.. doctest::
+
+    >>> import logging
+    >>> from eth_utils import get_logger
+    >>> logger = get_logger('my_application')
+    >>> assert logger.name == 'my_application'
+    >>> assert isinstance(logger, logging.getLoggerClass())
+
+
+``get_extended_debug_logger(string) -> ExtendedDebugLogger``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Like ``get_logger`` except that it always returns an instance of ``ExtendedDebugLogger``
+
+
+.. doctest::
+
+    >>> from eth_utils import get_extended_debug_logger, ExtendedDebugLogger
+    >>> logger = get_extended_debug_logger('my_application')
+    >>> assert logger.name == 'my_application'
+    >>> assert isinstance(logger, ExtendedDebugLogger), type(logger)
+
+
+
 ``class HasLogger``
 ^^^^^^^^^^^^^^^^^^^
 
