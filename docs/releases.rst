@@ -1,3 +1,12 @@
+eth-utils 1.8.0 (2019-11-04)
+----------------------------
+
+Features
+~~~~~~~~
+
+- Add support for python3.8 (`#174 <https://github.com/ethereum/eth-utils/issues/174>`__)
+
+
 eth-utils 1.7.0 (2019-09-05)
 ----------------------------
 
