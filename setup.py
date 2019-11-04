@@ -14,7 +14,7 @@ extras_require = {
         'pytest>=3.4.1,<4.0.0',
     ],
     'test': [
-        'hypothesis>=3.4.2,<4.0.0',
+        'hypothesis>=4.43.0,<5.0.0',
         'pytest>=3.4.1,<4.0.0',
         'pytest-pythonpath>=0.3,<1.0',
     ],
@@ -55,7 +55,7 @@ setup(
         "eth-hash>=0.1.0,<1.0.0",
         "eth-typing>=1.0.0,<3.0.0",
         "toolz>0.8.2,<1;implementation_name=='pypy'",
-        "cytoolz>=0.8.2,<1.0.0;implementation_name=='cpython'",
+        "cytoolz>=0.10.1,<1.0.0;implementation_name=='cpython'",
     ],
     setup_requires=['setuptools-markdown'],
     python_requires='>=3.5,!=3.5.2,<4',
@@ -74,6 +74,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
 )
