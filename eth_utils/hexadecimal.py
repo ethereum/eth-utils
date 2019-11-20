@@ -5,6 +5,8 @@ import codecs
 import string
 from typing import Any, AnyStr
 
+from eth_typing import HexStr
+
 from .types import is_string, is_text
 
 
@@ -16,7 +18,7 @@ def decode_hex(value: str) -> bytes:
     return codecs.decode(remove_0x_prefix(value), "hex")  # type: ignore
 
 
-def encode_hex(value: AnyStr) -> str:
+def encode_hex(value: AnyStr) -> HexStr:
     if not is_string(value):
         raise TypeError("Value must be an instance of str or unicode")
     binary_hex = codecs.encode(value, "hex")  # type: ignore
@@ -31,13 +33,13 @@ def is_0x_prefixed(value: Any) -> bool:
     return value.startswith("0x") or value.startswith("0X")
 
 
-def remove_0x_prefix(value: str) -> str:
+def remove_0x_prefix(value: HexStr) -> HexStr:
     if is_0x_prefixed(value):
         return value[2:]
     return value
 
 
-def add_0x_prefix(value: str) -> str:
+def add_0x_prefix(value: HexStr) -> HexStr:
     if is_0x_prefixed(value):
         return value
     return "0x" + value
