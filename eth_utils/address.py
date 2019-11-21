@@ -1,10 +1,11 @@
 from typing import Any, AnyStr
 
+from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
+
 from .conversions import hexstr_if_str, to_hex
 from .crypto import keccak
 from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
 from .types import is_bytes, is_text
-from .typing import Address, AnyAddress, ChecksumAddress, HexAddress
 
 
 def is_hex_address(value: Any) -> bool:
@@ -107,16 +108,18 @@ def to_checksum_address(value: AnyStr) -> ChecksumAddress:
     Makes a checksum address given a supported format.
     """
     norm_address = to_normalized_address(value)
-    address_hash = encode_hex(keccak(text=remove_0x_prefix(norm_address)))
+    address_hash = encode_hex(keccak(text=remove_0x_prefix(HexStr(norm_address))))
 
     checksum_address = add_0x_prefix(
-        "".join(
-            (
-                norm_address[i].upper()
-                if int(address_hash[i], 16) > 7
-                else norm_address[i]
+        HexStr(
+            "".join(
+                (
+                    norm_address[i].upper()
+                    if int(address_hash[i], 16) > 7
+                    else norm_address[i]
+                )
+                for i in range(2, 42)
             )
-            for i in range(2, 42)
         )
     )
     return ChecksumAddress(HexAddress(checksum_address))

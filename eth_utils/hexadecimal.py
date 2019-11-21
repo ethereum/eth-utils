@@ -22,7 +22,7 @@ def encode_hex(value: AnyStr) -> HexStr:
     if not is_string(value):
         raise TypeError("Value must be an instance of str or unicode")
     binary_hex = codecs.encode(value, "hex")  # type: ignore
-    return add_0x_prefix(binary_hex.decode("ascii"))
+    return add_0x_prefix(HexStr(binary_hex.decode("ascii")))
 
 
 def is_0x_prefixed(value: Any) -> bool:
@@ -35,14 +35,14 @@ def is_0x_prefixed(value: Any) -> bool:
 
 def remove_0x_prefix(value: HexStr) -> HexStr:
     if is_0x_prefixed(value):
-        return value[2:]
+        return HexStr(value[2:])
     return value
 
 
 def add_0x_prefix(value: HexStr) -> HexStr:
     if is_0x_prefixed(value):
         return value
-    return "0x" + value
+    return HexStr("0x" + value)
 
 
 def is_hex(value: Any) -> bool:

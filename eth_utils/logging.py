@@ -7,13 +7,16 @@ from .toolz import assoc
 
 DEBUG2_LEVEL_NUM = 8
 
+TLogger = TypeVar("TLogger", bound=logging.Logger)
+
 
 class cached_show_debug2_property:
-    def __init__(self, func: Callable[[logging.Logger], bool]):
-        functools.update_wrapper(self, func)
+    def __init__(self, func: Callable[[TLogger], bool]):
+        # type ignored b/c arg1 expects Callable[..., Any]
+        functools.update_wrapper(self, func)  # type: ignore
         self._func = func
 
-    def __get__(self, obj: Optional[logging.Logger], cls: Type[logging.Logger]) -> bool:
+    def __get__(self, obj: Optional[TLogger], cls: Type[logging.Logger]) -> Any:
         if obj is None:
             return self
 
@@ -60,10 +63,7 @@ def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator:
         logging.setLoggerClass(original_logger_class)
 
 
-TLogger = TypeVar("TLogger", bound=logging.Logger)
-
-
-def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
+def get_logger(name: str, logger_class: Type[logging.Logger] = None) -> logging.Logger:
     if logger_class is None:
         return logging.getLogger(name)
     else:
@@ -73,13 +73,18 @@ def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
             # accidentally return the incorrect logger type because the logging
             # module does not *update* the cached instance in the event that
             # the global logging class changes.
-            if name in logging.Logger.manager.loggerDict:
-                if type(logging.Logger.manager.loggerDict[name]) is not logger_class:
-                    del logging.Logger.manager.loggerDict[name]
+            #
+            # types ignored b/c mypy doesn't identify presence of manager on logging.Logger
+            if name in logging.Logger.manager.loggerDict:  # type: ignore
+                if (
+                    type(logging.Logger.manager.loggerDict[name])  # type: ignore
+                    is not logger_class
+                ):
+                    del logging.Logger.manager.loggerDict[name]  # type: ignore
             return logging.getLogger(name)
 
 
-def get_extended_debug_logger(name: str) -> ExtendedDebugLogger:
+def get_extended_debug_logger(name: str) -> logging.Logger:
     return get_logger(name, ExtendedDebugLogger)
 
 
