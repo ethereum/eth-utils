@@ -1,4 +1,4 @@
-from typing import Callable, TypeVar, Union, cast
+from typing import Callable, TypeVar, Union
 
 from eth_typing import HexStr, Primitives
 
@@ -37,7 +37,7 @@ def to_hex(
         )
 
     if is_integer(primitive):
-        return HexStr(hex(cast(int, primitive)))
+        return HexStr(hex(primitive))
 
     raise TypeError(
         "Unsupported type: '{0}'.  Must be one of: bool, str, bytes, bytearray"
@@ -114,7 +114,7 @@ def to_text(
     elif isinstance(primitive, (bytes, bytearray)):
         return primitive.decode("utf-8")
     elif is_integer(primitive):
-        byte_encoding = int_to_big_endian(primitive)  # type: ignore
+        byte_encoding = int_to_big_endian(primitive)
         return to_text(byte_encoding)
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 

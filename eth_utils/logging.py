@@ -1,7 +1,7 @@
 import contextlib
 import functools
 import logging
-from typing import Any, Callable, Iterator, Optional, Type, TypeVar
+from typing import Any, Callable, Dict, Iterator, Optional, Type, TypeVar
 
 from .toolz import assoc
 
@@ -54,7 +54,7 @@ def setup_DEBUG2_logging() -> None:
 
 
 @contextlib.contextmanager
-def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator:
+def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
     original_logger_class = logging.getLoggerClass()
     logging.setLoggerClass(logger_class)
     try:
@@ -99,7 +99,9 @@ class HasLoggerMeta(type):
 
     logger_class = logging.Logger
 
-    def __new__(mcls, name, bases, namespace):
+    def __new__(
+        mcls: Type[THasLoggerMeta], name: str, bases: Any, namespace: Dict[str, str]
+    ) -> type:
         if "logger" in namespace:
             # If a logger was explicitely declared we shouldn't do anything to
             # replace it.

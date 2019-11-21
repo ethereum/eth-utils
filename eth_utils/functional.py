@@ -37,7 +37,7 @@ def combine(
 def apply_to_return_value(
     callback: Callable[..., T]
 ) -> Callable[..., Callable[..., T]]:
-    def outer(fn):
+    def outer(fn: Callable[..., T]) -> Callable[..., T]:
         # We would need to type annotate *args and **kwargs but doing so segfaults
         # the PyPy builds. We ignore instead.
         @functools.wraps(fn)

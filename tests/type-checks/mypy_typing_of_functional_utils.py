@@ -1,5 +1,5 @@
 import decimal
-from typing import TYPE_CHECKING, Dict, Iterable, List, Set, Tuple
+from typing import TYPE_CHECKING, Dict, Iterable, List, NoReturn, Set, Tuple
 
 from eth_utils import (
     clamp,
@@ -70,7 +70,7 @@ ether: int = denoms.ether
 
 
 @replace_exceptions({ValueError: TypeError})
-def example_replace_exceptions():
+def example_replace_exceptions() -> NoReturn:
     raise ValueError("The base exception")
 
 

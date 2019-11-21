@@ -82,7 +82,7 @@ def to_wei(number: int, unit: str) -> int:
     s_number = str(number)
     unit_value = units[unit.lower()]
 
-    if d_number == 0:
+    if d_number == decimal.Decimal(0):
         return 0
 
     if d_number < 1 and "." in s_number:
