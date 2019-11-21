@@ -1,7 +1,7 @@
 import contextlib
 import functools
 import logging
-from typing import Any, Callable, Dict, Iterator, Optional, Type, TypeVar
+from typing import Any, Callable, Dict, Iterator, Optional, Type, TypeVar, cast
 
 from .toolz import assoc
 
@@ -84,8 +84,8 @@ def get_logger(name: str, logger_class: Type[logging.Logger] = None) -> logging.
             return logging.getLogger(name)
 
 
-def get_extended_debug_logger(name: str) -> logging.Logger:
-    return get_logger(name, ExtendedDebugLogger)
+def get_extended_debug_logger(name: str) -> ExtendedDebugLogger:
+    return cast(ExtendedDebugLogger, get_logger(name, ExtendedDebugLogger))
 
 
 THasLoggerMeta = TypeVar("THasLoggerMeta", bound="HasLoggerMeta")

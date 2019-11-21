@@ -45,7 +45,7 @@ def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> None:
     if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
         raise TypeError(
             "Arguments passed as hexstr or text must be of text type. "
-            "Instead, value was: %r" % (repr(next(iter(list(kwargs.values())))))
+            "Instead, value was: %r" % (repr(next(list(kwargs.values()))))
         )
 
 
@@ -57,7 +57,7 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
         )
 
 
-def validate_conversion_arguments(to_wrap: Callable[..., Any]) -> Any:
+def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]:
     """
     Validates arguments for conversion functions.
     - Only a single argument is present
@@ -66,7 +66,7 @@ def validate_conversion_arguments(to_wrap: Callable[..., Any]) -> Any:
     """
 
     @functools.wraps(to_wrap)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
+    def wrapper(*args: Any, **kwargs: Any) -> T:
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
