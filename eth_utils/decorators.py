@@ -45,7 +45,7 @@ def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> None:
     if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
         raise TypeError(
             "Arguments passed as hexstr or text must be of text type. "
-            "Instead, value was: %r" % (repr(next(list(kwargs.values()))))
+            "Instead, value was: %r" % (repr(next(iter(list(kwargs.values())))))
         )
 
 

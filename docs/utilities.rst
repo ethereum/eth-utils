@@ -1,6 +1,11 @@
 Utilities
 -------------
 
+.. _ChecksumAddress: https://eth-typing.readthedocs.io/en/latest/types.html#checksumaddress
+.. _HexAddress: https://eth-typing.readthedocs.io/en/latest/types.html#hexaddress
+.. _Address: https://eth-typing.readthedocs.io/en/latest/types.html#address
+.. _HexStr: https://eth-typing.readthedocs.io/en/latest/types.html#hexstr
+
 All functions can be imported directly from the ``eth_utils`` module
 
 Alternatively, you can get the curried version of the functions by
@@ -520,8 +525,9 @@ the same address.
    >>> is_same_address('0xd3cda913deb6f67967b99d67acdfa1712c293601', b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    True
 
-``to_canonical_address(value)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``to_canonical_address(value)`` -> Address_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Given any valid representation of an address return its canonical form.
 
@@ -537,8 +543,8 @@ Given any valid representation of an address return its canonical form.
    >>> to_canonical_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01'
 
-``to_checksum_address(value)`` -> text
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_checksum_address(value)`` -> ChecksumAddress_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Given any valid representation of an address return the checksummed
 representation.
@@ -555,8 +561,9 @@ representation.
    >>> to_checksum_address(b'\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01')
    '0xd3CdA913deB6f67967B99D67aCDFa1712C293601'
 
-``to_normalized_address(value)`` -> text
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``to_normalized_address(value)`` -> HexAddress_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Given any valid representation of an address return the normalized
 representation.
@@ -615,8 +622,8 @@ encoded as UTF-8.
    >>> to_bytes(text='cowmö')
    b'cowm\xc3\xb6'
 
-``to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> str
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> HexStr_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns it in its hexadecimal
 representation. It follows the rules for converting to hex in the
@@ -1141,18 +1148,19 @@ returned by the callable.
 Hexidecimal Utils
 ~~~~~~~~~~~~~~~~~
 
-``add_0x_prefix(value)`` -> string
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``add_0x_prefix(value: HexStr)`` -> HexStr_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Returns ``value`` with a ``0x`` prefix. If the value is already prefixed
-it is returned as-is. Value must be a string literal.
+it is returned as-is. Value must be a HexStr_.
 
 .. doctest::
 
    >>> from eth_utils import add_0x_prefix
-   >>> add_0x_prefix('12345')
+   >>> from eth_typing import HexStr
+   >>> add_0x_prefix(HexStr('12345'))
    '0x12345'
-   >>> add_0x_prefix('0x12345')
+   >>> add_0x_prefix(HexStr('0x12345'))
    '0x12345'
 
 ``decode_hex(value)`` -> bytes
@@ -1236,18 +1244,19 @@ type.
    Traceback (most recent call last):
    TypeError: is_hex requires text typed arguments.
 
-``remove_0x_prefix(value)`` -> string
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``remove_0x_prefix(value: HexStr)`` -> HexStr_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Returns ``value`` with the ``0x`` prefix stripped. If the value does not
-have a ``0x`` prefix it is returned as-is. Value must be string literal.
+have a ``0x`` prefix it is returned as-is. Value must be a HexStr_.
 
 .. doctest::
 
    >>> from eth_utils import remove_0x_prefix
-   >>> remove_0x_prefix('12345')
+   >>> from eth_typing import HexStr
+   >>> remove_0x_prefix(HexStr('12345'))
    '12345'
-   >>> remove_0x_prefix('0x12345')
+   >>> remove_0x_prefix(HexStr('0x12345'))
    '12345'
 
 

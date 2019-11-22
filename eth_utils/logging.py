@@ -1,7 +1,7 @@
 import contextlib
 import functools
 import logging
-from typing import Any, Callable, Dict, Iterator, Optional, Type, TypeVar, cast
+from typing import Any, Callable, Dict, Iterator, Optional, Tuple, Type, TypeVar, cast
 
 from .toolz import assoc
 
@@ -63,7 +63,7 @@ def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
         logging.setLoggerClass(original_logger_class)
 
 
-def get_logger(name: str, logger_class: Type[logging.Logger] = None) -> logging.Logger:
+def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
     if logger_class is None:
         return logging.getLogger(name)
     else:
@@ -75,12 +75,10 @@ def get_logger(name: str, logger_class: Type[logging.Logger] = None) -> logging.
             # the global logging class changes.
             #
             # types ignored b/c mypy doesn't identify presence of manager on logging.Logger
-            if name in logging.Logger.manager.loggerDict:  # type: ignore
-                if (
-                    type(logging.Logger.manager.loggerDict[name])  # type: ignore
-                    is not logger_class
-                ):
-                    del logging.Logger.manager.loggerDict[name]  # type: ignore
+            manager = logging.Logger.manager  # type: ignore
+            if name in manager.loggerDict:
+                if type(manager.loggerDict[name]) is not logger_class:
+                    del manager.loggerDict[name]
             return logging.getLogger(name)
 
 
@@ -100,10 +98,10 @@ class HasLoggerMeta(type):
     logger_class = logging.Logger
 
     def __new__(
-        mcls: Type[THasLoggerMeta], name: str, bases: Any, namespace: Dict[str, str]
+        mcls: Type[THasLoggerMeta], name: str, bases: Tuple[Type[Any]], namespace: Dict[str, Any]
     ) -> type:
         if "logger" in namespace:
-            # If a logger was explicitely declared we shouldn't do anything to
+            # If a logger was explicitly declared we shouldn't do anything to
             # replace it.
             return super().__new__(mcls, name, bases, namespace)
         if "__qualname__" not in namespace:
