@@ -65,7 +65,7 @@ def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
 
 def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
     if logger_class is None:
-        return logging.getLogger(name)
+        return cast(TLogger, logging.getLogger(name))
     else:
         with _use_logger_class(logger_class):
             # The logging module caches logger instances.  The following code
@@ -79,11 +79,11 @@ def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
             if name in manager.loggerDict:
                 if type(manager.loggerDict[name]) is not logger_class:
                     del manager.loggerDict[name]
-            return logging.getLogger(name)
+            return cast(TLogger, logging.getLogger(name))
 
 
 def get_extended_debug_logger(name: str) -> ExtendedDebugLogger:
-    return cast(ExtendedDebugLogger, get_logger(name, ExtendedDebugLogger))
+    return get_logger(name, ExtendedDebugLogger)
 
 
 THasLoggerMeta = TypeVar("THasLoggerMeta", bound="HasLoggerMeta")
@@ -98,7 +98,10 @@ class HasLoggerMeta(type):
     logger_class = logging.Logger
 
     def __new__(
-        mcls: Type[THasLoggerMeta], name: str, bases: Tuple[Type[Any]], namespace: Dict[str, Any]
+        mcls: Type[THasLoggerMeta],
+        name: str,
+        bases: Tuple[Type[Any]],
+        namespace: Dict[str, Any],
     ) -> type:
         if "logger" in namespace:
             # If a logger was explicitly declared we shouldn't do anything to
