@@ -1,17 +1,19 @@
 import functools
 import itertools
-from typing import Any, Callable, Dict, Iterable, Type
+from typing import Any, Callable, Dict, Iterable, Type, TypeVar
 
 from .types import is_text
 
+T = TypeVar("T")
+
 
 class combomethod(object):
-    def __init__(self, method):
+    def __init__(self, method: Callable[..., Any]) -> None:
         self.method = method
 
-    def __get__(self, obj=None, objtype=None):
+    def __get__(self, obj: T = None, objtype: Type[T] = None) -> Callable[..., T]:
         @functools.wraps(self.method)
-        def _wrapper(*args, **kwargs):
+        def _wrapper(*args: Any, **kwargs: Any) -> Any:
             if obj is not None:
                 return self.method(obj, *args, **kwargs)
             else:
@@ -20,13 +22,13 @@ class combomethod(object):
         return _wrapper
 
 
-def _has_one_val(*args, **kwargs):
+def _has_one_val(*args: T, **kwargs: T) -> bool:
     vals = itertools.chain(args, kwargs.values())
     not_nones = list(filter(lambda val: val is not None, vals))
     return len(not_nones) == 1
 
 
-def _assert_one_val(*args, **kwargs):
+def _assert_one_val(*args: T, **kwargs: T) -> None:
     if not _has_one_val(*args, **kwargs):
         raise TypeError(
             "Exactly one of the passed values can be specified. "
@@ -34,20 +36,20 @@ def _assert_one_val(*args, **kwargs):
         )
 
 
-def _hexstr_or_text_kwarg_is_text_type(**kwargs):
+def _hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> bool:
     value = kwargs["hexstr"] if "hexstr" in kwargs else kwargs["text"]
     return is_text(value)
 
 
-def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs):
+def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> None:
     if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
         raise TypeError(
             "Arguments passed as hexstr or text must be of text type. "
-            "Instead, value was: %r" % (repr(next(list(kwargs.values()))))
+            "Instead, value was: %r" % (repr(next(iter(list(kwargs.values())))))
         )
 
 
-def _validate_supported_kwarg(kwargs):
+def _validate_supported_kwarg(kwargs: Any) -> None:
     if next(iter(kwargs)) not in ["primitive", "hexstr", "text"]:
         raise TypeError(
             "Kwarg must be 'primitive', 'hexstr', or 'text'. "
@@ -55,7 +57,7 @@ def _validate_supported_kwarg(kwargs):
         )
 
 
-def validate_conversion_arguments(to_wrap):
+def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]:
     """
     Validates arguments for conversion functions.
     - Only a single argument is present
@@ -64,7 +66,7 @@ def validate_conversion_arguments(to_wrap):
     """
 
     @functools.wraps(to_wrap)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> T:
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
@@ -76,14 +78,14 @@ def validate_conversion_arguments(to_wrap):
     return wrapper
 
 
-def return_arg_type(at_position):
+def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
     """
     Wrap the return value with the result of `type(args[at_position])`
     """
 
-    def decorator(to_wrap):
+    def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> T:
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)

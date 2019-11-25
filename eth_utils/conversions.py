@@ -1,10 +1,13 @@
-from typing import Callable, Union, cast
+from typing import Callable, TypeVar, Union
+
+from eth_typing import HexStr, Primitives
 
 from .decorators import validate_conversion_arguments
 from .encoding import big_endian_to_int, int_to_big_endian
 from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
 from .types import is_boolean, is_integer, is_string
-from .typing import HexStr, Primitives, T
+
+T = TypeVar("T")
 
 
 @validate_conversion_arguments
@@ -17,16 +20,16 @@ def to_hex(
     https://github.com/ethereum/wiki/wiki/JSON-RPC#hex-value-encoding
     """
     if hexstr is not None:
-        return HexStr(add_0x_prefix(hexstr.lower()))
+        return add_0x_prefix(HexStr(hexstr.lower()))
 
     if text is not None:
-        return HexStr(encode_hex(text.encode("utf-8")))
+        return encode_hex(text.encode("utf-8"))
 
     if is_boolean(primitive):
         return HexStr("0x1") if primitive else HexStr("0x0")
 
     if isinstance(primitive, (bytes, bytearray)):
-        return HexStr(encode_hex(primitive))
+        return encode_hex(primitive)
     elif is_string(primitive):
         raise TypeError(
             "Unsupported type: The primitive argument must be one of: bytes,"
@@ -34,7 +37,7 @@ def to_hex(
         )
 
     if is_integer(primitive):
-        return HexStr(hex(cast(int, primitive)))
+        return HexStr(hex(primitive))
 
     raise TypeError(
         "Unsupported type: '{0}'.  Must be one of: bool, str, bytes, bytearray"
@@ -111,7 +114,7 @@ def to_text(
     elif isinstance(primitive, (bytes, bytearray)):
         return primitive.decode("utf-8")
     elif is_integer(primitive):
-        byte_encoding = int_to_big_endian(primitive)  # type: ignore
+        byte_encoding = int_to_big_endian(primitive)
         return to_text(byte_encoding)
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 
@@ -143,7 +146,9 @@ def hexstr_if_str(
     :param hexstr_or_primitive bytes, str, int: value to convert
     """
     if isinstance(hexstr_or_primitive, str):
-        if remove_0x_prefix(hexstr_or_primitive) and not is_hex(hexstr_or_primitive):
+        if remove_0x_prefix(HexStr(hexstr_or_primitive)) and not is_hex(
+            hexstr_or_primitive
+        ):
             raise ValueError(
                 "when sending a str, it must be a hex string. Got: {0!r}".format(
                     hexstr_or_primitive
