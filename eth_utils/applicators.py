@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Generator, List, Tuple
+from typing import Any, Callable, Dict, Generator, List, Tuple, overload
 import warnings
 
 from .decorators import return_arg_type
@@ -65,8 +65,22 @@ def apply_formatters_to_sequence(
             yield formatter(item)
 
 
+@overload
 def apply_formatter_if(
-    condition: Callable[..., Any], formatter: Callable[..., Any], value: Any
+    condition: Callable[..., bool]
+) -> Callable[[Callable[..., Any]], Callable[[Any], Any]]:
+    pass
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[..., bool], formatter: Callable[..., Any]
+) -> Callable[[Any], Any]:
+    pass
+
+
+def apply_formatter_if(
+    condition: Callable[..., bool], formatter: Callable[..., Any], value: Any
 ) -> Any:
     if condition(value):
         return formatter(value)

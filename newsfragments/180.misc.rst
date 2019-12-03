@@ -1,0 +1,1 @@
+Overload apply_formatter_if types to allow for curried use.
