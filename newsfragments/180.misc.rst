@@ -1,1 +1,1 @@
-Overload apply_formatter_if types to allow for curried use.
+Add stub file to allow for typing of curried fns.
