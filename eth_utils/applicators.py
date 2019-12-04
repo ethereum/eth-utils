@@ -66,7 +66,7 @@ def apply_formatters_to_sequence(
 
 
 def apply_formatter_if(
-    condition: Callable[..., Any], formatter: Callable[..., Any], value: Any
+    condition: Callable[..., bool], formatter: Callable[..., Any], value: Any
 ) -> Any:
     if condition(value):
         return formatter(value)

@@ -1,0 +1,1 @@
+Add stub file to allow for typing of curried fns.
