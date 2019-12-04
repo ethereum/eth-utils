@@ -1,1 +1,0 @@
-Update eth-typing dependency to v2.2.0 and add mypy.ini config file.

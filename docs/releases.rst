@@ -1,3 +1,12 @@
+eth-utils 1.8.2 (2019-12-04)
+----------------------------
+
+Misc
+~~~~
+
+- `#177 <https://github.com/ethereum/eth-utils/issues/177>`__, `#180 <https://github.com/ethereum/eth-utils/issues/180>`__
+
+
 eth-utils 1.8.1 (2019-11-20)
 ----------------------------
 
