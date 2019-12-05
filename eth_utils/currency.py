@@ -61,7 +61,7 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     return result_value
 
 
-def to_wei(number: int, unit: str) -> int:
+def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
     """
     Takes a number of a unit and converts it to wei.
     """
