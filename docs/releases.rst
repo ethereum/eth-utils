@@ -1,3 +1,12 @@
+eth-utils 1.8.4 (2019-12-05)
+----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Add missing asterisk to MANIFEST.in (`#182 <https://github.com/ethereum/eth-utils/issues/182>`__)
+
+
 eth-utils 1.8.3 (2019-12-04)
 ----------------------------
 
