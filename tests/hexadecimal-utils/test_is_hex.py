@@ -22,12 +22,18 @@ from eth_utils import is_hex
         ("0\u0080", False),  # triggers different exceptions in py2 and py3
     ),
 )
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_is_hex(value, expected):
     actual = is_hex(value)
     assert actual is expected
 
 
 @pytest.mark.parametrize("value", (b"", 123, {}, lambda: None))
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_is_hex_rejects_non_text_types(value):
     with pytest.raises(TypeError):
         is_hex(value)
+
+def test_is_hex_deprecated():
+    with pytest.deprecated_call():
+        is_hex("")
