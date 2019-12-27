@@ -16,7 +16,7 @@ from eth_utils.address import (
 
 
 @pytest.mark.parametrize(
-    "args,is_any,is_hex,is_binary",
+    "args,is_any,is_hexstr,is_binary",
     (
         # weird values
         (lambda: None, False, False, False),
@@ -102,9 +102,9 @@ from eth_utils.address import (
         ),  # normalized
     ),
 )
-def test_is_address(args, is_any, is_hex, is_binary):
+def test_is_address(args, is_any, is_hexstr, is_binary):
     assert is_address(args) == is_any
-    assert is_hex_address(args) == is_hex
+    assert is_hex_address(args) == is_hexstr
     assert is_binary_address(args) == is_binary
 
 

@@ -46,6 +46,32 @@ def add_0x_prefix(value: HexStr) -> HexStr:
     return HexStr("0x" + value)
 
 
+def is_hexstr(value: Any) -> bool:
+    if not isinstance(value, str):
+        return False
+    
+    elif value.lower() == "0x":
+        return True
+
+    unprefixed_value = remove_0x_prefix(value)
+    if len(unprefixed_value) % 2 != 0:
+        value_to_decode = "0" + unprefixed_value
+    else:
+        value_to_decode = unprefixed_value
+
+    if any(char not in string.hexdigits for char in value_to_decode):
+        return False
+
+    try:
+        value_as_bytes = codecs.decode(value_to_decode, "hex")  # type: ignore
+    except binascii.Error:
+        return False
+    except TypeError:
+        return False
+    else:
+        return bool(value_as_bytes)
+
+
 def is_hex(value: Any) -> bool:
     warnings.warn(
         DeprecationWarning(
