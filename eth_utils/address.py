@@ -12,8 +12,6 @@ def is_hex_address(value: Any) -> bool:
     """
     Checks if the given string of text type is an address in hexadecimal encoded form.
     """
-    if not is_text(value):
-        return False
     if not is_hexstr(value):
         return False
     else:
@@ -135,8 +133,6 @@ def is_checksum_address(value: Any) -> bool:
 
 
 def is_checksum_formatted_address(value: Any) -> bool:
-    if not is_text(value):
-        return False
 
     if not is_hex_address(value):
         return False
