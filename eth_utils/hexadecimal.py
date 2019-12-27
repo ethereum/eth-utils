@@ -3,6 +3,7 @@
 import binascii
 import codecs
 import string
+import warnings
 from typing import Any, AnyStr
 
 from eth_typing import HexStr
@@ -46,6 +47,12 @@ def add_0x_prefix(value: HexStr) -> HexStr:
 
 
 def is_hex(value: Any) -> bool:
+    warnings.warn(
+        DeprecationWarning(
+            "is_hex(value: Any) has been deprecated and will be removed in a subsequent major version "
+            "release of the eth-utils library. Update your calls to use is_hexstr(Any) instead."
+        )
+    )
     if not is_text(value):
         raise TypeError(
             "is_hex requires text typed arguments. Got: {0}".format(repr(value))
