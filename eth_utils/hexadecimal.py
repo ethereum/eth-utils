@@ -47,7 +47,7 @@ def add_0x_prefix(value: HexStr) -> HexStr:
 
 
 def is_hexstr(value: Any) -> bool:
-    if not isinstance(value, str):
+    if not is_text(value):
         return False
     
     elif value.lower() == "0x":
