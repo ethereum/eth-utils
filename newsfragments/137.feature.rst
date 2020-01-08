@@ -1,1 +1,1 @@
-Add `ix_hexstr` as preferred method of checking if a given value is a hex string.
+Add `is_hexstr` as preferred method of checking if a given value is a hex string.
