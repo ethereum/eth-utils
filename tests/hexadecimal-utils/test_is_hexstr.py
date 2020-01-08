@@ -15,7 +15,6 @@ from eth_utils import is_hexstr
         ("0xabcdef1234567890", True),
         ("0xABCDEF1234567890", True),
         ("0xAbCdEf1234567890", True),
-        ("0XAbCdEf1234567890", True),
         ("12345", True),  # odd length
         ("0x12345", True),  # odd length
         ("123456xx", False),  # non-hex character
