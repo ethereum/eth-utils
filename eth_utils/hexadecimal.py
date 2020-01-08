@@ -76,7 +76,7 @@ def is_hex(value: Any) -> bool:
     warnings.warn(
         DeprecationWarning(
             "is_hex(value: Any) has been deprecated and will be removed in a subsequent major version "
-            "release of the eth-utils library. Update your calls to use is_hexstr(Any) instead."
+            "release of the eth-utils library. Update your calls to use is_hexstr(value: Any) instead."
         )
     )
     if not is_text(value):
