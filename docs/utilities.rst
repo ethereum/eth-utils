@@ -1281,7 +1281,7 @@ type.
    False
    >>> is_hexstr(b'') # any non-string returns False
    False
-   >>> is_hex(b'0x') # any non-string returns False
+   >>> is_hexstr(b'0x') # any non-string returns False
    False
 
 ``remove_0x_prefix(value: HexStr)`` -> HexStr_
