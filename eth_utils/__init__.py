@@ -62,6 +62,7 @@ from .hexadecimal import (  # noqa: F401
     encode_hex,
     is_0x_prefixed,
     is_hex,
+    is_hexstr,
     remove_0x_prefix,
 )
 from .humanize import humanize_hash, humanize_ipfs_uri, humanize_seconds  # noqa: F401

@@ -4,7 +4,7 @@ from eth_typing import HexStr, Primitives
 
 from .decorators import validate_conversion_arguments
 from .encoding import big_endian_to_int, int_to_big_endian
-from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
+from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hexstr, remove_0x_prefix
 from .types import is_boolean, is_integer, is_string
 
 T = TypeVar("T")
@@ -146,7 +146,7 @@ def hexstr_if_str(
     :param hexstr_or_primitive bytes, str, int: value to convert
     """
     if isinstance(hexstr_or_primitive, str):
-        if remove_0x_prefix(HexStr(hexstr_or_primitive)) and not is_hex(
+        if remove_0x_prefix(HexStr(hexstr_or_primitive)) and not is_hexstr(
             hexstr_or_primitive
         ):
             raise ValueError(

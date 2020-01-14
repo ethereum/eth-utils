@@ -4,7 +4,7 @@ from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
 
 from .conversions import hexstr_if_str, to_hex
 from .crypto import keccak
-from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hex, remove_0x_prefix
+from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hexstr, remove_0x_prefix
 from .types import is_bytes, is_text
 
 
@@ -12,9 +12,7 @@ def is_hex_address(value: Any) -> bool:
     """
     Checks if the given string of text type is an address in hexadecimal encoded form.
     """
-    if not is_text(value):
-        return False
-    elif not is_hex(value):
+    if not is_hexstr(value):
         return False
     else:
         unprefixed = remove_0x_prefix(value)
@@ -135,8 +133,6 @@ def is_checksum_address(value: Any) -> bool:
 
 
 def is_checksum_formatted_address(value: Any) -> bool:
-    if not is_text(value):
-        return False
 
     if not is_hex_address(value):
         return False

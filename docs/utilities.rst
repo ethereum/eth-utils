@@ -1244,6 +1244,46 @@ type.
    Traceback (most recent call last):
    TypeError: is_hex requires text typed arguments.
 
+``is_hexstr(value)`` -> bool
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns ``True`` if ``value`` is a hexadecimal encoded string of text
+type.
+
+.. note::
+
+    This function differs from ``is_hex(value: Any)`` in that it will return
+    False on all non-text type arguments, while ``is_hex`` will raise a ``TypeError``
+    for all non-text type arguments.
+
+.. doctest::
+
+   >>> from eth_utils import is_hexstr
+   >>> is_hexstr('')
+   False
+   >>> is_hexstr('0x')
+   True
+   >>> is_hexstr('0X')
+   True
+   >>> is_hexstr('1234567890abcdef')
+   True
+   >>> is_hexstr('0x1234567890abcdef')
+   True
+   >>> is_hexstr('0x1234567890ABCDEF')
+   True
+   >>> is_hexstr('0x1234567890AbCdEf')
+   True
+   >>> is_hexstr('12345')  # odd length is ok
+   True
+   >>> is_hexstr('0x12345')  # odd length is ok
+   True
+   >>> is_hexstr('123456__abcdef')  # non hex characters
+   False
+   >>> is_hexstr(b'') # any non-string returns False
+   False
+   >>> is_hexstr(b'0x') # any non-string returns False
+   False
+
 ``remove_0x_prefix(value: HexStr)`` -> HexStr_
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

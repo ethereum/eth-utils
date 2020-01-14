@@ -55,6 +55,7 @@ from eth_utils.curried import (
     is_checksum_formatted_address,
     is_dict,
     is_hex,
+    is_hexstr,
     is_hex_address,
     is_integer,
     is_list,
