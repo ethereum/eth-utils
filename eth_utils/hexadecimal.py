@@ -2,6 +2,7 @@
 
 import binascii
 import codecs
+import re
 import string
 import warnings
 from typing import Any, AnyStr
@@ -9,6 +10,9 @@ from typing import Any, AnyStr
 from eth_typing import HexStr
 
 from .types import is_string, is_text
+
+
+_HEX_REGEXP = re.compile("[0-9a-fA-F]*")
 
 
 # Type ignored for `codecs.decode()` due to lack of mypy support for 'hex' encoding
@@ -59,7 +63,7 @@ def is_hexstr(value: Any) -> bool:
     else:
         value_to_decode = unprefixed_value
 
-    if any(char not in string.hexdigits for char in value_to_decode):
+    if not _HEX_REGEXP.fullmatch(value_to_decode):
         return False
 
     try:
@@ -86,7 +90,7 @@ def is_hex(value: Any) -> bool:
     else:
         value_to_decode = unprefixed_value
 
-    if any(char not in string.hexdigits for char in value_to_decode):
+    if not _HEX_REGEXP.fullmatch(value_to_decode):
         return False
 
     try:
