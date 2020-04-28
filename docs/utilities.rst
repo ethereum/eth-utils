@@ -1321,12 +1321,33 @@ Returns the provide number of seconds as a shorthand string.
    '1m1s'
 
 
+``humanize_bytes(bytes)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provided byte string in a human readable format.
+
+If the value is 5 bytes or shorted it is returned in full in its hexidecimal representation (without a ``0x`` prefix)
+
+If the value is longer that 5 bytes it is returne in its hexidecimal
+representation (without a ``0x`` prefix) with the middle segment replaced by an
+ellipsis, only showing the first and last four hexidecimal nibbles.
+
+.. doctest::
+
+   >>> from eth_utils import humanize_bytes
+   >>> humanize_bytes(bytes(range(3)))
+    '000102'
+   >>> humanize_bytes(bytes(range(5)))
+    '0001020304'
+   >>> humanize_bytes(bytes(range(32)))
+    '0001..1e1f'
+
+
 ``humanize_hash(bytes)`` -> string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Returns the provided byte string, hex encoded (without a ``0x`` prefix) with the
-middle segment replaced by an ellipsis, only showing the first and last four
-hexidecimal digits.
+A loose wrapper around ``humanize_bytes`` that is typed specifically for the
+``eth_typing.Hash32`` type.
 
 .. doctest::
 

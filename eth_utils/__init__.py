@@ -66,6 +66,7 @@ from .hexadecimal import (  # noqa: F401
     remove_0x_prefix,
 )
 from .humanize import (  # noqa: F401
+    humanize_bytes,
     humanize_hash,
     humanize_integer_sequence,
     humanize_ipfs_uri,
