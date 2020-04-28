@@ -133,7 +133,7 @@ def _humanize_range(bounds: Tuple[int, int]) -> str:
     if left == right:
         return str(left)
     else:
-        return f"{left}-{right}"
+        return "{left}-{right}".format(left=left, right=right)
 
 
 def humanize_integer_sequence(values_iter: Iterable[int]) -> str:
