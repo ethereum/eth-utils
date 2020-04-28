@@ -1286,6 +1286,20 @@ hexidecimal digits.
     '0001..1e1f'
 
 
+``humanize_integer_sequence(values)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns a concise representation of the provided sequence of integer values.
+
+.. doctest::
+
+   >>> from eth_utils import humanize_integer_sequence
+   >>> humanize_integer_sequence((1, 2, 3, 4))
+   '1-4'
+   >>> humanize_integer_sequence((1, 2, 3, 4, 6, 8, 9, 10))
+   '1-4|6|8-10'
+
+
 ``humanize_ipfs_uri(string)`` -> string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
