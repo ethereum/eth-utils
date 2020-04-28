@@ -4,13 +4,12 @@ import binascii
 import codecs
 import re
 import string
-import warnings
 from typing import Any, AnyStr
+import warnings
 
 from eth_typing import HexStr
 
 from .types import is_string, is_text
-
 
 _HEX_REGEXP = re.compile("[0-9a-fA-F]*")
 
@@ -53,7 +52,7 @@ def add_0x_prefix(value: HexStr) -> HexStr:
 def is_hexstr(value: Any) -> bool:
     if not is_text(value):
         return False
-    
+
     elif value.lower() == "0x":
         return True
 
