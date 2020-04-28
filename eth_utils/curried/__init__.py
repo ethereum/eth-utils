@@ -32,6 +32,7 @@ from eth_utils import (
     get_logger,
     hexstr_if_str,
     humanize_hash,
+    humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,
     import_string,

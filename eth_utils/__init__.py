@@ -65,7 +65,12 @@ from .hexadecimal import (  # noqa: F401
     is_hexstr,
     remove_0x_prefix,
 )
-from .humanize import humanize_hash, humanize_ipfs_uri, humanize_seconds  # noqa: F401
+from .humanize import (  # noqa: F401
+    humanize_hash,
+    humanize_integer_sequence,
+    humanize_ipfs_uri,
+    humanize_seconds,
+)
 from .logging import (  # noqa: F401
     DEBUG2_LEVEL_NUM,
     ExtendedDebugLogger,
