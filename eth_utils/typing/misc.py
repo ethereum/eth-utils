@@ -9,5 +9,4 @@ from eth_typing import (  # noqa: F401
     Primitives,
 )
 
-
 T = TypeVar("T")

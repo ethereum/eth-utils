@@ -23,7 +23,7 @@ from eth_utils import is_hexstr
         (1, False),  # int
         (b"", False),  # bytes
         ({}, False),  # dictionary
-        (lambda: None, False)  # lambda function
+        (lambda: None, False),  # lambda function
     ),
 )
 def test_is_hexstr(value, expected):

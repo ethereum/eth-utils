@@ -1,16 +1,7 @@
-from typing import (
-    Any,
-    List,
-)
-from eth_utils.curried import (
-    apply_formatter_if,
-    apply_one_of_formatters,
-)
+from typing import Any, List
 
-from eth_utils import (
-    is_list_like,
-    is_string,
-)
+from eth_utils import is_list_like, is_string
+from eth_utils.curried import apply_formatter_if, apply_one_of_formatters
 
 
 def i_put_my_thing_down_flip_it_and_reverse_it(lyric: List[str]) -> str:
@@ -26,7 +17,6 @@ CONDITION_FORMATTER_PAIRS = (
 apply_formatter_if(is_string)
 apply_formatter_if(is_string, bool)
 apply_formatter_if(is_string, bool, 1)
-
 
 
 apply_one_of_formatters(CONDITION_FORMATTER_PAIRS)

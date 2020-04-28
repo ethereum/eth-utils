@@ -4,7 +4,13 @@ from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
 
 from .conversions import hexstr_if_str, to_hex
 from .crypto import keccak
-from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, is_hexstr, remove_0x_prefix
+from .hexadecimal import (
+    add_0x_prefix,
+    decode_hex,
+    encode_hex,
+    is_hexstr,
+    remove_0x_prefix,
+)
 from .types import is_bytes, is_text
 
 
