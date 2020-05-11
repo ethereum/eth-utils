@@ -1245,7 +1245,7 @@ type.
    TypeError: is_hex requires text typed arguments.
 
 ``is_hexstr(value)`` -> bool
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Returns ``True`` if ``value`` is a hexadecimal encoded string of text
 type.
@@ -1357,7 +1357,7 @@ A loose wrapper around ``humanize_bytes`` that is typed specifically for the
 
 
 ``humanize_integer_sequence(values)`` -> string
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Returns a concise representation of the provided sequence of integer values.
 

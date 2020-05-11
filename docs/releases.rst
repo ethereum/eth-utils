@@ -1,3 +1,21 @@
+Eth_Utils 1.9.0 (2020-05-11)
+----------------------------
+
+Features
+~~~~~~~~
+
+- Add `is_hexstr` as preferred method of checking if a given value is a hex string. (`#137 <https://github.com/ethereum/eth-utils/issues/137>`__)
+- Improve performance of `is_hex` and `is_hexstr` by up to 40x (`#185 <https://github.com/ethereum/eth-utils/issues/185>`__)
+- Add ``humanize_integer_sequence`` utility. (`#188 <https://github.com/ethereum/eth-utils/issues/188>`__)
+- Add ``humanize_bytes`` utility. (`#189 <https://github.com/ethereum/eth-utils/issues/189>`__)
+
+
+Bugfixes
+~~~~~~~~
+
+- Silence a deprecation error by importing from collections.abc, instead of collections. (`#186 <https://github.com/ethereum/eth-utils/issues/186>`__)
+
+
 eth-utils 1.8.4 (2019-12-05)
 ----------------------------
 
