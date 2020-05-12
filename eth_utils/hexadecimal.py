@@ -1,7 +1,6 @@
 # String encodings and numeric representations
 
 import binascii
-import codecs
 import re
 from typing import Any, AnyStr
 
@@ -12,18 +11,24 @@ from .types import is_string, is_text
 _HEX_REGEXP = re.compile("[0-9a-fA-F]*")
 
 
-# Type ignored for `codecs.decode()` due to lack of mypy support for 'hex' encoding
-# https://github.com/python/typeshed/issues/300
 def decode_hex(value: str) -> bytes:
     if not is_text(value):
         raise TypeError("Value must be an instance of str")
-    return codecs.decode(remove_0x_prefix(value), "hex")  # type: ignore
+    non_prefixed = remove_0x_prefix(HexStr(value))
+    # unhexlify will only accept bytes type someday
+    ascii_hex = non_prefixed.encode("ascii")
+    return binascii.unhexlify(ascii_hex)
 
 
 def encode_hex(value: AnyStr) -> HexStr:
     if not is_string(value):
         raise TypeError("Value must be an instance of str or unicode")
-    binary_hex = codecs.encode(value, "hex")  # type: ignore
+    elif isinstance(value, (bytes, bytearray)):
+        ascii_bytes = value
+    else:
+        ascii_bytes = value.encode("ascii")
+
+    binary_hex = binascii.hexlify(ascii_bytes)
     return add_0x_prefix(HexStr(binary_hex.decode("ascii")))
 
 
@@ -64,7 +69,15 @@ def is_hexstr(value: Any) -> bool:
         return False
 
     try:
-        value_as_bytes = codecs.decode(value_to_decode, "hex")  # type: ignore
+        # convert from a value like '09af' to b'09af'
+        ascii_hex = value_to_decode.encode("ascii")
+    except UnicodeDecodeError:
+        # Should have already been caught by regex above, but just in case...
+        return False
+
+    try:
+        # convert to a value like b'\x09\xaf'
+        value_as_bytes = binascii.unhexlify(ascii_hex)
     except binascii.Error:
         return False
     except TypeError:
@@ -91,7 +104,15 @@ def is_hex(value: Any) -> bool:
         return False
 
     try:
-        value_as_bytes = codecs.decode(value_to_decode, "hex")  # type: ignore
+        # convert from a value like '09af' to b'09af'
+        ascii_hex = value_to_decode.encode("ascii")
+    except UnicodeDecodeError:
+        # Should have already been caught by regex above, but just in case...
+        return False
+
+    try:
+        # convert to a value like b'\x09\xaf'
+        value_as_bytes = binascii.unhexlify(ascii_hex)
     except binascii.Error:
         return False
     except TypeError:
