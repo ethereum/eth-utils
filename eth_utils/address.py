@@ -63,7 +63,7 @@ def to_normalized_address(value: AnyStr) -> HexAddress:
             "Value must be any string, instead got type {}".format(type(value))
         )
     if is_address(hex_address):
-        return HexAddress(hex_address)
+        return HexAddress(HexStr(hex_address))
     else:
         raise ValueError(
             "Unknown format {}, attempted to normalize to {}".format(value, hex_address)

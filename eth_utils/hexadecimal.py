@@ -3,9 +3,7 @@
 import binascii
 import codecs
 import re
-import string
 from typing import Any, AnyStr
-import warnings
 
 from eth_typing import HexStr
 

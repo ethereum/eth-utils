@@ -32,7 +32,7 @@ def check_mypy_run(
         (
             fixture_dir("to_tuple_decorator.py"),
             fixture_dir(
-                "to_tuple_decorator.py:13: error: Revealed type is 'builtins.tuple[builtins.int*]'\n"
+                "to_tuple_decorator.py:13: error: Revealed type is 'builtins.tuple[builtins.int*]'\n"  # noqa: E501
             ),
         ),
         (
@@ -50,19 +50,19 @@ def check_mypy_run(
         (
             fixture_dir("to_dict_decorator.py"),
             fixture_dir(
-                "to_dict_decorator.py:14: error: Revealed type is 'builtins.dict[builtins.int*, builtins.int*]'\n"
+                "to_dict_decorator.py:14: error: Revealed type is 'builtins.dict[builtins.int*, builtins.int*]'\n"  # noqa: E501
             ),
         ),
         (
             fixture_dir("to_ordered_dict_decorator.py"),
             fixture_dir(
-                "to_ordered_dict_decorator.py:14: error: Revealed type is 'collections.OrderedDict[builtins.int*, builtins.int*]'\n"
+                "to_ordered_dict_decorator.py:14: error: Revealed type is 'collections.OrderedDict[builtins.int*, builtins.int*]'\n"  # noqa: E501
             ),
         ),
         (
             fixture_dir("apply_to_return_value_decorator.py"),
             fixture_dir(
-                "apply_to_return_value_decorator.py:17: error: Revealed type is 'builtins.list*[builtins.int]'\n"
+                "apply_to_return_value_decorator.py:17: error: Revealed type is 'builtins.list*[builtins.int]'\n"  # noqa: E501
             ),
         ),
     ),
