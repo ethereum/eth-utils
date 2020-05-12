@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import List
 
 from eth_utils import is_list_like, is_string
 from eth_utils.curried import apply_formatter_if, apply_one_of_formatters
