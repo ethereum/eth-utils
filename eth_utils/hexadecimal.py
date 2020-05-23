@@ -40,9 +40,9 @@ def is_0x_prefixed(value: Any) -> bool:
     return value.startswith("0x") or value.startswith("0X")
 
 
-def remove_0x_prefix(value: HexStr) -> HexStr:
+def remove_0x_prefix(value: HexStr, chain_id: int = 1) -> HexStr:
     if is_0x_prefixed(value):
-        return HexStr(value[2:])
+        return HexStr(value[2:] if chain_id == 1 else str(chain_id) + value)
     return value
 
 

@@ -107,12 +107,14 @@ def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
         return to_normalized_address(left) == to_normalized_address(right)
 
 
-def to_checksum_address(value: AnyStr) -> ChecksumAddress:
+def to_checksum_address(value: AnyStr, chain_id: int = 1) -> ChecksumAddress:
     """
     Makes a checksum address given a supported format.
     """
     norm_address = to_normalized_address(value)
-    address_hash = encode_hex(keccak(text=remove_0x_prefix(HexStr(norm_address))))
+    address_hash = encode_hex(
+        keccak(text=remove_0x_prefix(HexStr(norm_address), chain_id))
+    )
 
     checksum_address = add_0x_prefix(
         HexStr(
@@ -122,20 +124,20 @@ def to_checksum_address(value: AnyStr) -> ChecksumAddress:
                     if int(address_hash[i], 16) > 7
                     else norm_address[i]
                 )
-                for i in range(2, 42)
+                for i in range(2, len(norm_address))
             )
         )
     )
     return ChecksumAddress(HexAddress(checksum_address))
 
 
-def is_checksum_address(value: Any) -> bool:
+def is_checksum_address(value: Any, chain_id: int = 1) -> bool:
     if not is_text(value):
         return False
 
     if not is_hex_address(value):
         return False
-    return value == to_checksum_address(value)
+    return value == to_checksum_address(value, chain_id)
 
 
 def is_checksum_formatted_address(value: Any) -> bool:

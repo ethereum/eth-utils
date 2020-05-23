@@ -97,5 +97,8 @@ is_same_address = curry(is_same_address)
 text_if_str = curry(text_if_str)
 to_wei = curry(to_wei)
 clamp = curry(clamp)
+is_checksum_address = curry(is_checksum_address)
+remove_0x_prefix = curry(remove_0x_prefix)
+to_checksum_address = curry(to_checksum_address)
 
 del curry
