@@ -23,6 +23,8 @@ from eth_utils.address import (
         ({}, False, False, False),
         ("function", False, False, False),
         (b"function", False, False, False),
+        # This has a weird upper case letter but should it be recognized as valid address?
+        ("0x6a0a0fc761c612C340a0e98d33b37a75e5268472", True, True, False),
         # null address
         ("0x0000000000000000000000000000000000000000", True, True, False),
         (b"0x0000000000000000000000000000000000000000", False, False, False),
