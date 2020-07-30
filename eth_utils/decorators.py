@@ -114,7 +114,7 @@ def replace_exceptions(
                 return to_wrap(*args, **kwargs)
             except old_exceptions as err:
                 try:
-                    raise old_to_new_exceptions[type(err)] from err
+                    raise old_to_new_exceptions[type(err)](err) from err
                 except KeyError:
                     raise TypeError(
                         "could not look up new exception to use for %r" % err

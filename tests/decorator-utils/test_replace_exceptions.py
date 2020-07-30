@@ -7,7 +7,7 @@ from eth_utils import replace_exceptions
 def mock_function_with_exception(old_to_new):
     @replace_exceptions(old_to_new)
     def function_with_exception(x):
-        raise TypeError
+        raise TypeError("Boom!")
 
     return function_with_exception
 
@@ -21,5 +21,5 @@ def mock_function_with_exception(old_to_new):
     ),
 )
 def test_decorator_replaces_exceptions(mock_function_with_exception, old_to_new, new):
-    with pytest.raises(new):
+    with pytest.raises(new, match="Boom!"):
         mock_function_with_exception(old_to_new)
