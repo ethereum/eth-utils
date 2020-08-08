@@ -43,6 +43,11 @@ class ExtendedDebugLogger(logging.Logger):
             # lambda to further speed up
             self.__dict__["debug2"] = lambda message, *args, **kwargs: None
 
+    def __reduce__(self) -> Tuple[Any, ...]:
+        # This is needed because our parent's implementation could cause us to become a regular
+        # Logger on unpickling.
+        return get_extended_debug_logger, (self.name,)
+
 
 def setup_DEBUG2_logging() -> None:
     """

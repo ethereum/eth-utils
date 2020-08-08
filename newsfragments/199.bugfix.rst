@@ -1,0 +1,1 @@
+Ensure pickling/unpickling an ``ExtendedDebugLogger`` always gives back an ``ExtendedDebugLogger``.

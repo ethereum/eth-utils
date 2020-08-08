@@ -1,4 +1,5 @@
 import logging
+import pickle
 import uuid
 
 from eth_utils.logging import ExtendedDebugLogger, get_extended_debug_logger, get_logger
@@ -55,3 +56,18 @@ def test_get_logger_preserves_logging_module_config():
     assert isinstance(logger, CustomLogger)
 
     assert logging.getLoggerClass() is logging.Logger
+
+
+def test_extended_debug_logger_pickling():
+    name = "testing.{0}".format(uuid.uuid4())
+    extended_logger = get_extended_debug_logger(name)
+    pickled = pickle.dumps(extended_logger)
+
+    # logging.Logger.__reduce__() returns (getLogger, name), which could give us a regular Logger
+    # instance after pickling/unpickling an ExtendedDebugLogger (e.g. when crossing process
+    # boundaries since the other process wouldn't have an ExtendedDebugLogger with that name in
+    # the logging module's cache). This test ensures an unpickled ExtendedDebugLogger is still an
+    # ExtendedDebugLogger even when it's not in the logging's module cache.
+    del logging.Logger.manager.loggerDict[name]
+    unpickled_logger = pickle.loads(pickled)
+    assert isinstance(unpickled_logger, ExtendedDebugLogger)
