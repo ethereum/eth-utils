@@ -41,12 +41,18 @@ extras_require['dev'] = (
     extras_require['deploy']
 )
 
+
+with open('./README.md') as readme:
+    long_description = readme.read()
+
+
 setup(
     name='eth-utils',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version='1.9.2',
     description="""Common utility functions for ethereum codebases.""",
-    long_description_markdown_filename='README.md',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Piper Merriam',
     author_email='pipermerriam@gmail.com',
     url='https://github.com/ethereum/eth_utils',
@@ -57,7 +63,6 @@ setup(
         "toolz>0.8.2,<1;implementation_name=='pypy'",
         "cytoolz>=0.10.1,<1.0.0;implementation_name=='cpython'",
     ],
-    setup_requires=['setuptools-markdown'],
     python_requires='>=3.5,!=3.5.2,<4',
     extras_require=extras_require,
     py_modules=['eth_utils'],
