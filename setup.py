@@ -49,7 +49,7 @@ with open('./README.md') as readme:
 setup(
     name='eth-utils',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='1.9.2',
+    version='1.9.3',
     description="""Common utility functions for ethereum codebases.""",
     long_description=long_description,
     long_description_content_type='text/markdown',
