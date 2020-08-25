@@ -8,12 +8,12 @@ from eth_utils import (
     ValidationError,
     add_0x_prefix,
     apply_formatter_at_index,
-    apply_formatter_if,
+    apply_formatter_if as non_curried_apply_formatter_if,
     apply_formatter_to_array,
     apply_formatters_to_dict,
     apply_formatters_to_sequence,
     apply_key_map,
-    apply_one_of_formatters,
+    apply_one_of_formatters as non_curried_apply_one_of_formatters,
     apply_to_return_value,
     big_endian_to_int,
     clamp,
@@ -30,7 +30,7 @@ from eth_utils import (
     function_signature_to_4byte_selector,
     get_extended_debug_logger,
     get_logger,
-    hexstr_if_str,
+    hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
     humanize_hash,
     humanize_integer_sequence,
@@ -82,20 +82,122 @@ from eth_utils import (
     to_wei,
 )
 from eth_utils.toolz import curry
+from typing import Any, Callable, Sequence, Tuple, TypeVar, Union, overload
+
+TReturn = TypeVar("TReturn")
+TValue = TypeVar("TValue")
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[..., bool]
+) -> Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]]:
+    ...
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[..., bool], formatter: Callable[..., TReturn]
+) -> Callable[[TValue], Union[TReturn, TValue]]:
+    ...
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[..., bool], formatter: Callable[..., TReturn], value: TValue
+) -> Union[TReturn, TValue]:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def apply_formatter_if(
+    condition: Callable[..., bool],
+    formatter: Callable[..., TReturn] = None,
+    value: TValue = None,
+) -> Union[
+    Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]],
+    Callable[[TValue], Union[TReturn, TValue]],
+    TReturn,
+    TValue,
+]:
+    ...
+
+
+@overload
+def apply_one_of_formatters(
+    formatter_condition_pairs: Sequence[
+        Tuple[Callable[..., bool], Callable[..., TReturn]]
+    ]
+) -> Callable[[TValue], TReturn]:
+    ...
+
+
+@overload
+def apply_one_of_formatters(
+    formatter_condition_pairs: Sequence[
+        Tuple[Callable[..., bool], Callable[..., TReturn]]
+    ],
+    value: TValue,
+) -> TReturn:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def apply_one_of_formatters(
+    formatter_condition_pairs: Sequence[
+        Tuple[Callable[..., bool], Callable[..., TReturn]]
+    ],
+    value: TValue = None,
+) -> TReturn:
+    ...
+
+
+@overload
+def hexstr_if_str(
+    to_type: Callable[..., TReturn]
+) -> Callable[[Union[bytes, int, str]], TReturn]:
+    ...
+
+
+@overload
+def hexstr_if_str(
+    to_type: Callable[..., TReturn], to_format: Union[bytes, int, str]
+) -> TReturn:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def hexstr_if_str(
+    to_type: Callable[..., TReturn], to_format: Union[bytes, int, str] = None
+) -> TReturn:
+    ...
+
 
 apply_formatter_at_index = curry(apply_formatter_at_index)
-apply_formatter_if = curry(apply_formatter_if)
+apply_formatter_if = curry(non_curried_apply_formatter_if)
 apply_formatter_to_array = curry(apply_formatter_to_array)
 apply_formatters_to_dict = curry(apply_formatters_to_dict)
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
-apply_one_of_formatters = curry(apply_one_of_formatters)
+apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)
 from_wei = curry(from_wei)
 get_logger = curry(get_logger)
-hexstr_if_str = curry(hexstr_if_str)
+hexstr_if_str = curry(non_curried_hexstr_if_str)
 is_same_address = curry(is_same_address)
 text_if_str = curry(text_if_str)
 to_wei = curry(to_wei)
 clamp = curry(clamp)
 
+del Any
+del Callable
+del Sequence
+del TReturn
+del TValue
+del Tuple
+del TypeVar
+del Union
 del curry
+del non_curried_apply_formatter_if
+del non_curried_apply_one_of_formatters
+del non_curried_hexstr_if_str
+del overload
