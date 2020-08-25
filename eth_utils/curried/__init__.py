@@ -188,6 +188,10 @@ text_if_str = curry(text_if_str)
 to_wei = curry(to_wei)
 clamp = curry(clamp)
 
+# Delete any methods and classes that are not intended to be importable from
+#   eth_utils.curried
+# We do this approach instead of __all__ because this approach actually prevents
+#   importing the wrong thing, while __all__ only affects `from eth_utils.curried import *`
 del Any
 del Callable
 del Sequence
