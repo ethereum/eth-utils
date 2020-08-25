@@ -1,3 +1,15 @@
+Eth_Utils 1.9.4 (2020-08-25)
+----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Make sure all the eth_utils.curried methods are importable, plus a fix for curried typing of
+  hexstr_if_str. (`#156 <https://github.com/ethereum/eth-utils/issues/156>`__)
+- Pass context to new exception in ``replace_exceptions`` decorator. (`#198 <https://github.com/ethereum/eth-utils/issues/198>`__)
+- Ensure pickling/unpickling an ``ExtendedDebugLogger`` always gives back an ``ExtendedDebugLogger``. (`#199 <https://github.com/ethereum/eth-utils/issues/199>`__)
+
+
 Eth_Utils 1.9.0 (2020-05-11)
 ----------------------------
 

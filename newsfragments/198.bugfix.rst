@@ -1,1 +1,0 @@
-Pass context to new exception in ``replace_exceptions`` decorator.
