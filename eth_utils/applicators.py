@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Generator, List, Tuple
+from typing import Any, Callable, Dict, Generator, List, Tuple, TypeVar
 import warnings
 
 from .decorators import return_arg_type
@@ -7,6 +7,7 @@ from .toolz import compose, curry
 
 Formatters = Callable[[List[Any]], List[Any]]
 
+TReturn = TypeVar("TReturn")
 
 @return_arg_type(2)
 def apply_formatter_at_index(
