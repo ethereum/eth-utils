@@ -10,7 +10,7 @@ from eth_utils import (
     apply_formatter_at_index,
     apply_formatter_if as non_curried_apply_formatter_if,
     apply_formatter_to_array,
-    apply_formatters_to_dict,
+    apply_formatters_to_dict as non_curried_apply_formatters_to_dict,
     apply_formatters_to_sequence,
     apply_key_map,
     apply_one_of_formatters as non_curried_apply_one_of_formatters,
@@ -86,6 +86,8 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Generator,
+    Optional,
     Sequence,
     Tuple,
     TypeVar,
@@ -185,26 +187,47 @@ def hexstr_if_str(
 @overload
 def text_if_str(
     to_type: Callable[..., TReturn]
-) -> TReturn:
+) -> Callable[[Union[bytes, int, str]], TReturn]:
     ...
 
 
 @overload
 def text_if_str(
+    to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str]
+) -> TReturn:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def text_if_str(
     to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str] = None
 ) -> TReturn:
     ...
 
 
-def text_if_str(
-    to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str] = None
+@overload
+def apply_formatters_to_dict(
+    formatters: Dict[Any, Any]
+) -> Callable[[Dict[Any, Any]], TReturn]:
+    ...
+
+@overload
+def apply_formatters_to_dict(
+    formatters: Dict[Any, Any], value: Dict[Any, Any]
+) -> TReturn:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def apply_formatters_to_dict(
+    formatters: Dict[Any, Any], value: Optional[Dict[Any, Any]] = None
 ) -> TReturn:
     ...
 
 apply_formatter_at_index = curry(apply_formatter_at_index)
 apply_formatter_if = curry(non_curried_apply_formatter_if)
 apply_formatter_to_array = curry(apply_formatter_to_array)
-apply_formatters_to_dict = curry(apply_formatters_to_dict)
+apply_formatters_to_dict = curry(non_curried_apply_formatters_to_dict)
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)
@@ -223,6 +246,8 @@ clamp = curry(clamp)
 del Any
 del Callable
 del Dict
+del Generator
+del Optional
 del Sequence
 del TReturn
 del TValue
@@ -232,6 +257,7 @@ del Union
 del curry
 del non_curried_apply_formatter_if
 del non_curried_apply_one_of_formatters
+del non_curried_apply_formatters_to_dict
 del non_curried_hexstr_if_str
 del non_curried_text_if_str
 del overload
