@@ -92,7 +92,7 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
-    overload
+    overload,
 )
 
 TReturn = TypeVar("TReturn")
@@ -211,6 +211,7 @@ def apply_formatters_to_dict(
 ) -> Callable[[Dict[Any, Any]], TReturn]:
     ...
 
+
 @overload
 def apply_formatters_to_dict(
     formatters: Dict[Any, Any], value: Dict[Any, Any]
@@ -223,6 +224,7 @@ def apply_formatters_to_dict(
     formatters: Dict[Any, Any], value: Optional[Dict[Any, Any]] = None
 ) -> TReturn:
     ...
+
 
 apply_formatter_at_index = curry(apply_formatter_at_index)
 apply_formatter_if = curry(non_curried_apply_formatter_if)
