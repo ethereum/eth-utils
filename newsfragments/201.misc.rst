@@ -1,0 +1,1 @@
+Updated mypy to 0.720, and added a deprecation warning check
