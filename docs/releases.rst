@@ -1,3 +1,19 @@
+Eth_Utils 1.9.5 (2020-08-31)
+----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Added a new type signature of apply_formatter_if to eth_utils curried module.
+  Also added text_if_str and apply_formatters_to_dict. (`#201 <https://github.com/ethereum/eth-utils/issues/201>`__)
+
+
+Misc
+~~~~
+
+- `#201 <https://github.com/ethereum/eth-utils/issues/201>`__
+
+
 Eth_Utils 1.9.4 (2020-08-25)
 ----------------------------
 
