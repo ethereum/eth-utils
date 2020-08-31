@@ -219,11 +219,19 @@ def test_to_normalized_address(value, expected):
             "0xd3CdA913deB6f67967B99D67aCDFa1712C293601",
         ),
         (
+            b"\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01",
+            "0xd3CdA913deB6f67967B99D67aCDFa1712C293601",
+        ),
+        (
             "0xc6d9d2cd449a754c494264e1809c50e34d64562b",
             "0xc6d9d2cD449A754c494264e1809c50e34D64562b",
         ),
         (
             "c6d9d2cd449a754c494264e1809c50e34d64562b",
+            "0xc6d9d2cD449A754c494264e1809c50e34D64562b",
+        ),
+        (
+            b"\xc6\xd9\xd2\xcdD\x9auLIBd\xe1\x80\x9cP\xe3MdV+",
             "0xc6d9d2cD449A754c494264e1809c50e34D64562b",
         ),
     ),
@@ -270,6 +278,10 @@ def test_is_same_address(address1, address2, expected):
         ),
         (
             "0xD3CDA913DEB6F67967B99D67ACDFA1712C293601",
+            b"\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01",
+        ),
+        (
+            b"\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01",
             b"\xd3\xcd\xa9\x13\xde\xb6\xf6yg\xb9\x9dg\xac\xdf\xa1q,)6\x01",
         ),
     ),
