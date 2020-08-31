@@ -159,7 +159,8 @@ LOOSE_SEQUENCE_FORMATTER_PARAMETERS = SEQUENCE_FORMATTER_PARAMETERS + (
     "formatters, value, expected", LOOSE_SEQUENCE_FORMATTER_PARAMETERS
 )
 def test_combine_argument_formatters(formatters, value, expected):
-    list_formatter = eth_utils.combine_argument_formatters(*formatters)
+    with pytest.warns(DeprecationWarning):
+        list_formatter = eth_utils.combine_argument_formatters(*formatters)
     if isinstance(expected, type) and issubclass(expected, Exception):
         with pytest.raises(expected):
             list_formatter(value)

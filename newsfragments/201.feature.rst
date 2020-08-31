@@ -1,0 +1,2 @@
+Added a new type signature of apply_formatter_if to eth_utils curried module.
+Also added text_if_str and apply_formatters_to_dict.

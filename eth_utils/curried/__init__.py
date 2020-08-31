@@ -10,7 +10,7 @@ from eth_utils import (
     apply_formatter_at_index,
     apply_formatter_if as non_curried_apply_formatter_if,
     apply_formatter_to_array,
-    apply_formatters_to_dict,
+    apply_formatters_to_dict as non_curried_apply_formatters_to_dict,
     apply_formatters_to_sequence,
     apply_key_map,
     apply_one_of_formatters as non_curried_apply_one_of_formatters,
@@ -66,7 +66,7 @@ from eth_utils import (
     reversed_return,
     setup_DEBUG2_logging,
     sort_return,
-    text_if_str,
+    text_if_str as non_curried_text_if_str,
     to_bytes,
     to_canonical_address,
     to_checksum_address,
@@ -82,7 +82,18 @@ from eth_utils import (
     to_wei,
 )
 from eth_utils.toolz import curry
-from typing import Any, Callable, Sequence, Tuple, TypeVar, Union, overload
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    Optional,
+    Sequence,
+    Tuple,
+    TypeVar,
+    Union,
+    overload,
+)
 
 TReturn = TypeVar("TReturn")
 TValue = TypeVar("TValue")
@@ -173,10 +184,52 @@ def hexstr_if_str(
     ...
 
 
+@overload
+def text_if_str(
+    to_type: Callable[..., TReturn]
+) -> Callable[[Union[bytes, int, str]], TReturn]:
+    ...
+
+
+@overload
+def text_if_str(
+    to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str]
+) -> TReturn:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def text_if_str(
+    to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str] = None
+) -> TReturn:
+    ...
+
+
+@overload
+def apply_formatters_to_dict(
+    formatters: Dict[Any, Any]
+) -> Callable[[Dict[Any, Any]], TReturn]:
+    ...
+
+
+@overload
+def apply_formatters_to_dict(
+    formatters: Dict[Any, Any], value: Dict[Any, Any]
+) -> TReturn:
+    ...
+
+
+# This is just a stub to appease mypy, it gets overwritten later
+def apply_formatters_to_dict(
+    formatters: Dict[Any, Any], value: Optional[Dict[Any, Any]] = None
+) -> TReturn:
+    ...
+
+
 apply_formatter_at_index = curry(apply_formatter_at_index)
 apply_formatter_if = curry(non_curried_apply_formatter_if)
 apply_formatter_to_array = curry(apply_formatter_to_array)
-apply_formatters_to_dict = curry(apply_formatters_to_dict)
+apply_formatters_to_dict = curry(non_curried_apply_formatters_to_dict)
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)
@@ -184,7 +237,7 @@ from_wei = curry(from_wei)
 get_logger = curry(get_logger)
 hexstr_if_str = curry(non_curried_hexstr_if_str)
 is_same_address = curry(is_same_address)
-text_if_str = curry(text_if_str)
+text_if_str = curry(non_curried_text_if_str)
 to_wei = curry(to_wei)
 clamp = curry(clamp)
 
@@ -194,6 +247,9 @@ clamp = curry(clamp)
 #   importing the wrong thing, while __all__ only affects `from eth_utils.curried import *`
 del Any
 del Callable
+del Dict
+del Generator
+del Optional
 del Sequence
 del TReturn
 del TValue
@@ -203,5 +259,7 @@ del Union
 del curry
 del non_curried_apply_formatter_if
 del non_curried_apply_one_of_formatters
+del non_curried_apply_formatters_to_dict
 del non_curried_hexstr_if_str
+del non_curried_text_if_str
 del overload
