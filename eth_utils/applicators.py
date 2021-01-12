@@ -82,10 +82,17 @@ def apply_formatters_to_dict(
         if key in formatters:
             try:
                 yield key, formatters[key](item)
-            except (TypeError, ValueError) as exc:
-                raise type(exc)(
-                    "Could not format value %r as field %r" % (item, key)
-                ) from exc
+            except ValueError as exc:
+                new_error_message = "Could not format invalid value %r as field %r" % (
+                    item,
+                    key,
+                )
+                raise ValueError(new_error_message) from exc
+            except TypeError as exc:
+                new_error_message = (
+                    "Could not format invalid type of %r for field %r" % (item, key)
+                )
+                raise TypeError(new_error_message) from exc
         else:
             yield key, item
 
