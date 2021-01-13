@@ -4,25 +4,20 @@ from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
 
 from .conversions import hexstr_if_str, to_hex
 from .crypto import keccak
-from .hexadecimal import (
-    add_0x_prefix,
-    decode_hex,
-    encode_hex,
-    is_hexstr,
-    remove_0x_prefix,
-)
+from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, remove_0x_prefix
+import re
 from .types import is_bytes, is_text
+
+_HEX_ADDRESS_REGEXP = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
 
 
 def is_hex_address(value: Any) -> bool:
     """
     Checks if the given string of text type is an address in hexadecimal encoded form.
     """
-    if not is_hexstr(value):
+    if not is_text(value):
         return False
-    else:
-        unprefixed = remove_0x_prefix(value)
-        return len(unprefixed) == 40
+    return _HEX_ADDRESS_REGEXP.fullmatch(value) is not None
 
 
 def is_binary_address(value: Any) -> bool:
@@ -42,14 +37,15 @@ def is_address(value: Any) -> bool:
     Checks if the given string in a supported value
     is an address in any of the known formats.
     """
-    if is_checksum_formatted_address(value):
-        return is_checksum_address(value)
-    elif is_hex_address(value):
+    if is_hex_address(value):
+        if _is_checksum_formatted(value):
+            return is_checksum_address(value)
         return True
-    elif is_binary_address(value):
+
+    if is_binary_address(value):
         return True
-    else:
-        return False
+
+    return False
 
 
 def to_normalized_address(value: AnyStr) -> HexAddress:
@@ -138,13 +134,14 @@ def is_checksum_address(value: Any) -> bool:
     return value == to_checksum_address(value)
 
 
-def is_checksum_formatted_address(value: Any) -> bool:
+def _is_checksum_formatted(value: Any) -> bool:
+    unprefixed_value = remove_0x_prefix(value)
+    return (
+        not unprefixed_value.islower()
+        and not unprefixed_value.isupper()
+        and not unprefixed_value.isnumeric()
+    )
 
-    if not is_hex_address(value):
-        return False
-    elif remove_0x_prefix(value) == remove_0x_prefix(value).lower():
-        return False
-    elif remove_0x_prefix(value) == remove_0x_prefix(value).upper():
-        return False
-    else:
-        return True
+
+def is_checksum_formatted_address(value: Any) -> bool:
+    return is_hex_address(value) and _is_checksum_formatted(value)
