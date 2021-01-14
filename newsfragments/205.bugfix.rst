@@ -1,0 +1,2 @@
+Update the type signature of to_canonical_address, to_checksum_address, and to_normalized_address to
+allow `bytes`-typed address input.
