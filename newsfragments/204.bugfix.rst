@@ -1,0 +1,4 @@
+:meth:`eth_utils.applicators.apply_formatters_to_dict` was crashing when it was trying to re-raise
+certain subclasses of `ValueError` and `TypeError`, like `JSONDecodeError`. This was hiding the
+original exception, and making it very difficult to debug. Instead of trying to re-raise the
+original exception type, we now reraise a simple `ValueError` or `TypeError`.

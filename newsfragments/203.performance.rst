@@ -1,0 +1,2 @@
+Speed up :meth:`eth_utils.address.is_address` by avoiding some duplicate work. Estimated speedup is
+40%.
