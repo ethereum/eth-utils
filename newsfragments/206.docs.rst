@@ -1,0 +1,1 @@
+Move release notes, and keep them from spamming the eth-utils docs home page.

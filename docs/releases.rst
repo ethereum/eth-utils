@@ -1,5 +1,12 @@
-Eth_Utils 1.9.5 (2020-08-31)
-----------------------------
+Release Notes
+=============
+
+Read up on all the latest improvements.
+
+.. towncrier release notes start
+
+eth-utils v1.9.5 (2020-08-31)
+-----------------------------
 
 Bugfixes
 ~~~~~~~~
@@ -14,8 +21,8 @@ Misc
 - `#201 <https://github.com/ethereum/eth-utils/issues/201>`__
 
 
-Eth_Utils 1.9.4 (2020-08-25)
-----------------------------
+eth-utils v1.9.4 (2020-08-25)
+-----------------------------
 
 Bugfixes
 ~~~~~~~~
@@ -26,8 +33,8 @@ Bugfixes
 - Ensure pickling/unpickling an ``ExtendedDebugLogger`` always gives back an ``ExtendedDebugLogger``. (`#199 <https://github.com/ethereum/eth-utils/issues/199>`__)
 
 
-Eth_Utils 1.9.0 (2020-05-11)
-----------------------------
+eth-utils v1.9.0 (2020-05-11)
+-----------------------------
 
 Features
 ~~~~~~~~
