@@ -63,31 +63,6 @@ def is_hex(value: Any) -> bool:
         raise TypeError(
             "is_hex requires text typed arguments. Got: {0}".format(repr(value))
         )
-    elif value.lower() == "0x":
-        return True
-
-    unprefixed_value = remove_0x_prefix(value)
-    if len(unprefixed_value) % 2 != 0:
-        value_to_decode = "0" + unprefixed_value
-    else:
-        value_to_decode = unprefixed_value
-
-    if not _HEX_REGEXP.fullmatch(value_to_decode):
+    if not value:
         return False
-
-    try:
-        # convert from a value like '09af' to b'09af'
-        ascii_hex = value_to_decode.encode("ascii")
-    except UnicodeDecodeError:
-        # Should have already been caught by regex above, but just in case...
-        return False
-
-    try:
-        # convert to a value like b'\x09\xaf'
-        value_as_bytes = binascii.unhexlify(ascii_hex)
-    except binascii.Error:
-        return False
-    except TypeError:
-        return False
-    else:
-        return bool(value_as_bytes)
+    return _HEX_REGEXP.fullmatch(value) is not None
