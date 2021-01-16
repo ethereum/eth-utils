@@ -1,6 +1,6 @@
 import functools
 import itertools
-from typing import Any, Callable, Dict, Iterable, Type, TypeVar
+from typing import Any, Callable, Dict, Type, TypeVar
 
 from .types import is_text
 
@@ -105,8 +105,6 @@ def replace_exceptions(
 
     def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
-        # String type b/c pypy3 throws SegmentationFault with Iterable as arg on nested fn
-        # Ignore so we don't have to import `Iterable`
         def wrapped(*args: Any, **kwargs: Any) -> T:
             try:
                 return to_wrap(*args, **kwargs)
