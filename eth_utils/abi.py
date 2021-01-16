@@ -4,7 +4,8 @@ from .crypto import keccak
 
 
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:
-    """Converts a tuple from a dict to a parenthesized list of its types.
+    """
+    Converts a tuple from a dict to a parenthesized list of its types.
 
     >>> from eth_utils.abi import collapse_if_tuple
     >>> collapse_if_tuple(
