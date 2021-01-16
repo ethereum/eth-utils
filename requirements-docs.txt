@@ -1,1 +1,1 @@
-<PYPI_NAME>[doc]
+eth-utils[doc]

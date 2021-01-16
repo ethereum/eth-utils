@@ -1,25 +1,25 @@
-# <PROJECT_NAME>
+# Ethereum Utilities
 
-[![Join the chat at https://gitter.im/ethereum/<REPO_NAME>](https://badges.gitter.im/ethereum/<REPO_NAME>.svg)](https://gitter.im/ethereum/<REPO_NAME>?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://circleci.com/gh/ethereum/<REPO_NAME>.svg?style=shield)](https://circleci.com/gh/ethereum/<REPO_NAME>)
-[![PyPI version](https://badge.fury.io/py/<PYPI_NAME>.svg)](https://badge.fury.io/py/<PYPI_NAME>)
-[![Python versions](https://img.shields.io/pypi/pyversions/<PYPI_NAME>.svg)](https://pypi.python.org/pypi/<PYPI_NAME>)
-[![Docs build](https://readthedocs.org/projects/<RTD_NAME>/badge/?version=latest)](http://<RTD_NAME>.readthedocs.io/en/latest/?badge=latest)
+[![Join the chat at https://gitter.im/ethereum/eth-utils](https://badges.gitter.im/ethereum/eth-utils.svg)](https://gitter.im/ethereum/eth-utils?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://circleci.com/gh/ethereum/eth-utils.svg?style=shield)](https://circleci.com/gh/ethereum/eth-utils)
+[![PyPI version](https://badge.fury.io/py/eth-utils.svg)](https://badge.fury.io/py/eth-utils)
+[![Python versions](https://img.shields.io/pypi/pyversions/eth-utils.svg)](https://pypi.python.org/pypi/eth-utils)
+[![Docs build](https://readthedocs.org/projects/eth-utils/badge/?version=latest)](http://eth-utils.readthedocs.io/en/latest/?badge=latest)
    
 
-<SHORT_DESCRIPTION>
+Common utility functions for python code that interacts with Ethereum
 
-Read more in the [documentation on ReadTheDocs](https://<RTD_NAME>.readthedocs.io/). [View the change log](https://<RTD_NAME>.readthedocs.io/en/latest/release_notes.html).
+Read more in the [documentation on ReadTheDocs](https://eth-utils.readthedocs.io/). [View the change log](https://eth-utils.readthedocs.io/en/latest/release_notes.html).
 
 ## Quickstart
 
 ```sh
-pip install <PYPI_NAME>
+pip install eth-utils
 ```
 
 ## Developer Setup
 
-If you would like to hack on <REPO_NAME>, please check out the [Snake Charmers
+If you would like to hack on eth-utils, please check out the [Snake Charmers
 Tactical Manual](https://github.com/ethereum/snake-charmers-tactical-manual)
 for information on how we do:
 
@@ -33,8 +33,8 @@ for information on how we do:
 You can set up your dev environment with:
 
 ```sh
-git clone git@github.com:ethereum/<REPO_NAME>.git
-cd <REPO_NAME>
+git clone git@github.com:ethereum/eth-utils.git
+cd eth-utils
 virtualenv -p python3 venv
 . venv/bin/activate
 pip install -e .[dev]
@@ -49,7 +49,7 @@ Show flake8 errors on file change:
 
 ```sh
 # Test flake8
-when-changed -v -s -r -1 <MODULE_NAME>/ tests/ -c "clear; flake8 <MODULE_NAME> tests && echo 'flake8 success' || echo 'error'"
+when-changed -v -s -r -1 eth_utils/ tests/ -c "clear; flake8 eth_utils tests && echo 'flake8 success' || echo 'error'"
 ```
 
 Run multi-process tests in one command, but without color:
@@ -65,7 +65,7 @@ Run in one thread, with color and desktop notifications:
 
 ```sh
 cd venv
-ptw --onfail "notify-send -t 5000 'Test failure ⚠⚠⚠⚠⚠' 'python 3 test on <REPO_NAME> failed'" ../tests ../<MODULE_NAME>
+ptw --onfail "notify-send -t 5000 'Test failure ⚠⚠⚠⚠⚠' 'python 3 test on eth-utils failed'" ../tests ../eth_utils
 ```
 
 ### Release setup

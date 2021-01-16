@@ -1,4 +1,4 @@
 
 
 def test_import():
-    import <MODULE_NAME>  # noqa: F401
+    import eth_utils  # noqa: F401

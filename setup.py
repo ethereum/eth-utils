@@ -47,15 +47,15 @@ with open('./README.md') as readme:
 
 
 setup(
-    name='<PYPI_NAME>',
+    name='eth-utils',
     # *IMPORTANT*: Don't manually change the version here. Use `make bump`, as described in readme
     version='1.9.5',
-    description="""<PYPI_NAME>: <SHORT_DESCRIPTION>""",
+    description="""eth-utils: Common utility functions for python code that interacts with Ethereum""",
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='The Ethereum Foundation',
     author_email='snakecharmers@ethereum.org',
-    url='https://github.com/ethereum/<REPO_NAME>',
+    url='https://github.com/ethereum/eth-utils',
     include_package_data=True,
     install_requires=[
         "eth-hash>=0.1.0,<1.0.0",
@@ -65,7 +65,7 @@ setup(
     ],
     python_requires='>=3.5,!=3.5.2,<4',
     extras_require=extras_require,
-    py_modules=['<MODULE_NAME>'],
+    py_modules=['eth_utils'],
     license="MIT",
     zip_safe=False,
     keywords='ethereum',

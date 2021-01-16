@@ -1,7 +1,7 @@
 eth-utils
 =====================================
 
-Common utility functions for codebases which interact with ethereum
+Common utility functions for python code that interacts with Ethereum
 
 Contents
 --------
