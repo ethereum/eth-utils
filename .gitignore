@@ -18,18 +18,16 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+pip-wheel-metadata/
+venv*
 
 # Installer logs
 pip-log.txt
 
-# Testing
+# Unit test / coverage reports
 .coverage
 .tox
 nosetests.xml
-.mypy_cache
-.hypothesis
-.cache  # tox cache
-.pytest_cache
 
 # Translations
 *.mo
@@ -45,8 +43,19 @@ output/*/index.html
 
 # Sphinx
 docs/_build
-docs/_static
-docs/_templates
+docs/modules.rst
+docs/*.internal.rst
+docs/*.utils.rst
+docs/*._utils.*
+
+# Blockchain
+chains
+
+# Hypothese Property base testing
+.hypothesis
+
+# tox/pytest cache
+.cache
 
 # Test output logs
 logs
@@ -76,6 +85,12 @@ logs
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 
+# VIM temp files
+*.sw[op]
+
+# mypy
+.mypy_cache
+
 ## File-based project format:
 *.iws
 
@@ -95,12 +110,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-# VIM swap fule
-*.swp
-
-# virtualenv default location
-venv*
-
-# pip wheel metadata
-pip-wheel-metadata/
