@@ -36,7 +36,7 @@ def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Format
     )
 
     _formatter_at_index = curry(apply_formatter_at_index)
-    return compose(
+    return compose(  # type: ignore
         *(
             _formatter_at_index(formatter, index)
             for index, formatter in enumerate(formatters)

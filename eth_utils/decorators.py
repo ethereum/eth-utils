@@ -88,7 +88,7 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
         def wrapper(*args: Any, **kwargs: Any) -> T:
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
-            return ReturnType(result)
+            return ReturnType(result)  # type: ignore
 
         return wrapper
 
@@ -97,19 +97,17 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
 def replace_exceptions(
     old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
-) -> Callable[..., Any]:
+) -> Callable[[Callable[..., T]], Callable[..., T]]:
     """
     Replaces old exceptions with new exceptions to be raised in their place.
     """
     old_exceptions = tuple(old_to_new_exceptions.keys())
 
-    def decorator(to_wrap: Callable[..., Any]) -> Callable[..., Any]:
+    def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
         # String type b/c pypy3 throws SegmentationFault with Iterable as arg on nested fn
         # Ignore so we don't have to import `Iterable`
-        def wrapper(
-            *args: Iterable[Any], **kwargs: Dict[str, Any]
-        ) -> Callable[..., Any]:
+        def wrapped(*args: Any, **kwargs: Any) -> T:
             try:
                 return to_wrap(*args, **kwargs)
             except old_exceptions as err:
@@ -120,6 +118,6 @@ def replace_exceptions(
                         "could not look up new exception to use for %r" % err
                     ) from err
 
-        return wrapper
+        return wrapped
 
     return decorator

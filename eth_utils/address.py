@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any, Union, cast
 
 from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
 
@@ -73,7 +73,8 @@ def is_normalized_address(value: Any) -> bool:
     if not is_address(value):
         return False
     else:
-        return value == to_normalized_address(value)
+        is_equal = value == to_normalized_address(value)
+        return cast(bool, is_equal)
 
 
 def to_canonical_address(address: Union[AnyAddress, str, bytes]) -> Address:
@@ -90,7 +91,8 @@ def is_canonical_address(address: Any) -> bool:
     """
     if not is_bytes(address) or len(address) != 20:
         return False
-    return address == to_canonical_address(address)
+    is_equal = address == to_canonical_address(address)
+    return cast(bool, is_equal)
 
 
 def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
@@ -131,7 +133,8 @@ def is_checksum_address(value: Any) -> bool:
 
     if not is_hex_address(value):
         return False
-    return value == to_checksum_address(value)
+    is_equal = value == to_checksum_address(value)
+    return cast(bool, is_equal)
 
 
 def _is_checksum_formatted(value: Any) -> bool:

@@ -16,7 +16,7 @@ extras_require = {
         'black>=18.6b4,<19',
         "flake8==3.7.9",
         "isort>=4.2.15,<5",
-        "mypy==0.770",
+        "mypy==0.720",
         "pydocstyle>=3.0.0,<4",
         'pytest>=3.4.1,<4.0.0',
     ],
