@@ -80,7 +80,7 @@ def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]
 
 def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
     """
-    Wrap the return value with the result of `type(args[at_position])`
+    Wrap the return value with the result of `type(args[at_position])`.
     """
 
     def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:

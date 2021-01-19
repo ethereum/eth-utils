@@ -129,7 +129,7 @@ def text_if_str(
     to_type: Callable[..., T], text_or_primitive: Union[bytes, int, str]
 ) -> T:
     """
-    Convert to a type, assuming that strings can be only unicode text (not a hexstr)
+    Convert to a type, assuming that strings can be only unicode text (not a hexstr).
 
     :param to_type function: takes the arguments (primitive, hexstr=hexstr, text=text),
         eg~ to_bytes, to_text, to_hex, to_int, etc
@@ -145,7 +145,7 @@ def hexstr_if_str(
     to_type: Callable[..., T], hexstr_or_primitive: Union[bytes, int, str]
 ) -> T:
     """
-    Convert to a type, assuming that strings can be only hexstr (not unicode text)
+    Convert to a type, assuming that strings can be only hexstr (not unicode text).
 
     :param to_type function: takes the arguments (primitive, hexstr=hexstr, text=text),
         eg~ to_bytes, to_text, to_hex, to_int, etc

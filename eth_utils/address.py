@@ -34,8 +34,7 @@ def is_binary_address(value: Any) -> bool:
 
 def is_address(value: Any) -> bool:
     """
-    Checks if the given string in a supported value
-    is an address in any of the known formats.
+    Is the given string an address in any of the known formats?
     """
     if is_hex_address(value):
         if _is_checksum_formatted(value):
@@ -79,8 +78,7 @@ def is_normalized_address(value: Any) -> bool:
 
 def to_canonical_address(address: Union[AnyAddress, str, bytes]) -> Address:
     """
-    Given any supported representation of an address
-    returns its canonical form (20 byte long string).
+    Convert a valid address to its canonical form (20-length bytes).
     """
     return Address(decode_hex(to_normalized_address(address)))
 
