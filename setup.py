@@ -60,7 +60,7 @@ setup(
     url='https://github.com/ethereum/eth-utils',
     include_package_data=True,
     install_requires=[
-        "eth-hash>=0.1.0,<0.3.0",
+        "eth-hash>=0.3.1,<0.4.0",
         "eth-typing>=2.2.1,<3.0.0",
         "toolz>0.8.2,<1;implementation_name=='pypy'",
         "cytoolz>=0.10.1,<1.0.0;implementation_name=='cpython'",
