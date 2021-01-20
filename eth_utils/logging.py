@@ -96,8 +96,10 @@ THasLoggerMeta = TypeVar("THasLoggerMeta", bound="HasLoggerMeta")
 
 class HasLoggerMeta(type):
     """
-    Metaclass which using the `__qualname__` to assign a logger instance to the
-    class who's name corresponds to the import path for the class.
+    Assigns a logger instance to a class, derived from the import path and name.
+
+    This metaclass uses `__qualname__` to identify a unique and meaningful name
+    to use when creating the associated logger for a given class.
     """
 
     logger_class = logging.Logger

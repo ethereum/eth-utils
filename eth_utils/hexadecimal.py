@@ -32,7 +32,7 @@ def encode_hex(value: AnyStr) -> HexStr:
     return add_0x_prefix(HexStr(binary_hex.decode("ascii")))
 
 
-def is_0x_prefixed(value: Any) -> bool:
+def is_0x_prefixed(value: str) -> bool:
     if not is_text(value):
         raise TypeError(
             "is_0x_prefixed requires text typed arguments. Got: {0}".format(repr(value))

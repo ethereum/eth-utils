@@ -6,39 +6,39 @@ from setuptools import (
 )
 
 extras_require = {
-    'lint': [
-        'black>=18.6b4,<19',
-        'flake8>=3.7.0,<4.0.0',
-        "isort==4.3.18",
-        'mypy==0.720',
-        'pytest>=3.4.1,<4.0.0',
-    ],
     'test': [
         'hypothesis>=4.43.0,<5.0.0',
+        "pytest==5.4.1",
+        "pytest-xdist",
+        "tox==3.14.6",
+    ],
+    'lint': [
+        'black>=18.6b4,<19',
+        "flake8==3.7.9",
+        "isort>=4.2.15,<5",
+        "mypy==0.720",
+        "pydocstyle>=5.0.0,<6",
         'pytest>=3.4.1,<4.0.0',
-        'pytest-pythonpath>=0.3,<1.0',
-    ],
-    'deploy': [
-        'bumpversion>=0.5.3,<1.0.0',
-        'tox>=2.9.1,<3.0.0',
-        'wheel>=0.30.0,<1.0.0',
-    ],
-    'dev': [
-        "twine>=1.13,<2",
     ],
     'doc': [
-        'Sphinx>=1.5.5,<2',
-        'sphinx_rtd_theme>=0.1.9,<2',
-        "towncrier>=19.2.0,<20",
+        "Sphinx>=1.6.5,<2",
+        "sphinx_rtd_theme>=0.1.9,<2",
+        "towncrier>=19.2.0, <20",
+    ],
+    'dev': [
+        "bumpversion>=0.5.3,<1",
+        "pytest-watch>=4.1.0,<5",
+        'wheel>=0.30.0,<1.0.0',
+        "twine>=1.13,<2",
+        "ipython",
     ],
 }
 
 extras_require['dev'] = (
     extras_require['dev'] +  # noqa: W504
-    extras_require['doc'] +  # noqa: W504
-    extras_require['lint'] +  # noqa: W504
     extras_require['test'] +  # noqa: W504
-    extras_require['deploy']
+    extras_require['lint'] +  # noqa: W504
+    extras_require['doc']
 )
 
 
@@ -48,14 +48,16 @@ with open('./README.md') as readme:
 
 setup(
     name='eth-utils',
-    # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
+    # *IMPORTANT*: Don't manually change the version here. Use `make bump`, as described in readme
     version='1.9.5',
-    description="""Common utility functions for ethereum codebases.""",
+    description=(
+        """eth-utils: Common utility functions for python code that interacts with Ethereum"""
+    ),
     long_description=long_description,
     long_description_content_type='text/markdown',
-    author='Piper Merriam',
-    author_email='pipermerriam@gmail.com',
-    url='https://github.com/ethereum/eth_utils',
+    author='The Ethereum Foundation',
+    author_email='snakecharmers@ethereum.org',
+    url='https://github.com/ethereum/eth-utils',
     include_package_data=True,
     install_requires=[
         "eth-hash>=0.1.0,<1.0.0",

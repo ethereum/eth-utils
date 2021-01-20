@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any, Union, cast
 
 from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
 
@@ -34,8 +34,7 @@ def is_binary_address(value: Any) -> bool:
 
 def is_address(value: Any) -> bool:
     """
-    Checks if the given string in a supported value
-    is an address in any of the known formats.
+    Is the given string an address in any of the known formats?
     """
     if is_hex_address(value):
         if _is_checksum_formatted(value):
@@ -73,13 +72,13 @@ def is_normalized_address(value: Any) -> bool:
     if not is_address(value):
         return False
     else:
-        return value == to_normalized_address(value)
+        is_equal = value == to_normalized_address(value)
+        return cast(bool, is_equal)
 
 
 def to_canonical_address(address: Union[AnyAddress, str, bytes]) -> Address:
     """
-    Given any supported representation of an address
-    returns its canonical form (20 byte long string).
+    Convert a valid address to its canonical form (20-length bytes).
     """
     return Address(decode_hex(to_normalized_address(address)))
 
@@ -90,7 +89,8 @@ def is_canonical_address(address: Any) -> bool:
     """
     if not is_bytes(address) or len(address) != 20:
         return False
-    return address == to_canonical_address(address)
+    is_equal = address == to_canonical_address(address)
+    return cast(bool, is_equal)
 
 
 def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
@@ -131,7 +131,8 @@ def is_checksum_address(value: Any) -> bool:
 
     if not is_hex_address(value):
         return False
-    return value == to_checksum_address(value)
+    is_equal = value == to_checksum_address(value)
+    return cast(bool, is_equal)
 
 
 def _is_checksum_formatted(value: Any) -> bool:

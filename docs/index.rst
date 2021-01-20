@@ -1,14 +1,18 @@
-Welcome to Eth-Utils's documentation!
+eth-utils
 =====================================
+
+Common utility functions for python code that interacts with Ethereum
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    overview
    utilities
    Low-Level APIs <modules>
-   releases
+   release_notes
 
 
 Indices and tables

@@ -1,9 +1,10 @@
-### What was wrong?
+## What was wrong?
 
+Issue #
 
+## How was it fixed?
 
-### How was it fixed?
-
+Summary of approach.
 
 ### To-Do
 
@@ -12,7 +13,8 @@
 
 [//]: # (For important changes that should go into the release notes please add a newsfragment file as explained here: https://github.com/ethereum/eth-utils/blob/master/newsfragments/README.md)
 
-- [ ] Add entry to the [release notes](https://github.com/ethereum/trinity/blob/master/newsfragments/README.md)
+[//]: # (See: https://eth-utils.readthedocs.io/en/latest/contributing.html#pull-requests)
+- [ ] Add entry to the [release notes](https://github.com/ethereum/eth-utils/blob/master/newsfragments/README.md)
 
 #### Cute Animal Picture
 
