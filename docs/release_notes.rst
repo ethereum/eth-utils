@@ -12,20 +12,22 @@ Bugfixes
 ~~~~~~~~
 
 - When a TypeError or ValueError is raised during
-  ~:meth:`eth_utils.applicators.apply_formatters_to_dict`, eth_utils appends some useful contextual
+  :meth:`~eth_utils.applicators.apply_formatters_to_dict`, eth_utils appends some useful contextual
   information. It was trying to re-create the old exception, but that sometimes fails, like with a
-  :cls:`JSONDecodeError`, which expects more arguments in the constructor. So now we raise a basic
+  :class:`JSONDecodeError`, which expects more arguments in the constructor. So now we raise a basic
   TypeError or ValueError. (`#204 <https://github.com/ethereum/eth-utils/issues/204>`__)
-- Update the type signature of to_canonical_address, to_checksum_address, and to_normalized_address to
-  allow `bytes`-typed address input. (`#205 <https://github.com/ethereum/eth-utils/issues/205>`__)
+- Update the type signature of :meth:`~eth_utils.address.to_canonical_address`,
+  :meth:`~eth_utils.address.to_checksum_address`, and
+  :meth:`~eth_utils.address.to_normalized_address` to allow `bytes`-typed
+  address input. (`#205 <https://github.com/ethereum/eth-utils/issues/205>`__)
 
 
 Performance improvements
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Significant speedup of ~:meth:`eth_utils.hexadecimal.is_hex` and
-  ~:meth:`eth_utils.hexadecimal.is_hex_str`. (`#202 <https://github.com/ethereum/eth-utils/issues/202>`__)
-- Significant speedup of ~:meth:`eth_utils.address.is_address`. Running a test that abi-encodes an
+- Significant speedup of :meth:`~eth_utils.hexadecimal.is_hex` and
+  :meth:`~eth_utils.hexadecimal.is_hexstr`. (`#202 <https://github.com/ethereum/eth-utils/issues/202>`__)
+- Significant speedup of :meth:`~eth_utils.address.is_address`. Running a test that abi-encodes an
   array of 10 addresses was about 67% faster. (`#203 <https://github.com/ethereum/eth-utils/issues/203>`__)
 
 
@@ -38,6 +40,7 @@ Internal Changes - for eth-utils Contributors
 Miscellaneous changes
 ~~~~~~~~~~~~~~~~~~~~~
 
+- `#196 <https://github.com/ethereum/eth-utils/issues/196>`__
 - `#207 <https://github.com/ethereum/eth-utils/issues/207>`__
 
 
