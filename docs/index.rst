@@ -11,7 +11,7 @@ Contents
 
    overview
    utilities
-   Low-Level APIs <modules>
+   Low-Level APIs <eth_utils>
    release_notes
 
 

@@ -154,9 +154,6 @@ Improved Documentation
 - Setup towncrier to improve the quality of the release notes (`#172 <https://github.com/ethereum/eth-utils/issues/172>`__)
 
 
-Release Notes
-=============
-
 v1.6.4
 --------------
 
