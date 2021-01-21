@@ -1,0 +1,2 @@
+Significant speedup of ~:meth:`eth_utils.hexadecimal.is_hex` and
+~:meth:`eth_utils.hexadecimal.is_hex_str`.

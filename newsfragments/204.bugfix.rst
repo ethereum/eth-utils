@@ -1,0 +1,5 @@
+When a TypeError or ValueError is raised during
+~:meth:`eth_utils.applicators.apply_formatters_to_dict`, eth_utils appends some useful contextual
+information. It was trying to re-create the old exception, but that sometimes fails, like with a
+:cls:`JSONDecodeError`, which expects more arguments in the constructor. So now we raise a basic
+TypeError or ValueError.
