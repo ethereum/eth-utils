@@ -1,2 +1,0 @@
-Significant speedup of ~:meth:`eth_utils.address.is_address`. Running a test that abi-encodes an
-array of 10 addresses was about 67% faster.

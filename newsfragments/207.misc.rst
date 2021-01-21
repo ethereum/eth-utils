@@ -1,1 +1,0 @@
-Merge in project template, for more standard release process, etc.

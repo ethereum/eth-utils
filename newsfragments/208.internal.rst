@@ -1,1 +1,0 @@
-Upgrade eth-hash to v0.3.1, to use its exported type annotations instead of casting the results.
