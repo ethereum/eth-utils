@@ -5,7 +5,7 @@ from typing import Any, Callable, Dict, Type, TypeVar
 from .types import is_text
 
 T = TypeVar("T")
-
+_C = TypeVar("_C", bound=Callable[..., Any])
 
 class combomethod(object):
     def __init__(self, method: Callable[..., Any]) -> None:
@@ -57,7 +57,7 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
         )
 
 
-def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]:
+def validate_conversion_arguments(to_wrap: _C) -> _C:
     """
     Validates arguments for conversion functions.
     - Only a single argument is present
@@ -66,7 +66,7 @@ def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]
     """
 
     @functools.wraps(to_wrap)
-    def wrapper(*args: Any, **kwargs: Any) -> T:
+    def wrapper(*args: Any, **kwargs: Any):
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
@@ -78,14 +78,14 @@ def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]
     return wrapper
 
 
-def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
+def return_arg_type(at_position: int) -> Callable[[_C], _C]:
     """
     Wrap the return value with the result of `type(args[at_position])`.
     """
 
-    def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
+    def decorator(to_wrap: _C) -> _C:
         @functools.wraps(to_wrap)
-        def wrapper(*args: Any, **kwargs: Any) -> T:
+        def wrapper(*args: Any, **kwargs: Any):
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)  # type: ignore
@@ -97,15 +97,15 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
 def replace_exceptions(
     old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
-) -> Callable[[Callable[..., T]], Callable[..., T]]:
+) -> Callable[[_C], _C]:
     """
     Replaces old exceptions with new exceptions to be raised in their place.
     """
     old_exceptions = tuple(old_to_new_exceptions.keys())
 
-    def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
+    def decorator(to_wrap: _C) -> _C:
         @functools.wraps(to_wrap)
-        def wrapped(*args: Any, **kwargs: Any) -> T:
+        def wrapped(*args: Any, **kwargs: Any):
             try:
                 return to_wrap(*args, **kwargs)
             except old_exceptions as err:
