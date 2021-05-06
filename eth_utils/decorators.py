@@ -67,7 +67,7 @@ def validate_conversion_arguments(to_wrap: _C) -> _C:
     """
 
     @functools.wraps(to_wrap)
-    def wrapper(*args: Any, **kwargs: Any):
+    def wrapper(*args: Any, **kwargs: Any) -> _C:
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
@@ -106,7 +106,7 @@ def replace_exceptions(
 
     def decorator(to_wrap: _C) -> _C:
         @functools.wraps(to_wrap)
-        def wrapped(*args: Any, **kwargs: Any):
+        def wrapped(*args: Any, **kwargs: Any) -> _C:
             try:
                 return to_wrap(*args, **kwargs)
             except old_exceptions as err:
