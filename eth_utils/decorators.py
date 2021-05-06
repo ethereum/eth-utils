@@ -7,6 +7,7 @@ from .types import is_text
 T = TypeVar("T")
 _C = TypeVar("_C", bound=Callable[..., Any])
 
+
 class combomethod(object):
     def __init__(self, method: Callable[..., Any]) -> None:
         self.method = method

@@ -1,0 +1,7 @@
+{
+    "python.linting.flake8Enabled": true,
+    "python.languageServer": "Pylance",
+    "python.linting.flake8Args": [
+        "max-line-length=100"
+    ]
+}
