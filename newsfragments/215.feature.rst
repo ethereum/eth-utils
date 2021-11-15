@@ -1,0 +1,2 @@
+Upgrade eth-typing to v3.0+, Add support for python 3.9 and 3.10
+Remove support for python 3.5
