@@ -5,6 +5,18 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.0.0 (2021-11-18)
+-----------------------------
+Eth_Utils 2.0.0 (2021-11-18)
+----------------------------
+
+Features
+~~~~~~~~
+
+- Upgrade eth-typing to v3.0+, Add support for python 3.9 and 3.10
+  Remove support for python 3.5 (`#215 <https://github.com/ethereum/eth-utils/issues/215>`__)
+
+
 eth-utils v1.10.0 (2021-01-21)
 ------------------------------
 
