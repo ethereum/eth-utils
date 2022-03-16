@@ -69,11 +69,15 @@ DISPLAY_HASH_CHARS = 4
 def humanize_bytes(value: bytes) -> str:
     if len(value) <= DISPLAY_HASH_CHARS + 1:
         return value.hex()
+
     value_as_hex = value.hex()
     return humanize_hex_str(value_as_hex)
 
 
 def humanize_hex_str(value: str) -> str:
+    if len(value) <= DISPLAY_HASH_CHARS + 1:
+        return value
+
     head = value[:DISPLAY_HASH_CHARS]
     tail = value[-1 * DISPLAY_HASH_CHARS :]
     return "{0}..{1}".format(head, tail)
