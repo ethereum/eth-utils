@@ -1145,7 +1145,7 @@ returned by the callable.
    >>> f(3)
    6
 
-Hexidecimal Utils
+Hexadecimal Utils
 ~~~~~~~~~~~~~~~~~
 
 ``add_0x_prefix(value: HexStr)`` -> HexStr_
@@ -1326,11 +1326,11 @@ Returns the provide number of seconds as a shorthand string.
 
 Returns the provided byte string in a human readable format.
 
-If the value is 5 bytes or less it is returned in full in its hexidecimal representation (without a ``0x`` prefix)
+If the value is 5 bytes or less it is returned in full in its hexadecimal representation (without a ``0x`` prefix)
 
-If the value is longer that 5 bytes it is returned in its hexidecimal
+If the value is longer that 5 bytes it is returned in its hexadecimal
 representation (without a ``0x`` prefix) with the middle segment replaced by an
-ellipsis, only showing the first and last four hexidecimal nibbles.
+ellipsis, only showing the first and last four hexadecimal nibbles.
 
 .. doctest::
 
