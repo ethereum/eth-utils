@@ -8,7 +8,7 @@ from eth_typing import HexStr
 
 from .types import is_string, is_text
 
-_HEX_REGEXP = re.compile("(0x)?[0-9a-f]*", re.IGNORECASE | re.ASCII)
+_HEX_REGEXP = re.compile("(0[xX])?[0-9a-fA-F]*")
 
 
 def decode_hex(value: str) -> bytes:
