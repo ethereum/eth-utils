@@ -37,7 +37,7 @@ def is_0x_prefixed(value: str) -> bool:
         raise TypeError(
             "is_0x_prefixed requires text typed arguments. Got: {0}".format(repr(value))
         )
-    return value.startswith("0x") or value.startswith("0X")
+    return value.startswith(("0x", "0X"))
 
 
 def remove_0x_prefix(value: HexStr) -> HexStr:
