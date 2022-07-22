@@ -18,6 +18,7 @@ extras_require = {
         "isort>=4.2.15,<5",
         "mypy==0.720",
         "pydocstyle>=5.0.0,<6",
+        "pytest>=6.2.5,<7",
     ],
     "doc": [
         "Sphinx>=1.6.5,<2",
@@ -35,9 +36,9 @@ extras_require = {
 
 extras_require["dev"] = (
     extras_require["dev"]
-    + extras_require["test"]  # noqa: W504
-    + extras_require["lint"]  # noqa: W504
-    + extras_require["doc"]  # noqa: W504
+    + extras_require["test"]
+    + extras_require["lint"]
+    + extras_require["doc"]
 )
 
 
