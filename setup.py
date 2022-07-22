@@ -11,6 +11,7 @@ extras_require = {
         "pytest>=6.2.5,<7",
         "pytest-xdist",
         "tox==3.14.6",
+        "types-setuptools",
     ],
     "lint": [
         "black>=18.6b4,<19",
