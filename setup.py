@@ -16,9 +16,10 @@ extras_require = {
         "black>=18.6b4,<19",
         "flake8==3.7.9",
         "isort>=4.2.15,<5",
-        "mypy==0.720",
+        "mypy==0.910",
         "pydocstyle>=5.0.0,<6",
         "pytest>=6.2.5,<7",
+        "types-setuptools",
     ],
     "doc": [
         "Sphinx>=1.6.5,<2",

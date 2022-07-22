@@ -13,7 +13,7 @@ TLogger = TypeVar("TLogger", bound=logging.Logger)
 class cached_show_debug2_property:
     def __init__(self, func: Callable[[TLogger], bool]):
         # type ignored b/c arg1 expects Callable[..., Any]
-        functools.update_wrapper(self, func)  # type: ignore
+        functools.update_wrapper(self, func)
         self._func = func
 
     def __get__(self, obj: Optional[TLogger], cls: Type[logging.Logger]) -> Any:
@@ -80,7 +80,7 @@ def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
             # the global logging class changes.
             #
             # types ignored b/c mypy doesn't identify presence of manager on logging.Logger
-            manager = logging.Logger.manager  # type: ignore
+            manager = logging.Logger.manager
             if name in manager.loggerDict:
                 if type(manager.loggerDict[name]) is not logger_class:
                     del manager.loggerDict[name]
@@ -109,7 +109,7 @@ class HasLoggerMeta(type):
         name: str,
         bases: Tuple[Type[Any]],
         namespace: Dict[str, Any],
-    ) -> type:
+    ) -> THasLoggerMeta:
         if "logger" in namespace:
             # If a logger was explicitly declared we shouldn't do anything to
             # replace it.
