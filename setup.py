@@ -25,7 +25,8 @@ extras_require = {
     "doc": [
         "Sphinx>=1.6.5,<2",
         "sphinx_rtd_theme>=0.1.9,<2",
-        "towncrier>=19.2.0, <20",
+        "towncrier>=21,<22",
+        "jinja2>=3.0.0,<3.0.1",
     ],
     "dev": [
         "bumpversion>=0.5.3,<1",

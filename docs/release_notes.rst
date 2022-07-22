@@ -7,8 +7,6 @@ Read up on all the latest improvements.
 
 eth-utils v2.0.0 (2021-11-18)
 -----------------------------
-Eth_Utils 2.0.0 (2021-11-18)
-----------------------------
 
 Features
 ~~~~~~~~
