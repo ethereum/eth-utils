@@ -56,6 +56,41 @@ def function_abi_to_4byte_selector(function_abi: Dict[str, Any]) -> bytes:
     return function_signature_to_4byte_selector(function_signature)
 
 
+def function_abi_to_solidity(function_abi: Dict[str, Any]) -> str:
+    inputs = [
+        input["type"] + collapse_if_tuple(input)
+        if input["type"] == "tuple"
+        else input["type"]
+        for input in function_abi["inputs"]
+    ]
+    res_info = ""
+    if (
+        function_abi.get("stateMutability", "")
+        and function_abi["stateMutability"] != "nonpayable"
+    ):
+        res_info += function_abi["stateMutability"] + " "
+    elif function_abi.get("constant", ""):
+        res_info += "view "
+    outputs = [
+        output["type"] + collapse_if_tuple(output)
+        if output["type"] == "tuple"
+        else output["type"]
+        for output in function_abi["outputs"]
+    ]
+
+    gas_info = (
+        " @{} ".format(function_abi["gas"]) if function_abi.get("gas", "") else ""
+    )
+    return "function {}({}) {}{} ({}){}".format(
+        function_abi["name"],
+        ", ".join(inputs),
+        res_info,
+        "returns",
+        ", ".join(outputs),
+        gas_info,
+    )
+
+
 def event_signature_to_log_topic(event_signature: str) -> bytes:
     return keccak(text=event_signature.replace(" ", ""))
 
@@ -63,3 +98,14 @@ def event_signature_to_log_topic(event_signature: str) -> bytes:
 def event_abi_to_log_topic(event_abi: Dict[str, Any]) -> bytes:
     event_signature = _abi_to_signature(event_abi)
     return event_signature_to_log_topic(event_signature)
+
+
+def event_abi_to_solidity(event_abi: Dict[str, Any]) -> str:
+    inputs = [
+        input["type"] + collapse_if_tuple(input)
+        if input["type"] == "tuple"
+        else input["type"]
+        for input in event_abi["inputs"]
+    ]
+    anonymous = " anonymous" if event_abi.get("anonymous", False) else ""
+    return "event {}({}){}".format(event_abi["name"], ", ".join(inputs), anonymous)
