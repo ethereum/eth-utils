@@ -71,6 +71,7 @@ from .humanize import (  # noqa: F401
     humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,
+    humanize_wei,
 )
 from .logging import (  # noqa: F401
     DEBUG2_LEVEL_NUM,
