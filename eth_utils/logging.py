@@ -1,7 +1,8 @@
 import contextlib
-import functools
 import logging
-from typing import Any, Callable, Dict, Iterator, Optional, Tuple, Type, TypeVar, cast
+from typing import Any, Dict, Iterator, Tuple, Type, TypeVar, cast
+
+from cached_property import cached_property
 
 from .toolz import assoc
 
@@ -10,27 +11,12 @@ DEBUG2_LEVEL_NUM = 8
 TLogger = TypeVar("TLogger", bound=logging.Logger)
 
 
-class cached_show_debug2_property:
-    def __init__(self, func: Callable[[TLogger], bool]):
-        # type ignored b/c arg1 expects Callable[..., Any]
-        functools.update_wrapper(self, func)
-        self._func = func
-
-    def __get__(self, obj: Optional[TLogger], cls: Type[logging.Logger]) -> Any:
-        if obj is None:
-            return self
-
-        result = self._func(obj)
-        obj.__dict__[self._func.__name__] = result
-        return result
-
-
 class ExtendedDebugLogger(logging.Logger):
     """
     Logging class that can be used for lower level debug logging.
     """
 
-    @cached_show_debug2_property
+    @cached_property  # type: ignore
     def show_debug2(self) -> bool:
         return self.isEnabledFor(DEBUG2_LEVEL_NUM)
 
