@@ -97,3 +97,35 @@ def test_invalid_to_wei_values(value, unit):
 
     with pytest.raises(ValueError):
         from_wei(value, unit)
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        1,  # 1000000000000000000 wei
+        0.1,  # 100000000000000000 wei
+        0.01,  # 10000000000000000 wei
+        0.001,  # 1000000000000000 wei
+        0.00000000000000001,  # 10 wei
+        0.000000000000000001,  # 1 wei
+        1.234567891234567891,  # 1234567891234567891 wei
+        0,  # 0 wei
+    ],
+)
+def test_float_ether(value):
+    assert from_wei(to_wei(value, "ether"), "ether") == decimal.Decimal(str(value))
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        0.0000000000000000001,  # 0.1 wei
+        0.00000000000000000001,  # 0.01 wei
+        0.000000000000000000001,  # 0.001 wei
+        0.0000000000000000011,  # 1.1 wei
+        0.00000000000000000123456789,  # 1.23456789 wei
+    ],
+)
+def test_invalid_float_ether(value):
+    with pytest.raises(AssertionError):
+        assert from_wei(to_wei(value, "ether"), "ether") == decimal.Decimal(str(value))

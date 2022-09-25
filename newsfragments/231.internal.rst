@@ -1,0 +1,1 @@
+Add currency tests with float ether inputs.
