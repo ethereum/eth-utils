@@ -1,10 +1,14 @@
 import contextlib
 import logging
+import sys
 from typing import Any, Dict, Iterator, Tuple, Type, TypeVar, cast
 
-from cached_property import cached_property
-
 from .toolz import assoc
+
+if sys.version_info < (3, 8):
+    from cached_property import cached_property
+else:
+    from functools import cached_property
 
 DEBUG2_LEVEL_NUM = 8
 
