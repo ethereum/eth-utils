@@ -1,0 +1,1 @@
+Update use of ``@cached_property`` for debug2 logging.
