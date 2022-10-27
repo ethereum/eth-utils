@@ -1,6 +1,6 @@
 [tool.towncrier]
 # Read https://github.com/ethereum/eth-utils/newsfragments/README.md for instructions
-package="eth_utils"
+package = "eth_utils"
 filename = "docs/release_notes.rst"
 directory = "newsfragments"
 underlines = ["-", "~", "^"]
@@ -41,3 +41,8 @@ showcontent = true
 directory = "misc"
 name = "Miscellaneous changes"
 showcontent = false
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Breaking changes"
+showcontent = true
