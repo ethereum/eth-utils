@@ -25,7 +25,7 @@ common: &common
         command: pip install --user tox
     - run:
         name: run tox
-        command: ~/.local/bin/tox -r
+        command: python -m tox -r
     - save_cache:
         paths:
           - .hypothesis
@@ -39,21 +39,15 @@ jobs:
   docs:
     <<: *common
     docker:
-      - image: cimg/python:3.6
+      - image: cimg/python:3.7
         environment:
           TOXENV: docs
   lint:
     <<: *common
     docker:
-      - image: cimg/python:3.6
+      - image: cimg/python:3.7
         environment:
           TOXENV: lint
-  py36-core:
-    <<: *common
-    docker:
-      - image: cimg/python:3.6
-        environment:
-          TOXENV: py36-core
   py37-core:
     <<: *common
     docker:
@@ -84,22 +78,21 @@ jobs:
       - image: pypy
         environment:
           TOXENV: pypy3-core
-  py36-typing1:
+  py37-typing1:
     <<: *common
     docker:
-      - image: cimg/python:3.6
+      - image: cimg/python:3.7
         environment:
-          TOXENV: py36-typing1
+          TOXENV: py37-typing1
 workflows:
   version: 2
   test:
     jobs:
       - docs
       - lint
-      - py36-core
       - py37-core
       - py38-core
       - py39-core
       - py310-core
       - pypy3-core
-      - py36-typing1
+      - py37-typing1
