@@ -14,7 +14,7 @@ extras_require = {
         "types-setuptools",
     ],
     "lint": [
-        "black>=18.6b4,<19",
+        "black>=22",
         "flake8==3.7.9",
         "isort>=4.2.15,<5",
         "mypy==0.910",
