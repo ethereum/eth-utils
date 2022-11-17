@@ -1,19 +1,23 @@
 import functools
 import itertools
-from typing import Any, Callable, Dict, Type, TypeVar
+from typing import Any, Callable, Dict, Generic, Type, TypeVar, Union
+from typing_extensions import Concatenate, ParamSpec
 
 from .types import is_text
 
 T = TypeVar("T")
+P = ParamSpec("P")
 
 
-class combomethod(object):
-    def __init__(self, method: Callable[..., Any]) -> None:
+class combomethod(Generic[P, T], object):
+    def __init__(self, method: Callable[Concatenate[Any, P], T]) -> None:
         self.method = method
 
-    def __get__(self, obj: T = None, objtype: Type[T] = None) -> Callable[..., Any]:
+    def __get__(
+        self, obj: object = None, objtype: Union[type, None] = None
+    ) -> Callable[P, T]:
         @functools.wraps(self.method)
-        def _wrapper(*args: Any, **kwargs: Any) -> Any:
+        def _wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
             if obj is not None:
                 return self.method(obj, *args, **kwargs)
             else:
