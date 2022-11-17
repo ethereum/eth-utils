@@ -5,6 +5,45 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.1.0 (2022-11-17)
+-----------------------------
+
+Features
+~~~~~~~~
+
+- Allow a wider eth-hash dependency range (`#225 <https://github.com/ethereum/eth-utils/issues/225>`__)
+
+
+Performance improvements
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Performance improvement of up to 65% on ``is_0x_prefixed`` (`#223 <https://github.com/ethereum/eth-utils/issues/223>`__)
+
+
+Improved Documentation
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Fix typo in documentation: hexidecimal -> hexadecimal (`#222 <https://github.com/ethereum/eth-utils/issues/222>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update use of ``@cached_property`` for debug2 logging. (`#232 <https://github.com/ethereum/eth-utils/issues/232>`__)
+
+
+Miscellaneous changes
+~~~~~~~~~~~~~~~~~~~~~
+
+- `#226 <https://github.com/ethereum/eth-utils/issues/226>`__, `#235 <https://github.com/ethereum/eth-utils/issues/235>`__
+
+
+Breaking changes
+~~~~~~~~~~~~~~~~
+
+- Remove support for Python 3.6, add Python 3.11, misc dev internal updates (`#227 <https://github.com/ethereum/eth-utils/issues/227>`__)
+
+
 eth-utils v2.0.0 (2021-11-18)
 -----------------------------
 
