@@ -33,7 +33,7 @@ class denoms:
 
 
 MIN_WEI = 0
-MAX_WEI = 2 ** 256 - 1
+MAX_WEI = 2**256 - 1
 
 
 def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
@@ -89,8 +89,8 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
         with localcontext() as ctx:
             multiplier = len(s_number) - s_number.index(".") - 1
             ctx.prec = multiplier
-            d_number = decimal.Decimal(value=number, context=ctx) * 10 ** multiplier
-        unit_value /= 10 ** multiplier
+            d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier
+        unit_value /= 10**multiplier
 
     with localcontext() as ctx:
         ctx.prec = 999
