@@ -717,8 +717,8 @@ being supplied when passing in a ``str``.
 
 Only supply one of the arguments:
 
-``keccak(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``keccak(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> Hash32
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. doctest::
 

@@ -29,6 +29,7 @@ from eth_typing import (
     ABIFallback,
     ABIFunction,
     ABIReceive,
+    Hash32,
 )
 
 from eth_utils.types import (
@@ -818,7 +819,7 @@ def function_abi_to_4byte_selector(abi_element: ABIElement) -> bytes:
     return function_signature_to_4byte_selector(function_signature)
 
 
-def event_signature_to_log_topic(event_signature: str) -> bytes:
+def event_signature_to_log_topic(event_signature: str) -> Hash32:
     r"""
     Return the 32-byte keccak signature of the log topic for an event signature.
 
@@ -836,7 +837,7 @@ def event_signature_to_log_topic(event_signature: str) -> bytes:
     return keccak(text=event_signature.replace(" ", ""))
 
 
-def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
+def event_abi_to_log_topic(event_abi: ABIEvent) -> Hash32:
     r"""
     Return the 32-byte keccak signature of the log topic from an event ABI.
 

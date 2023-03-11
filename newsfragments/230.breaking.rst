@@ -1,0 +1,1 @@
+Update the return type from ``bytes`` to ``Hash32`` for all ``keccak`` methods
