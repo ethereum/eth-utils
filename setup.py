@@ -23,10 +23,9 @@ extras_require = {
         "types-setuptools",
     ],
     "doc": [
-        "Sphinx>=1.6.5,<2",
-        "sphinx_rtd_theme>=0.1.9,<2",
+        "Sphinx>=5.0.0",
+        "sphinx_rtd_theme>=1.0.0",
         "towncrier>=21,<22",
-        "jinja2>=3.0.0,<3.0.1",
     ],
     "dev": [
         "bumpversion>=0.5.3,<1",
