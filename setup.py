@@ -23,7 +23,7 @@ extras_require = {
         "types-setuptools",
     ],
     "doc": [
-        "Sphinx>=5.0.0",
+        "sphinx>=5.0.0",
         "sphinx_rtd_theme>=1.0.0",
         "towncrier>=21,<22",
     ],
