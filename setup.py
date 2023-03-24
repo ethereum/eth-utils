@@ -7,19 +7,19 @@ from setuptools import (
 
 extras_require = {
     "test": [
-        "hypothesis>=4.43.0,<5.0.0",
-        "pytest>=6.2.5,<7",
+        "hypothesis>=4.43.0",
+        "pytest>=6.2.5",
         "pytest-xdist",
-        "tox>=3.14.6,<4",
+        "tox>=3.14.6",
         "types-setuptools",
     ],
     "lint": [
-        "black>=22",
-        "flake8==3.7.9",
-        "isort>=4.2.15,<5",
+        "black>=22.1.0",
+        "flake8==3.8.3",
+        "isort>=5.11.0",
         "mypy==0.910",
-        "pydocstyle>=5.0.0,<6",
-        "pytest>=6.2.5,<7",
+        "pydocstyle>=5.0.0",
+        "pytest>=6.2.5",
         "types-setuptools",
     ],
     "doc": [
@@ -28,10 +28,10 @@ extras_require = {
         "towncrier>=21,<22",
     ],
     "dev": [
-        "bumpversion>=0.5.3,<1",
-        "pytest-watch>=4.1.0,<5",
-        "wheel>=0.30.0,<1.0.0",
-        "twine>=1.13,<2",
+        "bumpversion>=0.5.3",
+        "pytest-watch>=4.1.0",
+        "wheel>=0.30.0",
+        "twine>=1.13",
         "ipython",
     ],
 }
