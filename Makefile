@@ -27,10 +27,11 @@ clean-pyc:
 	find . -name '__pycache__' -exec rm -rf {} +
 
 lint:
-	tox -elint
+	tox -e lint
 
 lint-roll:
-	black eth_utils tests
+	isort <MODULE_NAME> tests
+	black <MODULE_NAME> tests setup.py
 	$(MAKE) lint
 
 test:
@@ -44,13 +45,17 @@ build-docs:
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(MAKE) -C docs doctest
-	./newsfragments/validate_files.py
+
+validate-docs:
+	python ./newsfragments/validate_files.py
 	towncrier build --draft --version preview
 
-docs: build-docs
+check-docs: build-docs validate-docs
+
+docs: check-docs
 	open docs/_build/html/index.html
 
-linux-docs: build-docs
+linux-docs: check-docs
 	xdg-open docs/_build/html/index.html
 
 check-bump:
@@ -77,10 +82,10 @@ release: check-bump clean
 	git config commit.gpgSign true
 	bumpversion $(bump)
 	git push upstream && git push upstream --tags
-	python setup.py sdist bdist_wheel
+	python -m build
 	twine upload dist/*
 	git config commit.gpgSign "$(CURRENT_SIGN_SETTING)"
 
 dist: clean
-	python setup.py sdist bdist_wheel
+	python -m build
 	ls -l dist

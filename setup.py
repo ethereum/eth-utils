@@ -8,19 +8,16 @@ from setuptools import (
 extras_require = {
     "test": [
         "hypothesis>=4.43.0",
-        "pytest>=6.2.5",
-        "pytest-xdist",
-        "tox>=3.14.6",
+        "pytest>=7.0.0",
+        "pytest-xdist>=2.4.0",
         "types-setuptools",
     ],
     "lint": [
-        "black>=22.1.0",
-        "flake8==3.8.3",
+        "flake8==3.8.3",  # flake8 claims semver but adds new warnings at minor releases, leave it pinned.
         "isort>=5.11.0",
-        "mypy==0.910",
+        "mypy==0.910",  # mypy does not follow semver, leave it pinned.
         "pydocstyle>=5.0.0",
-        "pytest>=6.2.5",
-        "types-setuptools",
+        "black>=22.1.0",
     ],
     "doc": [
         "sphinx>=5.0.0",
@@ -30,8 +27,10 @@ extras_require = {
     "dev": [
         "bumpversion>=0.5.3",
         "pytest-watch>=4.1.0",
-        "wheel>=0.30.0",
-        "twine>=1.13",
+        "tox>=4.0.0",
+        "build>=0.9.0",
+        "wheel",
+        "twine",
         "ipython",
     ],
 }
@@ -86,6 +85,5 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: Implementation :: PyPy",
     ],
 )
