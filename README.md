@@ -38,7 +38,6 @@ cd eth-utils
 virtualenv -p python3 venv
 . venv/bin/activate
 pip install -e ".[dev]"
-pip install -e "eth-hash[pycryptodome]"
 ```
 
 ### Release setup

@@ -20,7 +20,7 @@ class ExtendedDebugLogger(logging.Logger):
     Logging class that can be used for lower level debug logging.
     """
 
-    @cached_property  # type: ignore
+    @cached_property
     def show_debug2(self) -> bool:
         return self.isEnabledFor(DEBUG2_LEVEL_NUM)
 

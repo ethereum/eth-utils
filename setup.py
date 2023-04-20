@@ -15,9 +15,10 @@ extras_require = {
     "lint": [
         "flake8==3.8.3",  # flake8 claims semver but adds new warnings at minor releases, leave it pinned.
         "isort>=5.11.0",
-        "mypy==0.910",  # mypy does not follow semver, leave it pinned.
+        "mypy==0.971",  # mypy does not follow semver, leave it pinned.
         "pydocstyle>=5.0.0",
-        "black>=22.1.0",
+        "black>=23",
+        "types-setuptools",
     ],
     "doc": [
         "sphinx>=5.0.0",
@@ -32,6 +33,7 @@ extras_require = {
         "wheel",
         "twine",
         "ipython",
+        "eth-hash[pycryptodome]",
     ],
 }
 
