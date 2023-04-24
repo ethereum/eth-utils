@@ -1,7 +1,11 @@
+import sys
 from typing import List
 
-import mypy.api
+from mypy import (
+    api,
+)
 import pytest
+
 
 MYPY_ARGS = ["--ignore-missing-imports"]
 FIXTURE_DIR = "fixtures/mypy/"
@@ -18,7 +22,7 @@ def check_mypy_run(
     expected_returncode: int = 1,
 ) -> None:
     """Helper to run mypy and check the output."""
-    out, err, returncode = mypy.api.run(cmd_line)
+    out, err, returncode = api.run(cmd_line)
     assert out == expected_out, err
     assert err == expected_err, out
     assert returncode == expected_returncode, returncode
@@ -26,6 +30,7 @@ def check_mypy_run(
 
 # The following tests all run code snippets through mypy that contain a
 # `reveal_type` statement, and then match the mypy output against our expectations
+@pytest.mark.skipif(sys.version_info < (3, 8), reason="requires Python 3.8 or higher")
 @pytest.mark.parametrize(
     "fixture,message",
     (

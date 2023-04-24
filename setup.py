@@ -11,6 +11,7 @@ extras_require = {
         "pytest>=7.0.0",
         "pytest-xdist>=2.4.0",
         "types-setuptools",
+        "mypy==0.971",  # mypy does not follow semver, leave it pinned.
     ],
     "lint": [
         "flake8==3.8.3",  # flake8 claims semver but adds new warnings at minor releases, leave it pinned.
