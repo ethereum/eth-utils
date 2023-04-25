@@ -14,7 +14,7 @@ Read more in the [documentation on ReadTheDocs](https://eth-utils.readthedocs.io
 ## Quickstart
 
 ```sh
-pip install eth-utils
+python -m pip install eth-utils
 ```
 
 ## Developer Setup
@@ -37,7 +37,7 @@ git clone git@github.com:ethereum/eth-utils.git
 cd eth-utils
 virtualenv -p python3 venv
 . venv/bin/activate
-pip install -e ".[dev]"
+python -m pip install -e ".[dev]"
 ```
 
 ### Release setup
