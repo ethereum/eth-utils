@@ -96,5 +96,4 @@ from .types import (  # noqa: F401
     is_tuple,
 )
 
-
 __version__ = pkg_resources.get_distribution("eth-utils").version

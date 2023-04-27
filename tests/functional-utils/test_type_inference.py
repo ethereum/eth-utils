@@ -1,11 +1,8 @@
 import sys
 from typing import List
 
-from mypy import (
-    api,
-)
+from mypy import api
 import pytest
-
 
 MYPY_ARGS = ["--ignore-missing-imports"]
 FIXTURE_DIR = "fixtures/mypy/"
