@@ -163,13 +163,6 @@ jobs:
     environment:
       TOXENV: py311-wheel-windows
   
-  py37-typing1:
-    <<: *common
-    docker:
-      - image: cimg/python:3.7
-        environment:
-          TOXENV: py37-typing1
-
 workflows:
   version: 2
   test:
@@ -190,4 +183,3 @@ workflows:
       - py310-wheel
       - py311-wheel
       - py311-wheel-windows
-      - py37-typing1
