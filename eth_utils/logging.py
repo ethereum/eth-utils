@@ -34,8 +34,8 @@ class ExtendedDebugLogger(logging.Logger):
             self.__dict__["debug2"] = lambda message, *args, **kwargs: None
 
     def __reduce__(self) -> Tuple[Any, ...]:
-        # This is needed because our parent's implementation could cause us to become a regular
-        # Logger on unpickling.
+        # This is needed because our parent's implementation could
+        # cause us to become a regular Logger on unpickling.
         return get_extended_debug_logger, (self.name,)
 
 
@@ -69,7 +69,8 @@ def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
             # module does not *update* the cached instance in the event that
             # the global logging class changes.
             #
-            # types ignored b/c mypy doesn't identify presence of manager on logging.Logger
+            # types ignored b/c mypy doesn't identify presence of
+            # manager on logging.Logger
             manager = logging.Logger.manager
             if name in manager.loggerDict:
                 if type(manager.loggerDict[name]) is not logger_class:
