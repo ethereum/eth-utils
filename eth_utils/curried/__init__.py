@@ -1,4 +1,17 @@
 # flake8: noqa
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    Optional,
+    Sequence,
+    Tuple,
+    TypeVar,
+    Union,
+    overload,
+)
+
 from eth_utils import (
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
@@ -8,12 +21,8 @@ from eth_utils import (
     ValidationError,
     add_0x_prefix,
     apply_formatter_at_index,
-    apply_formatter_if as non_curried_apply_formatter_if,
-    apply_formatter_to_array,
-    apply_formatters_to_dict as non_curried_apply_formatters_to_dict,
-    apply_formatters_to_sequence,
-    apply_key_map,
-    apply_one_of_formatters as non_curried_apply_one_of_formatters,
+)
+from eth_utils import (
     apply_to_return_value,
     big_endian_to_int,
     clamp,
@@ -30,7 +39,8 @@ from eth_utils import (
     function_signature_to_4byte_selector,
     get_extended_debug_logger,
     get_logger,
-    hexstr_if_str as non_curried_hexstr_if_str,
+)
+from eth_utils import (
     humanize_bytes,
     humanize_hash,
     humanize_integer_sequence,
@@ -66,7 +76,8 @@ from eth_utils import (
     reversed_return,
     setup_DEBUG2_logging,
     sort_return,
-    text_if_str as non_curried_text_if_str,
+)
+from eth_utils import (
     to_bytes,
     to_canonical_address,
     to_checksum_address,
@@ -81,19 +92,14 @@ from eth_utils import (
     to_tuple,
     to_wei,
 )
+from eth_utils import apply_formatter_if as non_curried_apply_formatter_if
+from eth_utils import apply_formatter_to_array
+from eth_utils import apply_formatters_to_dict as non_curried_apply_formatters_to_dict
+from eth_utils import apply_formatters_to_sequence, apply_key_map
+from eth_utils import apply_one_of_formatters as non_curried_apply_one_of_formatters
+from eth_utils import hexstr_if_str as non_curried_hexstr_if_str
+from eth_utils import text_if_str as non_curried_text_if_str
 from eth_utils.toolz import curry
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generator,
-    Optional,
-    Sequence,
-    Tuple,
-    TypeVar,
-    Union,
-    overload,
-)
 
 TReturn = TypeVar("TReturn")
 TValue = TypeVar("TValue")

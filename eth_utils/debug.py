@@ -4,8 +4,8 @@ import sys
 
 
 def pip_freeze() -> str:
-    result = subprocess.run("pip freeze".split(), stdout=subprocess.PIPE)
-    return "pip freeze result:\n%s" % result.stdout.decode()
+    result = subprocess.run("python -m pip freeze".split(), stdout=subprocess.PIPE)
+    return "python -m pip freeze result:\n%s" % result.stdout.decode()
 
 
 def python_version() -> str:

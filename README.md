@@ -1,10 +1,10 @@
 # Ethereum Utilities
 
-[![Join the chat at https://gitter.im/ethereum/eth-utils](https://badges.gitter.im/ethereum/eth-utils.svg)](https://gitter.im/ethereum/eth-utils?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the conversation on Discord](https://img.shields.io/discord/809793915578089484?color=blue&label=chat&logo=discord&logoColor=white)](https://discord.gg/GHryRvPB84)
 [![Build Status](https://circleci.com/gh/ethereum/eth-utils.svg?style=shield)](https://circleci.com/gh/ethereum/eth-utils)
 [![PyPI version](https://badge.fury.io/py/eth-utils.svg)](https://badge.fury.io/py/eth-utils)
 [![Python versions](https://img.shields.io/pypi/pyversions/eth-utils.svg)](https://pypi.python.org/pypi/eth-utils)
-[![Docs build](https://readthedocs.org/projects/eth-utils/badge/?version=latest)](http://eth-utils.readthedocs.io/en/latest/?badge=latest)
+[![Docs build](https://readthedocs.org/projects/eth-utils/badge/?version=latest)](https://eth-utils.readthedocs.io/en/latest/?badge=latest)
    
 
 Common utility functions for python code that interacts with Ethereum
@@ -14,7 +14,7 @@ Read more in the [documentation on ReadTheDocs](https://eth-utils.readthedocs.io
 ## Quickstart
 
 ```sh
-pip install eth-utils
+python -m pip install eth-utils
 ```
 
 ## Developer Setup
@@ -37,35 +37,7 @@ git clone git@github.com:ethereum/eth-utils.git
 cd eth-utils
 virtualenv -p python3 venv
 . venv/bin/activate
-pip install -e .[dev]
-pip install -e eth-hash[pycryptodome]
-```
-
-### Testing Setup
-
-During development, you might like to have tests run on every file save.
-
-Show flake8 errors on file change:
-
-```sh
-# Test flake8
-when-changed -v -s -r -1 eth_utils/ tests/ -c "clear; flake8 eth_utils tests && echo 'flake8 success' || echo 'error'"
-```
-
-Run multi-process tests in one command, but without color:
-
-```sh
-# in the project root:
-pytest --numprocesses=4 --looponfail --maxfail=1
-# the same thing, succinctly:
-pytest -n 4 -f --maxfail=1
-```
-
-Run in one thread, with color and desktop notifications:
-
-```sh
-cd venv
-ptw --onfail "notify-send -t 5000 'Test failure ⚠⚠⚠⚠⚠' 'python 3 test on eth-utils failed'" ../tests ../eth_utils
+python -m pip install -e ".[dev]"
 ```
 
 ### Release setup

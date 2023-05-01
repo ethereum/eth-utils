@@ -3,13 +3,13 @@
 # Towncrier silently ignores files that do not match the expected ending.
 # We use this script to ensure we catch these as errors in CI.
 
-import os
 import pathlib
 import sys
 
 ALLOWED_EXTENSIONS = {
     ".breaking.rst",
     ".bugfix.rst",
+    ".deprecation.rst",
     ".doc.rst",
     ".feature.rst",
     ".internal.rst",
@@ -42,5 +42,5 @@ for fragment_file in THIS_DIR.iterdir():
         raise Exception(f"Unexpected file: {fragment_file}")
     else:
         raise RuntimeError(
-            "Strange: arguments {sys.argv} were validated, but not found"
+            f"Strange: arguments {sys.argv} were validated, but not found"
         )

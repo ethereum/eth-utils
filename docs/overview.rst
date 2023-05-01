@@ -19,7 +19,7 @@ Installation
 
 .. code:: sh
 
-   pip install eth-utils
+   python -m pip install eth-utils
 
 Development
 -----------
@@ -28,7 +28,7 @@ Clone the repository and then run:
 
 .. code:: sh
 
-   pip install -e .[dev] eth-hash[pycryptodome]
+   python -m pip install -e ".[dev]"
 
 Documentation
 -------------
@@ -37,7 +37,7 @@ Building Sphinx docs locally:
 
 .. code:: sh
    
-   pip install -e .[doc]
+   python -m pip install -e ".[doc]"
    cd docs
    make html
 
@@ -51,27 +51,12 @@ You can run the tests with:
 
 .. code:: sh
 
-   py.test tests
+   pytest tests
 
 Or you can install ``tox`` to run the full test suite.
 
 Releasing
 ~~~~~~~~~
-
-Pandoc is required for transforming the markdown README to the proper
-format to render correctly on pypi.
-
-For Debian-like systems:
-
-::
-
-   apt install pandoc
-
-Or on OSX:
-
-.. code:: sh
-
-   brew install pandoc
 
 To release a new version:
 
