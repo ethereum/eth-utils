@@ -1,28 +1,18 @@
 import contextlib
-import functools
 import logging
-from typing import Any, Callable, Dict, Iterator, Optional, Tuple, Type, TypeVar, cast
+import sys
+from typing import Any, Dict, Iterator, Tuple, Type, TypeVar, cast
 
 from .toolz import assoc
+
+if sys.version_info < (3, 8):
+    from cached_property import cached_property
+else:
+    from functools import cached_property
 
 DEBUG2_LEVEL_NUM = 8
 
 TLogger = TypeVar("TLogger", bound=logging.Logger)
-
-
-class cached_show_debug2_property:
-    def __init__(self, func: Callable[[TLogger], bool]):
-        # type ignored b/c arg1 expects Callable[..., Any]
-        functools.update_wrapper(self, func)  # type: ignore
-        self._func = func
-
-    def __get__(self, obj: Optional[TLogger], cls: Type[logging.Logger]) -> Any:
-        if obj is None:
-            return self
-
-        result = self._func(obj)
-        obj.__dict__[self._func.__name__] = result
-        return result
 
 
 class ExtendedDebugLogger(logging.Logger):
@@ -30,7 +20,7 @@ class ExtendedDebugLogger(logging.Logger):
     Logging class that can be used for lower level debug logging.
     """
 
-    @cached_show_debug2_property
+    @cached_property
     def show_debug2(self) -> bool:
         return self.isEnabledFor(DEBUG2_LEVEL_NUM)
 
@@ -44,8 +34,8 @@ class ExtendedDebugLogger(logging.Logger):
             self.__dict__["debug2"] = lambda message, *args, **kwargs: None
 
     def __reduce__(self) -> Tuple[Any, ...]:
-        # This is needed because our parent's implementation could cause us to become a regular
-        # Logger on unpickling.
+        # This is needed because our parent's implementation could
+        # cause us to become a regular Logger on unpickling.
         return get_extended_debug_logger, (self.name,)
 
 
@@ -79,8 +69,9 @@ def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
             # module does not *update* the cached instance in the event that
             # the global logging class changes.
             #
-            # types ignored b/c mypy doesn't identify presence of manager on logging.Logger
-            manager = logging.Logger.manager  # type: ignore
+            # types ignored b/c mypy doesn't identify presence of
+            # manager on logging.Logger
+            manager = logging.Logger.manager
             if name in manager.loggerDict:
                 if type(manager.loggerDict[name]) is not logger_class:
                     del manager.loggerDict[name]
@@ -109,7 +100,7 @@ class HasLoggerMeta(type):
         name: str,
         bases: Tuple[Type[Any]],
         namespace: Dict[str, Any],
-    ) -> type:
+    ) -> THasLoggerMeta:
         if "logger" in namespace:
             # If a logger was explicitly declared we shouldn't do anything to
             # replace it.

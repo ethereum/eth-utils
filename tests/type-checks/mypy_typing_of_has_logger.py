@@ -1,5 +1,5 @@
 import logging
-from typing import Generic, GenericMeta, TypeVar
+from typing import Generic, TypeVar
 
 from eth_utils import (
     ExtendedDebugLogger,
@@ -17,7 +17,7 @@ def verify_has_extended_debug_logger_type() -> ExtendedDebugLogger:
     return HasExtendedDebugLogger.logger
 
 
-GenericWithLoggerMeta = HasLoggerMeta.meta_compat(GenericMeta)
+GenericWithLoggerMeta = HasLoggerMeta.meta_compat(type)
 
 
 # mypy doesn't recognize this as a valid metaclass but it still functions

@@ -97,13 +97,15 @@ def to_bytes(
         return to_bytes(hexstr=to_hex(primitive))
     elif hexstr is not None:
         if len(hexstr) % 2:
-            # type check ignored here because casting an Optional arg to str is not possible
+            # type check ignored here because casting an
+            # Optional arg to str is not possible
             hexstr = "0x0" + remove_0x_prefix(hexstr)  # type: ignore
         return decode_hex(hexstr)
     elif text is not None:
         return text.encode("utf-8")
     raise TypeError(
-        "expected a bool, int, byte or bytearray in first arg, or keyword of hexstr or text"
+        "expected a bool, int, byte or bytearray in first arg, "
+        "or keyword of hexstr or text"
     )
 
 

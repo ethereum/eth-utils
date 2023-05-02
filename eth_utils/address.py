@@ -1,3 +1,4 @@
+import re
 from typing import Any, Union, cast
 
 from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
@@ -5,7 +6,6 @@ from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
 from .conversions import hexstr_if_str, to_hex
 from .crypto import keccak
 from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, remove_0x_prefix
-import re
 from .types import is_bytes, is_text
 
 _HEX_ADDRESS_REGEXP = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
@@ -61,7 +61,9 @@ def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
         return HexAddress(HexStr(hex_address))
     else:
         raise ValueError(
-            "Unknown format {}, attempted to normalize to {}".format(value, hex_address)
+            "Unknown format {!r}, attempted to normalize to {!r}".format(
+                value, hex_address
+            )
         )
 
 

@@ -23,7 +23,7 @@ def enhanced_has_keywords(func):
         return has_keywords(func)
 
 
-# heavily inspired by https://github.com/pytoolz/toolz/blob/20d8aefc0a5/toolz/tests/test_curried.py
+# heavily inspired by https://github.com/pytoolz/toolz/blob/20d8aefc0a5/toolz/tests/test_curried.py  # noqa: E501
 def test_curried_namespace():
     def should_curry(value):
         if not callable(value) or isinstance(value, curry) or isinstance(value, type):
