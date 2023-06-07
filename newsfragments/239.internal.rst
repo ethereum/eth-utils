@@ -1,1 +1,0 @@
-remove unused docs deps, bump version of remaining

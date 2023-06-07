@@ -5,6 +5,17 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.1.1 (2023-06-07)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add currency tests with float ether inputs. (`#231 <https://github.com/ethereum/eth-utils/issues/231>`__)
+- remove unused docs deps, bump version of remaining (`#239 <https://github.com/ethereum/eth-utils/issues/239>`__)
+- merge updates from the python project template (`#240 <https://github.com/ethereum/eth-utils/issues/240>`__)
+
+
 eth-utils v2.1.0 (2022-11-17)
 -----------------------------
 
