@@ -40,7 +40,7 @@ def from_wei(number: int, unit: Union[str, int]) -> Union[int, decimal.Decimal]:
     """
     Takes a number of wei and converts it to any other ether unit.
     """
-    if not is_integer(number) and unit.lower() not in units:
+    if is_string(number) and unit.lower() not in units:
         raise ValueError(
             "Unknown unit.  Must be one of {0}".format("/".join(units.keys()))
         )
@@ -68,7 +68,7 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: Union[str, int
     """
     Takes a number of a unit and converts it to wei.
     """
-    if not is_integer(number) and unit.lower() not in units:
+    if is_string(number) and unit.lower() not in units:
         raise ValueError(
             "Unknown unit.  Must be one of {0}".format("/".join(units.keys()))
         )
