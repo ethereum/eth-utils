@@ -36,7 +36,7 @@ MIN_WEI = 0
 MAX_WEI = 2**256 - 1
 
 
-def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
+def from_wei(number: int, unit: Union[str, int]) -> Union[int, decimal.Decimal]:
     """
     Takes a number of wei and converts it to any other ether unit.
     """
@@ -51,7 +51,10 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     if number < MIN_WEI or number > MAX_WEI:
         raise ValueError("value must be between 1 and 2**256 - 1")
 
-    unit_value = units[unit.lower()]
+    if is_integer(unit):
+        unit_value = decimal.Decimal(10) ** decimal.Decimal(unit)
+    else:
+        unit_value = units[unit.lower()]
 
     with localcontext() as ctx:
         ctx.prec = 999
@@ -61,7 +64,7 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     return result_value
 
 
-def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
+def to_wei(number: Union[int, float, str, decimal.Decimal], unit: Union[str, int]) -> int:
     """
     Takes a number of a unit and converts it to wei.
     """
@@ -80,7 +83,11 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
         raise TypeError("Unsupported type.  Must be one of integer, float, or string")
 
     s_number = str(number)
-    unit_value = units[unit.lower()]
+
+    if is_integer(unit):
+        unit_value = decimal.Decimal(10) ** decimal.Decimal(unit)
+    else:
+        unit_value = units[unit.lower()]
 
     if d_number == decimal.Decimal(0):
         return 0
