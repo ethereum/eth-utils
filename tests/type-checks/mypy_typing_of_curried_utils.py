@@ -37,6 +37,7 @@ from eth_utils.curried import (  # noqa: F401
     humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,
+    humanize_wei,
     import_string,
     int_to_big_endian,
     is_0x_prefixed,
