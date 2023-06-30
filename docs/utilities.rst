@@ -1383,6 +1383,21 @@ ellipsis, only showing the first and last four characters of the hash.
     'ipfs://QmTK..7r8u'
 
 
+``humanize_wei(int)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns a human-friendly form of units given an amount of wei.
+
+.. doctest::
+
+   >>> from eth_utils import humanize_wei
+   >>> humanize_wei(0)
+   '0 wei'
+   >>> humanize_wei(1000000000000000000000)
+   '1000 ether'
+   >>> humanize_wei(9876543)
+   '0.009876543 gwei'
+
 Logging Utils
 ~~~~~~~~~~~~~~
 
