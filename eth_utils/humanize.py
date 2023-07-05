@@ -3,6 +3,8 @@ from urllib import parse
 
 from eth_typing import URI, Hash32
 
+from eth_utils.currency import denoms, from_wei
+
 from .toolz import sliding_window, take
 
 
@@ -157,3 +159,15 @@ def humanize_integer_sequence(values_iter: Iterable[int]) -> str:
         return "(empty)"
     else:
         return "|".join(map(_humanize_range, _extract_integer_ranges(*values)))
+
+
+def humanize_wei(number: int) -> str:
+    if number >= denoms.finney:
+        unit = "ether"
+    elif number >= denoms.mwei:
+        unit = "gwei"
+    else:
+        unit = "wei"
+    amount = from_wei(number, unit)
+    x = f"{str(amount)} {unit}"
+    return x

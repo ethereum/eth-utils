@@ -46,6 +46,7 @@ from eth_utils import (
     humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,
+    humanize_wei,
     import_string,
     int_to_big_endian,
     is_0x_prefixed,
