@@ -1,1 +1,1 @@
-Added `humanize_wei`` utility to convert common values to more readable units.
+Added ``humanize_wei`` utility to convert common values to more readable units.

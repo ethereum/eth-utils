@@ -169,5 +169,5 @@ def humanize_wei(number: int) -> str:
     else:
         unit = "wei"
     amount = from_wei(number, unit)
-    x = "{amount} {unit}".format(amount=str(amount), unit=unit)
+    x = f"{str(amount)} {unit}"
     return x
