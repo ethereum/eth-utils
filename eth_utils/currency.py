@@ -56,7 +56,7 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
         return 0
 
     if number < MIN_WEI or number > MAX_WEI:
-        raise ValueError("value must be between 1 and 2**256 - 1")
+        raise ValueError("value must be between 0 and 2**256 - 1")
 
     unit_value = units[unit.lower()]
 
@@ -102,6 +102,6 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
         result_value = decimal.Decimal(value=d_number, context=ctx) * unit_value
 
     if result_value < MIN_WEI or result_value > MAX_WEI:
-        raise ValueError("Resulting wei value must be between 1 and 2**256 - 1")
+        raise ValueError("Resulting wei value must be between 0 and 2**256 - 1")
 
     return int(result_value)
