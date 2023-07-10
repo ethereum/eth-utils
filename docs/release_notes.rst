@@ -5,6 +5,15 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.2.0 (2023-07-10)
+-----------------------------
+
+Features
+~~~~~~~~
+
+- Added ``humanize_wei`` utility to convert common values to more readable units. (`#194 <https://github.com/ethereum/eth-utils/issues/194>`__)
+
+
 eth-utils v2.1.1 (2023-06-07)
 -----------------------------
 
