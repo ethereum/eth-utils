@@ -1,0 +1,1 @@
+Use ``importlib`` to replace ``pkg_resources`` (deprecated) in Python >= 3.8.
