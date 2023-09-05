@@ -27,7 +27,7 @@ common: &common
           python -m pip install tox
     - run:
         name: run tox
-        command: python -m tox run -r
+        command: python -W -m tox run -r
     - save_cache:
         paths:
           - .hypothesis
