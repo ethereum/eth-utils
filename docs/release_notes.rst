@@ -5,6 +5,15 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.2.1 (2023-09-13)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add ``build.os`` config for readthedocs (`#250 <https://github.com/ethereum/eth-utils/issues/250>`__)
+
+
 eth-utils v2.2.0 (2023-07-10)
 -----------------------------
 
