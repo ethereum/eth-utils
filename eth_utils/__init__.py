@@ -8,13 +8,13 @@ except ImportError:
         return get_distribution(package_name).version
 
 
-from .abi import (  # noqa: F401
+from .abi import (
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
 )
-from .address import (  # noqa: F401
+from .address import (
     is_address,
     is_binary_address,
     is_canonical_address,
@@ -27,7 +27,7 @@ from .address import (  # noqa: F401
     to_checksum_address,
     to_normalized_address,
 )
-from .applicators import (  # noqa: F401
+from .applicators import (
     apply_formatter_at_index,
     apply_formatter_if,
     apply_formatter_to_array,
@@ -37,20 +37,13 @@ from .applicators import (  # noqa: F401
     apply_one_of_formatters,
     combine_argument_formatters,
 )
-from .conversions import (  # noqa: F401
-    hexstr_if_str,
-    text_if_str,
-    to_bytes,
-    to_hex,
-    to_int,
-    to_text,
-)
-from .crypto import keccak  # noqa: F401
-from .currency import denoms, from_wei, to_wei  # noqa: F401
-from .decorators import combomethod, replace_exceptions  # noqa: F401
-from .encoding import big_endian_to_int, int_to_big_endian  # noqa: F401
-from .exceptions import ValidationError  # noqa: F401
-from .functional import (  # noqa: F401
+from .conversions import hexstr_if_str, text_if_str, to_bytes, to_hex, to_int, to_text
+from .crypto import keccak
+from .currency import denoms, from_wei, to_wei
+from .decorators import combomethod, replace_exceptions
+from .encoding import big_endian_to_int, int_to_big_endian
+from .exceptions import ValidationError
+from .functional import (
     apply_to_return_value,
     flatten_return,
     reversed_return,
@@ -61,7 +54,7 @@ from .functional import (  # noqa: F401
     to_set,
     to_tuple,
 )
-from .hexadecimal import (  # noqa: F401
+from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
     encode_hex,
@@ -70,7 +63,7 @@ from .hexadecimal import (  # noqa: F401
     is_hexstr,
     remove_0x_prefix,
 )
-from .humanize import (  # noqa: F401
+from .humanize import (
     humanize_bytes,
     humanize_hash,
     humanize_integer_sequence,
@@ -78,7 +71,7 @@ from .humanize import (  # noqa: F401
     humanize_seconds,
     humanize_wei,
 )
-from .logging import (  # noqa: F401
+from .logging import (
     DEBUG2_LEVEL_NUM,
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
@@ -89,9 +82,9 @@ from .logging import (  # noqa: F401
     get_logger,
     setup_DEBUG2_logging,
 )
-from .module_loading import import_string  # noqa: F401
-from .numeric import clamp  # noqa: F401
-from .types import (  # noqa: F401
+from .module_loading import import_string
+from .numeric import clamp
+from .types import (
     is_boolean,
     is_bytes,
     is_dict,

@@ -1,6 +1,6 @@
 import warnings
 
-from .misc import (  # noqa: F401
+from .misc import (
     Address,
     AnyAddress,
     ChecksumAddress,
