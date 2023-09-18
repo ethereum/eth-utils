@@ -41,13 +41,8 @@ body:
   - type: input
     id: lib-version
     attributes:
-<<<<<<< HEAD
       label: eth-utils Version
       description: Which version of eth-utils are you using?
-=======
-      label: <PYPI_NAME> Version
-      description: Which version of <PYPI_NAME> are you using?
->>>>>>> template
       placeholder: x.x.x
     validations:
       required: false
