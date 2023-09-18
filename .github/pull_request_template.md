@@ -10,7 +10,11 @@ Closes #
 
 - [ ] Add or update documentation related to these changes
 
+<<<<<<< HEAD
 - [ ] Add entry to the [release notes](https://github.com/ethereum/eth-utils/blob/master/newsfragments/README.md)
+=======
+- [ ] Add entry to the [release notes](https://github.com/ethereum/<REPO_NAME>/blob/main/newsfragments/README.md)
+>>>>>>> template
 
 #### Cute Animal Picture
 
