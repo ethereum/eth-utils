@@ -1,12 +1,7 @@
 Overview
 ==============
 
-Join the chat at
-`https://gitter.im/ethereum/eth-utils <https://gitter.im/ethereum/eth-utils>`__
-
-`Build Status <https://circleci.com/gh/ethereum/eth-utils>`__
-
-Common utility functions for codebases which interact with ethereum.
+`eth-utils` provides common utility functions for codebases which interact with ethereum.
 
 -  This library and repository was previously located at
    https://github.com/pipermerriam/ethereum-utils. It was transferred to

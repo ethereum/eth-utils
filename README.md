@@ -54,7 +54,7 @@ The version format for this repo is `{major}.{minor}.{patch}` for stable, and
 
 To issue the next version in line, specify which part to bump,
 like `make release bump=minor` or `make release bump=devnum`. This is typically done from the
-main branch, except when releasing a beta (in which case the beta is released from main,
+master branch, except when releasing a beta (in which case the beta is released from master,
 and the previous stable branch is released from said branch).
 
 If you are in a beta version, `make release bump=stage` will switch to a stable.
