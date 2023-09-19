@@ -32,7 +32,7 @@ Building Sphinx docs locally:
 
 .. code:: sh
    
-   python -m pip install -e ".[doc]"
+   python -m pip install -e ".[docs]"
    cd docs
    make html
 
