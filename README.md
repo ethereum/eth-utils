@@ -5,7 +5,6 @@
 [![PyPI version](https://badge.fury.io/py/eth-utils.svg)](https://badge.fury.io/py/eth-utils)
 [![Python versions](https://img.shields.io/pypi/pyversions/eth-utils.svg)](https://pypi.python.org/pypi/eth-utils)
 [![Docs build](https://readthedocs.org/projects/eth-utils/badge/?version=latest)](https://eth-utils.readthedocs.io/en/latest/?badge=latest)
-   
 
 Common utility functions for python code that interacts with Ethereum
 

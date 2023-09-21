@@ -21,7 +21,7 @@ extras_require = {
         "black>=23",
         "types-setuptools",
     ],
-    "doc": [
+    "docs": [
         "sphinx>=5.0.0",
         "sphinx_rtd_theme>=1.0.0",
         "towncrier>=21,<22",
@@ -42,7 +42,7 @@ extras_require["dev"] = (
     extras_require["dev"]
     + extras_require["test"]
     + extras_require["lint"]
-    + extras_require["doc"]
+    + extras_require["docs"]
 )
 
 
