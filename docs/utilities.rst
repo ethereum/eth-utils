@@ -1592,12 +1592,27 @@ the class.  It exposes two additional APIs.
   when working in conjunction with ``abc.ABC`` or ``typing.Generic``.
 
 
-``HasExtendedDebugLoggerMeta``
+``class HasExtendedDebugLoggerMeta``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This metaclass uses the `ExtendedDebugLogger` class, derived from
 `HasLoggerMeta.replace_logger_class(ExtendedDebugLogger)`.
 
+Module Loading
+^^^^^^^^^^^^^^
+
+``import_string(dotted_path)`` -> Any
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Import a variable/class name for a module given the `dotted_path` string.
+
+Raises an ImportError if the module could not be found.
+
+.. doctest::
+
+   >>> from eth_utils import import_string
+   >>> import_string("eth_utils.decorators.combomethod")
+   <class 'eth_utils.decorators.combomethod'>
 
 Numeric Utils
 ~~~~~~~~~~~~~
