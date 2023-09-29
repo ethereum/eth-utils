@@ -701,6 +701,40 @@ decoded as UTF-8.
    >>> to_text(text='cowmö')
    'cowmö'
 
+``text_if_str(to_type, text_or_primitive)`` -> bytes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Convert `text_or_primitive` with the provided `to_type` function. Assumes the input string or primitive will be unicode `text`.
+
+.. doctest::
+
+   >>> from eth_utils import text_if_str, to_bytes
+   >>> text_if_str(to_bytes, '0x000F')
+   b'\x00'
+   >>> text_if_str(to_hex, 0)
+   '0x0'
+   >>> text_if_str(to_int, 0)
+   0
+   >>> text_if_str(to_text, 0)
+   '\x00'
+
+``hexstr_if_str(to_type, text_or_primitive)`` -> bytes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Convert `text_or_primitive` with the provided `to_type` function. Assumes the input string or primitive will be `hexstr`.
+
+.. doctest::
+
+   >>> from eth_utils import hexstr_if_str, to_bytes
+   >>> hexstr_if_str(to_bytes, '0x000F')
+   b'\x00\x0f'
+   >>> hexstr_if_str(to_hex, '0x000F')
+   '0x000f'
+   >>> hexstr_if_str(to_int, '0x000F')
+   15
+   >>> hexstr_if_str(to_text, '0x000F')
+   '\x00\x0f'
+
 Crypto Utils
 ~~~~~~~~~~~~
 
