@@ -702,7 +702,7 @@ decoded as UTF-8.
    'cowmö'
 
 ``text_if_str(to_type, text_or_primitive)`` -> T
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Convert `text_or_primitive` with the provided `to_type` function. Assumes the input string or primitive will be unicode `text`.
 
@@ -721,7 +721,7 @@ Return type `T` is the same as the return type of the provided `to_type` functio
    '\x00'
 
 ``hexstr_if_str(to_type, text_or_primitive)`` -> T
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Convert `text_or_primitive` with the provided `to_type` function. Assumes the input string or primitive will be `hexstr`.
 
