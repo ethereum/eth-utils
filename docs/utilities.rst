@@ -1018,6 +1018,14 @@ Returns ``value`` converted to the big endian representation.
    >>> int_to_big_endian(256)
    b'\x01\x00'
 
+Exceptions
+^^^^^^^^^^
+
+``ValidationError``
+^^^^^^^^^^^^^^^^^^^
+
+An exception that is raised when something does not pass a validation check.
+
 Functional Utils
 ~~~~~~~~~~~~~~~~
 
@@ -1583,6 +1591,12 @@ the class.  It exposes two additional APIs.
   Returns a new metaclass that derives from both metaclasses.  This is useful
   when working in conjunction with ``abc.ABC`` or ``typing.Generic``.
 
+
+``HasExtendedDebugLoggerMeta``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This metaclass uses the `ExtendedDebugLogger` class, derived from
+`HasLoggerMeta.replace_logger_class(ExtendedDebugLogger)`.
 
 
 Numeric Utils
