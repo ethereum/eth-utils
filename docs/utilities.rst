@@ -962,6 +962,28 @@ As usual, instances create their own copy on assignment.
    classmethod call
    1
 
+``@replace_exceptions``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Replaces `Old` exceptions in a method with `New` exceptions.
+Accepts a Dict, with `Old` exceptions pointing to 
+`New` exceptions.
+
+.. doctest::
+
+   >>> from eth_utils import replace_exceptions
+
+   >>> class Storage:
+   ...    val = 1
+   ...
+   ...    @replace_exceptions({TypeError: AttributeError})
+   ...    def thing(x=True):
+   ...      if x:
+   ...         raise TypeError
+   ...
+
+Calling `thing()` will raise an `AttributeError`
+
 Encoding Utils
 ~~~~~~~~~~~~~~
 
