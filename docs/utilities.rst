@@ -701,15 +701,17 @@ decoded as UTF-8.
    >>> to_text(text='cowmö')
    'cowmö'
 
-``text_if_str(to_type, text_or_primitive)`` -> bytes
+``text_if_str(to_type, text_or_primitive)`` -> T
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Convert `text_or_primitive` with the provided `to_type` function. Assumes the input string or primitive will be unicode `text`.
 
+Return type `T` is the same as the return type of the provided `to_type` function.
+
 .. doctest::
 
    >>> from eth_utils import text_if_str, to_bytes
-   >>> text_if_str(to_bytes, '0x000F')
+   >>> text_if_str(to_bytes, 0)
    b'\x00'
    >>> text_if_str(to_hex, 0)
    '0x0'
@@ -718,10 +720,12 @@ Convert `text_or_primitive` with the provided `to_type` function. Assumes the in
    >>> text_if_str(to_text, 0)
    '\x00'
 
-``hexstr_if_str(to_type, text_or_primitive)`` -> bytes
+``hexstr_if_str(to_type, text_or_primitive)`` -> T
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Convert `text_or_primitive` with the provided `to_type` function. Assumes the input string or primitive will be `hexstr`.
+
+Return type `T` is the same as the return type of the provided `to_type` function.
 
 .. doctest::
 
@@ -1019,7 +1023,7 @@ Returns ``value`` converted to the big endian representation.
    b'\x01\x00'
 
 Exceptions
-^^^^^^^^^^
+~~~~~~~~~~
 
 ``ValidationError``
 ^^^^^^^^^^^^^^^^^^^
@@ -1599,7 +1603,7 @@ This metaclass uses the `ExtendedDebugLogger` class, derived from
 `HasLoggerMeta.replace_logger_class(ExtendedDebugLogger)`.
 
 Module Loading
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 ``import_string(dotted_path)`` -> Any
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
