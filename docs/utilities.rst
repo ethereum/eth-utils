@@ -978,13 +978,16 @@ Accepts a Dict, with `Old` exceptions pointing to
    >>> from eth_utils import replace_exceptions
 
    >>> class Storage:
-   ...    val = 1
+   ...     @replace_exceptions({TypeError: AttributeError})
+   ...     def thing(self):
+   ...         if True:
+   ...             raise TypeError
    ...
-   ...    @replace_exceptions({TypeError: AttributeError})
-   ...    def thing(x=True):
-   ...      if x:
-   ...         raise TypeError
-   ...
+   >>> s = Storage()
+   >>> s.thing()
+   Traceback (most recent call last):
+      ...
+   AttributeError
 
 Calling `thing()` will raise an `AttributeError`
 
