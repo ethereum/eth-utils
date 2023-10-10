@@ -83,6 +83,12 @@ from .logging import (
     setup_DEBUG2_logging,
 )
 from .module_loading import import_string
+from .network import (
+    name_from_chain_id,
+    short_name_from_chain_id,
+    Network,
+    network_from_chain_id
+)
 from .numeric import clamp
 from .types import (
     is_boolean,
