@@ -5,6 +5,27 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.2.2 (2023-10-11)
+-----------------------------
+
+Improved Documentation
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Add information to docs for utilities which did not have any. (`#254 <https://github.com/ethereum/eth-utils/issues/254>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Pull latest from template repo to fix release script, update wording in comments and docs. (`#252 <https://github.com/ethereum/eth-utils/issues/252>`__)
+
+
+Miscellaneous Changes
+~~~~~~~~~~~~~~~~~~~~~
+
+- `#242 <https://github.com/ethereum/eth-utils/issues/242>`__
+
+
 eth-utils v2.2.1 (2023-09-13)
 -----------------------------
 

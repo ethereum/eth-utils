@@ -1,1 +1,0 @@
-Pull latest from template repo to fix release script, update wording in comments and docs.
