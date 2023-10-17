@@ -19,6 +19,7 @@ extras_require = {
         "mypy==0.971",  # mypy does not follow semver, leave it pinned.
         "pydocstyle>=5.0.0",
         "black>=23",
+        "types-requests>=2.26.1",
         "types-setuptools",
     ],
     "docs": [
@@ -69,6 +70,7 @@ setup(
         "eth-typing>=3.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",
         "cytoolz>=0.10.1;implementation_name=='cpython'",
+        "requests>=2.16.0",
     ],
     python_requires=">=3.7,<4",
     extras_require=extras_require,

@@ -1619,6 +1619,57 @@ Raises an ImportError if the module could not be found.
     >>> import_string("eth_utils.decorators.combomethod")
     <class 'eth_utils.decorators.combomethod'>
 
+Networks
+~~~~~~~~
+
+The :class:`~eth-utils.Networks` class provides methods to obtain network names and 
+other metadata given a ``chain_id``.
+
+``network_from_chain_id(chain_id)`` -> Network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the ``Network`` for the given ``chain_id`` int value.
+
+.. doctest::
+
+    >>> from eth_utils import network
+    >>> network.network_from_chain_id(1)
+    Network(chain_id=1, name='Ethereum Mainnet', shortName='eth', symbol=<ChainId.ETH: 1>)
+    >>> network.network_from_chain_id(2)
+    Network(chain_id=2, name='Expanse Network', shortName='exp', symbol=<ChainId.EXP: 2>)
+    >>> network.network_from_chain_id(100)
+    Network(chain_id=100, name='Gnosis', shortName='gno', symbol=<ChainId.GNO: 100>)
+
+``name_from_chain_id(chain_id)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the ``name`` of the ``Network`` with the given ``chain_id`` int value.
+
+.. doctest::
+
+    >>> from eth_utils import network
+    >>> network.name_from_chain_id(1)
+    'Ethereum Mainnet'
+    >>> network.name_from_chain_id(2)
+    'Expanse Network'
+    >>> network.name_from_chain_id(100)
+    'Gnosis'
+
+``short_name_from_chain_id(chain_id)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the ``short_name`` of the ``Network`` with the given ``chain_id`` int value.
+
+.. doctest::
+
+    >>> from eth_utils import network
+    >>> network.short_name_from_chain_id(1)
+    'eth'
+    >>> network.short_name_from_chain_id(2)
+    'exp'
+    >>> network.short_name_from_chain_id(100)
+    'gno'
+
 Numeric Utils
 ~~~~~~~~~~~~~
 

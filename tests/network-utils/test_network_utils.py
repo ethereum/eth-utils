@@ -1,12 +1,12 @@
-import pytest
 from eth_typing import ChainId
+import pytest
 
 from eth_utils import (
-    short_name_from_chain_id,
+    Network,
     ValidationError,
     name_from_chain_id,
-    Network,
-    network_from_chain_id
+    network_from_chain_id,
+    short_name_from_chain_id,
 )
 
 
@@ -20,7 +20,7 @@ from eth_utils import (
         (214, None),
     ],
 )
-def test_network_from_chain_id(chain_id, expected_name):
+def test_network_name_from_chain_id(chain_id, expected_name):
     if expected_name is not None:
         result = name_from_chain_id(chain_id)
         assert result == expected_name
@@ -59,7 +59,7 @@ def test_short_name_from_chain_id(chain_id, expected_short_name):
         (2, Network(2, "Expanse Network", "exp", ChainId.EXP)),
         (42, Network(42, "LUKSO Mainnet", "lukso", ChainId.LUKSO)),
         (43, Network(43, "Darwinia Pangolin Testnet", "pangolin", ChainId.PANGOLIN)),
-    ]
+    ],
 )
 def test_network_from_chain_id(chain_id, expected_network):
     if expected_network is not None:
