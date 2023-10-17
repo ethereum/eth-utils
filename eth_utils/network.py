@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 import json
-from typing import Any
-import urllib.request
 import warnings
 
 from eth_typing import ChainId
@@ -17,20 +15,13 @@ class Network:
     symbol: ChainId
 
 
-def load_networks_from_url(
-    url: str = "https://chainid.network/chains_mini.json",
-) -> Any:
-    with urllib.request.urlopen("https://chainid.network/chains_mini.json") as response:
-        data = json.load(response)
-
-        if data.status == 200:
-            return data
-        else:
-            raise Exception(f"Failed to fetch data from {url}")
-
-
-def initialize_network_objects(network_data: Any) -> list[Network]:
+def initialize_network_objects() -> list[Network]:
     networks_obj = []
+
+    networks_file = "./eth_utils/__json/eth_networks.json"
+    with open(networks_file, "r") as open_file:
+        network_data = json.load(open_file)
+
     for entry in network_data:
         try:
             network = Network(
@@ -51,7 +42,7 @@ def initialize_network_objects(network_data: Any) -> list[Network]:
     return networks_obj
 
 
-networks = initialize_network_objects(load_networks_from_url())
+networks = initialize_network_objects()
 
 networks_by_id = {network.chain_id: network for network in networks}
 network_names_by_id = {network.chain_id: network.name for network in networks}
