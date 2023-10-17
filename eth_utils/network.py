@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import json
+from typing import List
 import warnings
 
 from eth_typing import ChainId
@@ -15,7 +16,7 @@ class Network:
     symbol: ChainId
 
 
-def initialize_network_objects() -> list[Network]:
+def initialize_network_objects() -> List[Network]:
     networks_obj = []
 
     networks_file = "./eth_utils/__json/eth_networks.json"
