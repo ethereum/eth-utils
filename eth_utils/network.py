@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import json
 from typing import Any
 import urllib.request
+import warnings
 
 from eth_typing import ChainId
 
@@ -41,6 +42,11 @@ def initialize_network_objects(network_data: Any) -> list[Network]:
             networks_obj.append(network)
         except ValueError:
             # Entry does not have a valid ChainId constant in eth-typing
+            warnings.warn(
+                f"Network {entry['chainId']} with name '{entry['name']}' does not have "
+                f"a valid ChainId. eth-typing should be updated with the latest "
+                f"networks."
+            )
             pass
     return networks_obj
 
