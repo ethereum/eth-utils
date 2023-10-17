@@ -1,8 +1,9 @@
 from dataclasses import dataclass
+import json
 from typing import Any
+import urllib.request
 
 from eth_typing import ChainId
-import requests
 
 from eth_utils import ValidationError
 
@@ -18,12 +19,13 @@ class Network:
 def load_networks_from_url(
     url: str = "https://chainid.network/chains_mini.json",
 ) -> Any:
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return data
-    else:
-        raise Exception(f"Failed to fetch data from {url}")
+    with urllib.request.urlopen("https://chainid.network/chains_mini.json") as response:
+        data = json.load(response)
+
+        if data.status == 200:
+            return data
+        else:
+            raise Exception(f"Failed to fetch data from {url}")
 
 
 def initialize_network_objects(network_data: Any) -> list[Network]:
