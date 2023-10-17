@@ -48,7 +48,7 @@ def test_short_name_from_chain_id(chain_id, expected_short_name):
     else:
         with pytest.raises(ValidationError) as ex:
             short_name_from_chain_id(chain_id)
-        assert "Chain_id is not recognized" in str(ex.value)
+        assert "chain_id is not recognized" in str(ex.value)
 
 
 @pytest.mark.parametrize(
@@ -69,4 +69,4 @@ def test_network_from_chain_id(chain_id, expected_network):
     else:
         with pytest.raises(ValidationError) as ex:
             network_from_chain_id(chain_id)
-        assert "Chain_id is not recognized" in str(ex.value)
+        assert "chain_id is not recognized" in str(ex.value)

@@ -62,18 +62,18 @@ def network_from_chain_id(chain_id: int) -> Network:
     try:
         return networks_by_id[chain_id]
     except KeyError:
-        raise ValidationError(f"Chain_id is not recognized: {chain_id}")
+        raise ValidationError(f"chain_id is not recognized: {chain_id}")
 
 
 def name_from_chain_id(chain_id: int) -> str:
     try:
         return network_names_by_id[chain_id]
     except KeyError:
-        raise ValidationError(f"Chain_id is not recognized: {chain_id}")
+        raise ValidationError(f"chain_id is not recognized: {chain_id}")
 
 
 def short_name_from_chain_id(chain_id: int) -> str:
     try:
         return network_short_names_by_id[chain_id]
     except KeyError:
-        raise ValidationError(f"Chain_id is not recognized: {chain_id}")
+        raise ValidationError(f"chain_id is not recognized: {chain_id}")
