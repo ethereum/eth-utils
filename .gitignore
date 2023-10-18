@@ -45,10 +45,10 @@ output/*/index.html
 # Sphinx
 docs/_build
 docs/modules.rst
+docs/update_networks.rst
 docs/*.internal.rst
 docs/*.utils.rst
 docs/*._utils.*
-docs/update_networks.rst
 
 # Blockchain
 chains
