@@ -19,7 +19,7 @@ class Network:
 def initialize_network_objects() -> List[Network]:
     networks_obj = []
 
-    networks_file = "./eth_utils/__json/eth_networks.json"
+    networks_file = "__json/eth_networks.json"
     with open(networks_file, "r") as open_file:
         network_data = json.load(open_file)
 

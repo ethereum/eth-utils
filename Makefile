@@ -37,7 +37,7 @@ test:
 	pytest tests
 
 build-docs:
-	sphinx-apidoc -o docs/ . setup.py "*conftest*"
+	sphinx-apidoc -o docs/ . setup.py "*conftest*" "*update_networks.py"
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(MAKE) -C docs doctest
