@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import json
+import os
 from typing import List
 import warnings
 
@@ -19,8 +20,10 @@ class Network:
 def initialize_network_objects() -> List[Network]:
     networks_obj = []
 
-    networks_file = "__json/eth_networks.json"
-    with open(networks_file, "r") as open_file:
+    networks_json_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "__json")
+    )
+    with open(os.path.join(networks_json_path, "eth_networks.json"), "r") as open_file:
         network_data = json.load(open_file)
 
     for entry in network_data:
