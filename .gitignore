@@ -48,6 +48,7 @@ docs/modules.rst
 docs/*.internal.rst
 docs/*.utils.rst
 docs/*._utils.*
+docs/update_networks.rst
 
 # Blockchain
 chains
