@@ -1,0 +1,1 @@
+Add ``Network`` utility methods to utilize network metadata for a given ``ChainId``.

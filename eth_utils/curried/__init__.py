@@ -18,6 +18,7 @@ from eth_utils import (
     HasExtendedDebugLoggerMeta,
     HasLogger,
     HasLoggerMeta,
+    Network,
     ValidationError,
     add_0x_prefix,
     apply_formatter_at_index,
@@ -72,10 +73,13 @@ from eth_utils import (
     is_text,
     is_tuple,
     keccak,
+    name_from_chain_id,
+    network_from_chain_id,
     remove_0x_prefix,
     replace_exceptions,
     reversed_return,
     setup_DEBUG2_logging,
+    short_name_from_chain_id,
     sort_return,
 )
 from eth_utils import (
