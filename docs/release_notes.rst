@@ -5,6 +5,15 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.3.0 (2023-10-20)
+-----------------------------
+
+Features
+~~~~~~~~
+
+- Add ``Network`` utility methods to utilize network metadata for a given ``ChainId``. (`#253 <https://github.com/ethereum/eth-utils/issues/253>`__)
+
+
 eth-utils v2.2.2 (2023-10-11)
 -----------------------------
 
