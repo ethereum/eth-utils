@@ -1,0 +1,1 @@
+Some users were experiencing encoding issues when parsing the networks json. Use UTF-8 explicitly.
