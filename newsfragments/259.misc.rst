@@ -1,0 +1,1 @@
+Update networks to latest state by running ``update_networks.py``.
