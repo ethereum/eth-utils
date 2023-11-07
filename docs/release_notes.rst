@@ -17,7 +17,7 @@ Bugfixes
 Internal Changes - for eth-utils Contributors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Fix and add new test cases for invalid Network ``chain_id``s. (`#256 <https://github.com/ethereum/eth-utils/issues/256>`__)
+- Fix and add new test cases for invalid Network ``chain_id`` values. (`#256 <https://github.com/ethereum/eth-utils/issues/256>`__)
 
 
 Miscellaneous Changes
