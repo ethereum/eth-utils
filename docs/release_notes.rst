@@ -5,6 +5,27 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.3.1 (2023-11-07)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Some users were experiencing encoding issues when parsing the networks json. Use UTF-8 explicitly. (`#259 <https://github.com/ethereum/eth-utils/issues/259>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Fix and add new test cases for invalid Network ``chain_id``s. (`#256 <https://github.com/ethereum/eth-utils/issues/256>`__)
+
+
+Miscellaneous Changes
+~~~~~~~~~~~~~~~~~~~~~
+
+- `#259 <https://github.com/ethereum/eth-utils/issues/259>`__
+
+
 eth-utils v2.3.0 (2023-10-20)
 -----------------------------
 
