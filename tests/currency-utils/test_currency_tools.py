@@ -119,6 +119,19 @@ def test_float_ether(value):
 @pytest.mark.parametrize(
     "value",
     [
+        1,  # 1000000 wei
+        0.1,  # 100000 wei
+        0.01,  # 10000 wei
+        0.001,  # 1000 wei
+    ],
+)
+def test_float_usdt(value):
+    assert from_wei(to_wei(value, 6), 6) == decimal.Decimal(str(value))
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
         0.0000000000000000001,  # 0.1 wei
         0.00000000000000000001,  # 0.01 wei
         0.000000000000000000001,  # 0.001 wei
