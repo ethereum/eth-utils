@@ -47,8 +47,8 @@ def _abi_to_signature(abi: Dict[str, Any]) -> str:
     return function_signature
 
 
-def function_signature_to_4byte_selector(event_signature: str) -> bytes:
-    return keccak(text=event_signature.replace(" ", ""))[:4]
+def function_signature_to_4byte_selector(function_signature: str) -> bytes:
+    return keccak(text=function_signature.replace(" ", ""))[:4]
 
 
 def function_abi_to_4byte_selector(function_abi: Dict[str, Any]) -> bytes:
