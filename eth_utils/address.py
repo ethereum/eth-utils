@@ -125,7 +125,7 @@ def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
     if not is_address(left) or not is_address(right):
         raise ValueError("Both values must be valid addresses")
     else:
-        return to_normalized_address(left) == to_normalized_address(right)
+        return bool(to_normalized_address(left) == to_normalized_address(right))
 
 
 def to_checksum_address(value: Union[AnyAddress, str, bytes]) -> ChecksumAddress:

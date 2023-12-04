@@ -4,6 +4,7 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Optional,
     Type,
     TypeVar,
 )
@@ -19,7 +20,9 @@ class combomethod(object):
     def __init__(self, method: Callable[..., Any]) -> None:
         self.method = method
 
-    def __get__(self, obj: T = None, objtype: Type[T] = None) -> Callable[..., Any]:
+    def __get__(
+        self, obj: Optional[T] = None, objtype: Optional[Type[T]] = None
+    ) -> Callable[..., Any]:
         @functools.wraps(self.method)
         def _wrapper(*args: Any, **kwargs: Any) -> Any:
             if obj is not None:
@@ -93,7 +96,7 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
     def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
-        def wrapper(*args: Any, **kwargs: Any) -> T:
+        def wrapper(*args: Any, **kwargs: Any) -> T:  # type: ignore
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)  # type: ignore

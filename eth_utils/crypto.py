@@ -1,4 +1,5 @@
 from typing import (
+    Optional,
     Union,
 )
 
@@ -12,6 +13,8 @@ from .conversions import (
 
 
 def keccak(
-    primitive: Union[bytes, int, bool] = None, hexstr: str = None, text: str = None
+    primitive: Optional[Union[bytes, int, bool]] = None,
+    hexstr: Optional[str] = None,
+    text: Optional[str] = None,
 ) -> bytes:
-    return keccak_256(to_bytes(primitive, hexstr, text))
+    return bytes(keccak_256(to_bytes(primitive, hexstr, text)))

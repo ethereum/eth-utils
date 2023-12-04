@@ -1,6 +1,8 @@
 import contextlib
+from functools import (
+    cached_property,
+)
 import logging
-import sys
 from typing import (
     Any,
     Dict,
@@ -8,21 +10,13 @@ from typing import (
     Tuple,
     Type,
     TypeVar,
+    Union,
     cast,
 )
 
 from .toolz import (
     assoc,
 )
-
-if sys.version_info < (3, 8):
-    from cached_property import (
-        cached_property,
-    )
-else:
-    from functools import (
-        cached_property,
-    )
 
 DEBUG2_LEVEL_NUM = 8
 
@@ -59,7 +53,7 @@ def setup_DEBUG2_logging() -> None:
     """
     if not hasattr(logging, "DEBUG2"):
         logging.addLevelName(DEBUG2_LEVEL_NUM, "DEBUG2")
-        logging.DEBUG2 = DEBUG2_LEVEL_NUM
+        logging.DEBUG2 = DEBUG2_LEVEL_NUM  # type: ignore
 
 
 @contextlib.contextmanager
@@ -72,7 +66,7 @@ def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
         logging.setLoggerClass(original_logger_class)
 
 
-def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
+def get_logger(name: str, logger_class: Union[Type[TLogger], None] = None) -> TLogger:
     if logger_class is None:
         return cast(TLogger, logging.getLogger(name))
     else:

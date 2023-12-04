@@ -23,6 +23,7 @@ extras_require = {
     ],
     "test": [
         "hypothesis>=4.43.0",
+        "mypy==1.5.1",
         "pytest>=7.0.0",
         "pytest-xdist>=2.4.0",
     ],
