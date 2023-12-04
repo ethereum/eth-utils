@@ -2,11 +2,19 @@
 
 import binascii
 import re
-from typing import Any, AnyStr
+from typing import (
+    Any,
+    AnyStr,
+)
 
-from eth_typing import HexStr
+from eth_typing import (
+    HexStr,
+)
 
-from .types import is_string, is_text
+from .types import (
+    is_string,
+    is_text,
+)
 
 _HEX_REGEXP = re.compile("(0[xX])?[0-9a-fA-F]*")
 

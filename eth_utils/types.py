@@ -1,6 +1,8 @@
 import collections.abc
 import numbers
-from typing import Any
+from typing import (
+    Any,
+)
 
 bytes_types = (bytes, bytearray)
 integer_types = (int,)

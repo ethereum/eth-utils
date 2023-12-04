@@ -1,12 +1,20 @@
-from dataclasses import dataclass
+from dataclasses import (
+    dataclass,
+)
 import json
 import os
-from typing import List
+from typing import (
+    List,
+)
 import warnings
 
-from eth_typing import ChainId
+from eth_typing import (
+    ChainId,
+)
 
-from eth_utils import ValidationError
+from eth_utils import (
+    ValidationError,
+)
 
 
 @dataclass
@@ -44,9 +52,10 @@ def initialize_network_objects() -> List[Network]:
             warnings.warn(
                 f"Network {entry['chainId']} with name '{entry['name']}' does not have "
                 f"a valid ChainId. eth-typing should be updated with the latest "
-                f"networks."
+                f"networks.",
+                stacklevel=2,
             )
-            pass
+
     return networks_obj
 
 

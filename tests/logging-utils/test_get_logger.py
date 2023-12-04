@@ -2,7 +2,11 @@ import logging
 import pickle
 import uuid
 
-from eth_utils.logging import ExtendedDebugLogger, get_extended_debug_logger, get_logger
+from eth_utils.logging import (
+    ExtendedDebugLogger,
+    get_extended_debug_logger,
+    get_logger,
+)
 
 
 class CustomLogger(logging.Logger):

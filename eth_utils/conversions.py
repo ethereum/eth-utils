@@ -1,9 +1,21 @@
-from typing import Callable, TypeVar, Union
+from typing import (
+    Callable,
+    TypeVar,
+    Union,
+)
 
-from eth_typing import HexStr, Primitives
+from eth_typing import (
+    HexStr,
+    Primitives,
+)
 
-from .decorators import validate_conversion_arguments
-from .encoding import big_endian_to_int, int_to_big_endian
+from .decorators import (
+    validate_conversion_arguments,
+)
+from .encoding import (
+    big_endian_to_int,
+    int_to_big_endian,
+)
 from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
@@ -11,7 +23,11 @@ from .hexadecimal import (
     is_hexstr,
     remove_0x_prefix,
 )
-from .types import is_boolean, is_integer, is_string
+from .types import (
+    is_boolean,
+    is_integer,
+    is_string,
+)
 
 T = TypeVar("T")
 

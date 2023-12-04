@@ -3,8 +3,12 @@ import uuid
 
 import pytest
 
-from eth_utils import ExtendedDebugLogger
-from eth_utils.logging import DEBUG2_LEVEL_NUM
+from eth_utils import (
+    ExtendedDebugLogger,
+)
+from eth_utils.logging import (
+    DEBUG2_LEVEL_NUM,
+)
 
 
 @pytest.fixture

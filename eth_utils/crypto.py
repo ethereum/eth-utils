@@ -1,8 +1,14 @@
-from typing import Union
+from typing import (
+    Union,
+)
 
-from eth_hash.auto import keccak as keccak_256
+from eth_hash.auto import (
+    keccak as keccak_256,
+)
 
-from .conversions import to_bytes
+from .conversions import (
+    to_bytes,
+)
 
 
 def keccak(

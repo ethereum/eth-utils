@@ -1,6 +1,8 @@
 import pytest
 
-from eth_utils import combomethod
+from eth_utils import (
+    combomethod,
+)
 
 
 @pytest.fixture()

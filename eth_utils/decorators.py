@@ -1,8 +1,16 @@
 import functools
 import itertools
-from typing import Any, Callable, Dict, Type, TypeVar
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Type,
+    TypeVar,
+)
 
-from .types import is_text
+from .types import (
+    is_text,
+)
 
 T = TypeVar("T")
 

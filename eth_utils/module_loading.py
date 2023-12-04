@@ -1,5 +1,9 @@
-from importlib import import_module
-from typing import Any
+from importlib import (
+    import_module,
+)
+from typing import (
+    Any,
+)
 
 
 def import_string(dotted_path: str) -> Any:

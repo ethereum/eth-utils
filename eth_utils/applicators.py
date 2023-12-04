@@ -1,9 +1,23 @@
-from typing import Any, Callable, Dict, Generator, List, Tuple
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    List,
+    Tuple,
+)
 import warnings
 
-from .decorators import return_arg_type
-from .functional import to_dict
-from .toolz import compose, curry
+from .decorators import (
+    return_arg_type,
+)
+from .functional import (
+    to_dict,
+)
+from .toolz import (
+    compose,
+    curry,
+)
 
 Formatters = Callable[[List[Any]], List[Any]]
 
@@ -32,7 +46,8 @@ def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Format
             "release of the eth-utils library. Update your calls to use "
             "apply_formatters_to_sequence([formatter1, formatter2], [item1, item2]) "
             "instead."
-        )
+        ),
+        stacklevel=2,
     )
 
     _formatter_at_index = curry(apply_formatter_at_index)

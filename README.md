@@ -46,8 +46,8 @@ pre-commit install
 
 ### Update Networks
 
-The list of networks resides in the JSON file under eth_utils/__json/eth_networks.json.
-This file is used to initialize Networks, which can be used to obtain network 
+The list of networks resides in the JSON file under eth_utils/\_\_json/eth_networks.json.
+This file is used to initialize Networks, which can be used to obtain network
 information with a chain ID.
 
 Run the script to update the JSON file with the response from the remote list.
@@ -58,7 +58,8 @@ python update_networks.py
 
 If there are new networks they will appear in the JSON file. After checking the updates,
 open a PR to make them available in a new release.
-```
+
+````
 
 ### Release setup
 
@@ -66,7 +67,7 @@ To release a new version:
 
 ```sh
 make release bump=$$VERSION_PART_TO_BUMP$$
-```
+````
 
 #### How to bumpversion
 

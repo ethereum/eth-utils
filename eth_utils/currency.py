@@ -1,9 +1,18 @@
 import decimal
-from decimal import localcontext
-from typing import Union
+from decimal import (
+    localcontext,
+)
+from typing import (
+    Union,
+)
 
-from .types import is_integer, is_string
-from .units import units
+from .types import (
+    is_integer,
+    is_string,
+)
+from .units import (
+    units,
+)
 
 
 class denoms:

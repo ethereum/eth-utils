@@ -1,11 +1,28 @@
-from typing import Any, Iterable, Iterator, Tuple, Union
-from urllib import parse
+from typing import (
+    Any,
+    Iterable,
+    Iterator,
+    Tuple,
+    Union,
+)
+from urllib import (
+    parse,
+)
 
-from eth_typing import URI, Hash32
+from eth_typing import (
+    URI,
+    Hash32,
+)
 
-from eth_utils.currency import denoms, from_wei
+from eth_utils.currency import (
+    denoms,
+    from_wei,
+)
 
-from .toolz import sliding_window, take
+from .toolz import (
+    sliding_window,
+    take,
+)
 
 
 def humanize_seconds(seconds: Union[float, int]) -> str:

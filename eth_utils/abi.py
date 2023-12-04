@@ -1,6 +1,11 @@
-from typing import Any, Dict
+from typing import (
+    Any,
+    Dict,
+)
 
-from .crypto import keccak
+from .crypto import (
+    keccak,
+)
 
 
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:

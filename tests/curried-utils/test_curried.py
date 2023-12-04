@@ -1,6 +1,15 @@
 try:
-    from cytoolz import curry, keyfilter, merge_with, valfilter
-    from cytoolz.functoolz import Compose, has_keywords, num_required_args
+    from cytoolz import (
+        curry,
+        keyfilter,
+        merge_with,
+        valfilter,
+    )
+    from cytoolz.functoolz import (
+        Compose,
+        has_keywords,
+        num_required_args,
+    )
 except ImportError:
     from toolz import curry, keyfilter, merge_with, valfilter
     from toolz.functoolz import Compose, has_keywords, num_required_args

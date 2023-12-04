@@ -839,11 +839,11 @@ ether. Available denominations are:
 +--------------+---------------------------------+
 | micro        | 1000000000000                   |
 +--------------+---------------------------------+
-| finney       | 1000000000000000                | 
+| finney       | 1000000000000000                |
 +--------------+---------------------------------+
-| milliether   | 1000000000000000                | 
+| milliether   | 1000000000000000                |
 +--------------+---------------------------------+
-| milli        | 1000000000000000                | 
+| milli        | 1000000000000000                |
 +--------------+---------------------------------+
 | ether        | 1000000000000000000             |
 +--------------+---------------------------------+
@@ -970,7 +970,7 @@ As usual, instances create their own copy on assignment.
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Replaces `Old` exceptions in a method with `New` exceptions.
-Accepts a Dict, with `Old` exceptions pointing to 
+Accepts a Dict, with `Old` exceptions pointing to
 `New` exceptions.
 
 .. doctest::
@@ -1190,8 +1190,8 @@ set.
     ...     yield 'a'  # duplicate
     ...     yield 'c'
     ...
-    >>> build_thing() == {'c', 'b', 'a'} 
-    True 
+    >>> build_thing() == {'c', 'b', 'a'}
+    True
 
 ``apply_to_return_value(callable)`` => decorator_fn
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1525,7 +1525,7 @@ available on the attribute ``logger``
 The ``name`` of the logger instance is derived from the ``__qualname__`` for
 the class.
 
-.. warning:: 
+.. warning::
 
      This class will not behave nicely with the standard library
      ``typing.Generic``.  If you need to create a ``Generic`` class then you'll
@@ -1536,9 +1536,9 @@ the class.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A subclass of ``logging.Logger`` which exposes a ``debug2`` function which can
-be used to log a message at the ``DEBUG2`` log level.  
+be used to log a message at the ``DEBUG2`` log level.
 
-.. note:: 
+.. note::
 
      This class works fine on its own but will produce cleaner logs if you make
      sure to call ``eth_utils.setup_DEBUG2_logging`` at least once before
@@ -1622,7 +1622,7 @@ Raises an ImportError if the module could not be found.
 Networks
 ~~~~~~~~
 
-The :class:`~eth-utils.Networks` class provides methods to obtain network names and 
+The :class:`~eth-utils.Networks` class provides methods to obtain network names and
 other metadata given a ``chain_id``.
 
 ``network_from_chain_id(chain_id)`` -> Network

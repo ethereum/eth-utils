@@ -1,6 +1,9 @@
 import pytest
 
-from eth_utils.humanize import humanize_ipfs_uri, is_ipfs_uri
+from eth_utils.humanize import (
+    humanize_ipfs_uri,
+    is_ipfs_uri,
+)
 
 
 @pytest.mark.parametrize(

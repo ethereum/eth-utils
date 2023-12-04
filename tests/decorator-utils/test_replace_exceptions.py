@@ -1,6 +1,8 @@
 import pytest
 
-from eth_utils import replace_exceptions
+from eth_utils import (
+    replace_exceptions,
+)
 
 
 @pytest.fixture()
