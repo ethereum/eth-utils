@@ -28,8 +28,8 @@ def apply_formatter_at_index(
 ) -> Generator[List[Any], None, None]:
     if at_index + 1 > len(value):
         raise IndexError(
-            "Not enough values in iterable to apply formatter.  Got: {0}. "
-            "Need: {1}".format(len(value), at_index + 1)
+            "Not enough values in iterable to apply formatter.  Got: {}. "
+            "Need: {}".format(len(value), at_index + 1)
         )
     for index, item in enumerate(value):
         if index == at_index:
@@ -98,14 +98,18 @@ def apply_formatters_to_dict(
             try:
                 yield key, formatters[key](item)
             except ValueError as exc:
-                new_error_message = "Could not format invalid value %r as field %r" % (
-                    item,
-                    key,
+                new_error_message = (
+                    "Could not format invalid value {!r} as field {!r}".format(
+                        item,
+                        key,
+                    )
                 )
                 raise ValueError(new_error_message) from exc
             except TypeError as exc:
                 new_error_message = (
-                    "Could not format invalid type of %r for field %r" % (item, key)
+                    "Could not format invalid type of {!r} for field {!r}".format(
+                        item, key
+                    )
                 )
                 raise TypeError(new_error_message) from exc
         else:

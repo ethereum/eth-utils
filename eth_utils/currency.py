@@ -51,7 +51,7 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     """
     if unit.lower() not in units:
         raise ValueError(
-            "Unknown unit.  Must be one of {0}".format("/".join(units.keys()))
+            "Unknown unit.  Must be one of {}".format("/".join(units.keys()))
         )
 
     if number == 0:
@@ -76,7 +76,7 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
     """
     if unit.lower() not in units:
         raise ValueError(
-            "Unknown unit.  Must be one of {0}".format("/".join(units.keys()))
+            "Unknown unit.  Must be one of {}".format("/".join(units.keys()))
         )
 
     if is_integer(number) or is_string(number):

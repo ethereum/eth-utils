@@ -16,7 +16,7 @@ from .types import (
 T = TypeVar("T")
 
 
-class combomethod(object):
+class combomethod:
     def __init__(self, method: Callable[..., Any]) -> None:
         self.method = method
 

@@ -31,9 +31,7 @@ def humanize_seconds(seconds: Union[float, int]) -> str:
 
     unit_values = _consume_leading_zero_units(_humanize_seconds(int(seconds)))
 
-    return "".join(
-        ("{0}{1}".format(amount, unit) for amount, unit in take(3, unit_values))
-    )
+    return "".join((f"{amount}{unit}" for amount, unit in take(3, unit_values)))
 
 
 SECOND = 1
@@ -91,7 +89,7 @@ def humanize_bytes(value: bytes) -> str:
     value_as_hex = value.hex()
     head = value_as_hex[:DISPLAY_HASH_CHARS]
     tail = value_as_hex[-1 * DISPLAY_HASH_CHARS :]
-    return "{0}..{1}".format(head, tail)
+    return f"{head}..{tail}"
 
 
 def humanize_hash(value: Hash32) -> str:
@@ -109,7 +107,7 @@ def humanize_ipfs_uri(uri: URI) -> str:
     ipfs_hash = parsed.netloc
     head = ipfs_hash[:DISPLAY_HASH_CHARS]
     tail = ipfs_hash[-1 * DISPLAY_HASH_CHARS :]
-    return "ipfs://{0}..{1}".format(head, tail)
+    return f"ipfs://{head}..{tail}"
 
 
 def is_ipfs_uri(value: Any) -> bool:
@@ -159,7 +157,7 @@ def _humanize_range(bounds: Tuple[int, int]) -> str:
     if left == right:
         return str(left)
     else:
-        return "{left}-{right}".format(left=left, right=right)
+        return f"{left}-{right}"
 
 
 def humanize_integer_sequence(values_iter: Iterable[int]) -> str:

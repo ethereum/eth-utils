@@ -77,9 +77,7 @@ def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
     try:
         hex_address = hexstr_if_str(to_hex, value).lower()
     except AttributeError:
-        raise TypeError(
-            "Value must be any string, instead got type {}".format(type(value))
-        )
+        raise TypeError(f"Value must be any string, instead got type {type(value)}")
     if is_address(hex_address):
         return HexAddress(HexStr(hex_address))
     else:

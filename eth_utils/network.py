@@ -33,7 +33,6 @@ def initialize_network_objects() -> List[Network]:
     )
     with open(
         os.path.join(networks_json_path, "eth_networks.json"),
-        "r",
         encoding="UTF-8",
     ) as open_file:
         network_data = json.load(open_file)

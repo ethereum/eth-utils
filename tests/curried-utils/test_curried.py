@@ -46,11 +46,11 @@ def test_curried_namespace():
             return nargs == 1 and enhanced_has_keywords(value)
 
     def curry_namespace(ns):
-        return dict(
-            (name, curry(f) if should_curry(f) else f)
+        return {
+            name: curry(f) if should_curry(f) else f
             for name, f in ns.items()
             if "__" not in name
-        )
+        }
 
     all_auto_curried = curry_namespace(vars(eth_utils))
 

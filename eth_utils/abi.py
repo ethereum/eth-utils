@@ -28,7 +28,9 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     typ = abi["type"]
     if not isinstance(typ, str):
         raise TypeError(
-            "The 'type' must be a string, but got %r of type %s" % (typ, type(typ))
+            "The 'type' must be a string, but got {!r} of type {}".format(
+                typ, type(typ)
+            )
         )
     elif not typ.startswith("tuple"):
         return typ
@@ -37,7 +39,7 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     # Whatever comes after "tuple" is the array dims.  The ABI spec states that
     # this will have the form "", "[]", or "[k]".
     array_dim = typ[5:]
-    collapsed = "({}){}".format(delimited, array_dim)
+    collapsed = f"({delimited}){array_dim}"
 
     return collapsed
 

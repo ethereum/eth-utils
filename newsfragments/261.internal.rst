@@ -1,0 +1,1 @@
+Merge updates from the project template, notably: use ``pre-commit`` for linting and change the name of the ``master`` branch to ``main``

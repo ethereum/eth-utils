@@ -43,7 +43,7 @@ def encode_hex(value: AnyStr) -> HexStr:
 def is_0x_prefixed(value: str) -> bool:
     if not is_text(value):
         raise TypeError(
-            "is_0x_prefixed requires text typed arguments. Got: {0}".format(repr(value))
+            f"is_0x_prefixed requires text typed arguments. Got: {repr(value)}"
         )
     return value.startswith(("0x", "0X"))
 
@@ -68,9 +68,7 @@ def is_hexstr(value: Any) -> bool:
 
 def is_hex(value: Any) -> bool:
     if not is_text(value):
-        raise TypeError(
-            "is_hex requires text typed arguments. Got: {0}".format(repr(value))
-        )
+        raise TypeError(f"is_hex requires text typed arguments. Got: {repr(value)}")
     if not value:
         return False
     return _HEX_REGEXP.fullmatch(value) is not None
