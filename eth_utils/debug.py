@@ -5,15 +5,15 @@ import sys
 
 def pip_freeze() -> str:
     result = subprocess.run("python -m pip freeze".split(), stdout=subprocess.PIPE)
-    return "python -m pip freeze result:\n%s" % result.stdout.decode()
+    return f"python -m pip freeze result:\n{result.stdout.decode()}"
 
 
 def python_version() -> str:
-    return "Python version:\n%s" % sys.version
+    return f"Python version:\n{sys.version}"
 
 
 def platform_info() -> str:
-    return "Operating System: %s" % platform.platform()
+    return f"Operating System: {platform.platform()}"
 
 
 def get_environment_summary() -> str:

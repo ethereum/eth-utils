@@ -59,15 +59,13 @@ python update_networks.py
 If there are new networks they will appear in the JSON file. After checking the updates,
 open a PR to make them available in a new release.
 
-````
-
 ### Release setup
 
 To release a new version:
 
 ```sh
 make release bump=$$VERSION_PART_TO_BUMP$$
-````
+```
 
 #### How to bumpversion
 

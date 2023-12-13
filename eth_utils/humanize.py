@@ -99,8 +99,8 @@ def humanize_hash(value: Hash32) -> str:
 def humanize_ipfs_uri(uri: URI) -> str:
     if not is_ipfs_uri(uri):
         raise TypeError(
-            "%s does not look like a valid IPFS uri. Currently, "
-            "only CIDv0 hash schemes are supported." % uri
+            f"{uri} does not look like a valid IPFS uri. Currently, "
+            "only CIDv0 hash schemes are supported."
         )
 
     parsed = parse.urlparse(uri)

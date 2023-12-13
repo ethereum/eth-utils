@@ -71,7 +71,7 @@ def get_logger(name: str, logger_class: Union[Type[TLogger], None] = None) -> TL
         return cast(TLogger, logging.getLogger(name))
     else:
         with _use_logger_class(logger_class):
-            # The logging module caches logger instances.  The following code
+            # The logging module caches logger instances. The following code
             # ensures that if there is a cached instance that we don't
             # accidentally return the incorrect logger type because the logging
             # module does not *update* the cached instance in the event that
@@ -135,7 +135,7 @@ class HasLoggerMeta(type):
 
 
 class _BaseHasLogger(metaclass=HasLoggerMeta):
-    # This class exists to a allow us to define the type of the logger.  Once
+    # This class exists to a allow us to define the type of the logger. Once
     # python3.5 is deprecated this can be removed in favor of a simple type
     # annotation on the main class.
     logger = logging.Logger("")  # type: logging.Logger
@@ -149,7 +149,7 @@ HasExtendedDebugLoggerMeta = HasLoggerMeta.replace_logger_class(ExtendedDebugLog
 
 
 class _BaseHasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
-    # This class exists to a allow us to define the type of the logger.  Once
+    # This class exists to a allow us to define the type of the logger. Once
     # python3.5 is deprecated this can be removed in favor of a simple type
     # annotation on the main class.
     logger = ExtendedDebugLogger("")  # type: ExtendedDebugLogger

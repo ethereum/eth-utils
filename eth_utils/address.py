@@ -82,9 +82,8 @@ def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
         return HexAddress(HexStr(hex_address))
     else:
         raise ValueError(
-            "Unknown format {!r}, attempted to normalize to {!r}".format(
-                value, hex_address
-            )
+            f"Unknown format {repr(value)}, attempted to normalize to "
+            f"{repr(hex_address)}"
         )
 
 

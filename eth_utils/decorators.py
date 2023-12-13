@@ -43,7 +43,7 @@ def _assert_one_val(*args: T, **kwargs: T) -> None:
     if not _has_one_val(*args, **kwargs):
         raise TypeError(
             "Exactly one of the passed values can be specified. "
-            "Instead, values were: %r, %r" % (args, kwargs)
+            f"Instead, values were: {repr(args)}, {repr(kwargs)}"
         )
 
 
@@ -56,7 +56,7 @@ def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> None:
     if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
         raise TypeError(
             "Arguments passed as hexstr or text must be of text type. "
-            "Instead, value was: %r" % (repr(next(iter(list(kwargs.values())))))
+            f"Instead, value was: {(repr(next(iter(list(kwargs.values())))))}"
         )
 
 
@@ -64,7 +64,7 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
     if next(iter(kwargs)) not in ["primitive", "hexstr", "text"]:
         raise TypeError(
             "Kwarg must be 'primitive', 'hexstr', or 'text'. "
-            "Instead, kwarg was: %r" % (next(iter(kwargs)))
+            f"Instead, kwarg was: {repr((next(iter(kwargs))))}"
         )
 
 
@@ -124,7 +124,7 @@ def replace_exceptions(
                     raise old_to_new_exceptions[type(err)](err) from err
                 except KeyError:
                     raise TypeError(
-                        "could not look up new exception to use for %r" % err
+                        f"could not look up new exception to use for {repr(err)}"
                     ) from err
 
         return wrapped

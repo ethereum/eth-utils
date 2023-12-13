@@ -66,8 +66,8 @@ def to_hex(
         return HexStr(hex(cast(int, primitive)))
 
     raise TypeError(
-        "Unsupported type: '{}'.  Must be one of: bool, str, bytes, bytearray"
-        "or int.".format(repr(type(primitive)))
+        f"Unsupported type: '{repr(type(primitive))}'. Must be one of: bool, str, "
+        "bytes, bytearray or int."
     )
 
 
@@ -100,8 +100,8 @@ def to_int(
         return int(primitive)
     else:
         raise TypeError(
-            "Invalid type.  Expected one of int/bool/str/bytes/bytearray.  Got "
-            "{}".format(type(primitive))
+            "Invalid type. Expected one of int/bool/str/bytes/bytearray. Got "
+            f"{type(primitive)}"
         )
 
 
@@ -182,9 +182,8 @@ def hexstr_if_str(
             hexstr_or_primitive
         ):
             raise ValueError(
-                "when sending a str, it must be a hex string. Got: {!r}".format(
-                    hexstr_or_primitive
-                )
+                "when sending a str, it must be a hex string. "
+                f"Got: {repr(hexstr_or_primitive)}"
             )
         return to_type(hexstr=hexstr_or_primitive)
     else:

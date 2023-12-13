@@ -35,9 +35,7 @@ def make_ether_string_value(amount_in_wei):
     whole_part = s_amount_in_wei[:-18] or "0"
     decimal_part = s_amount_in_wei[-18:]
 
-    s_amount_in_ether = "{}.{}".format(
-        whole_part, decimal_part.zfill(18).rstrip("0")
-    ).rstrip(".")
+    s_amount_in_ether = f"{whole_part}.{decimal_part.zfill(18).rstrip('0')}".rstrip(".")
     return s_amount_in_ether
 
 
