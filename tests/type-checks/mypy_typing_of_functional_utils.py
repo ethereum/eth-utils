@@ -1,5 +1,13 @@
 import decimal
-from typing import TYPE_CHECKING, Dict, Iterable, List, NoReturn, Set, Tuple
+from typing import (
+    TYPE_CHECKING,
+    Dict,
+    Iterable,
+    List,
+    NoReturn,
+    Set,
+    Tuple,
+)
 
 from eth_utils import (
     clamp,

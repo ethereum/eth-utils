@@ -1,4 +1,3 @@
-# flake8: noqa
 from typing import (
     Any,
     Callable,
@@ -22,8 +21,12 @@ from eth_utils import (
     ValidationError,
     add_0x_prefix,
     apply_formatter_at_index,
-)
-from eth_utils import (
+    apply_formatter_if as non_curried_apply_formatter_if,
+    apply_formatter_to_array,
+    apply_formatters_to_dict as non_curried_apply_formatters_to_dict,
+    apply_formatters_to_sequence,
+    apply_key_map,
+    apply_one_of_formatters as non_curried_apply_one_of_formatters,
     apply_to_return_value,
     big_endian_to_int,
     clamp,
@@ -40,8 +43,7 @@ from eth_utils import (
     function_signature_to_4byte_selector,
     get_extended_debug_logger,
     get_logger,
-)
-from eth_utils import (
+    hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
     humanize_hash,
     humanize_integer_sequence,
@@ -81,8 +83,7 @@ from eth_utils import (
     setup_DEBUG2_logging,
     short_name_from_chain_id,
     sort_return,
-)
-from eth_utils import (
+    text_if_str as non_curried_text_if_str,
     to_bytes,
     to_canonical_address,
     to_checksum_address,
@@ -97,14 +98,9 @@ from eth_utils import (
     to_tuple,
     to_wei,
 )
-from eth_utils import apply_formatter_if as non_curried_apply_formatter_if
-from eth_utils import apply_formatter_to_array
-from eth_utils import apply_formatters_to_dict as non_curried_apply_formatters_to_dict
-from eth_utils import apply_formatters_to_sequence, apply_key_map
-from eth_utils import apply_one_of_formatters as non_curried_apply_one_of_formatters
-from eth_utils import hexstr_if_str as non_curried_hexstr_if_str
-from eth_utils import text_if_str as non_curried_text_if_str
-from eth_utils.toolz import curry
+from eth_utils.toolz import (
+    curry,
+)
 
 TReturn = TypeVar("TReturn")
 TValue = TypeVar("TValue")
@@ -114,35 +110,35 @@ TValue = TypeVar("TValue")
 def apply_formatter_if(
     condition: Callable[..., bool]
 ) -> Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]]:
-    ...
+    pass
 
 
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool], formatter: Callable[..., TReturn]
 ) -> Callable[[TValue], Union[TReturn, TValue]]:
-    ...
+    pass
 
 
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool], formatter: Callable[..., TReturn], value: TValue
 ) -> Union[TReturn, TValue]:
-    ...
+    pass
 
 
 # This is just a stub to appease mypy, it gets overwritten later
-def apply_formatter_if(
+def apply_formatter_if(  # type: ignore
     condition: Callable[..., bool],
-    formatter: Callable[..., TReturn] = None,
-    value: TValue = None,
+    formatter: Optional[Callable[..., TReturn]] = None,
+    value: Optional[TValue] = None,
 ) -> Union[
     Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]],
     Callable[[TValue], Union[TReturn, TValue]],
     TReturn,
     TValue,
 ]:
-    ...
+    pass
 
 
 @overload
@@ -165,11 +161,11 @@ def apply_one_of_formatters(
 
 
 # This is just a stub to appease mypy, it gets overwritten later
-def apply_one_of_formatters(
+def apply_one_of_formatters(  # type: ignore
     formatter_condition_pairs: Sequence[
         Tuple[Callable[..., bool], Callable[..., TReturn]]
     ],
-    value: TValue = None,
+    value: Optional[TValue] = None,
 ) -> TReturn:
     ...
 
@@ -189,8 +185,8 @@ def hexstr_if_str(
 
 
 # This is just a stub to appease mypy, it gets overwritten later
-def hexstr_if_str(
-    to_type: Callable[..., TReturn], to_format: Union[bytes, int, str] = None
+def hexstr_if_str(  # type: ignore
+    to_type: Callable[..., TReturn], to_format: Optional[Union[bytes, int, str]] = None
 ) -> TReturn:
     ...
 
@@ -210,8 +206,9 @@ def text_if_str(
 
 
 # This is just a stub to appease mypy, it gets overwritten later
-def text_if_str(
-    to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str] = None
+def text_if_str(  # type: ignore
+    to_type: Callable[..., TReturn],
+    text_or_primitive: Optional[Union[bytes, int, str]] = None,
 ) -> TReturn:
     ...
 
@@ -226,36 +223,36 @@ def apply_formatters_to_dict(
 @overload
 def apply_formatters_to_dict(
     formatters: Dict[Any, Any], value: Dict[Any, Any]
-) -> TReturn:
+) -> Dict[Any, Any]:
     ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
-def apply_formatters_to_dict(
+def apply_formatters_to_dict(  # type: ignore
     formatters: Dict[Any, Any], value: Optional[Dict[Any, Any]] = None
-) -> TReturn:
+) -> Dict[Any, Any]:
     ...
 
 
 apply_formatter_at_index = curry(apply_formatter_at_index)
-apply_formatter_if = curry(non_curried_apply_formatter_if)
+apply_formatter_if = curry(non_curried_apply_formatter_if)  # noqa: F811
 apply_formatter_to_array = curry(apply_formatter_to_array)
-apply_formatters_to_dict = curry(non_curried_apply_formatters_to_dict)
+apply_formatters_to_dict = curry(non_curried_apply_formatters_to_dict)  # noqa: F811
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
-apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)
+apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F811
 from_wei = curry(from_wei)
 get_logger = curry(get_logger)
-hexstr_if_str = curry(non_curried_hexstr_if_str)
+hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)
-text_if_str = curry(non_curried_text_if_str)
+text_if_str = curry(non_curried_text_if_str)  # noqa: F811
 to_wei = curry(to_wei)
 clamp = curry(clamp)
 
 # Delete any methods and classes that are not intended to be importable from
-#   eth_utils.curried
-# We do this approach instead of __all__ because this approach actually prevents
-#   importing the wrong thing, while __all__ only affects `from eth_utils.curried import *`
+# `eth_utils.curried`. We do this approach instead of __all__ because this approach
+# actually prevents importing the wrong thing, while __all__ only affects
+# `from eth_utils.curried import *`
 del Any
 del Callable
 del Dict

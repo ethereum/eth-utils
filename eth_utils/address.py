@@ -1,12 +1,35 @@
 import re
-from typing import Any, Union, cast
+from typing import (
+    Any,
+    Union,
+    cast,
+)
 
-from eth_typing import Address, AnyAddress, ChecksumAddress, HexAddress, HexStr
+from eth_typing import (
+    Address,
+    AnyAddress,
+    ChecksumAddress,
+    HexAddress,
+    HexStr,
+)
 
-from .conversions import hexstr_if_str, to_hex
-from .crypto import keccak
-from .hexadecimal import add_0x_prefix, decode_hex, encode_hex, remove_0x_prefix
-from .types import is_bytes, is_text
+from .conversions import (
+    hexstr_if_str,
+    to_hex,
+)
+from .crypto import (
+    keccak,
+)
+from .hexadecimal import (
+    add_0x_prefix,
+    decode_hex,
+    encode_hex,
+    remove_0x_prefix,
+)
+from .types import (
+    is_bytes,
+    is_text,
+)
 
 _HEX_ADDRESS_REGEXP = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
 
@@ -54,16 +77,13 @@ def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
     try:
         hex_address = hexstr_if_str(to_hex, value).lower()
     except AttributeError:
-        raise TypeError(
-            "Value must be any string, instead got type {}".format(type(value))
-        )
+        raise TypeError(f"Value must be any string, instead got type {type(value)}")
     if is_address(hex_address):
         return HexAddress(HexStr(hex_address))
     else:
         raise ValueError(
-            "Unknown format {!r}, attempted to normalize to {!r}".format(
-                value, hex_address
-            )
+            f"Unknown format {repr(value)}, attempted to normalize to "
+            f"{repr(hex_address)}"
         )
 
 
@@ -102,7 +122,7 @@ def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
     if not is_address(left) or not is_address(right):
         raise ValueError("Both values must be valid addresses")
     else:
-        return to_normalized_address(left) == to_normalized_address(right)
+        return bool(to_normalized_address(left) == to_normalized_address(right))
 
 
 def to_checksum_address(value: Union[AnyAddress, str, bytes]) -> ChecksumAddress:

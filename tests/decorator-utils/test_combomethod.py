@@ -1,6 +1,8 @@
 import pytest
 
-from eth_utils import combomethod
+from eth_utils import (
+    combomethod,
+)
 
 
 @pytest.fixture()
@@ -11,9 +13,9 @@ def Getter():
         @combomethod
         def get(combo):
             if isinstance(combo, type):
-                return "%d by class" % combo.val
+                return f"{combo.val} by class"
             elif isinstance(combo, _Getter):
-                return "%d by instance" % combo.val
+                return f"{combo.val} by instance"
             else:
                 raise TypeError("Unreachable, unless you really monkey around")
 

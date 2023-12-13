@@ -1,5 +1,9 @@
-from importlib import import_module
-from typing import Any
+from importlib import (
+    import_module,
+)
+from typing import (
+    Any,
+)
 
 
 def import_string(dotted_path: str) -> Any:
@@ -15,7 +19,7 @@ def import_string(dotted_path: str) -> Any:
     try:
         module_path, class_name = dotted_path.rsplit(".", 1)
     except ValueError:
-        msg = "%s doesn't look like a module path" % dotted_path
+        msg = f"{dotted_path} doesn't look like a module path"
         raise ImportError(msg)
 
     module = import_module(module_path)
@@ -23,8 +27,5 @@ def import_string(dotted_path: str) -> Any:
     try:
         return getattr(module, class_name)
     except AttributeError:
-        msg = 'Module "%s" does not define a "%s" attribute/class' % (
-            module_path,
-            class_name,
-        )
+        msg = f'Module "{module_path}" does not define a "{class_name}" attribute/class'
         raise ImportError(msg)

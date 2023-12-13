@@ -1,6 +1,15 @@
 try:
-    from cytoolz import curry, keyfilter, merge_with, valfilter
-    from cytoolz.functoolz import Compose, has_keywords, num_required_args
+    from cytoolz import (
+        curry,
+        keyfilter,
+        merge_with,
+        valfilter,
+    )
+    from cytoolz.functoolz import (
+        Compose,
+        has_keywords,
+        num_required_args,
+    )
 except ImportError:
     from toolz import curry, keyfilter, merge_with, valfilter
     from toolz.functoolz import Compose, has_keywords, num_required_args
@@ -37,11 +46,11 @@ def test_curried_namespace():
             return nargs == 1 and enhanced_has_keywords(value)
 
     def curry_namespace(ns):
-        return dict(
-            (name, curry(f) if should_curry(f) else f)
+        return {
+            name: curry(f) if should_curry(f) else f
             for name, f in ns.items()
             if "__" not in name
-        )
+        }
 
     all_auto_curried = curry_namespace(vars(eth_utils))
 
@@ -51,7 +60,7 @@ def test_curried_namespace():
     if inferred_namespace != curried_namespace:
         missing = set(inferred_namespace) - set(curried_namespace)
         if missing:
-            to_insert = sorted("%s," % f for f in missing)
+            to_insert = sorted(f"{f}," for f in missing)
             raise AssertionError(
                 "There are missing functions in eth_utils.curried:\n"
                 + "\n".join(to_insert)
@@ -66,7 +75,7 @@ def test_curried_namespace():
         unequal = valfilter(lambda x: x[0] != x[1], unequal)
         to_curry = keyfilter(lambda x: should_curry(getattr(eth_utils, x)), unequal)
         if to_curry:
-            to_curry_formatted = sorted("{0} = curry({0})".format(f) for f in to_curry)
+            to_curry_formatted = sorted(f"{f} = curry({f})" for f in to_curry)
             raise AssertionError(
                 "There are missing functions to curry in eth_utils.curried:\n"
                 + "\n".join(to_curry_formatted)
@@ -79,6 +88,6 @@ def test_curried_namespace():
             )
         else:
             raise AssertionError(
-                "unexplained difference between %r and %r"
-                % (inferred_namespace, curried_namespace)
+                f"unexplained difference between {repr(inferred_namespace)} and "
+                f"{repr(curried_namespace)}"
             )

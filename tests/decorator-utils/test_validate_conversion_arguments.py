@@ -1,6 +1,8 @@
 import pytest
 
-from eth_utils.decorators import validate_conversion_arguments
+from eth_utils.decorators import (
+    validate_conversion_arguments,
+)
 
 
 @pytest.fixture()

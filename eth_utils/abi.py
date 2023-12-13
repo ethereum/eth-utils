@@ -1,6 +1,11 @@
-from typing import Any, Dict
+from typing import (
+    Any,
+    Dict,
+)
 
-from .crypto import keccak
+from .crypto import (
+    keccak,
+)
 
 
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:
@@ -23,27 +28,25 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     typ = abi["type"]
     if not isinstance(typ, str):
         raise TypeError(
-            "The 'type' must be a string, but got %r of type %s" % (typ, type(typ))
+            f"The 'type' must be a string, but got {repr(typ)} of type {type(typ)}"
         )
     elif not typ.startswith("tuple"):
         return typ
 
     delimited = ",".join(collapse_if_tuple(c) for c in abi["components"])
-    # Whatever comes after "tuple" is the array dims.  The ABI spec states that
+    # Whatever comes after "tuple" is the array dims. The ABI spec states that
     # this will have the form "", "[]", or "[k]".
     array_dim = typ[5:]
-    collapsed = "({}){}".format(delimited, array_dim)
+    collapsed = f"({delimited}){array_dim}"
 
     return collapsed
 
 
 def _abi_to_signature(abi: Dict[str, Any]) -> str:
-    function_signature = "{fn_name}({fn_input_types})".format(
-        fn_name=abi["name"],
-        fn_input_types=",".join(
-            [collapse_if_tuple(abi_input) for abi_input in abi.get("inputs", [])]
-        ),
+    fn_input_types = ",".join(
+        [collapse_if_tuple(abi_input) for abi_input in abi.get("inputs", [])]
     )
+    function_signature = f"{abi['name']}({fn_input_types})"
     return function_signature
 
 

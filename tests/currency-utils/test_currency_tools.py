@@ -1,10 +1,18 @@
 import decimal
 
-from hypothesis import given
-from hypothesis import strategies as st
+from hypothesis import (
+    given,
+    strategies as st,
+)
 import pytest
 
-from eth_utils.currency import MAX_WEI, MIN_WEI, from_wei, to_wei, units
+from eth_utils.currency import (
+    MAX_WEI,
+    MIN_WEI,
+    from_wei,
+    to_wei,
+    units,
+)
 
 
 @given(
@@ -27,9 +35,7 @@ def make_ether_string_value(amount_in_wei):
     whole_part = s_amount_in_wei[:-18] or "0"
     decimal_part = s_amount_in_wei[-18:]
 
-    s_amount_in_ether = "{0}.{1}".format(
-        whole_part, decimal_part.zfill(18).rstrip("0")
-    ).rstrip(".")
+    s_amount_in_ether = f"{whole_part}.{decimal_part.zfill(18).rstrip('0')}".rstrip(".")
     return s_amount_in_ether
 
 

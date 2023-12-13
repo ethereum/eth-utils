@@ -13,8 +13,7 @@ from eth_utils import (
 
 
 def yield_things(*things):
-    for thing in things:
-        yield thing
+    yield from things
 
 
 def test_to_tuple():

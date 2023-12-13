@@ -5,8 +5,7 @@ CURRENT_SIGN_SETTING := $(shell git config commit.gpgSign)
 help:
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
-	@echo "lint - check style with mypy, flake8, isort, pydocstyle, and black"
-	@echo "lint-roll - automatically fix problems with flake8 and black"
+	@echo "lint - fix linting issues with pre-commit"
 	@echo "test - run tests quickly with the default Python"
 	@echo "docs - generate docs and open in browser (linux-docs for version on linux)"
 	@echo "notes - consume towncrier newsfragments/ and update release notes in docs/"
@@ -26,12 +25,10 @@ clean-pyc:
 	find . -name '__pycache__' -exec rm -rf {} +
 
 lint:
-	tox run -e lint
-
-lint-roll:
-	isort eth_utils tests
-	black eth_utils tests setup.py
-	$(MAKE) lint
+	@pre-commit run --all-files --show-diff-on-failure || ( \
+		echo "\n\n\n * pre-commit should have fixed the errors above. Running again to make sure everything is good..." \
+		&& pre-commit run --all-files --show-diff-on-failure \
+	)
 
 test:
 	pytest tests
@@ -70,9 +67,7 @@ notes: check-bump
 
 release: check-bump clean
 	# require that upstream is configured for ethereum/eth-utils
-	@git remote -v | grep \
-		-e "upstream\tgit@github.com:ethereum/eth-utils.git (push)" \
-		-Ee "upstream\thttps://(www.)?github.com/ethereum/eth-utils \(push\)"
+	@git remote -v | grep -E "upstream\tgit@github.com:ethereum/eth-utils.git \(push\)|upstream\thttps://(www.)?github.com/ethereum/eth-utils \(push\)"
 	# verify that docs build correctly
 	./newsfragments/validate_files.py is-empty
 	make build-docs

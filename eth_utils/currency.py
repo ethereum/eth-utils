@@ -1,9 +1,18 @@
 import decimal
-from decimal import localcontext
-from typing import Union
+from decimal import (
+    localcontext,
+)
+from typing import (
+    Union,
+)
 
-from .types import is_integer, is_string
-from .units import units
+from .types import (
+    is_integer,
+    is_string,
+)
+from .units import (
+    units,
+)
 
 
 class denoms:
@@ -41,9 +50,7 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     Takes a number of wei and converts it to any other ether unit.
     """
     if unit.lower() not in units:
-        raise ValueError(
-            "Unknown unit.  Must be one of {0}".format("/".join(units.keys()))
-        )
+        raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
 
     if number == 0:
         return 0
@@ -66,9 +73,7 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
     Takes a number of a unit and converts it to wei.
     """
     if unit.lower() not in units:
-        raise ValueError(
-            "Unknown unit.  Must be one of {0}".format("/".join(units.keys()))
-        )
+        raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
 
     if is_integer(number) or is_string(number):
         d_number = decimal.Decimal(value=number)
@@ -77,7 +82,7 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
     elif isinstance(number, decimal.Decimal):
         d_number = number
     else:
-        raise TypeError("Unsupported type.  Must be one of integer, float, or string")
+        raise TypeError("Unsupported type. Must be one of integer, float, or string")
 
     s_number = str(number)
     unit_value = units[unit.lower()]

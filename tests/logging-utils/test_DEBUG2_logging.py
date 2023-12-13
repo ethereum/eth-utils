@@ -3,8 +3,12 @@ import uuid
 
 import pytest
 
-from eth_utils import ExtendedDebugLogger
-from eth_utils.logging import DEBUG2_LEVEL_NUM
+from eth_utils import (
+    ExtendedDebugLogger,
+)
+from eth_utils.logging import (
+    DEBUG2_LEVEL_NUM,
+)
 
 
 @pytest.fixture
@@ -39,7 +43,7 @@ def test_caching_of_debug2_when_disabled(caplog, DEBUG2_installed):
     caplog.set_level(DEBUG2_LEVEL_NUM, "testing")
 
     # we need a unique logger because loggers are cached
-    logger = logging.getLogger("testing-{}".format(uuid.uuid4()))
+    logger = logging.getLogger(f"testing-{uuid.uuid4()}")
 
     assert logger.isEnabledFor(DEBUG2_LEVEL_NUM) is False
 
@@ -67,7 +71,7 @@ def test_caching_of_debug2_when_enabled(caplog, DEBUG2_installed):
     caplog.set_level(DEBUG2_LEVEL_NUM, "testing")
 
     # we need a unique logger because loggers are cached
-    logger = logging.getLogger("testing-{}".format(uuid.uuid4()))
+    logger = logging.getLogger(f"testing-{uuid.uuid4()}")
 
     assert logger.isEnabledFor(DEBUG2_LEVEL_NUM) is False
     logger.setLevel(DEBUG2_LEVEL_NUM)

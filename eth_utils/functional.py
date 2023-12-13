@@ -14,7 +14,9 @@ from typing import (  # noqa: F401
     Union,
 )
 
-from .toolz import compose as _compose
+from .toolz import (
+    compose as _compose,
+)
 
 T = TypeVar("T")
 

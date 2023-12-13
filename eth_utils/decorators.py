@@ -1,17 +1,28 @@
 import functools
 import itertools
-from typing import Any, Callable, Dict, Type, TypeVar
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Optional,
+    Type,
+    TypeVar,
+)
 
-from .types import is_text
+from .types import (
+    is_text,
+)
 
 T = TypeVar("T")
 
 
-class combomethod(object):
+class combomethod:
     def __init__(self, method: Callable[..., Any]) -> None:
         self.method = method
 
-    def __get__(self, obj: T = None, objtype: Type[T] = None) -> Callable[..., Any]:
+    def __get__(
+        self, obj: Optional[T] = None, objtype: Optional[Type[T]] = None
+    ) -> Callable[..., Any]:
         @functools.wraps(self.method)
         def _wrapper(*args: Any, **kwargs: Any) -> Any:
             if obj is not None:
@@ -32,7 +43,7 @@ def _assert_one_val(*args: T, **kwargs: T) -> None:
     if not _has_one_val(*args, **kwargs):
         raise TypeError(
             "Exactly one of the passed values can be specified. "
-            "Instead, values were: %r, %r" % (args, kwargs)
+            f"Instead, values were: {repr(args)}, {repr(kwargs)}"
         )
 
 
@@ -45,7 +56,7 @@ def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> None:
     if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
         raise TypeError(
             "Arguments passed as hexstr or text must be of text type. "
-            "Instead, value was: %r" % (repr(next(iter(list(kwargs.values())))))
+            f"Instead, value was: {(repr(next(iter(list(kwargs.values())))))}"
         )
 
 
@@ -53,7 +64,7 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
     if next(iter(kwargs)) not in ["primitive", "hexstr", "text"]:
         raise TypeError(
             "Kwarg must be 'primitive', 'hexstr', or 'text'. "
-            "Instead, kwarg was: %r" % (next(iter(kwargs)))
+            f"Instead, kwarg was: {repr((next(iter(kwargs))))}"
         )
 
 
@@ -85,7 +96,7 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
     def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
-        def wrapper(*args: Any, **kwargs: Any) -> T:
+        def wrapper(*args: Any, **kwargs: Any) -> T:  # type: ignore
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)  # type: ignore
@@ -113,7 +124,7 @@ def replace_exceptions(
                     raise old_to_new_exceptions[type(err)](err) from err
                 except KeyError:
                     raise TypeError(
-                        "could not look up new exception to use for %r" % err
+                        f"could not look up new exception to use for {repr(err)}"
                     ) from err
 
         return wrapped

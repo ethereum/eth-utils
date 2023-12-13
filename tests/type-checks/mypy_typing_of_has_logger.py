@@ -1,5 +1,8 @@
 import logging
-from typing import Generic, TypeVar
+from typing import (
+    Generic,
+    TypeVar,
+)
 
 from eth_utils import (
     ExtendedDebugLogger,
@@ -45,7 +48,7 @@ int_value: int
 
 int_value = VerifyGenericWithLoggerTypingInteger.return_T(1234)
 
-# mypy should be angry about passing a non-integer into this function.  We test
+# mypy should be angry about passing a non-integer into this function. We test
 # this by using an ignore comment relying on our type checking settings to warn
 # on un-used ignore statements
 VerifyGenericWithLoggerTypingInteger.return_T("not-an-integer")  # type: ignore

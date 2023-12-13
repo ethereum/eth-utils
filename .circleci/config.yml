@@ -26,6 +26,9 @@ common: &common
           python -m pip install --upgrade pip
           python -m pip install tox
     - run:
+        name: install pre-commit
+        command: python -m pip install --progress-bar=off pre-commit
+    - run:
         name: run tox
         command: python -m tox run -r
     - save_cache:
@@ -34,7 +37,6 @@ common: &common
           - .tox
           - ~/.cache/pip
           - ~/.local
-          - ./eggs
         key: cache-v1-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
 
 orbs:
@@ -71,12 +73,6 @@ jobs:
         environment:
           TOXENV: docs
 
-  py37-core:
-    <<: *common
-    docker:
-      - image: cimg/python:3.7
-        environment:
-          TOXENV: py37-core
   py38-core:
     <<: *common
     docker:
@@ -127,12 +123,6 @@ jobs:
         environment:
           TOXENV: py311-lint
 
-  py37-wheel:
-    <<: *common
-    docker:
-      - image: cimg/python:3.7
-        environment:
-          TOXENV: py37-wheel
   py38-wheel:
     <<: *common
     docker:
@@ -162,13 +152,12 @@ jobs:
     <<: *windows_steps
     environment:
       TOXENV: py311-wheel-windows
-  
+
 workflows:
   version: 2
   test:
     jobs:
       - docs
-      - py37-core
       - py38-core
       - py39-core
       - py310-core
@@ -177,7 +166,6 @@ workflows:
       - py39-lint
       - py310-lint
       - py311-lint
-      - py37-wheel
       - py38-wheel
       - py39-wheel
       - py310-wheel

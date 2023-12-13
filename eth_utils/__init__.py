@@ -1,12 +1,6 @@
-try:
-    from importlib.metadata import version as __version
-except ImportError:
-    # Python 3.7
-    def __version(package_name: str) -> str:  # type: ignore
-        from pkg_resources import get_distribution
-
-        return get_distribution(package_name).version
-
+from importlib.metadata import (
+    version as __version,
+)
 
 from .abi import (
     event_abi_to_log_topic,
@@ -37,12 +31,33 @@ from .applicators import (
     apply_one_of_formatters,
     combine_argument_formatters,
 )
-from .conversions import hexstr_if_str, text_if_str, to_bytes, to_hex, to_int, to_text
-from .crypto import keccak
-from .currency import denoms, from_wei, to_wei
-from .decorators import combomethod, replace_exceptions
-from .encoding import big_endian_to_int, int_to_big_endian
-from .exceptions import ValidationError
+from .conversions import (
+    hexstr_if_str,
+    text_if_str,
+    to_bytes,
+    to_hex,
+    to_int,
+    to_text,
+)
+from .crypto import (
+    keccak,
+)
+from .currency import (
+    denoms,
+    from_wei,
+    to_wei,
+)
+from .decorators import (
+    combomethod,
+    replace_exceptions,
+)
+from .encoding import (
+    big_endian_to_int,
+    int_to_big_endian,
+)
+from .exceptions import (
+    ValidationError,
+)
 from .functional import (
     apply_to_return_value,
     flatten_return,
@@ -82,14 +97,18 @@ from .logging import (
     get_logger,
     setup_DEBUG2_logging,
 )
-from .module_loading import import_string
+from .module_loading import (
+    import_string,
+)
 from .network import (
     Network,
     name_from_chain_id,
     network_from_chain_id,
     short_name_from_chain_id,
 )
-from .numeric import clamp
+from .numeric import (
+    clamp,
+)
 from .types import (
     is_boolean,
     is_bytes,

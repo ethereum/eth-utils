@@ -1,48 +1,35 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from setuptools import (
-    setup,
     find_packages,
+    setup,
 )
 
 extras_require = {
-    "test": [
-        "hypothesis>=4.43.0",
-        "pytest>=7.0.0",
-        "pytest-xdist>=2.4.0",
-        "types-setuptools",
-        "mypy==0.971",  # mypy does not follow semver, leave it pinned.
-    ],
-    "lint": [
-        "flake8==3.8.3",  # flake8 claims semver but adds new warnings at minor releases, leave it pinned.
-        "isort>=5.11.0",
-        "mypy==0.971",  # mypy does not follow semver, leave it pinned.
-        "pydocstyle>=5.0.0",
-        "black>=23",
-        "types-setuptools",
+    "dev": [
+        "build>=0.9.0",
+        "bumpversion>=0.5.3",
+        "eth-hash[pycryptodome]",
+        "ipython",
+        "pre-commit>=3.4.0",
+        "tox>=4.0.0",
+        "twine",
+        "wheel",
     ],
     "docs": [
-        "sphinx>=5.0.0",
+        "sphinx>=6.0.0",
         "sphinx_rtd_theme>=1.0.0",
         "towncrier>=21,<22",
     ],
-    "dev": [
-        "bumpversion>=0.5.3",
-        "pytest-watch>=4.1.0",
-        "tox>=4.0.0",
-        "build>=0.9.0",
-        "wheel",
-        "twine",
-        "ipython",
-        "eth-hash[pycryptodome]",
+    "test": [
+        "hypothesis>=4.43.0",
+        "mypy==1.5.1",
+        "pytest>=7.0.0",
+        "pytest-xdist>=2.4.0",
     ],
 }
 
 extras_require["dev"] = (
-    extras_require["dev"]
-    + extras_require["test"]
-    + extras_require["lint"]
-    + extras_require["docs"]
+    extras_require["dev"] + extras_require["docs"] + extras_require["test"]
 )
 
 
@@ -70,7 +57,7 @@ setup(
         "toolz>0.8.2;implementation_name=='pypy'",
         "cytoolz>=0.10.1;implementation_name=='cpython'",
     ],
-    python_requires=">=3.7,<4",
+    python_requires=">=3.8, <4",
     extras_require=extras_require,
     py_modules=["eth_utils"],
     license="MIT",
@@ -83,7 +70,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

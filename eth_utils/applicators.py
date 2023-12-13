@@ -1,9 +1,23 @@
-from typing import Any, Callable, Dict, Generator, List, Tuple
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    List,
+    Tuple,
+)
 import warnings
 
-from .decorators import return_arg_type
-from .functional import to_dict
-from .toolz import compose, curry
+from .decorators import (
+    return_arg_type,
+)
+from .functional import (
+    to_dict,
+)
+from .toolz import (
+    compose,
+    curry,
+)
 
 Formatters = Callable[[List[Any]], List[Any]]
 
@@ -14,8 +28,8 @@ def apply_formatter_at_index(
 ) -> Generator[List[Any], None, None]:
     if at_index + 1 > len(value):
         raise IndexError(
-            "Not enough values in iterable to apply formatter.  Got: {0}. "
-            "Need: {1}".format(len(value), at_index + 1)
+            f"Not enough values in iterable to apply formatter. Got: {len(value)}. "
+            f"Need: {at_index + 1}"
         )
     for index, item in enumerate(value):
         if index == at_index:
@@ -32,7 +46,8 @@ def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Format
             "release of the eth-utils library. Update your calls to use "
             "apply_formatters_to_sequence([formatter1, formatter2], [item1, item2]) "
             "instead."
-        )
+        ),
+        stacklevel=2,
     )
 
     _formatter_at_index = curry(apply_formatter_at_index)
@@ -50,15 +65,13 @@ def apply_formatters_to_sequence(
 ) -> Generator[List[Any], None, None]:
     if len(formatters) > len(sequence):
         raise IndexError(
-            "Too many formatters for sequence: {} formatters for {!r}".format(
-                len(formatters), sequence
-            )
+            f"Too many formatters for sequence: {len(formatters)} formatters for "
+            f"{repr(sequence)}"
         )
     elif len(formatters) < len(sequence):
         raise IndexError(
-            "Too few formatters for sequence: {} formatters for {!r}".format(
-                len(formatters), sequence
-            )
+            f"Too few formatters for sequence: {len(formatters)} formatters for "
+            f"{repr(sequence)}"
         )
     else:
         for formatter, item in zip(formatters, sequence):
@@ -83,14 +96,13 @@ def apply_formatters_to_dict(
             try:
                 yield key, formatters[key](item)
             except ValueError as exc:
-                new_error_message = "Could not format invalid value %r as field %r" % (
-                    item,
-                    key,
+                new_error_message = (
+                    f"Could not format invalid value {repr(item)} as field {repr(key)}"
                 )
                 raise ValueError(new_error_message) from exc
             except TypeError as exc:
                 new_error_message = (
-                    "Could not format invalid type of %r for field %r" % (item, key)
+                    f"Could not format invalid type {repr(item)} as field {repr(key)}"
                 )
                 raise TypeError(new_error_message) from exc
         else:
@@ -129,9 +141,7 @@ def apply_key_map(
     )
     if key_conflicts:
         raise KeyError(
-            "Could not apply key map due to conflicting key(s): {}".format(
-                key_conflicts
-            )
+            f"Could not apply key map due to conflicting key(s): {key_conflicts}"
         )
 
     for key, item in value.items():

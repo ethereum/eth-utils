@@ -1,6 +1,8 @@
 import pytest
 
-from eth_utils import is_hexstr
+from eth_utils import (
+    is_hexstr,
+)
 
 
 @pytest.mark.parametrize(
