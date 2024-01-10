@@ -5,6 +5,22 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v3.0.0 (2024-01-10)
+-----------------------------
+
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- Drop python 3.7 support (`#261 <https://github.com/ethereum/eth-utils/issues/261>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Merge updates from the project template, notably: use ``pre-commit`` for linting and change the name of the ``master`` branch to ``main`` (`#261 <https://github.com/ethereum/eth-utils/issues/261>`__)
+- Correct booleans in ``pyproject.toml`` and add test for the presence of the ``eth_utils.__version__`` attribute (`#263 <https://github.com/ethereum/eth-utils/issues/263>`__)
+
+
 eth-utils v2.3.1 (2023-11-07)
 -----------------------------
 

@@ -1,1 +1,0 @@
-Correct booleans in ``pyproject.toml`` and add test for the presence of the ``eth_utils.__version__`` attribute
