@@ -40,7 +40,7 @@ with open("./README.md") as readme:
 setup(
     name="eth-utils",
     # *IMPORTANT*: Don't manually change the version here. Use `make bump`, as described in readme
-    version="2.3.1",
+    version="3.0.0",
     description=(
         """eth-utils: Common utility functions for python code that interacts with Ethereum"""
     ),
