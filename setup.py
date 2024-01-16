@@ -52,6 +52,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "cached-property>=1.5.2,<2;python_version<'3.8'",
+        "typing_extensions",
         "eth-hash>=0.3.1",
         "eth-typing>=3.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",
