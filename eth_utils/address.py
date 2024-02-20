@@ -59,12 +59,7 @@ def is_address(value: Any) -> bool:
     """
     Is the given string an address in any of the known formats?
     """
-    if is_hex_address(value):
-        if _is_checksum_formatted(value):
-            return is_checksum_address(value)
-        return True
-
-    if is_binary_address(value):
+    if is_hex_address(value) or is_binary_address(value):
         return True
 
     return False
