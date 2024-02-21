@@ -1,0 +1,1 @@
+`Web3.is_address` now returns True for non-checksummed addresses.
