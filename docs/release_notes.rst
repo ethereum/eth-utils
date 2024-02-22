@@ -5,6 +5,15 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v4.0.0 (2024-02-22)
+-----------------------------
+
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- `Web3.is_address` now returns True for non-checksummed addresses. (`#265 <https://github.com/ethereum/eth-utils/issues/265>`__)
+
+
 eth-utils v3.0.0 (2024-01-10)
 -----------------------------
 
