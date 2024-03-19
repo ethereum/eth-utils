@@ -44,7 +44,7 @@ windows-wheel-steps:
     executor:
       name: win/default
       shell: bash.exe
-    working_directory: C:\Users\circleci\project\<REPO_NAME>
+    working_directory: C:\Users\circleci\project\eth-utils
     environment:
       TOXENV: windows-wheel
   restore-cache-step: &restore-cache-step

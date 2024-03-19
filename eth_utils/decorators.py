@@ -64,7 +64,7 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
     if next(iter(kwargs)) not in ["primitive", "hexstr", "text"]:
         raise TypeError(
             "Kwarg must be 'primitive', 'hexstr', or 'text'. "
-            f"Instead, kwarg was: {repr((next(iter(kwargs))))}"
+            f"Instead, kwarg was: {repr(next(iter(kwargs)))}"
         )
 
 
