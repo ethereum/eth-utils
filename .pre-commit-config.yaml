@@ -47,4 +47,9 @@ repos:
     rev: v1.5.1
     hooks:
     -   id: mypy
-        exclude: 'tests/|fixtures/'
+        exclude: tests/
+-   repo: https://github.com/PrincetonUniversity/blocklint
+    rev: v0.2.4
+    hooks:
+    -   id: blocklint
+        exclude: 'docs/Makefile|docs/release_notes.rst|tox.ini|eth_utils/__json'

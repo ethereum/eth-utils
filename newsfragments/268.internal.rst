@@ -1,0 +1,1 @@
+Upgrades from the template with support for Python 3.12 and linting with ``blocklint``.
