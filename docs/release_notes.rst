@@ -5,6 +5,16 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v4.1.0 (2024-04-01)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Upgrades from the template with support for Python 3.12 and linting with ``blocklint``. (`#268 <https://github.com/ethereum/eth-utils/issues/268>`__)
+- Remove ``cached_property`` dependency, as it was only for ``<=py37`` (`#269 <https://github.com/ethereum/eth-utils/issues/269>`__)
+
+
 eth-utils v4.0.0 (2024-02-22)
 -----------------------------
 

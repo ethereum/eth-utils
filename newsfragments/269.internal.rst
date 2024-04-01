@@ -1,1 +1,0 @@
-Remove ``cached_property`` dependency, as it was only for ``<=py37``
