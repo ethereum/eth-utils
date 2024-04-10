@@ -13,6 +13,7 @@ from eth_typing import (
     ABI,
     ABIElement,
     ABIEvent,
+    ABIFunction,
 )
 
 from .crypto import (
@@ -177,6 +178,38 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
         return [
             collapse_if_tuple(cast(Dict[str, Any], arg))
             for arg in abi_element["inputs"]
+        ]
+
+
+def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
+    """
+    Return names for each output from the function ABI.
+
+    :param function_abi: Function ABI.
+    :param type: `ABIFunction`
+    :return: Names for each function output in the function ABI.
+    :rtype: `List[str]`
+    """
+    if "outputs" not in function_abi or function_abi["type"] != "function":
+        return []
+    return [arg["name"] for arg in function_abi["outputs"]]
+
+
+def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
+    """
+    Return types for each output from the function ABI.
+
+    :param function_abi: Function ABI.
+    :param type: `ABIFunction`
+    :return: Types for each function output in the function ABI.
+    :rtype: `List[str]`
+    """
+    if "outputs" not in function_abi or function_abi["type"] != "function":
+        return []
+    else:
+        return [
+            collapse_if_tuple(cast(Dict[str, Any], arg))
+            for arg in function_abi["outputs"]
         ]
 
 
