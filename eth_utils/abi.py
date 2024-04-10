@@ -6,6 +6,7 @@ from typing import (
     List,
     Optional,
     Sequence,
+    cast,
 )
 
 from eth_typing import (
@@ -22,7 +23,7 @@ from .toolz import (
 )
 
 
-def collapse_if_tuple(abi: Dict[str, Any]) -> str:
+def collapse_if_tuple(abi: ABIFunctionParam) -> str:
     """
     Converts a tuple from a dict to a parenthesized list of its types.
 
@@ -155,6 +156,28 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     ):
         return []
     return [arg["name"] for arg in abi_element["inputs"]]
+
+
+def get_abi_input_types(abi_element: ABIElement) -> List[str]:
+    """
+    Return types for each input from the function or event ABI.
+
+    :param abi_element: Function or Event ABI.
+    :param type: `ABIFunction` or `ABIEvent`
+    :return: Types for each input in the function or event ABI.
+    :rtype: `List[str]`
+    """
+    if (
+        "inputs" not in abi_element
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
+    ):
+        return []
+    else:
+        return [
+            collapse_if_tuple(cast(Dict[str, Any], arg))
+            for arg in abi_element["inputs"]
+        ]
 
 
 def function_signature_to_4byte_selector(event_signature: str) -> bytes:
