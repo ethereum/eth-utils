@@ -1,3 +1,14 @@
+from typing import (
+    Sequence,
+)
+
+from eth_typing import (
+    ABI,
+    ABIEvent,
+    ABIEventParam,
+    ABIFunction,
+    ABIFunctionParam,
+)
 import pytest
 
 from eth_utils.abi import (
@@ -6,6 +17,7 @@ from eth_utils.abi import (
     event_signature_to_log_topic,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
+    get_all_event_abis,
 )
 from eth_utils.hexadecimal import (
     encode_hex,
@@ -131,6 +143,75 @@ def test_fn_signature_to_4byte_selector(signature, expected):
 )
 def test__abi_to_signature(abi, expected):
     assert _abi_to_signature(abi) == expected
+
+
+@pytest.fixture
+def make_event_abi_input():
+    def _make_event_abi_input(name) -> ABIEventParam:
+        return [
+            {
+                "indexed": False,
+                "internalType": "uint256",
+                "name": name,
+                "type": "uint256",
+            }
+        ]
+
+    return _make_event_abi_input
+
+
+@pytest.fixture
+def make_event_abi():
+    def _make_event_abi(name, input_names) -> ABIEvent:
+        inputs = [make_event_abi_input(input_name) for input_name in input_names]
+        return {
+            "anonymous": False,
+            "inputs": inputs,
+            "name": name,
+            "type": "event",
+        }
+
+    return _make_event_abi
+
+
+@pytest.fixture
+def make_function_abi_input():
+    def _make_function_abi_input(name) -> ABIFunctionParam:
+        return [{"internalType": "uint256", "name": name, "type": "uint256"}]
+
+    return _make_function_abi_input
+
+
+@pytest.fixture
+def make_function_abi():
+    def _make_function_abi(name, input_names) -> ABIFunction:
+        inputs = [make_function_abi_input(input_name) for input_name in input_names]
+        return {
+            "inputs": inputs,
+            "name": name,
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function",
+        }
+
+    return _make_function_abi
+
+
+@pytest.fixture
+def contract_abi() -> ABI:
+    return [
+        make_event_abi("LogSingleArg", ["arg0"]),
+        make_event_abi("LogSingleWithIndex", ["arg0"]),
+        make_function_abi("logTwoEvents", ["_arg0"]),
+    ]
+
+
+def test_get_all_event_abis(contract_abi) -> Sequence[ABIEvent]:
+    expected_event_abis = [
+        make_event_abi("LogSingleArg", ["arg0"]),
+        make_event_abi("LogSingleWithIndex", ["arg0"]),
+    ]
+    assert get_all_event_abis(contract_abi) == expected_event_abis
 
 
 EVENT_ABI_A = {

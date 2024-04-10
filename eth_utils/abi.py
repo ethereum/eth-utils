@@ -1,6 +1,14 @@
 from typing import (
     Any,
     Dict,
+    List,
+    Sequence,
+)
+
+from eth_typing import (
+    ABI,
+    ABIElement,
+    ABIEvent,
 )
 
 from .crypto import (
@@ -48,6 +56,22 @@ def _abi_to_signature(abi: Dict[str, Any]) -> str:
     )
     function_signature = f"{abi['name']}({fn_input_types})"
     return function_signature
+
+
+def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
+    return [abi for abi in contract_abi if abi["type"] == _type]
+
+
+def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
+    """
+    Return interfaces for each event in the contract ABI.
+
+    :param abi: Contract ABI.
+    :param type: `ABI`
+    :return: List of ABIs for each event interface.
+    :rtype: `list[ABIEvent]`
+    """
+    return [ABIEvent(event) for event in _filter_by_type("event", abi)]
 
 
 def function_signature_to_4byte_selector(event_signature: str) -> bytes:
