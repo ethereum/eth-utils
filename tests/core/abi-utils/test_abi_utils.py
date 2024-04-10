@@ -152,116 +152,83 @@ def test__abi_to_signature(abi, expected):
     assert _abi_to_signature(abi) == expected
 
 
-@pytest.fixture
-def make_abi_element():
-    def _make_abi_element(element_type, name, input_names, input_types) -> ABIElement:
-        if element_type == "event":
-            return make_event_abi(name, input_names)
-        elif element_type == "function":
-            return make_function_abi(name, input_names, input_types)
-        elif element_type == "constructor":
-            return make_constructor_abi(name, input_names, input_types)
-        elif element_type == "fallback":
-            return make_fallback_abi(name)
-        elif element_type == "receive":
-            return make_receive_abi(name)
-
-    return _make_abi_element
+def make_abi_element(
+    element_type, name, input_names=None, input_types=None
+) -> ABIElement:
+    if element_type == "event":
+        return make_event_abi(name, input_names)
+    elif element_type == "function":
+        return make_function_abi(name, input_names, input_types)
+    elif element_type == "constructor":
+        return make_constructor_abi(input_names, input_types)
+    elif element_type == "fallback":
+        return make_fallback_abi()
+    elif element_type == "receive":
+        return make_receive_abi()
 
 
-@pytest.fixture
-def make_constructor_abi_input():
-    def _make_constructor_abi_input(name) -> ABIFunctionParam:
-        return {"name": name, "type": "uint256"}
-
-    return _make_constructor_abi_input
+def make_constructor_abi_input(name, input_type) -> ABIFunctionParam:
+    return {"name": name, "type": input_type}
 
 
-@pytest.fixture
-def make_constructor_abi():
-    def _make_constructor_abi(input_names) -> ABIConstructor:
-        inputs = [make_constructor_abi_input(input_name) for input_name in input_names]
-        return {
-            "inputs": inputs,
-            "type": "constructor",
-        }
-
-    return _make_constructor_abi
-
-
-@pytest.fixture
-def make_fallback_abi():
-    def _make_fallback_abi() -> ABIFallback:
-        return {
-            "type": "fallback",
-        }
-
-    return _make_fallback_abi
+def make_constructor_abi(input_names, input_types) -> ABIConstructor:
+    inputs = [
+        make_constructor_abi_input(input_name, input_type)
+        for (input_name, input_type) in zip(input_names, input_types)
+    ]
+    return {
+        "inputs": inputs,
+        "type": "constructor",
+    }
 
 
-@pytest.fixture
-def make_receive_abi():
-    def _make_receive_abi() -> ABIReceive:
-        return {
-            "type": "receive",
-        }
-
-    return _make_receive_abi
+def make_fallback_abi() -> ABIFallback:
+    return {
+        "type": "fallback",
+    }
 
 
-@pytest.fixture
-def make_event_abi_input():
-    def _make_event_abi_input(name) -> ABIEventParam:
-        return [
-            {
-                "indexed": False,
-                "internalType": "uint256",
-                "name": name,
-                "type": "uint256",
-            }
-        ]
-
-    return _make_event_abi_input
+def make_receive_abi() -> ABIReceive:
+    return {
+        "type": "receive",
+    }
 
 
-@pytest.fixture
-def make_event_abi():
-    def _make_event_abi(name, input_names) -> ABIEvent:
-        inputs = [make_event_abi_input(input_name) for input_name in input_names]
-        return {
-            "anonymous": False,
-            "inputs": inputs,
-            "name": name,
-            "type": "event",
-        }
-
-    return _make_event_abi
+def make_event_abi_input(name) -> ABIEventParam:
+    return {
+        "indexed": False,
+        "internalType": "uint256",
+        "name": name,
+        "type": "uint256",
+    }
 
 
-@pytest.fixture
-def make_function_abi_input():
-    def _make_function_abi_input(name, input_type) -> ABIFunctionParam:
-        return [{"internalType": "uint256", "name": name, "type": input_type}]
+def make_event_abi(name, input_names) -> ABIEvent:
+    inputs = [make_event_abi_input(input_name) for input_name in input_names]
+    return {
+        "anonymous": False,
+        "inputs": inputs,
+        "name": name,
+        "type": "event",
+    }
 
-    return _make_function_abi_input
+
+def make_function_abi_input(name, input_type) -> ABIFunctionParam:
+    return {"internalType": "uint256", "name": name, "type": input_type}
 
 
-@pytest.fixture
-def make_function_abi():
-    def _make_function_abi(name, input_names, input_types) -> ABIFunction:
-        inputs = [
-            make_function_abi_input(input_name, input_type)
-            for input_name, input_type in zip(input_names, input_types)
-        ]
-        return {
-            "inputs": inputs,
-            "name": name,
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function",
-        }
-
-    return _make_function_abi
+def make_function_abi(name, input_names, input_types) -> ABIFunction:
+    inputs = [
+        make_function_abi_input(input_name, input_type)
+        for (input_name, input_type) in zip(input_names, input_types)
+    ]
+    return {
+        "inputs": inputs,
+        "name": name,
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+    }
 
 
 @pytest.fixture
@@ -288,7 +255,7 @@ def test_get_all_event_abis(contract_abi) -> Sequence[ABIEvent]:
         ("LogSingleWithIndex", ["arg0"]),
     ],
 )
-def test_get_event_abi(event_name, argument_names):
+def test_get_event_abi(contract_abi, event_name, argument_names):
     expected_event_abi = make_event_abi(event_name, argument_names)
     assert get_event_abi(contract_abi, event_name, argument_names) == expected_event_abi
 
@@ -296,18 +263,18 @@ def test_get_event_abi(event_name, argument_names):
 @pytest.mark.parametrize(
     "element_type,name,input_names,input_types",
     [
-        ("event", "LogSingleArg", ("arg0"), ("uint256")),
-        ("event", "LogSingleWithIndex", ("arg0"), ("uint256")),
+        ("event", "LogSingleArg", ["arg0"], ["uint256"]),
+        ("event", "LogSingleWithIndex", ["arg0"], ["uint256"]),
         (
             "event",
             "LogMultiArg",
-            ("arg0", "arg1", "arg2"),
-            ("uint256", "uint256", "uint256"),
+            ["arg0", "arg1", "arg2"],
+            ["uint256", "uint256", "uint256"],
         ),
-        ("event", "LogNoArg", (), ()),
-        ("function", "FnSingleArg", ("arg0"), ("uint256")),
-        ("function", "FnMultiArg", ("arg0", "arg1"), ("uint256", "uint256")),
-        ("constructor", "ConstArg", ("inputs"), ("uint256")),
+        ("event", "LogNoArg", [], []),
+        ("function", "FnSingleArg", ["arg0"], ["uint256"]),
+        ("function", "FnMultiArg", ["arg0", "arg1"], ["uint256", "uint256"]),
+        ("constructor", "ConstArg", ["inputs"], ["uint256"]),
     ],
 )
 def test_get_input_names_from_abi_element(element_type, name, input_names, input_types):
@@ -334,38 +301,50 @@ def test_get_input_names_from_fallback_or_receive_abi(element_type, name):
 @pytest.mark.parametrize(
     "element_type,name,input_names,input_types",
     [
-        ("event", "LogSingleArg", ("arg0"), ("uint256")),
+        ("event", "LogSingleArg", ["arg0"], ["uint256"]),
         (
             "event",
             "LogSingleWithIndex",  # TODO: actually create indexed event topic
-            ("arg0"),
-            ("uint256"),
+            ["arg0"],
+            ["uint256"],
         ),
         (
             "event",
             "LogMultiArg",
-            ("arg0", "arg1", "arg2"),
-            ("uint256", "uint256", "uint256"),
+            ["arg0", "arg1", "arg2"],
+            ["uint256", "uint256", "uint256"],
         ),
-        ("event", "LogNoArg", (), ()),
-        ("function", "FnSingleArg", ("arg0"), ("uint256")),
-        ("function", "FnMultiArg", ("arg0", "arg1"), ("uint256", "uint256")),
-        ("constructor", "ConstArg", ("inputs"), ("uint256")),
-        ("fallback", "FbNoArg", (), ()),
-        ("receive", "RecNoArg", (), ()),
-        ("fallback", "FbNoArg", ("arg0"), ("uint256")),
-        ("receive", "RecNoArg", ("arg0"), ("uint256")),
+        ("event", "LogNoArg", [], []),
+        ("function", "FnSingleArg", ["arg0"], ["uint256"]),
+        ("function", "FnMultiArg", ["arg0", "arg1"], ["uint256", "uint256"]),
+        ("constructor", "ConstArg", ["inputs"], ["uint256"]),
     ],
 )
 def test_get_input_types_from_abi_element(element_type, name, input_names, input_types):
-    abi_element = make_abi_element(element_type, name, input_names)
+    abi_element = make_abi_element(element_type, name, input_names, input_types)
     assert get_abi_input_types(abi_element) == input_types
+
+
+@pytest.mark.parametrize(
+    "element_type,name",
+    [
+        ("fallback", "FbNoArg"),
+        ("receive", "RecNoArg"),
+    ],
+    ids=[
+        "fallback inputs are always empty",
+        "receive inputs are always empty",
+    ],
+)
+def test_get_input_types_from_fallback_or_receive_abi(element_type, name):
+    abi_element = make_abi_element(element_type, name)
+    assert get_abi_input_types(abi_element) == []
 
 
 @pytest.mark.parametrize(
     "element_type,name,input_names,input_types",
     [
-        ("function", "FnMultiTypedArg", ("arg0"), ("uint256")),
+        ("function", "FnMultiTypedArg", ["arg0", "arg1"], ["uint256", "bytes32"]),
     ],
 )
 def test_get_tuple_input_types_from_abi_element(
