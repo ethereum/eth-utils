@@ -279,29 +279,51 @@ def test_get_all_event_abis(contract_abi) -> Sequence[ABIEvent]:
 
 @pytest.mark.parametrize(
     "event_name,argument_names",
-    (("LogSingleArg", ["arg0"]),),
-    (("LogSingleWithIndex", ["arg0"]),),
+    [
+        ("LogSingleArg", ["arg0"]),
+        ("LogSingleWithIndex", ["arg0"]),
+    ],
 )
-def test_get_event_abi(contract_abi, event_name, argument_names):
+def test_get_event_abi(event_name, argument_names):
     expected_event_abi = make_event_abi(event_name, argument_names)
     assert get_event_abi(contract_abi, event_name, argument_names) == expected_event_abi
 
 
 @pytest.mark.parametrize(
     "type,name,input_names",
-    (("event", "LogSingleArg", ["arg0"])),
-    (("event", "LogSingleWithIndex", ["arg0"])),
-    (("event", "LogMultiArg", ["arg0", "arg1", "arg2"])),
-    (("event", "LogNoArg", [])),
-    (("function", "FnSingleArg", ["arg0"])),
-    (("function", "FnMultiArg", ["arg0", "arg1"])),
-    (("constructor", "ConstArg", ["arg0"])),
-    (("fallback", "FbInputsArg", ["inputs"])),  # inputs arg
-    (("receive", "RecNoArg", [])),  # no args should be present
+    [
+        ("event", "LogSingleArg", ("arg0")),
+        ("event", "LogSingleWithIndex", ("arg0")),
+        ("event", "LogMultiArg", ("arg0", "arg1", "arg2")),
+        ("event", "LogNoArg", ()),
+        ("function", "FnSingleArg", ("arg0")),
+        ("function", "FnMultiArg", ("arg0", "arg1")),
+        ("constructor", "ConstArg", ("inputs")),
+    ],
 )
 def test_get_input_names_from_abi_element(type, name, input_names):
     abi_element = make_abi_element(type, name, input_names)
     assert get_abi_input_names(abi_element) == input_names
+
+
+@pytest.mark.parametrize(
+    "type,name,input_names",
+    [
+        ("fallback", "FbNoArg", ()),
+        ("receive", "RecNoArg", ()),
+        ("fallback", "FbNoArg", ("arg0")),
+        ("receive", "RecNoArg", ("arg0")),
+    ],
+    ids=[
+        "fallback no inputs",
+        "receive no inputs",
+        "fallback inputs are always empty",
+        "receive inputs are always empty",
+    ],
+)
+def test_get_input_names_from_fallback_or_receive_abi(type, name, input_names):
+    abi_element = make_abi_element(type, name, input_names)
+    assert get_abi_input_names(abi_element) == []
 
 
 EVENT_ABI_A = {

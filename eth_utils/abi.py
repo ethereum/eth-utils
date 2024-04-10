@@ -90,12 +90,6 @@ def _filter_by_argument_name(
     ]
 
 
-def _get_abi_input_names(abi: ABIElement) -> List[str]:
-    if "inputs" not in abi and abi["type"] == "fallback":
-        return []
-    return [arg["name"] for arg in abi["inputs"]]
-
-
 def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     """
     Return interfaces for each event in the contract ABI.
@@ -154,7 +148,13 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     :return: Names for each input in the function or event ABI.
     :rtype: `List[str]`
     """
-    return _get_abi_input_names(abi_element)
+    if (
+        "inputs" not in abi_element
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
+    ):
+        return []
+    return [arg["name"] for arg in abi_element["inputs"]]
 
 
 def function_signature_to_4byte_selector(event_signature: str) -> bytes:
