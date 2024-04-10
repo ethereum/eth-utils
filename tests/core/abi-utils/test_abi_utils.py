@@ -27,6 +27,10 @@ from eth_utils.abi import (
     get_abi_output_types,
     get_all_event_abis,
     get_event_abi,
+    get_event_log_topics,
+)
+from eth_utils.exceptions import (
+    ValidationError,
 )
 from eth_utils.hexadecimal import (
     encode_hex,
@@ -162,9 +166,10 @@ def make_abi_element(
     input_indexed=None,
     output_names=None,
     output_types=None,
+    anonymous=None,
 ) -> ABIElement:
     if element_type == "event":
-        return make_event_abi(name, input_names, input_types, input_indexed)
+        return make_event_abi(name, input_names, input_types, input_indexed, anonymous)
     elif element_type == "function":
         return make_function_abi(
             name, input_names, input_types, output_names, output_types
@@ -181,7 +186,11 @@ def make_constructor_abi_input(name, input_type) -> ABIFunctionParam:
     return {"name": name, "type": input_type}
 
 
-def make_constructor_abi(input_names, input_types) -> ABIConstructor:
+def make_constructor_abi(input_names=None, input_types=None) -> ABIConstructor:
+    if input_names is None or input_types is None:
+        input_names = []
+        input_types = []
+
     assert len(input_names) == len(input_types)
     inputs = [
         make_constructor_abi_input(input_name, input_type)
@@ -214,7 +223,17 @@ def make_event_abi_input(name, input_type, indexed=False) -> ABIEventParam:
     }
 
 
-def make_event_abi(name, input_names, input_types, input_indexed) -> ABIEvent:
+def make_event_abi(
+    name, input_names=None, input_types=None, input_indexed=None, anonymous=None
+) -> ABIEvent:
+    if input_names is None or input_types is None or input_indexed is None:
+        input_names = []
+        input_types = []
+        input_indexed = []
+
+    if anonymous is None:
+        anonymous = False
+
     assert len(input_names) == len(input_types) == len(input_indexed)
 
     inputs = [
@@ -224,7 +243,7 @@ def make_event_abi(name, input_names, input_types, input_indexed) -> ABIEvent:
         )
     ]
     return {
-        "anonymous": False,
+        "anonymous": anonymous,
         "inputs": inputs,
         "name": name,
         "type": "event",
@@ -242,20 +261,25 @@ def make_function_abi_output(name, input_type) -> ABIFunctionParam:
 def make_function_abi(
     name, input_names, input_types, output_names, output_types
 ) -> ABIFunction:
+    if input_names is None or input_types is None:
+        input_names = []
+        input_types = []
+
     assert len(input_names) == len(input_types)
     inputs = [
         make_function_abi_input(input_name, input_type)
         for (input_name, input_type) in zip(input_names, input_types)
     ]
 
-    if output_names is None:
-        outputs = []
-    else:
-        assert len(output_names) == len(output_types)
-        outputs = [
-            make_function_abi_output(output_name, output_type)
-            for (output_name, output_type) in zip(output_names, output_types)
-        ]
+    if output_names is None or output_types is None:
+        output_names = []
+        output_types = []
+
+    assert len(output_names) == len(output_types)
+    outputs = [
+        make_function_abi_output(output_name, output_type)
+        for (output_name, output_type) in zip(output_names, output_types)
+    ]
 
     return {
         "inputs": inputs,
@@ -269,7 +293,7 @@ def make_function_abi(
 @pytest.fixture
 def contract_abi() -> ABI:
     return [
-        make_event_abi("LogNoArg", [], [], []),
+        make_event_abi("LogNoArg"),
         make_event_abi("LogSingleArg", ["arg0"], ["uint256"], [False]),
         make_event_abi("LogSingleWithIndex", ["arg0"], ["uint256"], [False]),
         make_function_abi("logTwoEvents", ["_arg0"], ["uint256"], [], []),
@@ -295,7 +319,7 @@ def contract_ambiguous_event() -> ABI:
 
 def test_get_all_event_abis(contract_abi) -> Sequence[ABIEvent]:
     expected_event_abis = [
-        make_event_abi("LogNoArg", [], [], []),
+        make_event_abi("LogNoArg"),
         make_event_abi("LogSingleArg", ["arg0"], ["uint256"], [False]),
         make_event_abi("LogSingleWithIndex", ["arg0"], ["uint256"], [False]),
     ]
@@ -322,8 +346,7 @@ def test_get_event_abi(
     expected_event_abi = make_event_abi(
         event_name, input_names, input_types, input_indexed
     )
-    actual_event_abi = get_event_abi(contract_abi, event_name, input_names)
-    assert actual_event_abi == expected_event_abi
+    assert get_event_abi(contract_abi, event_name, input_names) == expected_event_abi
 
 
 def test_get_event_abi_raises_if_none_found(contract_abi_add_function):
@@ -489,6 +512,63 @@ def test_get_abi_output_types(element_type, name, output_names, output_types):
         output_types=output_types,
     )
     assert get_abi_output_types(abi_element) == output_types
+
+
+@pytest.mark.parametrize(
+    "element_type,name,topics,anonymous,expected_topics",
+    [
+        (
+            "event",
+            "LogSingleArg",
+            [
+                "0x87e10a54d1dda06db0fde99bdb2e67e6638ca9d2b5add2e3b5b406525b15824a",
+                "0x1",
+                "0x2",
+            ],
+            False,
+            ["0x1", "0x2"],
+        ),
+        (
+            "event",
+            "LogSingleArg",
+            [
+                "0x111",
+            ],
+            True,
+            ["0x111"],
+        ),
+    ],
+)
+def test_get_event_log_topics(element_type, name, topics, anonymous, expected_topics):
+    abi_element = make_abi_element(element_type, name, anonymous=anonymous)
+    assert get_event_log_topics(abi_element, topics) == expected_topics
+
+
+@pytest.mark.parametrize(
+    "element_type,name,topics,expected_error",
+    [
+        (
+            "event",
+            "LogSingleArg",
+            [],
+            "Expected non-anonymous event to have 1 or more topics",
+        ),
+        (
+            "event",
+            "LogSingleArg",
+            ["0x1"],
+            "The event signature did not match the provided ABI",
+        ),
+    ],
+)
+def test_get_event_log_topics_raises_for_bad_topics(
+    element_type, name, topics, expected_error
+):
+    abi_element = make_abi_element(element_type, name)
+    with pytest.raises(ValidationError) as err:
+        get_event_log_topics(abi_element, topics)
+
+    assert str(err.value) == expected_error
 
 
 EVENT_ABI_A = {

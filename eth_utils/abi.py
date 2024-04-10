@@ -6,6 +6,7 @@ from typing import (
     List,
     Optional,
     Sequence,
+    Union,
     cast,
 )
 
@@ -14,6 +15,19 @@ from eth_typing import (
     ABIElement,
     ABIEvent,
     ABIFunction,
+    HexStr,
+    Primitives,
+)
+from hexbytes import (
+    HexBytes,
+)
+
+from eth_utils.conversions import (
+    hexstr_if_str,
+    to_bytes,
+)
+from eth_utils.exceptions import (
+    ValidationError,
 )
 
 from .crypto import (
@@ -90,6 +104,41 @@ def _filter_by_argument_name(
         if set(argument_names).intersection(get_abi_input_names(abi))
         == set(argument_names)
     ]
+
+
+def _log_entry_data_to_bytes(
+    log_entry_data: Union[Primitives, HexStr, str],
+) -> HexBytes:
+    return hexstr_if_str(to_bytes, log_entry_data)
+
+
+def get_event_log_topics(
+    event_abi: ABIEvent,
+    topics: Optional[Sequence[HexBytes]] = None,
+) -> Sequence[HexBytes]:
+    """
+    Return topics from an event ABI.
+
+    :param event_abi: Event ABI.
+    :param type: `ABIEvent`
+    :param topics: Transaction topics from a `LogReceipt`.
+    :param type: `list[HexBytes]`
+    :return: Event topics from the event ABI.
+    :rtype: `list[HexBytes]`
+    """
+    if topics is None:
+        topics = []
+
+    if event_abi["anonymous"]:
+        return topics
+    elif len(topics) == 0:
+        # raise MismatchedABI("Expected non-anonymous event to have 1 or more topics")
+        raise ValidationError("Expected non-anonymous event to have 1 or more topics")
+    elif event_abi_to_log_topic(dict(event_abi)) != _log_entry_data_to_bytes(topics[0]):
+        # raise MismatchedABI("The event signature did not match the provided ABI")
+        raise ValidationError("The event signature did not match the provided ABI")
+    else:
+        return topics[1:]
 
 
 def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
