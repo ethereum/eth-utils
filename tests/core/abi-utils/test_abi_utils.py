@@ -4,10 +4,14 @@ from typing import (
 
 from eth_typing import (
     ABI,
+    ABIConstructor,
+    ABIElement,
     ABIEvent,
     ABIEventParam,
+    ABIFallback,
     ABIFunction,
     ABIFunctionParam,
+    ABIReceive,
 )
 import pytest
 
@@ -17,7 +21,9 @@ from eth_utils.abi import (
     event_signature_to_log_topic,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
+    get_abi_input_names,
     get_all_event_abis,
+    get_event_abi,
 )
 from eth_utils.hexadecimal import (
     encode_hex,
@@ -146,6 +152,63 @@ def test__abi_to_signature(abi, expected):
 
 
 @pytest.fixture
+def make_abi_element():
+    def _make_abi_element(type, name, input_names) -> ABIElement:
+        if type == "event":
+            return make_event_abi(name, input_names)
+        elif type == "function":
+            return make_function_abi(name, input_names)
+        elif type == "constructor":
+            return make_constructor_abi(name, input_names)
+        elif type == "fallback":
+            return make_fallback_abi(name, input_names)
+        elif type == "receive":
+            return make_receive_abi(name, input_names)
+
+    return _make_abi_element
+
+
+@pytest.fixture
+def make_constructor_abi_input():
+    def _make_constructor_abi_input(name) -> ABIFunctionParam:
+        return {"name": name, "type": "uint256"}
+
+    return _make_constructor_abi_input
+
+
+@pytest.fixture
+def make_constructor_abi():
+    def _make_constructor_abi(input_names) -> ABIConstructor:
+        inputs = [make_constructor_abi_input(input_name) for input_name in input_names]
+        return {
+            "inputs": inputs,
+            "type": "constructor",
+        }
+
+    return _make_constructor_abi
+
+
+@pytest.fixture
+def make_fallback_abi():
+    def _make_fallback_abi() -> ABIFallback:
+        return {
+            "type": "fallback",
+        }
+
+    return _make_fallback_abi
+
+
+@pytest.fixture
+def make_receive_abi():
+    def _make_receive_abi() -> ABIReceive:
+        return {
+            "type": "receive",
+        }
+
+    return _make_receive_abi
+
+
+@pytest.fixture
 def make_event_abi_input():
     def _make_event_abi_input(name) -> ABIEventParam:
         return [
@@ -212,6 +275,33 @@ def test_get_all_event_abis(contract_abi) -> Sequence[ABIEvent]:
         make_event_abi("LogSingleWithIndex", ["arg0"]),
     ]
     assert get_all_event_abis(contract_abi) == expected_event_abis
+
+
+@pytest.mark.parametrize(
+    "event_name,argument_names",
+    (("LogSingleArg", ["arg0"]),),
+    (("LogSingleWithIndex", ["arg0"]),),
+)
+def test_get_event_abi(contract_abi, event_name, argument_names):
+    expected_event_abi = make_event_abi(event_name, argument_names)
+    assert get_event_abi(contract_abi, event_name, argument_names) == expected_event_abi
+
+
+@pytest.mark.parametrize(
+    "type,name,input_names",
+    (("event", "LogSingleArg", ["arg0"])),
+    (("event", "LogSingleWithIndex", ["arg0"])),
+    (("event", "LogMultiArg", ["arg0", "arg1", "arg2"])),
+    (("event", "LogNoArg", [])),
+    (("function", "FnSingleArg", ["arg0"])),
+    (("function", "FnMultiArg", ["arg0", "arg1"])),
+    (("constructor", "ConstArg", ["arg0"])),
+    (("fallback", "FbInputsArg", ["inputs"])),  # inputs arg
+    (("receive", "RecNoArg", [])),  # no args should be present
+)
+def test_get_input_names_from_abi_element(type, name, input_names):
+    abi_element = make_abi_element(type, name, input_names)
+    assert get_abi_input_names(abi_element) == input_names
 
 
 EVENT_ABI_A = {

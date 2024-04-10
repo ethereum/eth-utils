@@ -1,7 +1,10 @@
+import functools
 from typing import (
     Any,
+    Collection,
     Dict,
     List,
+    Optional,
     Sequence,
 )
 
@@ -13,6 +16,9 @@ from eth_typing import (
 
 from .crypto import (
     keccak,
+)
+from .toolz import (
+    pipe,
 )
 
 
@@ -62,6 +68,34 @@ def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
     return [abi for abi in contract_abi if abi["type"] == _type]
 
 
+def _filter_by_name(name: str, contract_abi: ABI) -> List[ABIElement]:
+    return [
+        abi
+        for abi in contract_abi
+        if (
+            abi["type"] not in ("fallback", "constructor", "receive")
+            and abi["name"] == name
+        )
+    ]
+
+
+def _filter_by_argument_name(
+    argument_names: Collection[str], contract_abi: ABI
+) -> List[ABIElement]:
+    return [
+        abi
+        for abi in contract_abi
+        if set(argument_names).intersection(get_abi_input_names(abi))
+        == set(argument_names)
+    ]
+
+
+def _get_abi_input_names(abi: ABIElement) -> List[str]:
+    if "inputs" not in abi and abi["type"] == "fallback":
+        return []
+    return [arg["name"] for arg in abi["inputs"]]
+
+
 def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     """
     Return interfaces for each event in the contract ABI.
@@ -72,6 +106,55 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     :rtype: `list[ABIEvent]`
     """
     return [ABIEvent(event) for event in _filter_by_type("event", abi)]
+
+
+def get_event_abi(
+    abi: ABI,
+    event_name: Optional[str] = None,
+    argument_names: Optional[Sequence[str]] = None,
+) -> ABIEvent:
+    """
+    Find the event interface with the given name and arguments.
+
+    :param abi: Contract ABI.
+    :param type: `ABI`
+    :param event_name: Find an event abi with matching event name.
+    :param type: `str`
+    :param argument_names: Find an event abi with matching arguments.
+    :param type: `list[str]`
+    :return: ABI for the event interface.
+    :rtype: `ABIEvent`
+    """
+    filters = [
+        functools.partial(_filter_by_type, "event"),
+    ]
+
+    if event_name is not None:
+        filters.append(functools.partial(_filter_by_name, event_name))
+
+    if argument_names is not None:
+        filters.append(functools.partial(_filter_by_argument_name, argument_names))
+
+    event_abi_candidates = pipe(abi, *filters)
+
+    if len(event_abi_candidates) == 1:
+        return event_abi_candidates[0]
+    elif not event_abi_candidates:
+        raise ValueError("No matching events found")
+    else:
+        raise ValueError("Multiple events found")
+
+
+def get_abi_input_names(abi_element: ABIElement) -> List[str]:
+    """
+    Return names for each input from the function or event ABI.
+
+    :param abi_element: Function or Event ABI.
+    :param type: `ABIFunction` or `ABIEvent`
+    :return: Names for each input in the function or event ABI.
+    :rtype: `List[str]`
+    """
+    return _get_abi_input_names(abi_element)
 
 
 def function_signature_to_4byte_selector(event_signature: str) -> bytes:
