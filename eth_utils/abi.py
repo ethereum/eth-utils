@@ -135,7 +135,7 @@ def get_event_abi(
 
     if len(event_abi_candidates) == 1:
         return event_abi_candidates[0]
-    elif not event_abi_candidates:
+    elif len(event_abi_candidates) == 0:
         raise ValueError("No matching events found")
     else:
         raise ValueError("Multiple events found")
