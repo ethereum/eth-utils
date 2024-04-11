@@ -52,6 +52,7 @@ setup(
     url="https://github.com/ethereum/eth-utils",
     include_package_data=True,
     install_requires=[
+        "eth-abi>=4.0.0",
         "eth-hash>=0.3.1",
         "eth-typing>=3.0.0",
         "hexbytes>=0.1.0,<0.4.0",
