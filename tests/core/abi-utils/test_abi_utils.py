@@ -33,6 +33,7 @@ from eth_utils.abi import (
     get_event_abi,
     get_event_log_topics,
     get_function_abi,
+    get_function_info,
 )
 from eth_utils.exceptions import (
     EthUtilsABIValidationError,
@@ -626,8 +627,8 @@ def test_get_function_abi_by_name_with_kwargs(contract_abi):
     function_abi = get_function_abi(
         contract_abi,
         "setValue",
-        [{"name": "arg0", "type": "uint256"}],
-        {"arg1": {"name": "amount", "type": "uint256"}},
+        ["arg0"],
+        {"arg1": "uint256"},
     )
     expected_abi = make_abi_element(
         "function",
@@ -675,6 +676,47 @@ def test_get_function_abi_codec_override(contract_abi):
         "function", "logTwoEvents", [{"name": "_arg0", "type": "uint256"}]
     )
     assert function_abi == expected_abi
+
+
+@pytest.mark.parametrize(
+    "name,input_args,input_kwargs,expected_selector,expected_arguments",
+    [
+        (
+            "logTwoEvents",
+            ["_arg0"],
+            {},
+            "0x5818fad7",
+            [
+                "_arg0",
+            ],
+        ),
+        (
+            "setValue",
+            ["_arg0"],
+            {},
+            "0x55241077",
+            [
+                "_arg0",
+            ],
+        ),
+        (
+            "setValue",
+            [],
+            {"_arg0": "uint256"},
+            "0x55241077",
+            ("uint256",),
+        ),
+    ],
+)
+def test_get_function_info(
+    contract_abi, name, input_args, input_kwargs, expected_selector, expected_arguments
+):
+    function_info = get_function_info(contract_abi, name, input_args, input_kwargs)
+    assert function_info["abi"] == get_function_abi(
+        contract_abi, name, input_args, input_kwargs
+    )
+    assert function_info["selector"] == expected_selector
+    assert function_info["arguments"] == expected_arguments
 
 
 EVENT_ABI_A = {

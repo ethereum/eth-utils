@@ -23,6 +23,7 @@ from eth_typing import (
     ABIElement,
     ABIEvent,
     ABIFunction,
+    ABIFunctionInfo,
     ABIFunctionParam,
     HexStr,
     Primitives,
@@ -41,6 +42,9 @@ from eth_utils.encoding import (
 from eth_utils.exceptions import (
     EthUtilsABIValidationError,
     ValidationError,
+)
+from eth_utils.hexadecimal import (
+    encode_hex,
 )
 from eth_utils.types import (
     is_list_like,
@@ -449,6 +453,39 @@ def get_function_abi(
             args,
             kwargs,
         )
+
+
+def get_function_info(
+    abi: ABI,
+    function_identifier: str,
+    args: Optional[Sequence[Any]] = None,
+    kwargs: Optional[Any] = None,
+) -> ABIFunctionInfo:
+    """
+    Return the function ABI, selector and input arguments.
+
+    :param abi: Contract ABI.
+    :param type: `ABI`
+    :param function_identifier: Find a function ABI with matching identifier.
+    :param type: `str`
+    :param args: Find a function ABI with matching args.
+    :param type: `list[Any]`
+    :param kwargs: Find a function ABI with matching kwargs.
+    :param type: `Any`
+    :return: Function information including the ABI, selector and args.
+    :rtype: `ABIFunctionInfo`
+    """
+    args = args or tuple()
+    kwargs = kwargs or dict()
+
+    fn_abi = get_function_abi(abi, function_identifier, args, kwargs)
+    fn_selector = encode_hex(function_abi_to_4byte_selector(fn_abi))
+    fn_arguments = _merge_args_and_kwargs(fn_abi, args, kwargs)
+    _, aligned_fn_arguments = _get_aligned_abi_inputs(fn_abi, fn_arguments)
+
+    return ABIFunctionInfo(
+        abi=fn_abi, selector=fn_selector, arguments=aligned_fn_arguments
+    )
 
 
 def get_event_log_topics(
