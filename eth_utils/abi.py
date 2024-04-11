@@ -112,6 +112,18 @@ def _log_entry_data_to_bytes(
     return hexstr_if_str(to_bytes, log_entry_data)
 
 
+def get_all_function_abis(abi: ABI) -> ABIFunction:
+    """
+    Return interfaces for each function in the contract ABI.
+
+    :param abi: Contract ABI.
+    :param type: `ABI`
+    :return: List of ABIs for each function interface.
+    :rtype: `list[ABIFunction]`
+    """
+    return cast(ABIFunction, _filter_by_type("function", abi))
+
+
 def get_event_log_topics(
     event_abi: ABIEvent,
     topics: Optional[Sequence[HexBytes]] = None,

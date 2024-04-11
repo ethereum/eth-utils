@@ -26,6 +26,7 @@ from eth_utils.abi import (
     get_abi_output_names,
     get_abi_output_types,
     get_all_event_abis,
+    get_all_function_abis,
     get_event_abi,
     get_event_log_topics,
 )
@@ -297,6 +298,7 @@ def contract_abi() -> ABI:
         make_event_abi("LogSingleArg", ["arg0"], ["uint256"], [False]),
         make_event_abi("LogSingleWithIndex", ["arg0"], ["uint256"], [False]),
         make_function_abi("logTwoEvents", ["_arg0"], ["uint256"], [], []),
+        make_function_abi("setValue", ["_art0"], ["uint256"], [], []),
     ]
 
 
@@ -569,6 +571,14 @@ def test_get_event_log_topics_raises_for_bad_topics(
         get_event_log_topics(abi_element, topics)
 
     assert str(err.value) == expected_error
+
+
+def test_get_all_function_abis(contract_abi):
+    expected_function_abis = [
+        make_function_abi("logTwoEvents", ["_arg0"], ["uint256"], [], []),
+        make_function_abi("setValue", ["_art0"], ["uint256"], [], []),
+    ]
+    assert get_all_function_abis(contract_abi) == expected_function_abis
 
 
 EVENT_ABI_A = {
