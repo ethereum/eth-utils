@@ -1,0 +1,1 @@
+ABI utilities to simplify using contract `function` and `event` ABI signatures.
