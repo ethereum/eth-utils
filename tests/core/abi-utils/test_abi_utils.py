@@ -15,6 +15,7 @@ from eth_typing import (
     ABIFunction,
     ABIFunctionParam,
     ABIReceive,
+    MismatchedABI,
 )
 import pytest
 
@@ -36,7 +37,6 @@ from eth_utils.abi import (
     get_function_info,
 )
 from eth_utils.exceptions import (
-    EthUtilsABIValidationError,
     ValidationError,
 )
 from eth_utils.hexadecimal import (
@@ -364,11 +364,31 @@ def test_get_event_abi(contract_abi, event_name, input_args):
     assert get_event_abi(contract_abi, event_name, input_names) == expected_event_abi
 
 
-def test_get_event_abi_raises_if_none_found(contract_abi_add_function):
-    with pytest.raises(ValueError) as error:
-        get_event_abi(contract_abi_add_function, "foo", [])
+@pytest.mark.parametrize(
+    "name,args,error_type,expected_value",
+    (
+        (
+            None,
+            None,
+            ValidationError,
+            "event_name is required in order to match an event ABI.",
+        ),
+        (
+            "",
+            None,
+            ValidationError,
+            "event_name is required in order to match an event ABI.",
+        ),
+        ("foo", None, ValueError, "No matching events found"),
+    ),
+)
+def test_get_event_abi_raises_on_error(
+    contract_abi_add_function, name, args, error_type, expected_value
+):
+    with pytest.raises(error_type) as error:
+        get_event_abi(contract_abi_add_function, name, args)
 
-    assert str(error.value) == "No matching events found"
+    assert str(error.value) == expected_value
 
 
 def test_get_event_abi_raises_if_multiple_found(contract_ambiguous_event):
@@ -586,7 +606,7 @@ def test_get_event_log_topics_raises_for_bad_topics(
     element_type, name, topics, expected_error
 ):
     abi_element = make_abi_element(element_type, name)
-    with pytest.raises(ValidationError) as err:
+    with pytest.raises(MismatchedABI) as err:
         get_event_log_topics(abi_element, topics)
 
     assert str(err.value) == expected_error
@@ -655,7 +675,7 @@ def test_get_function_abi_raises_without_valid_function_identifier(contract_abi)
 
 
 def test_get_function_abi_by_name(contract_abi):
-    with pytest.raises(EthUtilsABIValidationError) as err:
+    with pytest.raises(MismatchedABI) as err:
         get_function_abi(contract_abi, "logTwoEvents")
 
     assert "Function invocation failed due to improper number of arguments." in str(

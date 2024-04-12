@@ -26,6 +26,7 @@ from eth_typing import (
     ABIFunctionInfo,
     ABIFunctionParam,
     HexStr,
+    MismatchedABI,
     Primitives,
 )
 from hexbytes import (
@@ -40,7 +41,6 @@ from eth_utils.encoding import (
     get_default_codec,
 )
 from eth_utils.exceptions import (
-    EthUtilsABIValidationError,
     ValidationError,
 )
 from eth_utils.hexadecimal import (
@@ -336,7 +336,7 @@ def _log_entry_data_to_bytes(
     return hexstr_if_str(to_bytes, log_entry_data)
 
 
-def _raise_function_abi_validation_error(
+def _raise_mismatched_abi_error(
     function_identifier: str,
     matching_function_signatures: Sequence[str],
     arg_count_matches: int,
@@ -367,7 +367,7 @@ def _raise_function_abi_validation_error(
     else:
         collapsed_kwargs = {}
 
-    message = (
+    raise MismatchedABI(
         f"\nCould not identify the intended function with name "
         f"`{function_identifier}`, positional arguments with type(s) "
         f"`{collapsed_args}` and keyword arguments with type(s) "
@@ -375,8 +375,6 @@ def _raise_function_abi_validation_error(
         f"\nFound {len(matching_function_signatures)} function(s) with the name "
         f"`{function_identifier}`: {matching_function_signatures}{diagnosis}"
     )
-
-    raise EthUtilsABIValidationError(message)
 
 
 def get_all_function_abis(abi: ABI) -> ABIFunction:
@@ -445,7 +443,7 @@ def get_function_abi(
         arg_count_matches = len(arg_count_filter(matching_identifiers))
         encoding_matches = len(encoding_filter(matching_identifiers))
 
-        _raise_function_abi_validation_error(
+        _raise_mismatched_abi_error(
             function_identifier,
             matching_function_signatures,
             arg_count_matches,
@@ -508,11 +506,9 @@ def get_event_log_topics(
     if event_abi["anonymous"]:
         return topics
     elif len(topics) == 0:
-        # raise MismatchedABI("Expected non-anonymous event to have 1 or more topics")
-        raise ValidationError("Expected non-anonymous event to have 1 or more topics")
+        raise MismatchedABI("Expected non-anonymous event to have 1 or more topics")
     elif event_abi_to_log_topic(dict(event_abi)) != _log_entry_data_to_bytes(topics[0]):
-        # raise MismatchedABI("The event signature did not match the provided ABI")
-        raise ValidationError("The event signature did not match the provided ABI")
+        raise MismatchedABI("The event signature did not match the provided ABI")
     else:
         return topics[1:]
 
@@ -531,11 +527,11 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
 
 def get_event_abi(
     abi: ABI,
-    event_name: Optional[str] = None,
+    event_name: str,
     argument_names: Optional[Sequence[str]] = None,
 ) -> ABIEvent:
     """
-    Find the event interface with the given name and arguments.
+    Find the event interface with the given name and/or arguments.
 
     :param abi: Contract ABI.
     :param type: `ABI`
@@ -550,8 +546,10 @@ def get_event_abi(
         functools.partial(_filter_by_type, "event"),
     ]
 
-    if event_name is not None:
-        filters.append(functools.partial(_filter_by_name, event_name))
+    if event_name is None or event_name == "":
+        raise ValidationError("event_name is required in order to match an event ABI.")
+
+    filters.append(functools.partial(_filter_by_name, event_name))
 
     if argument_names is not None:
         filters.append(functools.partial(_filter_by_argument_name, argument_names))
