@@ -573,12 +573,16 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     :return: Names for each input in the function or event ABI.
     :rtype: `List[str]`
     """
+    element_type = abi_element["type"]
     if (
         "inputs" not in abi_element
-        or abi_element["type"] == "fallback"
-        or abi_element["type"] == "receive"
+        or element_type == "fallback"
+        or element_type == "receive"
     ):
-        return []
+        raise ValueError(
+            f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+            f" ABI type was '{element_type}'."
+        )
     return [arg["name"] for arg in abi_element["inputs"]]
 
 
@@ -591,12 +595,16 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     :return: Types for each input in the function or event ABI.
     :rtype: `List[str]`
     """
+    element_type = abi_element["type"]
     if (
         "inputs" not in abi_element
-        or abi_element["type"] == "fallback"
-        or abi_element["type"] == "receive"
+        or element_type == "fallback"
+        or element_type == "receive"
     ):
-        return []
+        raise ValueError(
+            f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+            f" ABI type was '{element_type}'."
+        )
     else:
         return [collapse_if_tuple(cast(ABI, arg)) for arg in abi_element["inputs"]]
 
@@ -610,8 +618,12 @@ def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
     :return: Names for each function output in the function ABI.
     :rtype: `List[str]`
     """
-    if "outputs" not in function_abi or function_abi["type"] != "function":
-        return []
+    function_type = function_abi["type"]
+    if "outputs" not in function_abi or not function_type == "function":
+        raise ValueError(
+            f"Outputs only supported for ABI type 'function'. Provided"
+            f" ABI type was '{function_type}'."
+        )
     return [arg["name"] for arg in function_abi["outputs"]]
 
 
@@ -624,8 +636,12 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
     :return: Types for each function output in the function ABI.
     :rtype: `List[str]`
     """
-    if "outputs" not in function_abi or function_abi["type"] != "function":
-        return []
+    function_type = function_abi["type"]
+    if "outputs" not in function_abi or not function_type == "function":
+        raise ValueError(
+            f"Outputs only supported for ABI type 'function'. Provided"
+            f" ABI type was '{function_type}'."
+        )
     else:
         return [collapse_if_tuple(cast(ABI, arg)) for arg in function_abi["outputs"]]
 

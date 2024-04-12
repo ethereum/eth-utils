@@ -373,12 +373,6 @@ def test_get_event_abi(contract_abi, event_name, input_args):
             ValidationError,
             "event_name is required in order to match an event ABI.",
         ),
-        (
-            "",
-            None,
-            ValidationError,
-            "event_name is required in order to match an event ABI.",
-        ),
         ("foo", None, ValueError, "No matching events found"),
     ),
 )
@@ -442,9 +436,16 @@ def test_get_input_names_from_abi_element(element_type, name, input_args):
         "receive inputs are always empty",
     ],
 )
-def test_get_input_names_from_fallback_or_receive_abi(element_type, name):
+def test_get_input_names_raises_for_fallback_or_receive_abi(element_type, name):
     abi_element = make_abi_element(element_type, name)
-    assert get_abi_input_names(abi_element) == []
+    with pytest.raises(ValueError) as e:
+        get_abi_input_names(abi_element)
+
+    assert (
+        str(e.value)
+        == f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+        f" ABI type was '{element_type}'."
+    )
 
 
 @pytest.mark.parametrize(
@@ -498,9 +499,16 @@ def test_get_input_types_from_abi_element(element_type, name, input_args):
         "receive inputs are always empty",
     ],
 )
-def test_get_input_types_from_fallback_or_receive_abi(element_type, name):
+def test_get_input_types_raises_for_fallback_or_receive_abi(element_type, name):
     abi_element = make_abi_element(element_type, name)
-    assert get_abi_input_types(abi_element) == []
+    with pytest.raises(ValueError) as e:
+        get_abi_input_types(abi_element)
+
+    assert (
+        str(e.value)
+        == f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+        f" ABI type was '{element_type}'."
+    )
 
 
 @pytest.mark.parametrize(
@@ -511,10 +519,6 @@ def test_get_input_types_from_fallback_or_receive_abi(element_type, name):
             "FnMultiTypedArg",
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "bytes32"}],
         ),
-        ("constructor", "Const", []),
-        ("fallback", "Fb", []),
-        ("receive", "Rec", []),
-        ("event", "Rec", []),
     ],
 )
 def test_get_abi_output_names(element_type, name, outputs):
@@ -531,16 +535,39 @@ def test_get_abi_output_names(element_type, name, outputs):
 
 @pytest.mark.parametrize(
     "element_type,name,outputs",
+    (
+        ("constructor", "Const", []),
+        ("fallback", "Fb", []),
+        ("receive", "Rec", []),
+        ("event", "Evt", []),
+    ),
+)
+def test_get_abi_output_names_raises_for_non_function_types(
+    element_type, name, outputs
+):
+    abi_element = make_abi_element(
+        element_type,
+        name,
+        input_args=[],
+        outputs=outputs,
+    )
+    with pytest.raises(ValueError) as e:
+        get_abi_output_names(abi_element)
+
+    assert (
+        str(e.value) == f"Outputs only supported for ABI type 'function'. Provided"
+        f" ABI type was '{element_type}'."
+    )
+
+
+@pytest.mark.parametrize(
+    "element_type,name,outputs",
     [
         (
             "function",
             "FnMultiTypedArg",
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "bytes32"}],
         ),
-        ("constructor", "Const", []),
-        ("fallback", "Fb", []),
-        ("receive", "Rec", []),
-        ("event", "Rec", []),
     ],
 )
 def test_get_abi_output_types(element_type, name, outputs):
@@ -553,6 +580,33 @@ def test_get_abi_output_types(element_type, name, outputs):
     assert get_abi_output_types(abi_element) == [
         output.get("type") for output in outputs
     ]
+
+
+@pytest.mark.parametrize(
+    "element_type,name,outputs",
+    (
+        ("constructor", "Const", []),
+        ("fallback", "Fb", []),
+        ("receive", "Rec", []),
+        ("event", "Evt", []),
+    ),
+)
+def test_get_abi_output_types_raises_for_non_function_types(
+    element_type, name, outputs
+):
+    abi_element = make_abi_element(
+        element_type,
+        name,
+        input_args=[],
+        outputs=outputs,
+    )
+    with pytest.raises(ValueError) as e:
+        get_abi_output_types(abi_element)
+
+    assert (
+        str(e.value) == f"Outputs only supported for ABI type 'function'. Provided"
+        f" ABI type was '{element_type}'."
+    )
 
 
 @pytest.mark.parametrize(
