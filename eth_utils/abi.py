@@ -102,7 +102,7 @@ def _abi_inputs_types(
     return ",".join([collapse_if_tuple(abi_input) for abi_input in abi_inputs])
 
 
-def _abi_to_signature(abi: ABI) -> str:
+def _abi_to_signature(abi: ABIElement) -> str:
     function_signature = f"{abi['name']}({_abi_inputs_types(abi.get('inputs', []))})"
     return function_signature
 
@@ -237,7 +237,7 @@ def _merge_args_and_kwargs(
     )
 
     if sorted_args:
-        return sorted_args[1]
+        return sorted_args
     else:
         return tuple()
 
