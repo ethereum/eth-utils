@@ -30,6 +30,7 @@ from eth_utils import (
     apply_to_return_value,
     big_endian_to_int,
     clamp,
+    collapse_if_tuple,
     combine_argument_formatters,
     combomethod,
     decode_hex,
@@ -41,7 +42,17 @@ from eth_utils import (
     from_wei,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
+    get_abi_input_names,
+    get_abi_input_types,
+    get_abi_output_names,
+    get_abi_output_types,
+    get_all_event_abis,
+    get_all_function_abis,
+    get_event_abi,
+    get_event_log_topics,
     get_extended_debug_logger,
+    get_function_abi,
+    get_function_info,
     get_logger,
     hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
@@ -242,6 +253,10 @@ apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F811
 from_wei = curry(from_wei)
+get_event_abi = curry(get_event_abi)
+get_event_log_topics = curry(get_event_log_topics)
+get_function_abi = curry(get_function_abi)
+get_function_info = curry(get_function_info)
 get_logger = curry(get_logger)
 hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)

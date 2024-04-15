@@ -9,6 +9,7 @@ from typing import (
     Any,
     Collection,
     Dict,
+    Iterable,
     List,
     Mapping,
     Optional,
@@ -22,6 +23,7 @@ from eth_typing import (
     ABI,
     ABIElement,
     ABIEvent,
+    ABIEventParam,
     ABIFunction,
     ABIFunctionInfo,
     ABIFunctionParam,
@@ -59,7 +61,7 @@ from .toolz import (
 )
 
 
-def collapse_if_tuple(abi: ABIFunctionParam) -> str:
+def collapse_if_tuple(abi: Union[ABIFunctionParam, ABIEventParam]) -> str:
     """
     Converts a tuple from a dict to a parenthesized list of its types.
 
@@ -94,7 +96,7 @@ def collapse_if_tuple(abi: ABIFunctionParam) -> str:
 
 
 def _abi_inputs_types(
-    abi_inputs: Union[Sequence[ABIFunctionParam], None] = None
+    abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam]]] = None
 ) -> str:
     if abi_inputs is None:
         abi_inputs = []
@@ -103,8 +105,20 @@ def _abi_inputs_types(
 
 
 def _abi_to_signature(abi: ABIElement) -> str:
-    function_signature = f"{abi['name']}({_abi_inputs_types(abi.get('inputs', []))})"
-    return function_signature
+    if abi["type"] == "fallback" or abi["type"] == "receive":
+        name = str(abi["type"])
+        abi_inputs = None
+    elif abi["type"] == "constructor":
+        name = abi["type"]
+        abi_inputs = abi["inputs"]
+    elif abi["type"] == "event":
+        name = abi["name"]
+        abi_inputs = abi["inputs"]
+    else:
+        name = str(abi.get("name", abi["type"]))
+        abi_inputs = abi.get("inputs")
+
+    return f"{name}({_abi_inputs_types(abi_inputs)})"
 
 
 def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
@@ -117,7 +131,7 @@ def _filter_by_name(name: str, contract_abi: ABI) -> List[ABIElement]:
         for abi in contract_abi
         if (
             abi["type"] not in ("fallback", "constructor", "receive")
-            and abi["name"] == name
+            and abi.get("name", "") == name
         )
     ]
 
@@ -129,11 +143,10 @@ def _filter_by_encodability(
     contract_abi: ABI,
 ) -> List[ABIFunction]:
     return [
-        cast(ABIFunction, function_abi)
-        for function_abi in contract_abi
-        if _check_if_arguments_can_be_encoded(
-            cast(ABIFunction, function_abi), abi_codec, args, kwargs
-        )
+        abi
+        for abi in contract_abi
+        if abi["type"] == "function"
+        and _check_if_arguments_can_be_encoded(abi, abi_codec, args, kwargs)
     ]
 
 
@@ -148,10 +161,24 @@ def _filter_by_argument_name(
     ]
 
 
+def _get_abi_if_input_size(abi_element: ABIElement, num_arguments: int) -> bool:
+    if (
+        "inputs" not in abi_element
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
+    ):
+        # only return True for fallback and receive if 0 arguments expected
+        return num_arguments == 0
+    elif abi_element["type"] == "function" or abi_element["type"] == "constructor":
+        return len(abi_element["inputs"]) == num_arguments
+
+    return False
+
+
 def _filter_by_argument_count(
     num_arguments: int, contract_abi: ABI
 ) -> List[ABIElement]:
-    return [abi for abi in contract_abi if len(abi["inputs"]) == num_arguments]
+    return [abi for abi in contract_abi if _get_abi_if_input_size(abi, num_arguments)]
 
 
 def _check_if_arguments_can_be_encoded(
@@ -236,8 +263,8 @@ def _merge_args_and_kwargs(
         )
     )
 
-    if sorted_args:
-        return sorted_args
+    if len(sorted_args) > 0:
+        return tuple(sorted_args[1])
     else:
         return tuple()
 
@@ -277,11 +304,12 @@ def _align_abi_input(
         # Arg is non-tuple.  Just return value.
         return arg
 
+    sub_abis: Iterable[ABIFunctionParam] = []
     tuple_prefix, tuple_dims = tuple_parts
     if tuple_dims is None:
         # Arg is non-list tuple.  Each sub arg in `arg` will be aligned
         # according to its corresponding abi.
-        sub_abis = arg_abi["components"]
+        sub_abis = cast(Iterable[ABIFunctionParam], arg_abi["components"])
     else:
         num_dims = tuple_dims.count("[")
 
@@ -332,7 +360,7 @@ def _get_tuple_type_str_parts(s: str) -> Optional[Tuple[str, Optional[str]]]:
 
 def _log_entry_data_to_bytes(
     log_entry_data: Union[Primitives, HexStr, str],
-) -> HexBytes:
+) -> bytes:
     return hexstr_if_str(to_bytes, log_entry_data)
 
 
@@ -377,7 +405,7 @@ def _raise_mismatched_abi_error(
     )
 
 
-def get_all_function_abis(abi: ABI) -> ABIFunction:
+def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     """
     Return interfaces for each function in the contract ABI.
 
@@ -386,7 +414,10 @@ def get_all_function_abis(abi: ABI) -> ABIFunction:
     :return: List of ABIs for each function interface.
     :rtype: `list[ABIFunction]`
     """
-    return cast(ABIFunction, _filter_by_type("function", abi))
+    return [
+        cast(ABIFunction, function_abi)
+        for function_abi in _filter_by_type("function", abi)
+    ]
 
 
 def get_function_abi(
@@ -429,12 +460,11 @@ def get_function_abi(
         _filter_by_encodability, abi_codec, args, kwargs
     )
 
-    function_candidates = pipe(abi, name_filter, arg_count_filter)
+    function_candidates = cast(
+        Sequence[ABIFunction], pipe(abi, name_filter, arg_count_filter)
+    )
 
-    if len(function_candidates) == 1:
-        return function_candidates[0]
-
-    else:
+    if len(function_candidates) != 1:
         matching_identifiers = name_filter(abi)
         matching_function_signatures = [
             _abi_to_signature(func) for func in matching_identifiers
@@ -451,6 +481,8 @@ def get_function_abi(
             args,
             kwargs,
         )
+
+    return function_candidates[0]
 
 
 def get_function_info(
@@ -507,7 +539,7 @@ def get_event_log_topics(
         return topics
     elif len(topics) == 0:
         raise MismatchedABI("Expected non-anonymous event to have 1 or more topics")
-    elif event_abi_to_log_topic(dict(event_abi)) != _log_entry_data_to_bytes(topics[0]):
+    elif event_abi_to_log_topic(event_abi) != _log_entry_data_to_bytes(topics[0]):
         raise MismatchedABI("The event signature did not match the provided ABI")
     else:
         return topics[1:]
@@ -522,7 +554,7 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     :return: List of ABIs for each event interface.
     :rtype: `list[ABIEvent]`
     """
-    return [ABIEvent(event) for event in _filter_by_type("event", abi)]
+    return [cast(ABIEvent, event) for event in _filter_by_type("event", abi)]
 
 
 def get_event_abi(
@@ -554,7 +586,7 @@ def get_event_abi(
     if argument_names is not None:
         filters.append(functools.partial(_filter_by_argument_name, argument_names))
 
-    event_abi_candidates = pipe(abi, *filters)
+    event_abi_candidates = cast(Sequence[ABIEvent], pipe(abi, *filters))
 
     if len(event_abi_candidates) == 1:
         return event_abi_candidates[0]
@@ -573,15 +605,14 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     :return: Names for each input in the function or event ABI.
     :rtype: `List[str]`
     """
-    element_type = abi_element["type"]
     if (
         "inputs" not in abi_element
-        or element_type == "fallback"
-        or element_type == "receive"
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
     ):
         raise ValueError(
             f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-            f" ABI type was '{element_type}'."
+            f" ABI type was '{abi_element['type']}'."
         )
     return [arg["name"] for arg in abi_element["inputs"]]
 
@@ -595,18 +626,17 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     :return: Types for each input in the function or event ABI.
     :rtype: `List[str]`
     """
-    element_type = abi_element["type"]
     if (
-        "inputs" not in abi_element
-        or element_type == "fallback"
-        or element_type == "receive"
+        abi_element["type"] == "constructor"
+        or abi_element["type"] == "function"
+        or abi_element["type"] == "event"
     ):
-        raise ValueError(
-            f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-            f" ABI type was '{element_type}'."
-        )
-    else:
-        return [collapse_if_tuple(cast(ABI, arg)) for arg in abi_element["inputs"]]
+        return [collapse_if_tuple(arg) for arg in abi_element["inputs"]]
+
+    raise ValueError(
+        f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+        f" ABI type was '{abi_element['type']}'."
+    )
 
 
 def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
@@ -618,11 +648,10 @@ def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
     :return: Names for each function output in the function ABI.
     :rtype: `List[str]`
     """
-    function_type = function_abi["type"]
-    if "outputs" not in function_abi or not function_type == "function":
+    if "outputs" not in function_abi or function_abi["type"] != "function":
         raise ValueError(
             f"Outputs only supported for ABI type 'function'. Provided"
-            f" ABI type was '{function_type}'."
+            f" ABI type was '{function_abi['type']}'."
         )
     return [arg["name"] for arg in function_abi["outputs"]]
 
@@ -636,14 +665,13 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
     :return: Types for each function output in the function ABI.
     :rtype: `List[str]`
     """
-    function_type = function_abi["type"]
-    if "outputs" not in function_abi or not function_type == "function":
-        raise ValueError(
-            f"Outputs only supported for ABI type 'function'. Provided"
-            f" ABI type was '{function_type}'."
-        )
-    else:
-        return [collapse_if_tuple(cast(ABI, arg)) for arg in function_abi["outputs"]]
+    if function_abi["type"] == "function":
+        return [collapse_if_tuple(arg) for arg in function_abi["outputs"]]
+
+    raise ValueError(
+        f"Outputs only supported for ABI type 'function'. Provided"
+        f" ABI type was '{function_abi['type']}'."
+    )
 
 
 def function_signature_to_4byte_selector(event_signature: str) -> bytes:
