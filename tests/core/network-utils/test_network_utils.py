@@ -1,7 +1,8 @@
+import pytest
+
 from eth_typing import (
     ChainId,
 )
-import pytest
 
 from eth_utils import (
     Network,
