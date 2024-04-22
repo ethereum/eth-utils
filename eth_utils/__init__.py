@@ -3,7 +3,6 @@ from importlib.metadata import (
 )
 
 from .abi import (
-    collapse_if_tuple,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     function_abi_to_4byte_selector,
@@ -18,6 +17,7 @@ from .abi import (
     get_event_log_topics,
     get_function_abi,
     get_function_info,
+    get_normalized_abi_arg_type,
 )
 from .address import (
     is_address,

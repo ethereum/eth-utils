@@ -61,12 +61,12 @@ from .toolz import (
 )
 
 
-def collapse_if_tuple(abi: Union[ABIFunctionParam, ABIEventParam]) -> str:
+def get_normalized_abi_arg_type(abi: Union[ABIFunctionParam, ABIEventParam]) -> str:
     """
     Converts a tuple from a dict to a parenthesized list of its types.
 
-    >>> from eth_utils.abi import collapse_if_tuple
-    >>> collapse_if_tuple(
+    >>> from eth_utils.abi import get_normalized_abi_arg_type
+    >>> get_normalized_abi_arg_type(
     ...     {
     ...         'components': [
     ...             {'name': 'anAddress', 'type': 'address'},
@@ -86,7 +86,7 @@ def collapse_if_tuple(abi: Union[ABIFunctionParam, ABIEventParam]) -> str:
     elif not typ.startswith("tuple"):
         return typ
 
-    delimited = ",".join(collapse_if_tuple(c) for c in abi["components"])
+    delimited = ",".join(get_normalized_abi_arg_type(c) for c in abi["components"])
     # Whatever comes after "tuple" is the array dims. The ABI spec states that
     # this will have the form "", "[]", or "[k]".
     array_dim = typ[5:]
@@ -101,7 +101,9 @@ def _abi_inputs_types(
     if abi_inputs is None:
         abi_inputs = []
 
-    return ",".join([collapse_if_tuple(abi_input) for abi_input in abi_inputs])
+    return ",".join(
+        [get_normalized_abi_arg_type(abi_input) for abi_input in abi_inputs]
+    )
 
 
 def _abi_to_signature(abi: ABIElement) -> str:
@@ -286,7 +288,7 @@ def _get_aligned_abi_inputs(
         args = tuple(args[abi["name"]] for abi in input_abis)
 
     return (
-        tuple(collapse_if_tuple(abi) for abi in input_abis),
+        tuple(get_normalized_abi_arg_type(abi) for abi in input_abis),
         type(args)(_align_abi_input(abi, arg) for abi, arg in zip(input_abis, args)),
     )
 
@@ -631,7 +633,7 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
         or abi_element["type"] == "function"
         or abi_element["type"] == "event"
     ):
-        return [collapse_if_tuple(arg) for arg in abi_element["inputs"]]
+        return [get_normalized_abi_arg_type(arg) for arg in abi_element["inputs"]]
 
     raise ValueError(
         f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
@@ -666,7 +668,7 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
     :rtype: `List[str]`
     """
     if function_abi["type"] == "function":
-        return [collapse_if_tuple(arg) for arg in function_abi["outputs"]]
+        return [get_normalized_abi_arg_type(arg) for arg in function_abi["outputs"]]
 
     raise ValueError(
         f"Outputs only supported for ABI type 'function'. Provided"
