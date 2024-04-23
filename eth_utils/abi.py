@@ -629,16 +629,16 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     :rtype: `List[str]`
     """
     if (
-        abi_element["type"] == "constructor"
-        or abi_element["type"] == "function"
-        or abi_element["type"] == "event"
+        "inputs" not in abi_element
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
     ):
-        return [get_normalized_abi_arg_type(arg) for arg in abi_element["inputs"]]
+        raise ValueError(
+            f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+            f" ABI type was '{abi_element['type']}'."
+        )
 
-    raise ValueError(
-        f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-        f" ABI type was '{abi_element['type']}'."
-    )
+    return [get_normalized_abi_arg_type(arg) for arg in abi_element["inputs"]]
 
 
 def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
