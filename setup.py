@@ -55,7 +55,7 @@ setup(
         "eth-abi>=1.1.0",
         "eth-hash>=0.3.1",
         "eth-typing @ git+https://github.com/reedsa/eth-typing@abi-utils-type-fixes",
-        "hexbytes>=0.1.0",
+        "hexbytes>=1.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",
         "cytoolz>=0.10.1;implementation_name=='cpython'",
     ],
