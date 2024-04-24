@@ -1,5 +1,4 @@
 import collections
-
 import pytest
 
 import eth_utils

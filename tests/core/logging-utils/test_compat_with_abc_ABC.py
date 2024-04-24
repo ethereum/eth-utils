@@ -3,7 +3,6 @@ from abc import (
     abstractmethod,
 )
 import logging
-
 import pytest
 
 from eth_utils import (

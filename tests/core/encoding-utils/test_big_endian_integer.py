@@ -1,8 +1,9 @@
+import pytest
+
 from hypothesis import (
     given,
     strategies as st,
 )
-import pytest
 
 from eth_utils.encoding import (
     big_endian_to_int,
