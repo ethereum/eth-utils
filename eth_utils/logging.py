@@ -134,26 +134,12 @@ class HasLoggerMeta(type):
         return type(mcls.__name__, (mcls, other), {})
 
 
-class _BaseHasLogger(metaclass=HasLoggerMeta):
-    # This class exists to a allow us to define the type of the logger. Once
-    # python3.5 is deprecated this can be removed in favor of a simple type
-    # annotation on the main class.
-    logger = logging.Logger("")  # type: logging.Logger
-
-
-class HasLogger(_BaseHasLogger):
-    pass
+class HasLogger(metaclass=HasLoggerMeta):
+    logger: logging.Logger
 
 
 HasExtendedDebugLoggerMeta = HasLoggerMeta.replace_logger_class(ExtendedDebugLogger)
 
 
-class _BaseHasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
-    # This class exists to a allow us to define the type of the logger. Once
-    # python3.5 is deprecated this can be removed in favor of a simple type
-    # annotation on the main class.
-    logger = ExtendedDebugLogger("")  # type: ExtendedDebugLogger
-
-
-class HasExtendedDebugLogger(_BaseHasExtendedDebugLogger):
-    pass
+class HasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
+    logger: ExtendedDebugLogger
