@@ -19,6 +19,6 @@ with urllib.request.urlopen("https://chainid.network/chains_mini.json") as respo
     content = response.read().decode()
 
 with open(networks_file, "w") as open_file:
-    open_file.write(content)
+    open_file.write(f"{content}\n")
 
 print("Networks have updated! Please review and open a PR with the changes.")
