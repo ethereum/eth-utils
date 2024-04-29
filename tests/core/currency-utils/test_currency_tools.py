@@ -1,5 +1,5 @@
-import decimal
 import pytest
+import decimal
 
 from hypothesis import (
     given,

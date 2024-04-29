@@ -1,3 +1,4 @@
+import pytest
 from typing import (
     Sequence,
 )
@@ -17,7 +18,6 @@ from eth_typing import (
     ABIReceive,
     MismatchedABI,
 )
-import pytest
 
 from eth_utils.abi import (
     _abi_to_signature,
