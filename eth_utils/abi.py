@@ -61,43 +61,14 @@ from .toolz import (
 )
 
 
-def get_normalized_abi_arg_type(abi: Union[ABIFunctionParam, ABIEventParam]) -> str:
-    """
-    Converts a tuple from a dict to a parenthesized list of its types.
-
-    >>> from eth_utils.abi import get_normalized_abi_arg_type
-    >>> get_normalized_abi_arg_type(
-    ...     {
-    ...         'components': [
-    ...             {'name': 'anAddress', 'type': 'address'},
-    ...             {'name': 'anInt', 'type': 'uint256'},
-    ...             {'name': 'someBytes', 'type': 'bytes'},
-    ...         ],
-    ...         'type': 'tuple',
-    ...     }
-    ... )
-    '(address,uint256,bytes)'
-    """
-    typ = abi["type"]
-    if not isinstance(typ, str):
-        raise TypeError(
-            f"The 'type' must be a string, but got {repr(typ)} of type {type(typ)}"
-        )
-    elif not typ.startswith("tuple"):
-        return typ
-
-    delimited = ",".join(get_normalized_abi_arg_type(c) for c in abi["components"])
-    # Whatever comes after "tuple" is the array dims. The ABI spec states that
-    # this will have the form "", "[]", or "[k]".
-    array_dim = typ[5:]
-    collapsed = f"({delimited}){array_dim}"
-
-    return collapsed
-
-
 def _abi_inputs_types(
     abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam]]] = None
 ) -> str:
+    """
+    Parse type(s) from a list of function or event ABI arguments.
+
+    Returns a string of each type separated by commas.
+    """
     if abi_inputs is None:
         abi_inputs = []
 
@@ -107,6 +78,14 @@ def _abi_inputs_types(
 
 
 def _abi_to_signature(abi: ABIElement) -> str:
+    """
+    Returns a string signature representation of the function or event ABI
+    and arguments.
+
+    Signatures consist of the name followed by a list of arguments.
+
+    Function signature example: ``f(address,uint256,bytes)``
+    """
     if abi["type"] == "fallback" or abi["type"] == "receive":
         name = str(abi["type"])
         abi_inputs = None
@@ -124,10 +103,16 @@ def _abi_to_signature(abi: ABIElement) -> str:
 
 
 def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
+    """
+    Return a list of each ``ABIElement`` that is of type ``_type``.
+    """
     return [abi for abi in contract_abi if abi["type"] == _type]
 
 
 def _filter_by_name(name: str, contract_abi: ABI) -> List[ABIElement]:
+    """
+    Return a list of each ``ABIElement`` that matches the provided ``name``.
+    """
     return [
         abi
         for abi in contract_abi
@@ -144,6 +129,10 @@ def _filter_by_encodability(
     kwargs: Dict[str, Any],
     contract_abi: ABI,
 ) -> List[ABIFunction]:
+    """
+    Return a list of each ``ABIFunction`` that can be encoded with the provided
+    arguments.
+    """
     return [
         abi
         for abi in contract_abi
@@ -155,6 +144,10 @@ def _filter_by_encodability(
 def _filter_by_argument_name(
     argument_names: Collection[str], contract_abi: ABI
 ) -> List[ABIElement]:
+    """
+    Return a list of each ``ABIElement`` which contain arguments matching provided
+    names.
+    """
     return [
         abi
         for abi in contract_abi
@@ -163,7 +156,10 @@ def _filter_by_argument_name(
     ]
 
 
-def _get_abi_if_input_size(abi_element: ABIElement, num_arguments: int) -> bool:
+def _abi_match_num_arguments(abi_element: ABIElement, num_arguments: int) -> bool:
+    """
+    Return True if the provided ABI has the expected number of arguments.
+    """
     if (
         "inputs" not in abi_element
         or abi_element["type"] == "fallback"
@@ -180,7 +176,10 @@ def _get_abi_if_input_size(abi_element: ABIElement, num_arguments: int) -> bool:
 def _filter_by_argument_count(
     num_arguments: int, contract_abi: ABI
 ) -> List[ABIElement]:
-    return [abi for abi in contract_abi if _get_abi_if_input_size(abi, num_arguments)]
+    """
+    Return a list of each ``ABIElement`` which has the given number of arguments.
+    """
+    return [abi for abi in contract_abi if _abi_match_num_arguments(abi, num_arguments)]
 
 
 def _check_if_arguments_can_be_encoded(
@@ -189,6 +188,14 @@ def _check_if_arguments_can_be_encoded(
     args: Sequence[Any],
     kwargs: Dict[str, Any],
 ) -> bool:
+    """
+    Validates the function and arguments for encoding.
+
+    Returns True if the function ABI can be encoded with the provided argument
+    (``args``) and keyword args (``kwargs``).
+
+    False is returned if arguments do not align with the ABI spec.
+    """
     try:
         arguments = _merge_args_and_kwargs(function_abi, args, kwargs)
     except TypeError:
@@ -211,12 +218,19 @@ def _merge_args_and_kwargs(
     function_abi: ABIFunction, args: Sequence[Any], kwargs: Dict[str, Any]
 ) -> Tuple[Any, ...]:
     """
-    Takes a list of positional args (``args``) and a dict of keyword args
-    (``kwargs``) defining values to be passed to a call to the contract function
-    described by ``function_abi``.  Checks to ensure that the correct number of
-    args were given, no duplicate args were given, and no unknown args were
-    given.  Returns a list of argument values aligned to the order of inputs
-    defined in ``function_abi``.
+    Return a Tuple of arguments for use in contract function calls.
+
+    Flattens positional args (``args``) and keyword args (``kwargs``) and uses the
+    ``function_abi`` for validation.
+
+    Checks to ensure that the correct number of args were given, no duplicate args were
+    given, and no unknown args were given.  Returns a list of argument values aligned
+    to the order of inputs defined in ``function_abi``.
+
+    :param function_abi: Function ABI.
+    :param type: `ABIFunction`
+    :return: Arguments list.
+    :rtype: `Tuple[Any]`
     """
     # Ensure the function is being applied to the correct number of args
     if len(args) + len(kwargs) != len(function_abi.get("inputs", [])):
@@ -300,7 +314,7 @@ def _align_abi_input(
     Aligns the values of any mapping at any level of nesting in ``arg``
     according to the layout of the corresponding abi spec.
     """
-    tuple_parts = _get_tuple_type_str_parts(arg_abi["type"])
+    tuple_parts = _get_tuple_type_str_and_dims(arg_abi["type"])
 
     if tuple_parts is None:
         # Arg is non-tuple.  Just return value.
@@ -343,7 +357,7 @@ def _align_abi_input(
     )
 
 
-def _get_tuple_type_str_parts(s: str) -> Optional[Tuple[str, Optional[str]]]:
+def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
     """
     Takes a JSON ABI type string.  For tuple type strings, returns the separated
     prefix and array dimension parts.  For all other strings, returns ``None``.
@@ -360,10 +374,13 @@ def _get_tuple_type_str_parts(s: str) -> Optional[Tuple[str, Optional[str]]]:
     return None
 
 
-def _log_entry_data_to_bytes(
-    log_entry_data: Union[Primitives, HexStr, str],
+def _log_topic_bytes(
+    log_topic: Union[Primitives, HexStr, str],
 ) -> bytes:
-    return hexstr_if_str(to_bytes, log_entry_data)
+    """
+    Return bytes from the provided topic.
+    """
+    return hexstr_if_str(to_bytes, log_topic)
 
 
 def _raise_mismatched_abi_error(
@@ -374,6 +391,12 @@ def _raise_mismatched_abi_error(
     args: Optional[Sequence[Any]] = None,
     kwargs: Optional[Any] = None,
 ) -> None:
+    """
+    Raise a ``MismatchedABI`` when a function ABI lookup results in an error.
+
+    An error may result from multiple functions matching the provided signature and
+    arguments or no functions are identified.
+    """
     if arg_count_matches == 0:
         diagnosis = "\nFunction invocation failed due to improper number of arguments."
     elif encoding_matches == 0:
@@ -430,7 +453,11 @@ def get_function_abi(
     abi_codec: Optional[Any] = None,
 ) -> ABIFunction:
     """
-    Return the interface for a contract function.
+    Return the interface for an ``ABIFunction`` which matches the provided identifier
+    and arguments.
+
+    The ABI which matches the provided identifier, named arguments (``args``) and
+    keyword args (``kwargs``) will be returned.
 
     :param abi: Contract ABI.
     :param type: `ABI`
@@ -440,9 +467,10 @@ def get_function_abi(
     :param type: `list[Any]`
     :param kwargs: Find a function ABI with matching kwargs.
     :param type: `Any`
-    :param abi_codec: Codec used for encoding and decoding. Default with
+    :param abi_codec: Codec used for encoding and decoding. Default with \
     `strict_bytes_type_checking` enabled.
     :param type: `Any`
+
     :return: ABI for the function interface.
     :rtype: `ABIFunction`
     """
@@ -496,6 +524,9 @@ def get_function_info(
     """
     Return the function ABI, selector and input arguments.
 
+    The ABI which matches the provided identifier, named arguments (``args``) and
+    keyword args (``kwargs``) will be returned.
+
     :param abi: Contract ABI.
     :param type: `ABI`
     :param function_identifier: Find a function ABI with matching identifier.
@@ -541,7 +572,7 @@ def get_event_log_topics(
         return topics
     elif len(topics) == 0:
         raise MismatchedABI("Expected non-anonymous event to have 1 or more topics")
-    elif event_abi_to_log_topic(event_abi) != _log_entry_data_to_bytes(topics[0]):
+    elif event_abi_to_log_topic(event_abi) != _log_topic_bytes(topics[0]):
         raise MismatchedABI("The event signature did not match the provided ABI")
     else:
         return topics[1:]
@@ -676,19 +707,98 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
     )
 
 
-def function_signature_to_4byte_selector(event_signature: str) -> bytes:
-    return keccak(text=event_signature.replace(" ", ""))[:4]
+def function_signature_to_4byte_selector(function_signature: str) -> bytes:
+    """
+    Return the 4-byte function signature from a function signature string.
+
+    :param event_signature: String representation of the event name and arguments.
+    :param type: `string`
+    :return: 4-byte function signature.
+    :rtype: `bytes`
+    """
+    return keccak(text=function_signature.replace(" ", ""))[:4]
 
 
 def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
+    """
+    Return the 4-byte function signature of the provided function ABI.
+
+    :param function_abi: Function ABI.
+    :param type: `ABIFunction`
+    :return: 4-byte function signature.
+    :rtype: `bytes`
+    """
     function_signature = _abi_to_signature(function_abi)
     return function_signature_to_4byte_selector(function_signature)
 
 
 def event_signature_to_log_topic(event_signature: str) -> bytes:
+    """
+    Return the keccak signature of the log topic for an event signature.
+
+    :param event_signature: String representation of the event name and arguments.
+    :param type: `string`
+    :return: Log topic bytes.
+    :rtype: `bytes`
+    """
     return keccak(text=event_signature.replace(" ", ""))
 
 
 def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
+    """
+    Return the keccak signature of the log topic from an event ABI.
+
+    :param event_abi: Event ABI.
+    :param type: `ABIEvent`
+    :return: Log topic bytes.
+    :rtype: `bytes`
+    """
     event_signature = _abi_to_signature(event_abi)
     return event_signature_to_log_topic(event_signature)
+
+
+def get_normalized_abi_arg_type(
+    abi_element_param: Union[ABIFunctionParam, ABIEventParam]
+) -> str:
+    """
+    Extract argument types from a function or event ABI parameter.
+
+    With tuple argument types, return a Tuple of each type.
+    Non-tuple types just return the type.
+
+    >>> from eth_utils.abi import get_normalized_abi_arg_type
+    >>> get_normalized_abi_arg_type(
+    ...     {
+    ...         'components': [
+    ...             {'name': 'anAddress', 'type': 'address'},
+    ...             {'name': 'anInt', 'type': 'uint256'},
+    ...             {'name': 'someBytes', 'type': 'bytes'},
+    ...         ],
+    ...         'type': 'tuple',
+    ...     }
+    ... )
+    '(address,uint256,bytes)'
+
+    :param abi_element_param: Function or Event ABI parameter.
+    :param type: `ABIFunction` or `ABIEvent`
+    :return: Type(s) in the function or event ABI param.
+    :rtype: `str`
+    """
+    element_type = abi_element_param.get("type")
+    if not isinstance(element_type, str):
+        raise TypeError(
+            f"The 'type' must be a string, but got {repr(element_type)} of type "
+            f"{type(element_type)}"
+        )
+    elif not element_type.startswith("tuple"):
+        return element_type
+
+    delimited = ",".join(
+        get_normalized_abi_arg_type(c) for c in abi_element_param["components"]
+    )
+    # Whatever comes after "tuple" is the array dims. The ABI spec states that
+    # this will have the form "", "[]", or "[k]".
+    array_dim = element_type[5:]
+    collapsed = f"({delimited}){array_dim}"
+
+    return collapsed
