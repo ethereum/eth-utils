@@ -752,6 +752,7 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     :param type: `ABIEvent`
     :return: Log topic bytes.
     :rtype: `bytes`
+
     """
     event_signature = _abi_to_signature(event_abi)
     return event_signature_to_log_topic(event_signature)

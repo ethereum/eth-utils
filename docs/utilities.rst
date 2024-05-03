@@ -18,49 +18,10 @@ importing them through the ``curried`` module like so:
 ABI Utils
 ~~~~~~~~~
 
-``event_abi_to_log_topic(event_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 32 byte log topic for the given event abi.
-
-.. doctest::
-
-    >>> from eth_utils import event_abi_to_log_topic
-    >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``event_signature_to_log_topic(event_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 32 byte log topic for the given event signature.
-
-.. doctest::
-
-    >>> from eth_utils import event_signature_to_log_topic
-    >>> event_signature_to_log_topic('MyEvent()')
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``function_abi_to_4byte_selector(function_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function abi.
-
-.. doctest::
-
-    >>> from eth_utils import function_abi_to_4byte_selector
-    >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})
-    b'\xc3x\n:'
-
-``function_signature_to_4byte_selector(function_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function signature.
-
-.. doctest::
-
-    >>> from eth_utils import function_signature_to_4byte_selector
-    >>> function_signature_to_4byte_selector('myFunction()')
-    b'\xc3x\n:'
+.. automodule:: eth_utils.abi
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Applicators
 ~~~~~~~~~~~
