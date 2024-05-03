@@ -1,6 +1,11 @@
 from typing import (
-    Any,
+    TYPE_CHECKING,
 )
+
+if TYPE_CHECKING:
+    from eth_abi.abi import (
+        ABICodec,
+    )
 
 
 def int_to_big_endian(value: int) -> bytes:
@@ -11,7 +16,7 @@ def big_endian_to_int(value: bytes) -> int:
     return int.from_bytes(value, "big")
 
 
-def get_default_codec() -> Any:
+def get_default_codec() -> "ABICodec":
     from eth_abi.abi import (
         ABICodec,
     )
