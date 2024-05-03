@@ -447,7 +447,7 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
 
 def get_function_abi(
     abi: ABI,
-    function_identifier: Optional[str] = None,
+    function_identifier: str,
     args: Optional[Sequence[Any]] = None,
     kwargs: Optional[Any] = None,
     abi_codec: Optional[Any] = None,
