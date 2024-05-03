@@ -15,8 +15,16 @@ importing them through the ``curried`` module like so:
 
     >>> from eth_utils.curried import hexstr_if_str
 
-ABI Utils
-~~~~~~~~~
+ABI Utilities
+~~~~~~~~~~~~~
+
+The Application Binary Interface (ABI) may be used for encoding or decoding
+transactional data. Components of an ABI may include a descriptor of each Function or
+Event in the contract. The following utilities provide convenient methods for parsing
+components of an ABI and encoding function parameters for use in transactions.
+
+For more information about the ABI spec, see the Solidity
+`Contract ABI specification <https://docs.soliditylang.org/en/v0.8.25/abi-spec.html>`_.
 
 .. automodule:: eth_utils.abi
    :members:

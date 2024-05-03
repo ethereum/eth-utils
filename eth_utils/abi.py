@@ -228,7 +228,7 @@ def _merge_args_and_kwargs(
     to the order of inputs defined in ``function_abi``.
 
     :param function_abi: Function ABI.
-    :param type: `ABIFunction`
+    :type function_abi: `ABIFunction`
     :return: Arguments list.
     :rtype: `Tuple[Any]`
     """
@@ -435,7 +435,7 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     Return interfaces for each function in the contract ABI.
 
     :param abi: Contract ABI.
-    :param type: `ABI`
+    :type abi: `ABI`
     :return: List of ABIs for each function interface.
     :rtype: `list[ABIFunction]`
     """
@@ -459,17 +459,21 @@ def get_function_abi(
     The ABI which matches the provided identifier, named arguments (``args``) and
     keyword args (``kwargs``) will be returned.
 
+    The `abi_codec` may be overridden if custom encoding and decoding is required. The
+    default is used if no codec is provided. More details about customizations are in
+    the `eth-abi Codecs Doc <https://eth-abi.readthedocs.io/en/latest/codecs.html>`__.
+
     :param abi: Contract ABI.
-    :param type: `ABI`
+    :type abi: `ABI`
     :param function_identifier: Find a function ABI with matching name.
-    :param type: `str`
+    :type function_identifier: `str`
     :param args: Find a function ABI with matching args.
-    :param type: `list[Any]`
+    :type args: `list[Any]`
     :param kwargs: Find a function ABI with matching kwargs.
-    :param type: `Any`
+    :type kwargs: `Any`
     :param abi_codec: Codec used for encoding and decoding. Default with \
     `strict_bytes_type_checking` enabled.
-    :param type: `Any`
+    :type abi_codec: `Any`
 
     :return: ABI for the function interface.
     :rtype: `ABIFunction`
@@ -528,13 +532,13 @@ def get_function_info(
     keyword args (``kwargs``) will be returned.
 
     :param abi: Contract ABI.
-    :param type: `ABI`
+    :type abi: `ABI`
     :param function_identifier: Find a function ABI with matching identifier.
-    :param type: `str`
+    :type function_identifier: `str`
     :param args: Find a function ABI with matching args.
-    :param type: `list[Any]`
+    :type args: `list[Any]`
     :param kwargs: Find a function ABI with matching kwargs.
-    :param type: `Any`
+    :type kwargs: `Any`
     :return: Function information including the ABI, selector and args.
     :rtype: `ABIFunctionInfo`
     """
@@ -559,9 +563,9 @@ def get_event_log_topics(
     Return topics from an event ABI.
 
     :param event_abi: Event ABI.
-    :param type: `ABIEvent`
+    :type event_abi: `ABIEvent`
     :param topics: Transaction topics from a `LogReceipt`.
-    :param type: `list[HexBytes]`
+    :type topics: `list[HexBytes]`
     :return: Event topics from the event ABI.
     :rtype: `list[HexBytes]`
     """
@@ -583,7 +587,7 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     Return interfaces for each event in the contract ABI.
 
     :param abi: Contract ABI.
-    :param type: `ABI`
+    :type abi: `ABI`
     :return: List of ABIs for each event interface.
     :rtype: `list[ABIEvent]`
     """
@@ -599,11 +603,11 @@ def get_event_abi(
     Find the event interface with the given name and/or arguments.
 
     :param abi: Contract ABI.
-    :param type: `ABI`
+    :type abi: `ABI`
     :param event_name: Find an event abi with matching event name.
-    :param type: `str`
+    :type event_name: `str`
     :param argument_names: Find an event abi with matching arguments.
-    :param type: `list[str]`
+    :type argument_names: `list[str]`
     :return: ABI for the event interface.
     :rtype: `ABIEvent`
     """
@@ -634,7 +638,7 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     Return names for each input from the function or event ABI.
 
     :param abi_element: Function or Event ABI.
-    :param type: `ABIFunction` or `ABIEvent`
+    :type abi_element: `ABIFunction` or `ABIEvent`
     :return: Names for each input in the function or event ABI.
     :rtype: `List[str]`
     """
@@ -655,7 +659,7 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     Return types for each input from the function or event ABI.
 
     :param abi_element: Function or Event ABI.
-    :param type: `ABIFunction` or `ABIEvent`
+    :type abi_element: `ABIFunction` or `ABIEvent`
     :return: Types for each input in the function or event ABI.
     :rtype: `List[str]`
     """
@@ -677,7 +681,7 @@ def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
     Return names for each output from the function ABI.
 
     :param function_abi: Function ABI.
-    :param type: `ABIFunction`
+    :type function_abi: `ABIFunction`
     :return: Names for each function output in the function ABI.
     :rtype: `List[str]`
     """
@@ -694,7 +698,7 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
     Return types for each output from the function ABI.
 
     :param function_abi: Function ABI.
-    :param type: `ABIFunction`
+    :type function_abi: `ABIFunction`
     :return: Types for each function output in the function ABI.
     :rtype: `List[str]`
     """
@@ -712,7 +716,7 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     Return the 4-byte function signature from a function signature string.
 
     :param event_signature: String representation of the event name and arguments.
-    :param type: `string`
+    :type event_signature: `string`
     :return: 4-byte function signature.
     :rtype: `bytes`
     """
@@ -724,7 +728,7 @@ def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
     Return the 4-byte function signature of the provided function ABI.
 
     :param function_abi: Function ABI.
-    :param type: `ABIFunction`
+    :type function_abi: `ABIFunction`
     :return: 4-byte function signature.
     :rtype: `bytes`
     """
@@ -737,7 +741,7 @@ def event_signature_to_log_topic(event_signature: str) -> bytes:
     Return the keccak signature of the log topic for an event signature.
 
     :param event_signature: String representation of the event name and arguments.
-    :param type: `string`
+    :type event_signature: `string`
     :return: Log topic bytes.
     :rtype: `bytes`
     """
@@ -749,7 +753,7 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     Return the keccak signature of the log topic from an event ABI.
 
     :param event_abi: Event ABI.
-    :param type: `ABIEvent`
+    :type event_abi: `ABIEvent`
     :return: Log topic bytes.
     :rtype: `bytes`
 
@@ -781,7 +785,7 @@ def get_normalized_abi_arg_type(
     '(address,uint256,bytes)'
 
     :param abi_element_param: Function or Event ABI parameter.
-    :param type: `ABIFunction` or `ABIEvent`
+    :type abi_element_param: `ABIFunction` or `ABIEvent`
     :return: Type(s) in the function or event ABI param.
     :rtype: `str`
     """
