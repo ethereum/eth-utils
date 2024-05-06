@@ -5,6 +5,23 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v4.1.1 (2024-05-06)
+-----------------------------
+
+Features
+~~~~~~~~
+
+- Update networks for latest changes and testnets. (`#276 <https://github.com/ethereum/eth-utils/issues/276>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Merge template updates, fixing docs CI and setting nightly CI runs for all testing (`#272 <https://github.com/ethereum/eth-utils/issues/272>`__)
+- Updated ``eth_networks.json`` with latest networks. (`#273 <https://github.com/ethereum/eth-utils/issues/273>`__)
+- No warning for outdated networks. (`#278 <https://github.com/ethereum/eth-utils/issues/278>`__)
+
+
 eth-utils v4.1.0 (2024-04-01)
 -----------------------------
 
