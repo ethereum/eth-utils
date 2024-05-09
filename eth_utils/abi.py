@@ -103,7 +103,7 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
 
 
 def _abi_inputs_types(
-    abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam]]] = None
+    abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam, str]]] = None
 ) -> str:
     """
     Parse type(s) from a list of function or event ABI arguments.
