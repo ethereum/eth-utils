@@ -215,7 +215,11 @@ def _abi_match_num_arguments(abi_element: ABIElement, num_arguments: int) -> boo
     ):
         # only return True for fallback and receive if 0 arguments expected
         return num_arguments == 0
-    elif abi_element["type"] == "function" or abi_element["type"] == "constructor":
+    elif (
+        abi_element["type"] == "function"
+        or abi_element["type"] == "constructor"
+        or abi_element["type"] == "error"
+    ):
         return len(abi_element["inputs"]) == num_arguments
 
     return False
