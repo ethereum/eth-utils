@@ -35,6 +35,7 @@ from eth_utils.abi import (
     get_event_log_topics,
     get_function_abi,
     get_function_info,
+    get_normalized_abi_arg_type,
 )
 from eth_utils.exceptions import (
     ValidationError,
@@ -379,17 +380,13 @@ def test_get_event_abi(contract_abi, event_name, input_args):
 def test_get_event_abi_raises_on_error(
     contract_abi_add_function, name, args, error_type, expected_value
 ):
-    with pytest.raises(error_type) as error:
+    with pytest.raises(error_type, match=expected_value):
         get_event_abi(contract_abi_add_function, name, args)
-
-    assert str(error.value) == expected_value
 
 
 def test_get_event_abi_raises_if_multiple_found(contract_ambiguous_event):
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(ValueError, match="Multiple events found"):
         get_event_abi(contract_ambiguous_event, "LogSingleArg", ["arg0"])
-
-    assert str(error.value) == "Multiple events found"
 
 
 @pytest.mark.parametrize(
@@ -833,3 +830,74 @@ def test_event_signature_to_log_topic(event_signature, expected):
     bytes_topic = event_signature_to_log_topic(event_signature)
     hex_topic = encode_hex(bytes_topic)
     assert hex_topic == expected
+
+
+@pytest.mark.parametrize(
+    "abi_element_param,expected",
+    (
+        (
+            (
+                {
+                    "components": [
+                        {"name": "anAddress", "type": "address"},
+                        {"name": "anInt", "type": "uint256"},
+                        {"name": "someBytes", "type": "bytes"},
+                    ],
+                    "type": "tuple",
+                }
+            ),
+            "(address,uint256,bytes)",
+        ),
+        (
+            (
+                {
+                    "components": [
+                        {"name": "bytes32", "type": "bytes32[]"},
+                        {"name": "bytes", "type": "bytes"},
+                        {"name": "someMoarBytes", "type": "bytes"},
+                    ],
+                    "type": "tuple[]",
+                }
+            ),
+            "(bytes32[],bytes,bytes)[]",
+        ),
+        (
+            (
+                {
+                    "components": [
+                        {"name": "anAddress", "type": "address"},
+                        {"name": "anInt", "type": "uint256"},
+                        {"name": "someBytes", "type": "bytes"},
+                    ],
+                    "type": "tuple[3]",
+                }
+            ),
+            "(address,uint256,bytes)[3]",
+        ),
+        (
+            (
+                {
+                    "type": "uint256",
+                }
+            ),
+            "uint256",
+        ),
+    ),
+)
+def test_get_normalized_abi_arg_type(abi_element_param, expected):
+    assert get_normalized_abi_arg_type(abi_element_param) == expected
+
+
+@pytest.mark.parametrize(
+    "abi_element_param",
+    (
+        (
+            {
+                "type": False,
+            }
+        ),
+    ),
+)
+def test_get_normalized_abi_arg_type_with_errors(abi_element_param):
+    with pytest.raises(TypeError):
+        get_normalized_abi_arg_type(abi_element_param)
