@@ -531,6 +531,7 @@ def get_function_info(
     function_identifier: str,
     args: Optional[Sequence[Any]] = None,
     kwargs: Optional[Any] = None,
+    abi_codec: Optional[Any] = None,
 ) -> ABIFunctionInfo:
     """
     Return the function ABI, selector and input arguments.
@@ -552,7 +553,9 @@ def get_function_info(
     args = args or tuple()
     kwargs = kwargs or dict()
 
-    fn_abi = get_function_abi(abi, function_identifier, args, kwargs)
+    fn_abi = get_function_abi(
+        abi, function_identifier, args, kwargs, abi_codec=abi_codec
+    )
     fn_selector = encode_hex(function_abi_to_4byte_selector(fn_abi))
     fn_arguments = _merge_args_and_kwargs(fn_abi, args, kwargs)
     _, aligned_fn_arguments = _get_aligned_abi_inputs(fn_abi, fn_arguments)
