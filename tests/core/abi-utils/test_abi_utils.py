@@ -882,6 +882,10 @@ def test_event_signature_to_log_topic(event_signature, expected):
             ),
             "uint256",
         ),
+        (
+            "uint256",
+            "uint256",
+        ),
     ),
 )
 def test_get_normalized_abi_arg_type(abi_element_param, expected):

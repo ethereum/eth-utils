@@ -814,7 +814,13 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
 
 
 def get_normalized_abi_arg_type(
-    abi_element_param: Union[ABIFunctionParam, ABIEventParam]
+    abi_element_param: Union[
+        ABIFunctionParam,
+        ABIEventParam,
+        str,
+        bytes,
+        int,
+    ]
 ) -> str:
     """
     Extract argument types from a function or event ABI parameter.
@@ -835,11 +841,14 @@ def get_normalized_abi_arg_type(
     ... )
     '(address,uint256,bytes)'
 
-    :param abi_element_param: Function or Event ABI parameter.
-    :type abi_element_param: `ABIFunction` or `ABIEvent`
+    :param abi_element_param: ABI for the Function or Event parameter
+    :type abi_element_param: `ABIFunctionParam` or `ABIEventParam` or `str`
     :return: Type(s) in the function or event ABI param.
     :rtype: `str`
     """
+    if isinstance(abi_element_param, (str, bytes, int)):
+        return str(abi_element_param)
+
     element_type = abi_element_param.get("type")
     if not isinstance(element_type, str):
         raise TypeError(
