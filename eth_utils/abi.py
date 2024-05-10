@@ -38,6 +38,10 @@ from typing_extensions import (
     deprecated,
 )
 
+from eth_utils.address import (
+    is_binary_address,
+    is_checksum_address,
+)
 from eth_utils.conversions import (
     hexstr_if_str,
     to_bytes,
@@ -103,7 +107,7 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
 
 
 def _abi_inputs_types(
-    abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam, str]]] = None
+    abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam]]] = None
 ) -> str:
     """
     Parse type(s) from a list of function or event ABI arguments.
@@ -435,44 +439,74 @@ def _log_topic_bytes(
     return hexstr_if_str(to_bytes, log_topic)
 
 
-def _raise_mismatched_abi_error(
+def _get_argument_readable_type(arg: Any) -> str:
+    if is_checksum_address(arg) or is_binary_address(arg):
+        return "address"
+
+    return str(arg.__class__.__name__)
+
+
+def _extract_argument_types(*args: Sequence[Any]) -> str:
+    """
+    Takes a list of arguments and returns a string representation of the argument types,
+    appropriately collapsing `tuple` types into the respective nested types.
+    """
+    collapsed_args = []
+
+    for arg in args:
+        if is_list_like(arg):
+            collapsed_nested = []
+            for nested in arg:
+                if is_list_like(nested):
+                    collapsed_nested.append(f"({_extract_argument_types(nested)})")
+                else:
+                    collapsed_nested.append(_get_argument_readable_type(nested))
+            collapsed_args.append(",".join(collapsed_nested))
+        else:
+            collapsed_args.append(_get_argument_readable_type(arg))
+
+    return ",".join(collapsed_args)
+
+
+def _mismatched_abi_error_diagnosis(
     function_identifier: str,
     matching_function_signatures: Sequence[str],
     arg_count_matches: int,
     encoding_matches: int,
     args: Optional[Sequence[Any]] = None,
     kwargs: Optional[Any] = None,
-) -> None:
+) -> str:
     """
     Raise a ``MismatchedABI`` when a function ABI lookup results in an error.
 
     An error may result from multiple functions matching the provided signature and
     arguments or no functions are identified.
     """
+    diagnosis = "\n"
     if arg_count_matches == 0:
-        diagnosis = "\nFunction invocation failed due to improper number of arguments."
+        diagnosis += "Function invocation failed due to improper number of arguments."
     elif encoding_matches == 0:
-        diagnosis = "\nFunction invocation failed due to no matching argument types."
+        diagnosis += "Function invocation failed due to no matching argument types."
     elif encoding_matches > 1:
-        diagnosis = (
-            "\nAmbiguous argument encoding. "
+        diagnosis += (
+            "Ambiguous argument encoding. "
             "Provided arguments can be encoded to multiple functions "
             "matching this call."
         )
 
     if args is not None:
-        collapsed_args = _abi_inputs_types(args)
+        collapsed_args = _extract_argument_types(args)
     else:
         collapsed_args = ""
 
     if kwargs is not None:
         collapsed_kwargs = dict(
-            {(k, _abi_inputs_types([v])) for k, v in kwargs.items()}
+            {(k, _extract_argument_types([v])) for k, v in kwargs.items()}
         )
     else:
         collapsed_kwargs = {}
 
-    raise MismatchedABI(
+    return (
         f"\nCould not identify the intended function with name "
         f"`{function_identifier}`, positional arguments with type(s) "
         f"`{collapsed_args}` and keyword arguments with type(s) "
@@ -547,7 +581,7 @@ def get_function_abi(
     )
 
     function_candidates = cast(
-        Sequence[ABIFunction], pipe(abi, name_filter, arg_count_filter)
+        Sequence[ABIFunction], pipe(abi, name_filter, arg_count_filter, encoding_filter)
     )
 
     if len(function_candidates) != 1:
@@ -559,7 +593,7 @@ def get_function_abi(
         arg_count_matches = len(arg_count_filter(matching_identifiers))
         encoding_matches = len(encoding_filter(matching_identifiers))
 
-        _raise_mismatched_abi_error(
+        error_diagnosis = _mismatched_abi_error_diagnosis(
             function_identifier,
             matching_function_signatures,
             arg_count_matches,
@@ -567,6 +601,8 @@ def get_function_abi(
             args,
             kwargs,
         )
+
+        raise TypeError(error_diagnosis)
 
     return function_candidates[0]
 
@@ -821,9 +857,6 @@ def get_normalized_abi_arg_type(
     abi_element_param: Union[
         ABIFunctionParam,
         ABIEventParam,
-        str,
-        bytes,
-        int,
     ]
 ) -> str:
     """
@@ -850,10 +883,7 @@ def get_normalized_abi_arg_type(
     :return: Type(s) in the function or event ABI param.
     :rtype: `str`
     """
-    if isinstance(abi_element_param, (str, bytes, int)):
-        return str(abi_element_param)
-
-    element_type = abi_element_param.get("type")
+    element_type = abi_element_param["type"]
     if not isinstance(element_type, str):
         raise TypeError(
             f"The 'type' must be a string, but got {repr(element_type)} of type "

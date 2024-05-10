@@ -435,14 +435,12 @@ def test_get_input_names_from_abi_element(element_type, name, input_args):
 )
 def test_get_input_names_raises_for_fallback_or_receive_abi(element_type, name):
     abi_element = make_abi_element(element_type, name)
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(
+        ValueError,
+        match=f"Inputs not supported for function types 'fallback' or 'receive'."
+        f" Provided ABI type was '{element_type}'.",
+    ):
         get_abi_input_names(abi_element)
-
-    assert (
-        str(e.value)
-        == f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-        f" ABI type was '{element_type}'."
-    )
 
 
 @pytest.mark.parametrize(
@@ -498,14 +496,12 @@ def test_get_input_types_from_abi_element(element_type, name, input_args):
 )
 def test_get_input_types_raises_for_fallback_or_receive_abi(element_type, name):
     abi_element = make_abi_element(element_type, name)
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(
+        ValueError,
+        match=f"Inputs not supported for function types 'fallback' or 'receive'."
+        f" Provided ABI type was '{element_type}'.",
+    ):
         get_abi_input_types(abi_element)
-
-    assert (
-        str(e.value)
-        == f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-        f" ABI type was '{element_type}'."
-    )
 
 
 @pytest.mark.parametrize(
@@ -548,13 +544,12 @@ def test_get_abi_output_names_raises_for_non_function_types(
         input_args=[],
         outputs=outputs,
     )
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(
+        ValueError,
+        match=f"Outputs only supported for ABI type 'function'."
+        f" Provided ABI type was '{element_type}'.",
+    ):
         get_abi_output_names(abi_element)
-
-    assert (
-        str(e.value) == f"Outputs only supported for ABI type 'function'. Provided"
-        f" ABI type was '{element_type}'."
-    )
 
 
 @pytest.mark.parametrize(
@@ -597,13 +592,12 @@ def test_get_abi_output_types_raises_for_non_function_types(
         input_args=[],
         outputs=outputs,
     )
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(
+        ValueError,
+        match=f"Outputs only supported for ABI type 'function'."
+        f" Provided ABI type was '{element_type}'.",
+    ):
         get_abi_output_types(abi_element)
-
-    assert (
-        str(e.value) == f"Outputs only supported for ABI type 'function'. Provided"
-        f" ABI type was '{element_type}'."
-    )
 
 
 @pytest.mark.parametrize(
@@ -657,10 +651,8 @@ def test_get_event_log_topics_raises_for_bad_topics(
     element_type, name, topics, expected_error
 ):
     abi_element = make_abi_element(element_type, name)
-    with pytest.raises(MismatchedABI) as err:
+    with pytest.raises(MismatchedABI, match=expected_error):
         get_event_log_topics(abi_element, topics)
-
-    assert str(err.value) == expected_error
 
 
 def test_get_all_function_abis(contract_abi):
@@ -719,19 +711,16 @@ def test_get_function_abi_by_name_with_kwargs(contract_abi):
 
 
 def test_get_function_abi_raises_without_valid_function_identifier(contract_abi):
-    with pytest.raises(TypeError) as err:
+    with pytest.raises(TypeError, match="Unsupported function identifier"):
         get_function_abi(contract_abi, 1, ["_arg0"])
-
-    assert str(err.value) == "Unsupported function identifier"
 
 
 def test_get_function_abi_by_name(contract_abi):
-    with pytest.raises(MismatchedABI) as err:
+    with pytest.raises(
+        MismatchedABI,
+        match="Function invocation failed due to improper number of arguments.",
+    ):
         get_function_abi(contract_abi, "logTwoEvents")
-
-    assert "Function invocation failed due to improper number of arguments." in str(
-        err.value
-    )
 
 
 def test_get_function_abi_codec_override(contract_abi):
