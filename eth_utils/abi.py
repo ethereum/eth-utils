@@ -106,7 +106,7 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
 
 
 def _abi_inputs_types(
-    abi_inputs: Optional[Sequence[Union[ABIComponent]]] = None,
+    abi_inputs: Optional[Sequence[Union[ABIComponent, str]]] = None,
 ) -> str:
     """
     Parse type(s) from a list of function or event ABI arguments.
@@ -850,7 +850,7 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     return event_signature_to_log_topic(event_signature)
 
 
-def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent]) -> str:
+def get_normalized_abi_arg_type(abi_element_param: ABIComponent) -> str:
     """
     Extract argument types from a function or event ABI parameter.
 
