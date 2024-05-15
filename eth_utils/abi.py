@@ -850,7 +850,7 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     return event_signature_to_log_topic(event_signature)
 
 
-def get_normalized_abi_arg_type(abi_element_param: ABIComponent) -> str:
+def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent, str]) -> str:
     """
     Extract argument types from a function or event ABI parameter.
 
