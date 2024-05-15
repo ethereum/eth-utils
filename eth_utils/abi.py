@@ -856,7 +856,6 @@ def get_normalized_abi_arg_type(abi_element_param: ABIComponent) -> str:
 
     With tuple argument types, return a Tuple of each type.
     Non-tuple types just return the type.
-
     >>> from eth_utils.abi import get_normalized_abi_arg_type
     >>> get_normalized_abi_arg_type(
     ...     {
@@ -875,6 +874,9 @@ def get_normalized_abi_arg_type(abi_element_param: ABIComponent) -> str:
     :return: Type(s) in the function or event ABI param.
     :rtype: `str`
     """
+    if isinstance(abi_element_param, str):
+        return abi_element_param
+
     element_type = abi_element_param["type"]
     if not isinstance(element_type, str):
         raise TypeError(
