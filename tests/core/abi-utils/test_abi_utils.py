@@ -8,13 +8,12 @@ from eth_abi.registry import (
 )
 from eth_typing import (
     ABI,
+    ABIComponent,
     ABIConstructor,
     ABIElement,
     ABIEvent,
-    ABIEventParam,
     ABIFallback,
     ABIFunction,
-    ABIFunctionParam,
     ABIReceive,
     MismatchedABI,
 )
@@ -186,7 +185,7 @@ def make_abi_element(
         return make_receive_abi()
 
 
-def make_constructor_abi_input(name, input_type) -> ABIFunctionParam:
+def make_constructor_abi_input(name, input_type) -> ABIComponent:
     return {"name": name, "type": input_type}
 
 
@@ -216,7 +215,7 @@ def make_receive_abi() -> ABIReceive:
     }
 
 
-def make_event_abi_input(name, input_type, indexed=False) -> ABIEventParam:
+def make_event_abi_input(name, input_type, indexed=False) -> ABIComponent:
     return {
         "indexed": indexed,
         "name": name,
@@ -243,15 +242,15 @@ def make_event_abi(name, input_args=None, anonymous=None) -> ABIEvent:
     }
 
 
-def make_function_abi_kwarg(name, components) -> ABIFunctionParam:
+def make_function_abi_kwarg(name, components) -> ABIComponent:
     return {"name": name, "type": "tuple", "components": components}
 
 
-def make_function_abi_input(name, input_type) -> ABIFunctionParam:
+def make_function_abi_input(name, input_type) -> ABIComponent:
     return {"name": name, "type": input_type}
 
 
-def make_function_abi_output(name, input_type) -> ABIFunctionParam:
+def make_function_abi_output(name, input_type) -> ABIComponent:
     return {"name": name, "type": input_type}
 
 

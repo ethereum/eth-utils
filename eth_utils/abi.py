@@ -21,12 +21,11 @@ from typing import (
 
 from eth_typing import (
     ABI,
+    ABIComponent,
     ABIElement,
     ABIEvent,
-    ABIEventParam,
     ABIFunction,
     ABIFunctionInfo,
-    ABIFunctionParam,
     HexStr,
     MismatchedABI,
     Primitives,
@@ -107,7 +106,7 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
 
 
 def _abi_inputs_types(
-    abi_inputs: Optional[Sequence[Union[ABIFunctionParam, ABIEventParam]]] = None
+    abi_inputs: Optional[Sequence[Union[ABIComponent]]] = None,
 ) -> str:
     """
     Parse type(s) from a list of function or event ABI arguments.
@@ -363,9 +362,7 @@ def _get_aligned_abi_inputs(
     )
 
 
-def _align_abi_input(
-    arg_abi: ABIFunctionParam, arg: Any
-) -> Union[Any, Tuple[Any, ...]]:
+def _align_abi_input(arg_abi: ABIComponent, arg: Any) -> Union[Any, Tuple[Any, ...]]:
     """
     Aligns the values of any mapping at any level of nesting in ``arg``
     according to the layout of the corresponding abi spec.
@@ -376,12 +373,12 @@ def _align_abi_input(
         # Arg is non-tuple.  Just return value.
         return arg
 
-    sub_abis: Iterable[ABIFunctionParam] = []
+    sub_abis: Iterable[ABIComponent] = []
     tuple_prefix, tuple_dims = tuple_parts
     if tuple_dims is None:
         # Arg is non-list tuple.  Each sub arg in `arg` will be aligned
         # according to its corresponding abi.
-        sub_abis = cast(Iterable[ABIFunctionParam], arg_abi["components"])
+        sub_abis = cast(Iterable[ABIComponent], arg_abi["components"])
     else:
         num_dims = tuple_dims.count("[")
 
@@ -853,12 +850,7 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     return event_signature_to_log_topic(event_signature)
 
 
-def get_normalized_abi_arg_type(
-    abi_element_param: Union[
-        ABIFunctionParam,
-        ABIEventParam,
-    ]
-) -> str:
+def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent]) -> str:
     """
     Extract argument types from a function or event ABI parameter.
 
@@ -879,7 +871,7 @@ def get_normalized_abi_arg_type(
     '(address,uint256,bytes)'
 
     :param abi_element_param: ABI for the Function or Event parameter
-    :type abi_element_param: `ABIFunctionParam` or `ABIEventParam` or `str`
+    :type abi_element_param: `ABIComponent`
     :return: Type(s) in the function or event ABI param.
     :rtype: `str`
     """
