@@ -436,11 +436,11 @@ def _log_topic_bytes(
     return hexstr_if_str(to_bytes, log_topic)
 
 
-def _get_argument_readable_type(arg: Any) -> str:
+def _get_argument_readable_type(arg: Any) -> Any:
     if is_checksum_address(arg) or is_binary_address(arg):
         return "address"
 
-    return str(arg.__class__.__name__)
+    return arg.__class__.__name__
 
 
 def _extract_argument_types(*args: Sequence[Any]) -> str:
@@ -599,7 +599,7 @@ def get_function_abi(
             kwargs,
         )
 
-        raise TypeError(error_diagnosis)
+        raise MismatchedABI(error_diagnosis)
 
     return function_candidates[0]
 

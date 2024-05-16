@@ -678,7 +678,7 @@ def test_get_all_function_abis(contract_abi):
 
 
 def test_get_function_abi_by_name_with_args(contract_abi):
-    function_abi = get_function_abi(contract_abi, "logTwoEvents", ["_arg0"])
+    function_abi = get_function_abi(contract_abi, "logTwoEvents", [1])
     expected_abi = make_abi_element(
         "function", "logTwoEvents", [{"name": "_arg0", "type": "uint256"}]
     )
@@ -689,8 +689,13 @@ def test_get_function_abi_by_name_with_kwargs(contract_abi):
     function_abi = get_function_abi(
         contract_abi,
         "setValue",
-        ["arg0"],
-        {"arg1": "uint256"},
+        [0],
+        {
+            "arg1": {
+                "a": 10000,
+                "b": 987654321,
+            }
+        },
     )
     expected_abi = make_abi_element(
         "function",
@@ -728,9 +733,7 @@ def test_get_function_abi_codec_override(contract_abi):
     )
 
     codec = ABICodec(default_registry)
-    function_abi = get_function_abi(
-        contract_abi, "logTwoEvents", ["_arg0"], abi_codec=codec
-    )
+    function_abi = get_function_abi(contract_abi, "logTwoEvents", [1], abi_codec=codec)
     expected_abi = make_abi_element(
         "function", "logTwoEvents", [{"name": "_arg0", "type": "uint256"}]
     )
@@ -742,28 +745,34 @@ def test_get_function_abi_codec_override(contract_abi):
     [
         (
             "logTwoEvents",
-            ["_arg0"],
+            [100],
             {},
             "0x5818fad7",
             [
-                "_arg0",
+                100,
             ],
         ),
         (
             "setValue",
-            ["_arg0"],
+            [99],
             {},
             "0x55241077",
             [
-                "_arg0",
+                99,
             ],
         ),
         (
             "setValue",
-            [],
-            {"_arg0": "uint256"},
-            "0x55241077",
-            ("uint256",),
+            [1],
+            ({"arg1": {"a": 2, "b": 0}}),
+            "0x647c15ed",
+            (
+                1,
+                (
+                    2,
+                    0,
+                ),
+            ),
         ),
     ],
 )
