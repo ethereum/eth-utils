@@ -1,4 +1,5 @@
 import pytest
+import re
 from typing import (
     Sequence,
 )
@@ -34,6 +35,7 @@ from eth_utils.abi import (
     get_event_log_topics,
     get_function_abi,
     get_normalized_abi_arg_type,
+    get_normalized_abi_inputs,
 )
 from eth_utils.exceptions import (
     ValidationError,
@@ -52,6 +54,39 @@ FN_ABI_C = {
         {"type": "bytes32", "name": "b"},
         {"type": "address", "name": "c"},
     ],
+}
+FN_ABI_D = {
+    "constant": False,
+    "inputs": [
+        {"name": "a", "type": "int256"},
+        {"name": "b", "type": "int256"},
+        {"name": "c", "type": "int256"},
+        {"name": "d", "type": "int256"},
+    ],
+    "name": "testFn",
+    "outputs": [],
+    "type": "function",
+}
+FN_ABI_E = {
+    "constant": False,
+    "inputs": [
+        {"name": "", "type": "int256"},
+        {"name": "", "type": "int256"},
+    ],
+    "name": "testFn",
+    "outputs": [],
+    "type": "function",
+}
+FN_ABI_DUPLICATE_NAMES = {
+    "constant": False,
+    "inputs": [
+        {"name": "b", "type": "int256"},
+        {"name": "b", "type": "int256"},
+        {"name": "a", "type": "int256"},
+    ],
+    "name": "testFn",
+    "outputs": [],
+    "type": "function",
 }
 FN_ABI_NESTED_TUPLE_INPUTS = {
     "inputs": [
@@ -854,3 +889,97 @@ def test_get_normalized_abi_arg_type(abi_element_param, expected):
 def test_get_normalized_abi_arg_type_with_errors(abi_element_param):
     with pytest.raises(TypeError):
         get_normalized_abi_arg_type(abi_element_param)
+
+
+@pytest.mark.parametrize(
+    "fn_abi,args,kwargs,expected",
+    (
+        (
+            FN_ABI_C,
+            (
+                "0x1234567890123456789012345678901234567890",
+                b"bar",
+                "0x1234567890123456789012345678901234567890",
+            ),
+            {},
+            (
+                "0x1234567890123456789012345678901234567890",
+                b"bar",
+                "0x1234567890123456789012345678901234567890",
+            ),
+        ),
+        (
+            FN_ABI_NO_INPUTS,
+            (),
+            {},
+            (),
+        ),
+        (
+            FN_ABI_C,
+            [],
+            {
+                "a": "0x1234567890123456789012345678901234567890",
+                "b": b"bar",
+                "c": "0x1234567890123456789012345678901234567890",
+            },
+            (
+                "0x1234567890123456789012345678901234567890",
+                b"bar",
+                "0x1234567890123456789012345678901234567890",
+            ),
+        ),
+    ),
+)
+def test_get_normalized_abi_inputs(fn_abi, args, kwargs, expected):
+    inputs = get_normalized_abi_inputs(fn_abi, args, kwargs)
+
+    assert inputs == expected
+
+
+def test_get_normalized_abi_inputs_returns_args_without_kwargs():
+    args = [1, "0x1234567890123456789012345678901234567890", b"bar"]
+    kwargs = {}
+    inputs = get_normalized_abi_inputs(FN_ABI_C, args, kwargs)
+
+    assert inputs == args
+
+
+def test_error_when_invalid_args_kwargs_combo_provided():
+    with pytest.raises(TypeError, match="Incorrect argument count."):
+        get_normalized_abi_inputs(
+            FN_ABI_E,
+            (
+                1,
+                2,
+            ),
+            {"a": 1, "b": 2},
+        )
+
+
+def test_kwargs_is_disallowed_when_merging_with_unnamed_inputs():
+    with pytest.raises(TypeError):
+        get_normalized_abi_inputs(FN_ABI_E, tuple(), {"x": 1, "y": 2})
+
+
+def test_args_works_when_merging_with_unnamed_inputs():
+    actual = get_normalized_abi_inputs(FN_ABI_E, (1, 2), {})
+    assert actual == (1, 2)
+
+
+def test_args_allowed_when_duplicate_named_inputs():
+    actual = get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1, 2, 3), {})
+    assert actual == (1, 2, 3)
+
+
+def test_kwargs_not_allowed_for_duplicate_input_names():
+    with pytest.raises(
+        TypeError, match=re.escape("testFn() got multiple values for argument(s) 'b'")
+    ):
+        get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
+
+
+def test_kwargs_allowed_if_no_intersections_with_duplicate_input_names():
+    with pytest.raises(
+        TypeError, match=re.escape("testFn() got multiple values for argument(s) 'b'")
+    ):
+        get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
