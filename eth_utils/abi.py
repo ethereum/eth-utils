@@ -25,7 +25,6 @@ from eth_typing import (
     ABIElement,
     ABIEvent,
     ABIFunction,
-    ABIFunctionInfo,
     HexStr,
     MismatchedABI,
     Primitives,
@@ -50,9 +49,6 @@ from eth_utils.encoding import (
 )
 from eth_utils.exceptions import (
     ValidationError,
-)
-from eth_utils.hexadecimal import (
-    encode_hex,
 )
 from eth_utils.types import (
     is_list_like,
@@ -252,7 +248,7 @@ def _check_if_arguments_can_be_encoded(
     False is returned if arguments do not align with the ABI spec.
     """
     try:
-        arguments = _merge_args_and_kwargs(function_abi, args, kwargs)
+        arguments = get_normalized_abi_inputs(function_abi, args, kwargs)
     except TypeError:
         return False
 
@@ -260,105 +256,12 @@ def _check_if_arguments_can_be_encoded(
         return False
 
     try:
-        types, aligned_args = _get_aligned_abi_inputs(function_abi, arguments)
+        types, aligned_args = get_aligned_abi_inputs(function_abi, arguments)
     except TypeError:
         return False
 
     return all(
         abi_codec.is_encodable(_type, arg) for _type, arg in zip(types, aligned_args)
-    )
-
-
-def _merge_args_and_kwargs(
-    function_abi: ABIFunction, args: Sequence[Any], kwargs: Dict[str, Any]
-) -> Tuple[Any, ...]:
-    """
-    Return a Tuple of arguments for use in contract function calls.
-
-    Flattens positional args (``args``) and keyword args (``kwargs``) and uses the
-    ``function_abi`` for validation.
-
-    Checks to ensure that the correct number of args were given, no duplicate args were
-    given, and no unknown args were given.  Returns a list of argument values aligned
-    to the order of inputs defined in ``function_abi``.
-
-    :param function_abi: Function ABI.
-    :type function_abi: `ABIFunction`
-    :return: Arguments list.
-    :rtype: `Tuple[Any]`
-    """
-    # Ensure the function is being applied to the correct number of args
-    if len(args) + len(kwargs) != len(function_abi.get("inputs", [])):
-        raise TypeError(
-            f"Incorrect argument count. Expected '{len(function_abi['inputs'])}'"
-            f". Got '{len(args) + len(kwargs)}'"
-        )
-
-    # If no keyword args were given, we don't need to align them
-    if not kwargs:
-        return cast(Tuple[Any, ...], args)
-
-    kwarg_names = set(kwargs.keys())
-    sorted_arg_names = tuple(arg_abi["name"] for arg_abi in function_abi["inputs"])
-    args_as_kwargs = dict(zip(sorted_arg_names, args))
-
-    # Check for duplicate args
-    duplicate_args = kwarg_names.intersection(args_as_kwargs.keys())
-    if duplicate_args:
-        raise TypeError(
-            f"{function_abi.get('name')}() got multiple values for argument(s) "
-            f"'{', '.join(duplicate_args)}'"
-        )
-
-    # Check for unknown args
-    unknown_args = kwarg_names.difference(sorted_arg_names)
-    if unknown_args:
-        if function_abi.get("name"):
-            raise TypeError(
-                f"{function_abi.get('name')}() got unexpected keyword argument(s)"
-                f" '{', '.join(unknown_args)}'"
-            )
-        raise TypeError(
-            f"Type: '{function_abi.get('type')}' got unexpected keyword argument(s)"
-            f" '{', '.join(unknown_args)}'"
-        )
-
-    # Sort args according to their position in the ABI and unzip them from their
-    # names
-    sorted_args = tuple(
-        zip(
-            *sorted(
-                itertools.chain(kwargs.items(), args_as_kwargs.items()),
-                key=lambda kv: sorted_arg_names.index(kv[0]),
-            )
-        )
-    )
-
-    if len(sorted_args) > 0:
-        return tuple(sorted_args[1])
-    else:
-        return tuple()
-
-
-def _get_aligned_abi_inputs(
-    abi: ABIFunction, args: Union[Tuple[Any, ...], Mapping[Any, Any]]
-) -> Tuple[Tuple[Any, ...], Tuple[Any, ...]]:
-    """
-    Takes a function ABI (``abi``) and a sequence or mapping of args (``args``).
-    Returns a list of type strings for the function's inputs and a list of
-    arguments which have been aligned to the layout of those types.  The args
-    contained in ``args`` may contain nested mappings or sequences corresponding
-    to tuple-encoded values in ``abi``.
-    """
-    input_abis = abi.get("inputs", [])
-
-    if isinstance(args, abc.Mapping):
-        # `args` is mapping.  Align values according to abi order.
-        args = tuple(args[abi["name"]] for abi in input_abis)
-
-    return (
-        tuple(get_normalized_abi_arg_type(abi) for abi in input_abis),
-        type(args)(_align_abi_input(abi, arg) for abi, arg in zip(input_abis, args)),
     )
 
 
@@ -604,45 +507,6 @@ def get_function_abi(
     return function_candidates[0]
 
 
-def get_function_info(
-    abi: ABI,
-    function_identifier: str,
-    args: Optional[Sequence[Any]] = None,
-    kwargs: Optional[Any] = None,
-    abi_codec: Optional[Any] = None,
-) -> ABIFunctionInfo:
-    """
-    Return the function ABI, selector and input arguments.
-
-    The ABI which matches the provided identifier, named arguments (``args``) and
-    keyword args (``kwargs``) will be returned.
-
-    :param abi: Contract ABI.
-    :type abi: `ABI`
-    :param function_identifier: Find a function ABI with matching identifier.
-    :type function_identifier: `str`
-    :param args: Find a function ABI with matching args.
-    :type args: `list[Any]`
-    :param kwargs: Find a function ABI with matching kwargs.
-    :type kwargs: `Any`
-    :return: Function information including the ABI, selector and args.
-    :rtype: `ABIFunctionInfo`
-    """
-    args = args or tuple()
-    kwargs = kwargs or dict()
-
-    fn_abi = get_function_abi(
-        abi, function_identifier, args, kwargs, abi_codec=abi_codec
-    )
-    fn_selector = encode_hex(function_abi_to_4byte_selector(fn_abi))
-    fn_arguments = _merge_args_and_kwargs(fn_abi, args, kwargs)
-    _, aligned_fn_arguments = _get_aligned_abi_inputs(fn_abi, fn_arguments)
-
-    return ABIFunctionInfo(
-        abi=fn_abi, selector=fn_selector, arguments=aligned_fn_arguments
-    )
-
-
 def get_event_log_topics(
     event_abi: ABIEvent,
     topics: Optional[Sequence[HexBytes]] = None,
@@ -719,6 +583,107 @@ def get_event_abi(
         raise ValueError("No matching events found")
     else:
         raise ValueError("Multiple events found")
+
+
+def get_normalized_abi_inputs(
+    function_abi: ABIFunction, args: Sequence[Any], kwargs: Dict[str, Any]
+) -> Tuple[Any, ...]:
+    """
+    Flattens positional args (``args``) and keyword args (``kwargs``) into a Tuple and
+    uses the ``function_abi`` for validation.
+
+    Checks to ensure that the correct number of args were given, no duplicate args were
+    given, and no unknown args were given.  Returns a list of argument values aligned
+    to the order of inputs defined in ``function_abi``.
+
+    :param function_abi: Function ABI.
+    :type function_abi: `ABIFunction`
+    :param args: Positional arguments for the function.
+    :type args: `Sequence[Any]`
+    :param kwargs: Keyword arguments for the function.
+    :type kwargs: `Dict[str, Any]`
+    :return: Arguments list.
+    :rtype: `Tuple[Any]`
+    """
+    if len(args) + len(kwargs) != len(function_abi.get("inputs", [])):
+        raise TypeError(
+            f"Incorrect argument count. Expected '{len(function_abi['inputs'])}'"
+            f". Got '{len(args) + len(kwargs)}'"
+        )
+
+    # If no keyword args were given, we don't need to align them
+    if not kwargs:
+        return cast(Tuple[Any, ...], args)
+
+    kwarg_names = set(kwargs.keys())
+    sorted_arg_names = tuple(arg_abi["name"] for arg_abi in function_abi["inputs"])
+    args_as_kwargs = dict(zip(sorted_arg_names, args))
+
+    # Check for duplicate args
+    duplicate_args = kwarg_names.intersection(args_as_kwargs.keys())
+    if duplicate_args:
+        raise TypeError(
+            f"{function_abi.get('name')}() got multiple values for argument(s) "
+            f"'{', '.join(duplicate_args)}'"
+        )
+
+    # Check for unknown args
+    unknown_args = kwarg_names.difference(sorted_arg_names)
+    if unknown_args:
+        if function_abi.get("name"):
+            raise TypeError(
+                f"{function_abi.get('name')}() got unexpected keyword argument(s)"
+                f" '{', '.join(unknown_args)}'"
+            )
+        raise TypeError(
+            f"Type: '{function_abi.get('type')}' got unexpected keyword argument(s)"
+            f" '{', '.join(unknown_args)}'"
+        )
+
+    # Sort args according to their position in the ABI and unzip them from their
+    # names
+    sorted_args = tuple(
+        zip(
+            *sorted(
+                itertools.chain(kwargs.items(), args_as_kwargs.items()),
+                key=lambda kv: sorted_arg_names.index(kv[0]),
+            )
+        )
+    )
+
+    if len(sorted_args) > 0:
+        return tuple(sorted_args[1])
+    else:
+        return tuple()
+
+
+def get_aligned_abi_inputs(
+    function_abi: ABIFunction, args: Union[Tuple[Any, ...], Mapping[Any, Any]]
+) -> Tuple[Tuple[Any, ...], Tuple[Any, ...]]:
+    """
+    Returns a pair of nested Tuples containing a list of types and a list of input
+    names sorted by the order specified by the ``abi``.
+
+    The args contained in ``args`` may contain nested mappings or sequences
+    corresponding to tuple-encoded values in ``abi``.
+
+    :param function_abi: Function ABI.
+    :type function_abi: `ABIFunction`
+    :param args: Arguments for the function.
+    :type args: `Union[Tuple[Any, ...], Mapping[Any, Any]]`
+    :return: Tuple of types and aligned arguments.
+    :rtype: `Tuple[Tuple[Any, ...], Tuple[Any, ...]]`
+    """
+    input_abis = function_abi.get("inputs", [])
+
+    if isinstance(args, abc.Mapping):
+        # `args` is mapping.  Align values according to abi order.
+        args = tuple(args[abi["name"]] for abi in input_abis)
+
+    return (
+        tuple(get_normalized_abi_arg_type(abi) for abi in input_abis),
+        type(args)(_align_abi_input(abi, arg) for abi, arg in zip(input_abis, args)),
+    )
 
 
 def get_abi_input_names(abi_element: ABIElement) -> List[str]:

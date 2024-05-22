@@ -51,7 +51,6 @@ from eth_utils import (
     get_event_log_topics,
     get_extended_debug_logger,
     get_function_abi,
-    get_function_info,
     get_logger,
     get_normalized_abi_arg_type,
     hexstr_if_str as non_curried_hexstr_if_str,
@@ -256,7 +255,6 @@ from_wei = curry(from_wei)
 get_event_abi = curry(get_event_abi)
 get_event_log_topics = curry(get_event_log_topics)
 get_function_abi = curry(get_function_abi)
-get_function_info = curry(get_function_info)
 get_logger = curry(get_logger)
 hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)

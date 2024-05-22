@@ -33,7 +33,6 @@ from eth_utils.abi import (
     get_event_abi,
     get_event_log_topics,
     get_function_abi,
-    get_function_info,
     get_normalized_abi_arg_type,
 )
 from eth_utils.exceptions import (
@@ -738,53 +737,6 @@ def test_get_function_abi_codec_override(contract_abi):
         "function", "logTwoEvents", [{"name": "_arg0", "type": "uint256"}]
     )
     assert function_abi == expected_abi
-
-
-@pytest.mark.parametrize(
-    "name,input_args,input_kwargs,expected_selector,expected_arguments",
-    [
-        (
-            "logTwoEvents",
-            [100],
-            {},
-            "0x5818fad7",
-            [
-                100,
-            ],
-        ),
-        (
-            "setValue",
-            [99],
-            {},
-            "0x55241077",
-            [
-                99,
-            ],
-        ),
-        (
-            "setValue",
-            [1],
-            ({"arg1": {"a": 2, "b": 0}}),
-            "0x647c15ed",
-            (
-                1,
-                (
-                    2,
-                    0,
-                ),
-            ),
-        ),
-    ],
-)
-def test_get_function_info(
-    contract_abi, name, input_args, input_kwargs, expected_selector, expected_arguments
-):
-    function_info = get_function_info(contract_abi, name, input_args, input_kwargs)
-    assert function_info["abi"] == get_function_abi(
-        contract_abi, name, input_args, input_kwargs
-    )
-    assert function_info["selector"] == expected_selector
-    assert function_info["arguments"] == expected_arguments
 
 
 EVENT_ABI_A = {

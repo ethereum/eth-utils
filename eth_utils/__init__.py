@@ -16,7 +16,6 @@ from .abi import (
     get_event_abi,
     get_event_log_topics,
     get_function_abi,
-    get_function_info,
     get_normalized_abi_arg_type,
 )
 from .address import (
