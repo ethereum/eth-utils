@@ -1,6 +1,8 @@
 import pytest
+import json
 import re
 from typing import (
+    NamedTuple,
     Sequence,
 )
 
@@ -29,6 +31,7 @@ from eth_utils.abi import (
     get_abi_input_types,
     get_abi_output_names,
     get_abi_output_types,
+    get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
     get_event_abi,
@@ -983,3 +986,211 @@ def test_kwargs_allowed_if_no_intersections_with_duplicate_input_names():
         TypeError, match=re.escape("testFn() got multiple values for argument(s) 'b'")
     ):
         get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
+
+
+class MyXYTuple(NamedTuple):
+    x: int
+    y: int
+
+
+TEST_FUNCTION_ABI_JSON = """
+{
+  "constant": false,
+  "inputs": [
+    {
+      "components": [
+        {
+          "name": "a",
+          "type": "uint256"
+        },
+        {
+          "name": "b",
+          "type": "uint256[]"
+        },
+        {
+          "components": [
+            {
+              "name": "x",
+              "type": "uint256"
+            },
+            {
+              "name": "y",
+              "type": "uint256"
+            }
+          ],
+          "name": "c",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "s",
+      "type": "tuple"
+    },
+    {
+      "components": [
+        {
+          "name": "x",
+          "type": "uint256"
+        },
+        {
+          "name": "y",
+          "type": "uint256"
+        }
+      ],
+      "name": "t",
+      "type": "tuple"
+    },
+    {
+      "name": "a",
+      "type": "uint256"
+    },
+    {
+      "components": [
+        {
+          "name": "x",
+          "type": "uint256"
+        },
+        {
+          "name": "y",
+          "type": "uint256"
+        }
+      ],
+      "name": "b",
+      "type": "tuple[][]"
+    }
+  ],
+  "name": "f",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+}
+"""
+TEST_FUNCTION_ABI = json.loads(TEST_FUNCTION_ABI_JSON)
+
+GET_ABI_INPUTS_OUTPUT = (
+    (
+        "(uint256,uint256[],(uint256,uint256)[])",  # Type of s
+        "(uint256,uint256)",  # Type of t
+        "uint256",  # Type of a
+        "(uint256,uint256)[][]",  # Type of b
+    ),
+    (
+        (1, [2, 3, 4], [(5, 6), (7, 8), (9, 10)]),  # Value for s
+        (11, 12),  # Value for t
+        13,  # Value for a
+        [[(14, 15), (16, 17)], [(18, 19)]],  # Value for b
+    ),
+)
+GET_ABI_INPUTS_TESTS = (
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": {
+                "a": 1,
+                "b": [2, 3, 4],
+                "c": [{"x": 5, "y": 6}, {"x": 7, "y": 8}, {"x": 9, "y": 10}],
+            },
+            "t": {"x": 11, "y": 12},
+            "a": 13,
+            "b": [[{"x": 14, "y": 15}, {"x": 16, "y": 17}], [{"x": 18, "y": 19}]],
+        },
+        GET_ABI_INPUTS_OUTPUT,
+    ),
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": {"a": 1, "b": [2, 3, 4], "c": [(5, 6), (7, 8), {"x": 9, "y": 10}]},
+            "t": {"x": 11, "y": 12},
+            "a": 13,
+            "b": [[(14, 15), (16, 17)], [{"x": 18, "y": 19}]],
+        },
+        GET_ABI_INPUTS_OUTPUT,
+    ),
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": {"a": 1, "b": [2, 3, 4], "c": [(5, 6), (7, 8), (9, 10)]},
+            "t": (11, 12),
+            "a": 13,
+            "b": [[(14, 15), (16, 17)], [(18, 19)]],
+        },
+        GET_ABI_INPUTS_OUTPUT,
+    ),
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": (1, [2, 3, 4], [(5, 6), (7, 8), (9, 10)]),
+            "t": (11, 12),
+            "a": 13,
+            "b": [[(14, 15), (16, 17)], [(18, 19)]],
+        },
+        GET_ABI_INPUTS_OUTPUT,
+    ),
+    (
+        TEST_FUNCTION_ABI,
+        (
+            (1, [2, 3, 4], [(5, 6), (7, 8), (9, 10)]),
+            (11, 12),
+            13,
+            [[(14, 15), (16, 17)], [(18, 19)]],
+        ),
+        GET_ABI_INPUTS_OUTPUT,
+    ),
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": {"a": 1, "b": [2, 3, 4], "c": [(5, 6), (7, 8), MyXYTuple(x=9, y=10)]},
+            "t": MyXYTuple(x=11, y=12),
+            "a": 13,
+            "b": [
+                [MyXYTuple(x=14, y=15), MyXYTuple(x=16, y=17)],
+                [MyXYTuple(x=18, y=19)],
+            ],
+        },
+        GET_ABI_INPUTS_OUTPUT,
+    ),
+    (
+        {},
+        (),
+        ((), ()),
+    ),
+)
+
+
+@pytest.mark.parametrize(
+    "abi, args, expected",
+    GET_ABI_INPUTS_TESTS,
+)
+def test_get_aligned_abi_inputs(abi, args, expected):
+    assert get_aligned_abi_inputs(abi, args) == expected
+
+
+GET_ABI_INPUTS_RAISING_TESTS = (
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": {"a": 1, "b": [2, 3, 4], "c": ["56", (7, 8), (9, 10)]},
+            "t": (11, 12),
+            "a": 13,
+            "b": [[(14, 15), (16, 17)], [(18, 19)]],
+        },
+    ),
+    (
+        TEST_FUNCTION_ABI,
+        {
+            "s": {"a": 1, "b": [2, 3, 4], "c": {(5, 6), (7, 8), (9, 10)}},
+            "t": (11, 12),
+            "a": 13,
+            "b": [[(14, 15), (16, 17)], [(18, 19)]],
+        },
+    ),
+)
+
+
+@pytest.mark.parametrize(
+    "abi, args",
+    GET_ABI_INPUTS_RAISING_TESTS,
+)
+def test_get_aligned_abi_inputs_raises_type_error(abi, args):
+    with pytest.raises(TypeError):
+        get_aligned_abi_inputs(abi, args)
