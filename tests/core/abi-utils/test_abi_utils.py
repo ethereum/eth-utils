@@ -6,9 +6,6 @@ from typing import (
     Sequence,
 )
 
-from eth_abi.registry import (
-    registry as default_registry,
-)
 from eth_typing import (
     ABI,
     ABIComponent,
@@ -22,7 +19,7 @@ from eth_typing import (
 )
 
 from eth_utils.abi import (
-    _abi_to_signature,
+    abi_to_signature,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     function_abi_to_4byte_selector,
@@ -36,7 +33,6 @@ from eth_utils.abi import (
     get_all_function_abis,
     get_event_abi,
     get_event_log_topics,
-    get_function_abi,
     get_normalized_abi_arg_type,
     get_normalized_abi_inputs,
 )
@@ -198,8 +194,8 @@ def test_fn_signature_to_4byte_selector(signature, expected):
         (FN_ABI_SINGLETON_TUPLE_INPUT, "singletonTupleInput((address))"),
     ),
 )
-def test__abi_to_signature(abi, expected):
-    assert _abi_to_signature(abi) == expected
+def test_abi_to_signature(abi, expected):
+    assert abi_to_signature(abi) == expected
 
 
 def make_abi_element(
@@ -712,69 +708,6 @@ def test_get_all_function_abis(contract_abi):
 
     abis = get_all_function_abis(contract_abi)
     assert abis == expected_function_abis
-
-
-def test_get_function_abi_by_name_with_args(contract_abi):
-    function_abi = get_function_abi(contract_abi, "logTwoEvents", [1])
-    expected_abi = make_abi_element(
-        "function", "logTwoEvents", [{"name": "_arg0", "type": "uint256"}]
-    )
-    assert function_abi == expected_abi
-
-
-def test_get_function_abi_by_name_with_kwargs(contract_abi):
-    function_abi = get_function_abi(
-        contract_abi,
-        "setValue",
-        [0],
-        {
-            "arg1": {
-                "a": 10000,
-                "b": 987654321,
-            }
-        },
-    )
-    expected_abi = make_abi_element(
-        "function",
-        "setValue",
-        [{"name": "_arg0", "type": "uint256"}],
-        [
-            {
-                "name": "arg1",
-                "components": [
-                    {"name": "a", "type": "uint256"},
-                    {"name": "b", "type": "uint256"},
-                ],
-            }
-        ],
-    )
-    assert function_abi == expected_abi
-
-
-def test_get_function_abi_raises_without_valid_function_identifier(contract_abi):
-    with pytest.raises(TypeError, match="Unsupported function identifier"):
-        get_function_abi(contract_abi, 1, ["_arg0"])
-
-
-def test_get_function_abi_by_name(contract_abi):
-    with pytest.raises(
-        MismatchedABI,
-        match="Function invocation failed due to improper number of arguments.",
-    ):
-        get_function_abi(contract_abi, "logTwoEvents")
-
-
-def test_get_function_abi_codec_override(contract_abi):
-    from eth_abi.codec import (
-        ABICodec,
-    )
-
-    codec = ABICodec(default_registry)
-    function_abi = get_function_abi(contract_abi, "logTwoEvents", [1], abi_codec=codec)
-    expected_abi = make_abi_element(
-        "function", "logTwoEvents", [{"name": "_arg0", "type": "uint256"}]
-    )
-    assert function_abi == expected_abi
 
 
 EVENT_ABI_A = {

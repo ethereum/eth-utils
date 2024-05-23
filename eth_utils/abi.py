@@ -44,15 +44,11 @@ from eth_utils.conversions import (
     hexstr_if_str,
     to_bytes,
 )
-from eth_utils.encoding import (
-    get_default_codec,
-)
 from eth_utils.exceptions import (
     ValidationError,
 )
 from eth_utils.types import (
     is_list_like,
-    is_text,
 )
 
 from .crypto import (
@@ -69,9 +65,11 @@ from .toolz import (
 )
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     """
+    DEPRECATED: This method will be replaced by `get_normalized_abi_arg_type`.
+
     Converts a tuple from a dict to a parenthesized list of its types.
 
-    ..doctest:
+    .. doctest::
 
         >>> from eth_utils.abi import collapse_if_tuple
         >>> collapse_if_tuple(
@@ -119,31 +117,6 @@ def _abi_inputs_types(
     )
 
 
-def _abi_to_signature(abi: ABIElement) -> str:
-    """
-    Returns a string signature representation of the function or event ABI
-    and arguments.
-
-    Signatures consist of the name followed by a list of arguments.
-
-    Function signature example: ``f(address,uint256,bytes)``
-    """
-    if abi["type"] == "fallback" or abi["type"] == "receive":
-        name = str(abi["type"])
-        abi_inputs = None
-    elif abi["type"] == "constructor":
-        name = abi["type"]
-        abi_inputs = abi["inputs"]
-    elif abi["type"] == "event":
-        name = abi["name"]
-        abi_inputs = abi["inputs"]
-    else:
-        name = str(abi.get("name", abi["type"]))
-        abi_inputs = abi.get("inputs")
-
-    return f"{name}({_abi_inputs_types(abi_inputs)})"
-
-
 def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
     """
     Return a list of each ``ABIElement`` that is of type ``_type``.
@@ -162,24 +135,6 @@ def _filter_by_name(name: str, contract_abi: ABI) -> List[ABIElement]:
             abi["type"] not in ("fallback", "constructor", "receive")
             and abi.get("name", "") == name
         )
-    ]
-
-
-def _filter_by_encodability(
-    abi_codec: Any,
-    args: Sequence[Any],
-    kwargs: Dict[str, Any],
-    contract_abi: ABI,
-) -> List[ABIFunction]:
-    """
-    Return a list of each ``ABIFunction`` that can be encoded with the provided
-    arguments.
-    """
-    return [
-        abi
-        for abi in contract_abi
-        if abi["type"] == "function"
-        and _check_if_arguments_can_be_encoded(abi, abi_codec, args, kwargs)
     ]
 
 
@@ -203,68 +158,6 @@ def _filter_by_argument_name(
             continue
 
     return abis_with_matching_args
-
-
-def _abi_match_num_arguments(abi_element: ABIElement, num_arguments: int) -> bool:
-    """
-    Return True if the provided ABI has the expected number of arguments.
-    """
-    if (
-        "inputs" not in abi_element
-        or abi_element["type"] == "fallback"
-        or abi_element["type"] == "receive"
-    ):
-        # only return True for fallback and receive if 0 arguments expected
-        return num_arguments == 0
-    elif (
-        abi_element["type"] == "function"
-        or abi_element["type"] == "constructor"
-        or abi_element["type"] == "error"
-    ):
-        return len(abi_element["inputs"]) == num_arguments
-
-    return False
-
-
-def _filter_by_argument_count(
-    num_arguments: int, contract_abi: ABI
-) -> List[ABIElement]:
-    """
-    Return a list of each ``ABIElement`` which has the given number of arguments.
-    """
-    return [abi for abi in contract_abi if _abi_match_num_arguments(abi, num_arguments)]
-
-
-def _check_if_arguments_can_be_encoded(
-    function_abi: ABIFunction,
-    abi_codec: Any,
-    args: Sequence[Any],
-    kwargs: Dict[str, Any],
-) -> bool:
-    """
-    Validates the function and arguments for encoding.
-
-    Returns True if the function ABI can be encoded with the provided argument
-    (``args``) and keyword args (``kwargs``).
-
-    False is returned if arguments do not align with the ABI spec.
-    """
-    try:
-        arguments = get_normalized_abi_inputs(function_abi, args, kwargs)
-    except TypeError:
-        return False
-
-    if len(function_abi.get("inputs", [])) != len(arguments):
-        return False
-
-    try:
-        types, aligned_args = get_aligned_abi_inputs(function_abi, arguments)
-    except TypeError:
-        return False
-
-    return all(
-        abi_codec.is_encodable(_type, arg) for _type, arg in zip(types, aligned_args)
-    )
 
 
 def _align_abi_input(arg_abi: ABIComponent, arg: Any) -> Union[Any, Tuple[Any, ...]]:
@@ -370,52 +263,56 @@ def _extract_argument_types(*args: Sequence[Any]) -> str:
     return ",".join(collapsed_args)
 
 
-def _mismatched_abi_error_diagnosis(
-    function_identifier: str,
-    matching_function_signatures: Sequence[str],
-    arg_count_matches: int,
-    encoding_matches: int,
-    args: Optional[Sequence[Any]] = None,
-    kwargs: Optional[Any] = None,
-) -> str:
+def abi_to_signature(abi: ABIElement) -> str:
     """
-    Raise a ``MismatchedABI`` when a function ABI lookup results in an error.
+    Returns a string signature representation of the function or event ABI
+    and arguments.
 
-    An error may result from multiple functions matching the provided signature and
-    arguments or no functions are identified.
+    Signatures consist of the name followed by a list of arguments.
+
+    :param abi: Contract ABI.
+    :type abi: `ABI`
+    :return: Stringified ABI signature
+    :rtype: `str`
+
+    .. doctest::
+
+        >>> import json
+        >>> from eth_utils import abi_to_signature
+        >>> abi_json = '''
+        ... {
+        ...   "constant": false,
+        ...   "inputs": [
+        ...     {
+        ...       "name": "s",
+        ...       "type": "uint256"
+        ...     }
+        ...   ],
+        ...   "name": "f",
+        ...   "outputs": [],
+        ...   "payable": false,
+        ...   "stateMutability": "nonpayable",
+        ...   "type": "function"
+        ... }
+        ... '''
+        >>> abi = json.loads(abi_json)
+        >>> abi_to_signature(abi)
+        'f(uint256)'
     """
-    diagnosis = "\n"
-    if arg_count_matches == 0:
-        diagnosis += "Function invocation failed due to improper number of arguments."
-    elif encoding_matches == 0:
-        diagnosis += "Function invocation failed due to no matching argument types."
-    elif encoding_matches > 1:
-        diagnosis += (
-            "Ambiguous argument encoding. "
-            "Provided arguments can be encoded to multiple functions "
-            "matching this call."
-        )
-
-    if args is not None:
-        collapsed_args = _extract_argument_types(args)
+    if abi["type"] == "fallback" or abi["type"] == "receive":
+        name = str(abi["type"])
+        abi_inputs = None
+    elif abi["type"] == "constructor":
+        name = abi["type"]
+        abi_inputs = abi["inputs"]
+    elif abi["type"] == "event":
+        name = abi["name"]
+        abi_inputs = abi["inputs"]
     else:
-        collapsed_args = ""
+        name = str(abi.get("name", abi["type"]))
+        abi_inputs = abi.get("inputs")
 
-    if kwargs is not None:
-        collapsed_kwargs = dict(
-            {(k, _extract_argument_types([v])) for k, v in kwargs.items()}
-        )
-    else:
-        collapsed_kwargs = {}
-
-    return (
-        f"\nCould not identify the intended function with name "
-        f"`{function_identifier}`, positional arguments with type(s) "
-        f"`{collapsed_args}` and keyword arguments with type(s) "
-        f"`{collapsed_kwargs}`."
-        f"\nFound {len(matching_function_signatures)} function(s) with the name "
-        f"`{function_identifier}`: {matching_function_signatures}{diagnosis}"
-    )
+    return f"{name}({_abi_inputs_types(abi_inputs)})"
 
 
 def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
@@ -431,82 +328,6 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
         cast(ABIFunction, function_abi)
         for function_abi in _filter_by_type("function", abi)
     ]
-
-
-def get_function_abi(
-    abi: ABI,
-    function_identifier: str,
-    args: Optional[Sequence[Any]] = None,
-    kwargs: Optional[Any] = None,
-    abi_codec: Optional[Any] = None,
-) -> ABIFunction:
-    """
-    Return the interface for an ``ABIFunction`` which matches the provided identifier
-    and arguments.
-
-    The ABI which matches the provided identifier, named arguments (``args``) and
-    keyword args (``kwargs``) will be returned.
-
-    The `abi_codec` may be overridden if custom encoding and decoding is required. The
-    default is used if no codec is provided. More details about customizations are in
-    the `eth-abi Codecs Doc <https://eth-abi.readthedocs.io/en/latest/codecs.html>`__.
-
-    :param abi: Contract ABI.
-    :type abi: `ABI`
-    :param function_identifier: Find a function ABI with matching name.
-    :type function_identifier: `str`
-    :param args: Find a function ABI with matching args.
-    :type args: `list[Any]`
-    :param kwargs: Find a function ABI with matching kwargs.
-    :type kwargs: `Any`
-    :param abi_codec: Codec used for encoding and decoding. Default with \
-    `strict_bytes_type_checking` enabled.
-    :type abi_codec: `Any`
-
-    :return: ABI for the function interface.
-    :rtype: `ABIFunction`
-    """
-    if function_identifier is None or not is_text(function_identifier):
-        raise TypeError("Unsupported function identifier")
-
-    if abi_codec is None:
-        abi_codec = get_default_codec()
-
-    args = args or tuple()
-    kwargs = kwargs or dict()
-    num_arguments = len(args) + len(kwargs)
-
-    name_filter = functools.partial(_filter_by_name, function_identifier)
-    arg_count_filter = functools.partial(_filter_by_argument_count, num_arguments)
-    encoding_filter = functools.partial(
-        _filter_by_encodability, abi_codec, args, kwargs
-    )
-
-    function_candidates = cast(
-        Sequence[ABIFunction], pipe(abi, name_filter, arg_count_filter, encoding_filter)
-    )
-
-    if len(function_candidates) != 1:
-        matching_identifiers = name_filter(abi)
-        matching_function_signatures = [
-            _abi_to_signature(func) for func in matching_identifiers
-        ]
-
-        arg_count_matches = len(arg_count_filter(matching_identifiers))
-        encoding_matches = len(encoding_filter(matching_identifiers))
-
-        error_diagnosis = _mismatched_abi_error_diagnosis(
-            function_identifier,
-            matching_function_signatures,
-            arg_count_matches,
-            encoding_matches,
-            args,
-            kwargs,
-        )
-
-        raise MismatchedABI(error_diagnosis)
-
-    return function_candidates[0]
 
 
 def get_event_log_topics(
@@ -799,7 +620,7 @@ def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
     :return: 4-byte function signature.
     :rtype: `bytes`
     """
-    function_signature = _abi_to_signature(function_abi)
+    function_signature = abi_to_signature(function_abi)
     return function_signature_to_4byte_selector(function_signature)
 
 
@@ -837,7 +658,7 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     :rtype: `bytes`
 
     """
-    event_signature = _abi_to_signature(event_abi)
+    event_signature = abi_to_signature(event_abi)
     return event_signature_to_log_topic(event_signature)
 
 

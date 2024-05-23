@@ -19,6 +19,7 @@ from eth_utils import (
     HasLoggerMeta,
     Network,
     ValidationError,
+    abi_to_signature,
     add_0x_prefix,
     apply_formatter_at_index,
     apply_formatter_if as non_curried_apply_formatter_if,
@@ -50,7 +51,6 @@ from eth_utils import (
     get_event_abi,
     get_event_log_topics,
     get_extended_debug_logger,
-    get_function_abi,
     get_logger,
     get_normalized_abi_arg_type,
     hexstr_if_str as non_curried_hexstr_if_str,
@@ -254,7 +254,6 @@ apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F8
 from_wei = curry(from_wei)
 get_event_abi = curry(get_event_abi)
 get_event_log_topics = curry(get_event_log_topics)
-get_function_abi = curry(get_function_abi)
 get_logger = curry(get_logger)
 hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)

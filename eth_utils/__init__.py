@@ -3,6 +3,7 @@ from importlib.metadata import (
 )
 
 from .abi import (
+    abi_to_signature,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     function_abi_to_4byte_selector,
@@ -15,7 +16,6 @@ from .abi import (
     get_all_function_abis,
     get_event_abi,
     get_event_log_topics,
-    get_function_abi,
     get_normalized_abi_arg_type,
 )
 from .address import (
