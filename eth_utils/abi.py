@@ -71,18 +71,20 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     """
     Converts a tuple from a dict to a parenthesized list of its types.
 
-    >>> from eth_utils.abi import collapse_if_tuple
-    >>> collapse_if_tuple(
-    ...     {
-    ...         'components': [
-    ...             {'name': 'anAddress', 'type': 'address'},
-    ...             {'name': 'anInt', 'type': 'uint256'},
-    ...             {'name': 'someBytes', 'type': 'bytes'},
-    ...         ],
-    ...         'type': 'tuple',
-    ...     }
-    ... )
-    '(address,uint256,bytes)'
+    ..doctest:
+
+        >>> from eth_utils.abi import collapse_if_tuple
+        >>> collapse_if_tuple(
+        ...     {
+        ...         'components': [
+        ...             {'name': 'anAddress', 'type': 'address'},
+        ...             {'name': 'anInt', 'type': 'uint256'},
+        ...             {'name': 'someBytes', 'type': 'bytes'},
+        ...         ],
+        ...         'type': 'tuple',
+        ...     }
+        ... )
+        '(address,uint256,bytes)'
     """
     typ = abi["type"]
     if not isinstance(typ, str):
@@ -765,8 +767,14 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
 
 
 def function_signature_to_4byte_selector(function_signature: str) -> bytes:
-    """
+    r"""
     Return the 4-byte function signature from a function signature string.
+
+    .. doctest::
+
+        >>> from eth_utils import function_signature_to_4byte_selector
+        >>> function_signature_to_4byte_selector('myFunction()')
+        b'\xc3x\n:'
 
     :param event_signature: String representation of the event name and arguments.
     :type event_signature: `string`
@@ -777,8 +785,14 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
 
 
 def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
-    """
+    r"""
     Return the 4-byte function signature of the provided function ABI.
+
+    .. doctest::
+
+        >>> from eth_utils import function_abi_to_4byte_selector
+        >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})  # noqa: E501
+        b'\xc3x\n:'
 
     :param function_abi: Function ABI.
     :type function_abi: `ABIFunction`
@@ -790,8 +804,14 @@ def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
 
 
 def event_signature_to_log_topic(event_signature: str) -> bytes:
-    """
-    Return the keccak signature of the log topic for an event signature.
+    r"""
+    Return the 32-byte keccak signature of the log topic for an event signature.
+
+    .. doctest::
+
+        >>> from eth_utils import event_signature_to_log_topic
+        >>> event_signature_to_log_topic('MyEvent()')
+        b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
 
     :param event_signature: String representation of the event name and arguments.
     :type event_signature: `string`
@@ -802,8 +822,14 @@ def event_signature_to_log_topic(event_signature: str) -> bytes:
 
 
 def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
-    """
-    Return the keccak signature of the log topic from an event ABI.
+    r"""
+    Return the 32-byte keccak signature of the log topic from an event ABI.
+
+    .. doctest::
+
+        >>> from eth_utils import event_abi_to_log_topic
+        >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})  # noqa: E501
+        b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
 
     :param event_abi: Event ABI.
     :type event_abi: `ABIEvent`
@@ -821,18 +847,21 @@ def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent, str]) -> 
 
     With tuple argument types, return a Tuple of each type.
     Non-tuple types just return the type.
-    >>> from eth_utils.abi import get_normalized_abi_arg_type
-    >>> get_normalized_abi_arg_type(
-    ...     {
-    ...         'components': [
-    ...             {'name': 'anAddress', 'type': 'address'},
-    ...             {'name': 'anInt', 'type': 'uint256'},
-    ...             {'name': 'someBytes', 'type': 'bytes'},
-    ...         ],
-    ...         'type': 'tuple',
-    ...     }
-    ... )
-    '(address,uint256,bytes)'
+
+    ..doctest:
+
+        >>> from eth_utils.abi import get_normalized_abi_arg_type
+        >>> get_normalized_abi_arg_type(
+        ...     {
+        ...         'components': [
+        ...             {'name': 'anAddress', 'type': 'address'},
+        ...             {'name': 'anInt', 'type': 'uint256'},
+        ...             {'name': 'someBytes', 'type': 'bytes'},
+        ...         ],
+        ...         'type': 'tuple',
+        ...     }
+        ... )
+        '(address,uint256,bytes)'
 
     :param abi_element_param: ABI for the Function or Event parameter
     :type abi_element_param: `ABIComponent`
