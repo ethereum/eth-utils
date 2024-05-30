@@ -65,7 +65,8 @@ from .toolz import (
 )
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     """
-    DEPRECATED: This method will be replaced by `get_normalized_abi_arg_type`.
+    DEPRECATED: This method will be replaced by \
+:func:`eth_utils.abi.get_normalized_abi_arg_type`.
 
     Converts a tuple from a dict to a parenthesized list of its types.
 
@@ -277,25 +278,21 @@ def abi_to_signature(abi: ABIElement) -> str:
 
     .. doctest::
 
-        >>> import json
         >>> from eth_utils import abi_to_signature
-        >>> abi_json = '''
-        ... {
-        ...   "constant": false,
-        ...   "inputs": [
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
         ...     {
-        ...       "name": "s",
-        ...       "type": "uint256"
+        ...       'name': 's',
+        ...       'type': 'uint256'
         ...     }
         ...   ],
-        ...   "name": "f",
-        ...   "outputs": [],
-        ...   "payable": false,
-        ...   "stateMutability": "nonpayable",
-        ...   "type": "function"
+        ...   'name': 'f',
+        ...   'outputs': [],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
         ... }
-        ... '''
-        >>> abi = json.loads(abi_json)
         >>> abi_to_signature(abi)
         'f(uint256)'
     """
@@ -323,6 +320,18 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     :type abi: `ABI`
     :return: List of ABIs for each function interface.
     :rtype: `list[ABIFunction]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_all_function_abis
+        >>> abi = [
+        ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
+        ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
+        ...   {"type": "event", "name": "MyEvent", "inputs": []}
+        ... ]
+        >>> get_all_function_abis(abi)
+        [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
+{'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
     return [
         cast(ABIFunction, function_abi)
@@ -334,7 +343,7 @@ def get_event_log_topics(
     event_abi: ABIEvent,
     topics: Optional[Sequence[HexBytes]] = None,
 ) -> Sequence[HexBytes]:
-    """
+    r"""
     Return topics from an event ABI.
 
     :param event_abi: Event ABI.
@@ -343,6 +352,24 @@ def get_event_log_topics(
     :type topics: `list[HexBytes]`
     :return: Event topics from the event ABI.
     :rtype: `list[HexBytes]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_event_log_topics
+        >>> abi = {
+        ...   'type': 'event',
+        ...   'anonymous': False,
+        ...   'name': 'MyEvent',
+        ...   'inputs': [
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ]
+        ... }
+        >>> keccak_signature = b'l+Ff\xba\x8d\xa5\xa9W\x17b\x1d\x87\x9aw\xder_=\x81g\t\xb9\xcb\xe9\xf0Y\xb8\xf8u\xe2\x84'  # noqa: E501
+        >>> get_event_log_topics(abi, [keccak_signature, '0x1', '0x2'])
+        ['0x1', '0x2']
     """
     if topics is None:
         topics = []
@@ -365,6 +392,17 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     :type abi: `ABI`
     :return: List of ABIs for each event interface.
     :rtype: `list[ABIEvent]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_all_event_abis
+        >>> abi = [
+        ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
+        ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
+        ...   {"type": "event", "name": "MyEvent", "inputs": []}
+        ... ]
+        >>> get_all_event_abis(abi)
+        [{'type': 'event', 'name': 'MyEvent', 'inputs': []}]
     """
     return [cast(ABIEvent, event) for event in _filter_by_type("event", abi)]
 
@@ -385,6 +423,17 @@ def get_event_abi(
     :type argument_names: `list[str]`
     :return: ABI for the event interface.
     :rtype: `ABIEvent`
+
+    .. doctest::
+
+        >>> from eth_utils import get_event_abi
+        >>> abi = [
+        ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
+        ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
+        ...   {"type": "event", "name": "MyEvent", "inputs": []}
+        ... ]
+        >>> get_event_abi(abi, 'MyEvent')
+        {'type': 'event', 'name': 'MyEvent', 'inputs': []}
     """
     filters = [
         functools.partial(_filter_by_type, "event"),
@@ -411,7 +460,7 @@ def get_event_abi(
 def get_normalized_abi_inputs(
     function_abi: ABIFunction, args: Sequence[Any], kwargs: Dict[str, Any]
 ) -> Tuple[Any, ...]:
-    """
+    r"""
     Flattens positional args (``args``) and keyword args (``kwargs``) into a Tuple and
     uses the ``function_abi`` for validation.
 
@@ -427,6 +476,39 @@ def get_normalized_abi_inputs(
     :type kwargs: `Dict[str, Any]`
     :return: Arguments list.
     :rtype: `Tuple[Any]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_normalized_abi_inputs
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
+        ...     {
+        ...       'name': 'name',
+        ...       'type': 'string'
+        ...     },
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     },
+        ...     {
+        ...       'name': 't',
+        ...       'components': [
+        ...         {'name': 'anAddress', 'type': 'address'},
+        ...         {'name': 'anInt', 'type': 'uint256'},
+        ...         {'name': 'someBytes', 'type': 'bytes'},
+        ...       ],
+        ...       'type': 'tuple'
+        ...     }
+        ...   ],
+        ...   'name': 'f',
+        ...   'outputs': [],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
+        ... }
+        >>> get_normalized_abi_inputs(abi, ('myName', 123), {'t': ('0x1', 1, b'\x01')})
+        ('myName', 123, ('0x1', 1, b'\x01'))
     """
     if len(args) + len(kwargs) != len(function_abi.get("inputs", [])):
         raise TypeError(
@@ -496,6 +578,30 @@ def get_aligned_abi_inputs(
     :type args: `Union[Tuple[Any, ...], Mapping[Any, Any]]`
     :return: Tuple of types and aligned arguments.
     :rtype: `Tuple[Tuple[Any, ...], Tuple[Any, ...]]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_aligned_abi_inputs
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
+        ...     {
+        ...       'name': 'name',
+        ...       'type': 'string'
+        ...     },
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'name': 'f',
+        ...   'outputs': [],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
+        ... }
+        >>> get_aligned_abi_inputs(abi, ('myName', 123))
+        (('string', 'uint256'), ('myName', 123))
     """
     input_abis = function_abi.get("inputs", [])
 
@@ -517,6 +623,26 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     :type abi_element: `ABIFunction` or `ABIEvent`
     :return: Names for each input in the function or event ABI.
     :rtype: `List[str]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_abi_input_names
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'name': 'f',
+        ...   'outputs': [],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
+        ... }
+        >>> get_abi_input_names(abi)
+        ['s']
     """
     if (
         "inputs" not in abi_element
@@ -538,6 +664,26 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     :type abi_element: `ABIFunction` or `ABIEvent`
     :return: Types for each input in the function or event ABI.
     :rtype: `List[str]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_abi_input_types
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'name': 'f',
+        ...   'outputs': [],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
+        ... }
+        >>> get_abi_input_types(abi)
+        ['uint256']
     """
     if (
         "inputs" not in abi_element
@@ -560,6 +706,35 @@ def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
     :type function_abi: `ABIFunction`
     :return: Names for each function output in the function ABI.
     :rtype: `List[str]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_abi_output_names
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'name': 'f',
+        ...   'outputs': [
+        ...     {
+        ...       'name': 'name',
+        ...       'type': 'string'
+        ...     },
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
+        ... }
+        >>> get_abi_output_names(abi)
+        ['name', 's']
     """
     if "outputs" not in function_abi or function_abi["type"] != "function":
         raise ValueError(
@@ -577,6 +752,36 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
     :type function_abi: `ABIFunction`
     :return: Types for each function output in the function ABI.
     :rtype: `List[str]`
+
+    .. doctest::
+
+        >>> from eth_utils import get_abi_output_types
+        >>> abi = {
+        ...   'constant': False,
+        ...   'inputs': [
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'name': 'f',
+        ...   'outputs': [
+        ...     {
+        ...       'name': 'name',
+        ...       'type': 'string'
+        ...     },
+        ...     {
+        ...       'name': 's',
+        ...       'type': 'uint256'
+        ...     }
+        ...   ],
+        ...   'payable': False,
+        ...   'stateMutability': 'nonpayable',
+        ...   'type': 'function'
+        ... }
+        >>> get_abi_output_types(abi)
+        ['string', 'uint256']
+
     """
     if function_abi["type"] == "function":
         return [get_normalized_abi_arg_type(arg) for arg in function_abi["outputs"]]
@@ -591,16 +796,16 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     r"""
     Return the 4-byte function signature from a function signature string.
 
+    :param event_signature: String representation of the event name and arguments.
+    :type event_signature: `string`
+    :return: 4-byte function signature.
+    :rtype: `bytes`
+
     .. doctest::
 
         >>> from eth_utils import function_signature_to_4byte_selector
         >>> function_signature_to_4byte_selector('myFunction()')
         b'\xc3x\n:'
-
-    :param event_signature: String representation of the event name and arguments.
-    :type event_signature: `string`
-    :return: 4-byte function signature.
-    :rtype: `bytes`
     """
     return keccak(text=function_signature.replace(" ", ""))[:4]
 
@@ -609,16 +814,22 @@ def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
     r"""
     Return the 4-byte function signature of the provided function ABI.
 
-    .. doctest::
-
-        >>> from eth_utils import function_abi_to_4byte_selector
-        >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})  # noqa: E501
-        b'\xc3x\n:'
-
     :param function_abi: Function ABI.
     :type function_abi: `ABIFunction`
     :return: 4-byte function signature.
     :rtype: `bytes`
+
+    .. doctest::
+
+        >>> from eth_utils import function_abi_to_4byte_selector
+        >>> abi = {
+        ...   'type': 'function',
+        ...   'name': 'myFunction',
+        ...   'inputs': [],
+        ...   'outputs': []
+        ... }
+        >>> function_abi_to_4byte_selector(abi)
+        b'\xc3x\n:'
     """
     function_signature = abi_to_signature(function_abi)
     return function_signature_to_4byte_selector(function_signature)
@@ -628,16 +839,16 @@ def event_signature_to_log_topic(event_signature: str) -> bytes:
     r"""
     Return the 32-byte keccak signature of the log topic for an event signature.
 
+    :param event_signature: String representation of the event name and arguments.
+    :type event_signature: `string`
+    :return: Log topic bytes.
+    :rtype: `bytes`
+
     .. doctest::
 
         >>> from eth_utils import event_signature_to_log_topic
         >>> event_signature_to_log_topic('MyEvent()')
         b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-    :param event_signature: String representation of the event name and arguments.
-    :type event_signature: `string`
-    :return: Log topic bytes.
-    :rtype: `bytes`
     """
     return keccak(text=event_signature.replace(" ", ""))
 
@@ -646,17 +857,22 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     r"""
     Return the 32-byte keccak signature of the log topic from an event ABI.
 
-    .. doctest::
-
-        >>> from eth_utils import event_abi_to_log_topic
-        >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})  # noqa: E501
-        b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
     :param event_abi: Event ABI.
     :type event_abi: `ABIEvent`
     :return: Log topic bytes.
     :rtype: `bytes`
 
+    .. doctest::
+
+        >>> from eth_utils import event_abi_to_log_topic
+        >>> abi = {
+        ...   'type': 'event',
+        ...   'anonymous': False,
+        ...   'name': 'MyEvent',
+        ...   'inputs': []
+        ... }
+        >>> event_abi_to_log_topic(abi)
+        b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
     """
     event_signature = abi_to_signature(event_abi)
     return event_signature_to_log_topic(event_signature)
@@ -669,25 +885,24 @@ def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent, str]) -> 
     With tuple argument types, return a Tuple of each type.
     Non-tuple types just return the type.
 
-    ..doctest:
-
-        >>> from eth_utils.abi import get_normalized_abi_arg_type
-        >>> get_normalized_abi_arg_type(
-        ...     {
-        ...         'components': [
-        ...             {'name': 'anAddress', 'type': 'address'},
-        ...             {'name': 'anInt', 'type': 'uint256'},
-        ...             {'name': 'someBytes', 'type': 'bytes'},
-        ...         ],
-        ...         'type': 'tuple',
-        ...     }
-        ... )
-        '(address,uint256,bytes)'
-
     :param abi_element_param: ABI for the Function or Event parameter
     :type abi_element_param: `ABIComponent`
     :return: Type(s) in the function or event ABI param.
     :rtype: `str`
+
+    ..doctest:
+
+        >>> from eth_utils.abi import get_normalized_abi_arg_type
+        >>> abi = {
+        ...   'components': [
+        ...     {'name': 'anAddress', 'type': 'address'},
+        ...     {'name': 'anInt', 'type': 'uint256'},
+        ...     {'name': 'someBytes', 'type': 'bytes'},
+        ...   ],
+        ...   'type': 'tuple',
+        ... }
+        >>> get_normalized_abi_arg_type(abi)
+        '(address,uint256,bytes)'
     """
     if isinstance(abi_element_param, str):
         return abi_element_param
