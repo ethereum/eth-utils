@@ -8,7 +8,6 @@ from typing import (
 
 from eth_typing import (
     ABI,
-    ABIComponent,
     ABIConstructor,
     ABIElement,
     ABIEvent,
@@ -218,20 +217,14 @@ def make_abi_element(
         return make_receive_abi()
 
 
-def make_constructor_abi_input(name, input_type) -> ABIComponent:
-    return {"name": name, "type": input_type}
-
-
 def make_constructor_abi(input_args=None) -> ABIConstructor:
     if input_args is None:
         input_args = []
 
-    inputs = [
-        make_constructor_abi_input(arg.get("name"), arg.get("type"))
-        for arg in input_args
-    ]
     return {
-        "inputs": inputs,
+        "inputs": [
+            {"name": arg.get("name"), "type": arg.get("type")} for arg in input_args
+        ],
         "type": "constructor",
     }
 
@@ -248,14 +241,6 @@ def make_receive_abi() -> ABIReceive:
     }
 
 
-def make_event_abi_input(name, input_type, indexed=False) -> ABIComponent:
-    return {
-        "indexed": indexed,
-        "name": name,
-        "type": input_type,
-    }
-
-
 def make_event_abi(name, input_args=None, anonymous=None) -> ABIEvent:
     if input_args is None:
         input_args = []
@@ -264,7 +249,11 @@ def make_event_abi(name, input_args=None, anonymous=None) -> ABIEvent:
         anonymous = False
 
     inputs = [
-        make_event_abi_input(arg.get("name"), arg.get("type"), arg.get("indexed"))
+        {
+            "indexed": arg.get("indexed"),
+            "name": arg.get("name"),
+            "type": arg.get("type"),
+        }
         for arg in input_args
     ]
     return {
@@ -273,18 +262,6 @@ def make_event_abi(name, input_args=None, anonymous=None) -> ABIEvent:
         "name": name,
         "type": "event",
     }
-
-
-def make_function_abi_kwarg(name, components) -> ABIComponent:
-    return {"name": name, "type": "tuple", "components": components}
-
-
-def make_function_abi_input(name, input_type) -> ABIComponent:
-    return {"name": name, "type": input_type}
-
-
-def make_function_abi_output(name, input_type) -> ABIComponent:
-    return {"name": name, "type": input_type}
 
 
 def make_function_abi(
@@ -299,11 +276,13 @@ def make_function_abi(
     if outputs is None:
         outputs = []
 
-    inputs = [
-        make_function_abi_input(arg.get("name"), arg.get("type")) for arg in input_args
-    ]
+    inputs = [{"name": arg.get("name"), "type": arg.get("type")} for arg in input_args]
     inputs += [
-        make_function_abi_kwarg(kwarg.get("name"), kwarg.get("components"))
+        {
+            "name": kwarg.get("name"),
+            "type": "tuple",
+            "components": kwarg.get("components"),
+        }
         for kwarg in input_kwargs
     ]
 
@@ -311,8 +290,7 @@ def make_function_abi(
         outputs = []
 
     outputs = [
-        make_function_abi_output(output.get("name"), output.get("type"))
-        for output in outputs
+        {"name": output.get("name"), "type": output.get("type")} for output in outputs
     ]
 
     return {
