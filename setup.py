@@ -52,7 +52,6 @@ setup(
     url="https://github.com/ethereum/eth-utils",
     include_package_data=True,
     install_requires=[
-        "eth-abi>=1.1.0",
         "eth-hash>=0.3.1",
         "eth-typing @ git+https://github.com/reedsa/eth-typing@abi-deprecate-types",
         "hexbytes>=1.0.0",
