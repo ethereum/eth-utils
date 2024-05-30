@@ -46,6 +46,7 @@ from eth_utils import (
     get_abi_input_types,
     get_abi_output_names,
     get_abi_output_types,
+    get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
     get_event_abi,
@@ -53,6 +54,7 @@ from eth_utils import (
     get_extended_debug_logger,
     get_logger,
     get_normalized_abi_arg_type,
+    get_normalized_abi_inputs,
     hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
     humanize_hash,
@@ -252,9 +254,11 @@ apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F811
 from_wei = curry(from_wei)
+get_aligned_abi_inputs = curry(get_aligned_abi_inputs)
 get_event_abi = curry(get_event_abi)
 get_event_log_topics = curry(get_event_log_topics)
 get_logger = curry(get_logger)
+get_normalized_abi_inputs = curry(get_normalized_abi_inputs)
 hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)
 text_if_str = curry(non_curried_text_if_str)  # noqa: F811
