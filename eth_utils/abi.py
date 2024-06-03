@@ -2,12 +2,10 @@ from collections import (
     abc,
 )
 import copy
-import functools
 import itertools
 import re
 from typing import (
     Any,
-    Collection,
     Dict,
     Iterable,
     List,
@@ -26,11 +24,7 @@ from eth_typing import (
     ABIEvent,
     ABIFunction,
     HexStr,
-    MismatchedABI,
     Primitives,
-)
-from hexbytes import (
-    HexBytes,
 )
 from typing_extensions import (
     deprecated,
@@ -44,18 +38,12 @@ from eth_utils.conversions import (
     hexstr_if_str,
     to_bytes,
 )
-from eth_utils.exceptions import (
-    ValidationError,
-)
 from eth_utils.types import (
     is_list_like,
 )
 
 from .crypto import (
     keccak,
-)
-from .toolz import (
-    pipe,
 )
 
 
@@ -123,42 +111,6 @@ def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
     Return a list of each ``ABIElement`` that is of type ``_type``.
     """
     return [abi for abi in contract_abi if abi["type"] == _type]
-
-
-def _filter_by_name(name: str, contract_abi: ABI) -> List[ABIElement]:
-    """
-    Return a list of each ``ABIElement`` that matches the provided ``name``.
-    """
-    return [
-        abi
-        for abi in contract_abi
-        if (
-            abi["type"] not in ("fallback", "constructor", "receive")
-            and abi.get("name", "") == name
-        )
-    ]
-
-
-def _filter_by_argument_name(
-    argument_names: Collection[str], contract_abi: ABI
-) -> List[ABIElement]:
-    """
-    Return a list of each ``ABIElement`` which contain arguments matching provided
-    names.
-    """
-    abis_with_matching_args = []
-    for abi_element in contract_abi:
-        try:
-            abi_arg_names = get_abi_input_names(abi_element)
-
-            if set(argument_names).intersection(abi_arg_names) == set(abi_arg_names):
-                abis_with_matching_args.append(abi_element)
-        except TypeError:
-            # fallback or receive functions do not have arguments
-            # proceed to next ABIElement
-            continue
-
-    return abis_with_matching_args
 
 
 def _align_abi_input(arg_abi: ABIComponent, arg: Any) -> Union[Any, Tuple[Any, ...]]:
@@ -339,51 +291,6 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     ]
 
 
-def get_event_log_topics(
-    event_abi: ABIEvent,
-    topics: Optional[Sequence[HexBytes]] = None,
-) -> Sequence[HexBytes]:
-    r"""
-    Return topics from an event ABI.
-
-    :param event_abi: Event ABI.
-    :type event_abi: `ABIEvent`
-    :param topics: Transaction topics from a `LogReceipt`.
-    :type topics: `list[HexBytes]`
-    :return: Event topics from the event ABI.
-    :rtype: `list[HexBytes]`
-
-    .. doctest::
-
-        >>> from eth_utils import get_event_log_topics
-        >>> abi = {
-        ...   'type': 'event',
-        ...   'anonymous': False,
-        ...   'name': 'MyEvent',
-        ...   'inputs': [
-        ...     {
-        ...       'name': 's',
-        ...       'type': 'uint256'
-        ...     }
-        ...   ]
-        ... }
-        >>> keccak_signature = b'l+Ff\xba\x8d\xa5\xa9W\x17b\x1d\x87\x9aw\xder_=\x81g\t\xb9\xcb\xe9\xf0Y\xb8\xf8u\xe2\x84'  # noqa: E501
-        >>> get_event_log_topics(abi, [keccak_signature, '0x1', '0x2'])
-        ['0x1', '0x2']
-    """
-    if topics is None:
-        topics = []
-
-    if event_abi["anonymous"]:
-        return topics
-    elif len(topics) == 0:
-        raise MismatchedABI("Expected non-anonymous event to have 1 or more topics")
-    elif event_abi_to_log_topic(event_abi) != _log_topic_bytes(topics[0]):
-        raise MismatchedABI("The event signature did not match the provided ABI")
-    else:
-        return topics[1:]
-
-
 def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     """
     Return interfaces for each event in the contract ABI.
@@ -405,56 +312,6 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
         [{'type': 'event', 'name': 'MyEvent', 'inputs': []}]
     """
     return [cast(ABIEvent, event) for event in _filter_by_type("event", abi)]
-
-
-def get_event_abi(
-    abi: ABI,
-    event_name: str,
-    argument_names: Optional[Sequence[str]] = None,
-) -> ABIEvent:
-    """
-    Find the event interface with the given name and/or arguments.
-
-    :param abi: Contract ABI.
-    :type abi: `ABI`
-    :param event_name: Find an event abi with matching event name.
-    :type event_name: `str`
-    :param argument_names: Find an event abi with matching arguments.
-    :type argument_names: `list[str]`
-    :return: ABI for the event interface.
-    :rtype: `ABIEvent`
-
-    .. doctest::
-
-        >>> from eth_utils import get_event_abi
-        >>> abi = [
-        ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
-        ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
-        ...   {"type": "event", "name": "MyEvent", "inputs": []}
-        ... ]
-        >>> get_event_abi(abi, 'MyEvent')
-        {'type': 'event', 'name': 'MyEvent', 'inputs': []}
-    """
-    filters = [
-        functools.partial(_filter_by_type, "event"),
-    ]
-
-    if event_name is None or event_name == "":
-        raise ValidationError("event_name is required in order to match an event ABI.")
-
-    filters.append(functools.partial(_filter_by_name, event_name))
-
-    if argument_names is not None:
-        filters.append(functools.partial(_filter_by_argument_name, argument_names))
-
-    event_abi_candidates = cast(Sequence[ABIEvent], pipe(abi, *filters))
-
-    if len(event_abi_candidates) == 1:
-        return event_abi_candidates[0]
-    elif len(event_abi_candidates) == 0:
-        raise ValueError("No matching events found")
-    else:
-        raise ValueError("Multiple events found")
 
 
 def get_normalized_abi_inputs(

@@ -15,8 +15,6 @@ from .abi import (
     get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
-    get_event_abi,
-    get_event_log_topics,
     get_normalized_abi_arg_type,
     get_normalized_abi_inputs,
 )

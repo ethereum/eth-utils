@@ -14,7 +14,6 @@ from eth_typing import (
     ABIFallback,
     ABIFunction,
     ABIReceive,
-    MismatchedABI,
 )
 
 from eth_utils.abi import (
@@ -30,13 +29,8 @@ from eth_utils.abi import (
     get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
-    get_event_abi,
-    get_event_log_topics,
     get_normalized_abi_arg_type,
     get_normalized_abi_inputs,
-)
-from eth_utils.exceptions import (
-    ValidationError,
 )
 from eth_utils.hexadecimal import (
     encode_hex,
@@ -338,14 +332,6 @@ def contract_abi_add_function() -> ABI:
     ]
 
 
-@pytest.fixture
-def contract_ambiguous_event() -> ABI:
-    return [
-        make_event_abi("LogSingleArg", [{"name": "arg0", "type": "uint256"}]),
-        make_event_abi("LogSingleArg", [{"name": "arg0", "type": "uint256"}]),
-    ]
-
-
 def test_get_all_event_abis(contract_abi) -> Sequence[ABIEvent]:
     expected_event_abis = [
         make_event_abi("LogNoArg"),
@@ -359,44 +345,6 @@ def test_get_all_event_abis_without_events(
     contract_abi_add_function,
 ) -> Sequence[ABIEvent]:
     assert get_all_event_abis(contract_abi_add_function) == []
-
-
-@pytest.mark.parametrize(
-    "event_name,input_args",
-    [
-        ("LogSingleArg", [{"name": "arg0", "type": "uint256"}]),
-        ("LogSingleWithIndex", [{"name": "arg0", "type": "uint256"}]),
-        ("LogNoArg", []),
-    ],
-)
-def test_get_event_abi(contract_abi, event_name, input_args):
-    expected_event_abi = make_event_abi(event_name, input_args)
-    input_names = [arg["name"] for arg in input_args]
-    assert get_event_abi(contract_abi, event_name, input_names) == expected_event_abi
-
-
-@pytest.mark.parametrize(
-    "name,args,error_type,expected_value",
-    (
-        (
-            None,
-            None,
-            ValidationError,
-            "event_name is required in order to match an event ABI.",
-        ),
-        ("foo", None, ValueError, "No matching events found"),
-    ),
-)
-def test_get_event_abi_raises_on_error(
-    contract_abi_add_function, name, args, error_type, expected_value
-):
-    with pytest.raises(error_type, match=expected_value):
-        get_event_abi(contract_abi_add_function, name, args)
-
-
-def test_get_event_abi_raises_if_multiple_found(contract_ambiguous_event):
-    with pytest.raises(ValueError, match="Multiple events found"):
-        get_event_abi(contract_ambiguous_event, "LogSingleArg", ["arg0"])
 
 
 @pytest.mark.parametrize(
@@ -608,61 +556,6 @@ def test_get_abi_output_types_raises_for_non_function_types(
         f" Provided ABI type was '{element_type}'.",
     ):
         get_abi_output_types(abi_element)
-
-
-@pytest.mark.parametrize(
-    "element_type,name,topics,anonymous,expected_topics",
-    [
-        (
-            "event",
-            "LogSingleArg",
-            [
-                "0x87e10a54d1dda06db0fde99bdb2e67e6638ca9d2b5add2e3b5b406525b15824a",
-                "0x1",
-                "0x2",
-            ],
-            False,
-            ["0x1", "0x2"],
-        ),
-        (
-            "event",
-            "LogSingleArg",
-            [
-                "0x111",
-            ],
-            True,
-            ["0x111"],
-        ),
-    ],
-)
-def test_get_event_log_topics(element_type, name, topics, anonymous, expected_topics):
-    abi_element = make_abi_element(element_type, name, anonymous=anonymous)
-    assert get_event_log_topics(abi_element, topics) == expected_topics
-
-
-@pytest.mark.parametrize(
-    "element_type,name,topics,expected_error",
-    [
-        (
-            "event",
-            "LogSingleArg",
-            [],
-            "Expected non-anonymous event to have 1 or more topics",
-        ),
-        (
-            "event",
-            "LogSingleArg",
-            ["0x1"],
-            "The event signature did not match the provided ABI",
-        ),
-    ],
-)
-def test_get_event_log_topics_raises_for_bad_topics(
-    element_type, name, topics, expected_error
-):
-    abi_element = make_abi_element(element_type, name)
-    with pytest.raises(MismatchedABI, match=expected_error):
-        get_event_log_topics(abi_element, topics)
 
 
 def test_get_all_function_abis(contract_abi):
