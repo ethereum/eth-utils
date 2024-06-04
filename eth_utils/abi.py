@@ -23,21 +23,11 @@ from eth_typing import (
     ABIElement,
     ABIEvent,
     ABIFunction,
-    HexStr,
-    Primitives,
 )
 from typing_extensions import (
     deprecated,
 )
 
-from eth_utils.address import (
-    is_binary_address,
-    is_checksum_address,
-)
-from eth_utils.conversions import (
-    hexstr_if_str,
-    to_bytes,
-)
 from eth_utils.types import (
     is_list_like,
 )
@@ -176,44 +166,6 @@ def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
         return tuple_prefix, tuple_dims
 
     return None
-
-
-def _log_topic_bytes(
-    log_topic: Union[Primitives, HexStr, str],
-) -> bytes:
-    """
-    Return bytes from the provided topic.
-    """
-    return hexstr_if_str(to_bytes, log_topic)
-
-
-def _get_argument_readable_type(arg: Any) -> Any:
-    if is_checksum_address(arg) or is_binary_address(arg):
-        return "address"
-
-    return arg.__class__.__name__
-
-
-def _extract_argument_types(*args: Sequence[Any]) -> str:
-    """
-    Takes a list of arguments and returns a string representation of the argument types,
-    appropriately collapsing `tuple` types into the respective nested types.
-    """
-    collapsed_args = []
-
-    for arg in args:
-        if is_list_like(arg):
-            collapsed_nested = []
-            for nested in arg:
-                if is_list_like(nested):
-                    collapsed_nested.append(f"({_extract_argument_types(nested)})")
-                else:
-                    collapsed_nested.append(_get_argument_readable_type(nested))
-            collapsed_args.append(",".join(collapsed_nested))
-        else:
-            collapsed_args.append(_get_argument_readable_type(arg))
-
-    return ",".join(collapsed_args)
 
 
 def abi_to_signature(abi: ABIElement) -> str:
