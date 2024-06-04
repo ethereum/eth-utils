@@ -93,13 +93,6 @@ def _abi_inputs_types(
     )
 
 
-def _filter_by_type(_type: str, contract_abi: ABI) -> List[ABIElement]:
-    """
-    Return a list of each ``ABIElement`` that is of type ``_type``.
-    """
-    return [abi for abi in contract_abi if abi["type"] == _type]
-
-
 def _align_abi_input(arg_abi: ABIComponent, arg: Any) -> Union[Any, Tuple[Any, ...]]:
     """
     Aligns the values of any mapping at any level of nesting in ``arg``
@@ -213,6 +206,32 @@ def abi_to_signature(abi: ABIElement) -> str:
     return f"{name}({_abi_inputs_types(abi_inputs)})"
 
 
+def filter_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
+    """
+    Return a list of each ``ABIElement`` that is of type ``_type``.
+
+    :param type: Type of ABI element to filter by.
+    :type type: `str`
+    :param contract_abi: Contract ABI.
+    :type contract_abi: `ABI`
+    :return: List of ABI elements of the specified type.
+    :rtype: `List[ABIElement]`
+
+    .. doctest::
+
+        >>> from eth_utils import filter_by_type
+        >>> abi = [
+        ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
+        ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
+        ...   {"type": "event", "name": "MyEvent", "inputs": []}
+        ... ]
+        >>> filter_by_type("function", abi)
+        [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
+{'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
+    """
+    return [abi for abi in contract_abi if abi["type"] == type]
+
+
 def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     """
     Return interfaces for each function in the contract ABI.
@@ -236,7 +255,7 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     """
     return [
         cast(ABIFunction, function_abi)
-        for function_abi in _filter_by_type("function", abi)
+        for function_abi in filter_by_type("function", abi)
     ]
 
 
@@ -260,7 +279,7 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
         >>> get_all_event_abis(abi)
         [{'type': 'event', 'name': 'MyEvent', 'inputs': []}]
     """
-    return [cast(ABIEvent, event) for event in _filter_by_type("event", abi)]
+    return [cast(ABIEvent, event) for event in filter_by_type("event", abi)]
 
 
 def get_normalized_abi_inputs(

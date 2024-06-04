@@ -6,6 +6,7 @@ from .abi import (
     abi_to_signature,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
+    filter_by_type,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
     get_abi_input_names,
