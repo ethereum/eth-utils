@@ -43,9 +43,6 @@ from .crypto import (
 )
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     """
-    DEPRECATED: This method will be replaced by \
-:func:`eth_utils.abi.get_normalized_abi_arg_type`.
-
     Converts a tuple from a dict to a parenthesized list of its types.
 
     .. doctest::
