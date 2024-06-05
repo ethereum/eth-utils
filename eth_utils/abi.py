@@ -23,7 +23,9 @@ from eth_typing import (
     ABIElement,
     ABIError,
     ABIEvent,
+    ABIFallback,
     ABIFunction,
+    ABIReceive,
 )
 from typing_extensions import (
     deprecated,
@@ -338,9 +340,10 @@ def get_normalized_abi_inputs(
         >>> get_normalized_abi_inputs(abi, ('myName', 123), {'t': ('0x1', 1, b'\x01')})
         ('myName', 123, ('0x1', 1, b'\x01'))
     """
-    if len(args) + len(kwargs) != len(function_abi.get("inputs", [])):
+    function_inputs = function_abi.get("inputs", [])
+    if len(args) + len(kwargs) != len(function_inputs):
         raise TypeError(
-            f"Incorrect argument count. Expected '{len(function_abi['inputs'])}'"
+            f"Incorrect argument count. Expected '{len(function_inputs)}'"
             f". Got '{len(args) + len(kwargs)}'"
         )
 
@@ -349,7 +352,7 @@ def get_normalized_abi_inputs(
         return cast(Tuple[Any, ...], args)
 
     kwarg_names = set(kwargs.keys())
-    sorted_arg_names = tuple(arg_abi["name"] for arg_abi in function_abi["inputs"])
+    sorted_arg_names = tuple(arg_abi["name"] for arg_abi in function_inputs)
     args_as_kwargs = dict(zip(sorted_arg_names, args))
 
     # Check for duplicate args
@@ -639,7 +642,9 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     return keccak(text=function_signature.replace(" ", ""))[:4]
 
 
-def function_abi_to_4byte_selector(function_abi: Union[ABIFunction, ABIError]) -> bytes:
+def function_abi_to_4byte_selector(
+    function_abi: Union[ABIFunction, ABIError, ABIFallback, ABIReceive]
+) -> bytes:
     r"""
     Return the 4-byte function signature of the provided function ABI.
 

@@ -53,7 +53,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "eth-hash>=0.3.1",
-        "eth-typing @ git+https://github.com/reedsa/eth-typing@5d8dc7d719afe9507c22ace4f359e338224f762e",
+        "eth-typing @ git+https://github.com/reedsa/eth-typing@abi-function-info-types",
         "hexbytes>=1.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",
         "cytoolz>=0.10.1;implementation_name=='cpython'",
