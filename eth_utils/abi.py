@@ -21,6 +21,7 @@ from eth_typing import (
     ABI,
     ABIComponent,
     ABIElement,
+    ABIError,
     ABIEvent,
     ABIFunction,
 )
@@ -283,7 +284,9 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
 
 
 def get_normalized_abi_inputs(
-    function_abi: ABIFunction, args: Sequence[Any], kwargs: Dict[str, Any]
+    function_abi: Union[ABIFunction, ABIError],
+    args: Sequence[Any],
+    kwargs: Dict[str, Any],
 ) -> Tuple[Any, ...]:
     r"""
     Flattens positional args (``args``) and keyword args (``kwargs``) into a Tuple and
@@ -388,7 +391,8 @@ def get_normalized_abi_inputs(
 
 
 def get_aligned_abi_inputs(
-    function_abi: ABIFunction, args: Union[Tuple[Any, ...], Mapping[Any, Any]]
+    function_abi: Union[ABIFunction, ABIError],
+    args: Union[Tuple[Any, ...], Mapping[Any, Any]],
 ) -> Tuple[Tuple[Any, ...], Tuple[Any, ...]]:
     """
     Returns a pair of nested Tuples containing a list of types and a list of input
@@ -635,7 +639,7 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     return keccak(text=function_signature.replace(" ", ""))[:4]
 
 
-def function_abi_to_4byte_selector(function_abi: ABIFunction) -> bytes:
+def function_abi_to_4byte_selector(function_abi: Union[ABIFunction, ABIError]) -> bytes:
     r"""
     Return the 4-byte function signature of the provided function ABI.
 
