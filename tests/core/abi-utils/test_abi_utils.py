@@ -20,6 +20,8 @@ from eth_utils.abi import (
     abi_to_signature,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
+    filter_abi_by_name,
+    filter_abi_by_type,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
     get_abi_input_names,
@@ -29,7 +31,7 @@ from eth_utils.abi import (
     get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
-    get_normalized_abi_arg_type,
+    get_normalized_abi_component_type,
     get_normalized_abi_inputs,
 )
 from eth_utils.hexadecimal import (
@@ -347,6 +349,46 @@ def test_get_all_event_abis_without_events(
     assert get_all_event_abis(contract_abi_add_function) == []
 
 
+def test_filter_abi_by_name(contract_abi) -> Sequence[ABIFunction]:
+    expected_event_abis = [
+        make_event_abi("LogNoArg"),
+    ]
+    assert filter_abi_by_name("LogNoArg", contract_abi) == expected_event_abis
+
+
+def test_filter_abi_by_name_returns_empty_list_for_no_match(
+    contract_abi,
+) -> Sequence[ABIFunction]:
+    assert filter_abi_by_name("notafunction", contract_abi) == []
+
+
+def test_filter_abi_by_type(contract_abi) -> Sequence[ABIFunction]:
+    expected_function_abis = [
+        make_function_abi("logTwoEvents", [{"name": "_arg0", "type": "uint256"}]),
+        make_function_abi("setValue", [{"name": "_arg0", "type": "uint256"}]),
+        make_function_abi(
+            "setValue",
+            [{"name": "_arg0", "type": "uint256"}],
+            [
+                {
+                    "name": "arg1",
+                    "components": [
+                        {"name": "a", "type": "uint256"},
+                        {"name": "b", "type": "uint256"},
+                    ],
+                }
+            ],
+        ),
+    ]
+    assert filter_abi_by_type("function", contract_abi) == expected_function_abis
+
+
+def test_filter_abi_by_type_returns_empty_list_for_no_match(
+    contract_abi,
+) -> Sequence[ABIFunction]:
+    assert filter_abi_by_type("notatype", contract_abi) == []
+
+
 @pytest.mark.parametrize(
     "element_type,name,input_args",
     [
@@ -624,7 +666,7 @@ def test_event_signature_to_log_topic(event_signature, expected):
 
 
 @pytest.mark.parametrize(
-    "abi_element_param,expected",
+    "abi_component,expected",
     (
         (
             (
@@ -679,12 +721,12 @@ def test_event_signature_to_log_topic(event_signature, expected):
         ),
     ),
 )
-def test_get_normalized_abi_arg_type(abi_element_param, expected):
-    assert get_normalized_abi_arg_type(abi_element_param) == expected
+def test_get_normalized_abi_component_type(abi_component, expected):
+    assert get_normalized_abi_component_type(abi_component) == expected
 
 
 @pytest.mark.parametrize(
-    "abi_element_param",
+    "abi_component",
     (
         (
             {
@@ -693,9 +735,9 @@ def test_get_normalized_abi_arg_type(abi_element_param, expected):
         ),
     ),
 )
-def test_get_normalized_abi_arg_type_with_errors(abi_element_param):
+def test_get_normalized_abi_component_type_with_errors(abi_component):
     with pytest.raises(TypeError):
-        get_normalized_abi_arg_type(abi_element_param)
+        get_normalized_abi_component_type(abi_component)
 
 
 @pytest.mark.parametrize(
@@ -790,6 +832,22 @@ def test_kwargs_allowed_if_no_intersections_with_duplicate_input_names():
         TypeError, match=re.escape("testFn() got multiple values for argument(s) 'b'")
     ):
         get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
+
+
+def test_get_normalized_abi_inputs_returns_args_for_error_abis():
+    error_abi = {
+        "name": "Invalid",
+        "type": "error",
+        "inputs": [
+            {"type": "address", "name": "a"},
+            {"type": "bytes32", "name": "b"},
+        ],
+    }
+    args = ["0x1234567890123456789012345678901234567890", b"bar"]
+    kwargs = {}
+    inputs = get_normalized_abi_inputs(error_abi, args, kwargs)
+
+    assert inputs == args
 
 
 class MyXYTuple(NamedTuple):

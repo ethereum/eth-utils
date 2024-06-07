@@ -6,7 +6,8 @@ from .abi import (
     abi_to_signature,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
-    filter_by_type,
+    filter_abi_by_name,
+    filter_abi_by_type,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
     get_abi_input_names,
@@ -16,7 +17,7 @@ from .abi import (
     get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
-    get_normalized_abi_arg_type,
+    get_normalized_abi_component_type,
     get_normalized_abi_inputs,
 )
 from .address import (

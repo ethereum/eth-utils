@@ -38,7 +38,8 @@ from eth_utils import (
     encode_hex,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
-    filter_by_type,
+    filter_abi_by_name,
+    filter_abi_by_type,
     flatten_return,
     from_wei,
     function_abi_to_4byte_selector,
@@ -52,7 +53,7 @@ from eth_utils import (
     get_all_function_abis,
     get_extended_debug_logger,
     get_logger,
-    get_normalized_abi_arg_type,
+    get_normalized_abi_component_type,
     get_normalized_abi_inputs,
     hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
@@ -252,7 +253,8 @@ apply_formatters_to_dict = curry(non_curried_apply_formatters_to_dict)  # noqa: 
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F811
-filter_by_type = curry(filter_by_type)
+filter_abi_by_name = curry(filter_abi_by_name)
+filter_abi_by_type = curry(filter_abi_by_type)
 from_wei = curry(from_wei)
 get_aligned_abi_inputs = curry(get_aligned_abi_inputs)
 get_logger = curry(get_logger)

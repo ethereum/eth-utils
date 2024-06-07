@@ -19,13 +19,12 @@ from typing import (
 
 from eth_typing import (
     ABI,
+    ABICallable,
     ABIComponent,
     ABIElement,
     ABIError,
     ABIEvent,
-    ABIFallback,
     ABIFunction,
-    ABIReceive,
 )
 from typing_extensions import (
     deprecated,
@@ -42,12 +41,12 @@ from .crypto import (
 
 @deprecated(
     "`collapse_if_tuple(abi)` is deprecated in favor of"
-    "`get_normalized_abi_arg_type(abi)`"
+    "`get_normalized_abi_component_type(abi)`"
 )
 def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     """
     DEPRECATED: `collapse_if_tuple` is deprecated in favor of
-    `get_normalized_abi_arg_type`
+    `get_normalized_abi_component_type`
 
     Converts a tuple from a dict to a parenthesized list of its types.
 
@@ -83,7 +82,7 @@ def collapse_if_tuple(abi: Dict[str, Any]) -> str:
     return collapsed
 
 
-def _abi_inputs_types(
+def _abi_input_types(
     abi_inputs: Optional[Sequence[Union[ABIComponent, str]]] = None,
 ) -> str:
     """
@@ -95,7 +94,7 @@ def _abi_inputs_types(
         abi_inputs = []
 
     return ",".join(
-        [get_normalized_abi_arg_type(abi_input) for abi_input in abi_inputs]
+        [get_normalized_abi_component_type(abi_input) for abi_input in abi_inputs]
     )
 
 
@@ -164,22 +163,22 @@ def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
     return None
 
 
-def abi_to_signature(abi: ABIElement) -> str:
+def abi_to_signature(abi_element: ABIElement) -> str:
     """
     Returns a string signature representation of the function or event ABI
     and arguments.
 
     Signatures consist of the name followed by a list of arguments.
 
-    :param abi: Contract ABI.
-    :type abi: `ABI`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :return: Stringified ABI signature
     :rtype: `str`
 
     .. doctest::
 
         >>> from eth_utils import abi_to_signature
-        >>> abi = {
+        >>> abi_element = {
         ...   'constant': False,
         ...   'inputs': [
         ...     {
@@ -193,26 +192,99 @@ def abi_to_signature(abi: ABIElement) -> str:
         ...   'stateMutability': 'nonpayable',
         ...   'type': 'function'
         ... }
-        >>> abi_to_signature(abi)
+        >>> abi_to_signature(abi_element)
         'f(uint256)'
     """
-    if abi["type"] == "fallback" or abi["type"] == "receive":
-        name = str(abi["type"])
-        abi_inputs = None
-    elif abi["type"] == "constructor":
-        name = abi["type"]
-        abi_inputs = abi["inputs"]
-    elif abi["type"] == "event":
-        name = abi["name"]
-        abi_inputs = abi["inputs"]
+    if abi_element["type"] == "fallback" or abi_element["type"] == "receive":
+        name = str(abi_element["type"])
+        abi_element_inputs = None
+    elif abi_element["type"] == "constructor":
+        name = abi_element["type"]
+        abi_element_inputs = abi_element["inputs"]
+    elif abi_element["type"] == "event":
+        name = abi_element["name"]
+        abi_element_inputs = abi_element["inputs"]
     else:
-        name = str(abi.get("name", abi["type"]))
-        abi_inputs = abi.get("inputs")
+        name = str(abi_element.get("name", abi_element["type"]))
+        abi_element_inputs = abi_element.get("inputs")
 
-    return f"{name}({_abi_inputs_types(abi_inputs)})"
+    return f"{name}({_abi_input_types(abi_element_inputs)})"
 
 
-def filter_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
+def filter_abi_by_name(
+    name: str, contract_abi: ABI
+) -> List[Union[ABIFunction, ABIEvent, ABIError]]:
+    """
+    Get one or more function and event ABIs by name.
+
+    :param name: Name of the function or event.
+    :type name: `str`
+    :param contract_abi: Contract ABI.
+    :type contract_abi: `ABI`
+    :return: Function or event ABIs with matching name.
+    :rtype: `List[ABIElement]`
+
+    .. doctest
+
+            >>> from web3.utils.abi import filter_abi_by_name
+            >>> abi = [
+            ...     {
+            ...         "constant": False,
+            ...         "inputs": [],
+            ...         "name": "func_1",
+            ...         "outputs": [],
+            ...         "type": "function",
+            ...     },
+            ...     {
+            ...         "constant": False,
+            ...         "inputs": [
+            ...             {"name": "a", "type": "uint256"},
+            ...         ],
+            ...         "name": "func_2",
+            ...         "outputs": [],
+            ...         "type": "function",
+            ...     },
+            ...     {
+            ...         "constant": False,
+            ...         "inputs": [
+            ...             {"name": "a", "type": "uint256"},
+            ...             {"name": "b", "type": "uint256"},
+            ...         ],
+            ...         "name": "func_3",
+            ...         "outputs": [],
+            ...         "type": "function",
+            ...     },
+            ...     {
+            ...         "constant": False,
+            ...         "inputs": [
+            ...             {"name": "a", "type": "uint256"},
+            ...             {"name": "b", "type": "uint256"},
+            ...             {"name": "c", "type": "uint256"},
+            ...         ],
+            ...         "name": "func_4",
+            ...         "outputs": [],
+            ...         "type": "function",
+            ...     },
+            ... ]
+            >>> filter_abi_by_name("func_1", abi)
+            [{'constant': False, 'inputs': [], 'name': 'func_1', 'outputs': [], \
+'type': 'function'}]
+    """
+    return [
+        abi
+        for abi in contract_abi
+        if (
+            (
+                abi["type"] == "function"
+                or abi["type"] == "event"
+                or abi["type"] == "error"
+            )
+            and abi["name"] == name
+        )
+    ]
+
+
+def filter_abi_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
     """
     Return a list of each ``ABIElement`` that is of type ``_type``.
 
@@ -225,20 +297,20 @@ def filter_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
 
     .. doctest::
 
-        >>> from eth_utils import filter_by_type
+        >>> from eth_utils import filter_abi_by_type
         >>> abi = [
         ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
         ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
         ...   {"type": "event", "name": "MyEvent", "inputs": []}
         ... ]
-        >>> filter_by_type("function", abi)
+        >>> filter_abi_by_type("function", abi)
         [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
     return [abi for abi in contract_abi if abi["type"] == type]
 
 
-def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
+def get_all_function_abis(contract_abi: ABI) -> Sequence[ABIFunction]:
     """
     Return interfaces for each function in the contract ABI.
 
@@ -250,22 +322,22 @@ def get_all_function_abis(abi: ABI) -> Sequence[ABIFunction]:
     .. doctest::
 
         >>> from eth_utils import get_all_function_abis
-        >>> abi = [
+        >>> contract_abi = [
         ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
         ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
         ...   {"type": "event", "name": "MyEvent", "inputs": []}
         ... ]
-        >>> get_all_function_abis(abi)
+        >>> get_all_function_abis(contract_abi)
         [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
     return [
         cast(ABIFunction, function_abi)
-        for function_abi in filter_by_type("function", abi)
+        for function_abi in filter_abi_by_type("function", contract_abi)
     ]
 
 
-def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
+def get_all_event_abis(contract_abi: ABI) -> Sequence[ABIEvent]:
     """
     Return interfaces for each event in the contract ABI.
 
@@ -277,15 +349,17 @@ def get_all_event_abis(abi: ABI) -> Sequence[ABIEvent]:
     .. doctest::
 
         >>> from eth_utils import get_all_event_abis
-        >>> abi = [
+        >>> contract_abi = [
         ...   {"type": "function", "name": "myFunction", "inputs": [], "outputs": []},
         ...   {"type": "function", "name": "myFunction2", "inputs": [], "outputs": []},
         ...   {"type": "event", "name": "MyEvent", "inputs": []}
         ... ]
-        >>> get_all_event_abis(abi)
+        >>> get_all_event_abis(contract_abi)
         [{'type': 'event', 'name': 'MyEvent', 'inputs': []}]
     """
-    return [cast(ABIEvent, event) for event in filter_by_type("event", abi)]
+    return [
+        cast(ABIEvent, event) for event in filter_abi_by_type("event", contract_abi)
+    ]
 
 
 def get_normalized_abi_inputs(
@@ -301,8 +375,8 @@ def get_normalized_abi_inputs(
     given, and no unknown args were given.  Returns a list of argument values aligned
     to the order of inputs defined in ``function_abi``.
 
-    :param function_abi: Function ABI.
-    :type function_abi: `ABIFunction`
+    :param function_abi: Function or error ABI.
+    :type function_abi: `ABIFunction` or `ABIError`
     :param args: Positional arguments for the function.
     :type args: `Sequence[Any]`
     :param kwargs: Keyword arguments for the function.
@@ -407,8 +481,8 @@ def get_aligned_abi_inputs(
     The args contained in ``args`` may contain nested mappings or sequences
     corresponding to tuple-encoded values in ``abi``.
 
-    :param function_abi: Function ABI.
-    :type function_abi: `ABIFunction`
+    :param function_abi: Function or error ABI.
+    :type function_abi: `ABIFunction` or `ABIError`
     :param args: Arguments for the function.
     :type args: `Union[Tuple[Any, ...], Mapping[Any, Any]]`
     :return: Tuple of types and aligned arguments.
@@ -445,7 +519,7 @@ def get_aligned_abi_inputs(
         args = tuple(args[abi["name"]] for abi in input_abis)
 
     return (
-        tuple(get_normalized_abi_arg_type(abi) for abi in input_abis),
+        tuple(get_normalized_abi_component_type(abi) for abi in input_abis),
         type(args)(_align_abi_input(abi, arg) for abi, arg in zip(input_abis, args)),
     )
 
@@ -454,8 +528,8 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     """
     Return names for each input from the function or event ABI.
 
-    :param abi_element: Function or Event ABI.
-    :type abi_element: `ABIFunction` or `ABIEvent`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :return: Names for each input in the function or event ABI.
     :rtype: `List[str]`
 
@@ -495,8 +569,8 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     """
     Return types for each input from the function or event ABI.
 
-    :param abi_element: Function or Event ABI.
-    :type abi_element: `ABIFunction` or `ABIEvent`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :return: Types for each input in the function or event ABI.
     :rtype: `List[str]`
 
@@ -530,7 +604,7 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
             f" ABI type was '{abi_element['type']}'."
         )
 
-    return [get_normalized_abi_arg_type(arg) for arg in abi_element["inputs"]]
+    return [get_normalized_abi_component_type(arg) for arg in abi_element["inputs"]]
 
 
 def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
@@ -619,7 +693,9 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
 
     """
     if function_abi["type"] == "function":
-        return [get_normalized_abi_arg_type(arg) for arg in function_abi["outputs"]]
+        return [
+            get_normalized_abi_component_type(arg) for arg in function_abi["outputs"]
+        ]
 
     raise ValueError(
         f"Outputs only supported for ABI type 'function'. Provided"
@@ -629,11 +705,11 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
 
 def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     r"""
-    Return the 4-byte function signature from a function signature string.
+    Return the 4-byte function selector from a function signature string.
 
-    :param event_signature: String representation of the event name and arguments.
-    :type event_signature: `string`
-    :return: 4-byte function signature.
+    :param function_signature: String representation of the function name and arguments.
+    :type function_signature: `string`
+    :return: 4-byte function selector.
     :rtype: `bytes`
 
     .. doctest::
@@ -645,30 +721,28 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     return keccak(text=function_signature.replace(" ", ""))[:4]
 
 
-def function_abi_to_4byte_selector(
-    function_abi: Union[ABIFunction, ABIError, ABIFallback, ABIReceive]
-) -> bytes:
+def function_abi_to_4byte_selector(callable_abi: ABICallable) -> bytes:
     r"""
     Return the 4-byte function signature of the provided function ABI.
 
-    :param function_abi: Function ABI.
-    :type function_abi: `ABIFunction`
+    :param callable_abi: Callable function ABI.
+    :type callable_abi: `ABICallable`
     :return: 4-byte function signature.
     :rtype: `bytes`
 
     .. doctest::
 
         >>> from eth_utils import function_abi_to_4byte_selector
-        >>> abi = {
+        >>> callable_abi = {
         ...   'type': 'function',
         ...   'name': 'myFunction',
         ...   'inputs': [],
         ...   'outputs': []
         ... }
-        >>> function_abi_to_4byte_selector(abi)
+        >>> function_abi_to_4byte_selector(callable_abi)
         b'\xc3x\n:'
     """
-    function_signature = abi_to_signature(function_abi)
+    function_signature = abi_to_signature(callable_abi)
     return function_signature_to_4byte_selector(function_signature)
 
 
@@ -715,22 +789,23 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     return event_signature_to_log_topic(event_signature)
 
 
-def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent, str]) -> str:
+def get_normalized_abi_component_type(abi_component: Union[ABIComponent, str]) -> str:
     """
     Extract argument types from a function or event ABI parameter.
 
     With tuple argument types, return a Tuple of each type.
-    Non-tuple types just return the type.
+    Returns the param if `abi_component` is an instance of str or another non-tuple
+    type.
 
-    :param abi_element_param: ABI for the Function or Event parameter
-    :type abi_element_param: `ABIComponent`
-    :return: Type(s) in the function or event ABI param.
+    :param abi_component: A Function or Event ABI component or a string with type info.
+    :type abi_component: `ABIComponent` or `str`
+    :return: Type(s) for the function or event ABI param.
     :rtype: `str`
 
     .. doctest:
 
-        >>> from eth_utils.abi import get_normalized_abi_arg_type
-        >>> abi = {
+        >>> from eth_utils.abi import get_normalized_abi_component_type
+        >>> abi_component = {
         ...   'components': [
         ...     {'name': 'anAddress', 'type': 'address'},
         ...     {'name': 'anInt', 'type': 'uint256'},
@@ -738,13 +813,13 @@ def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent, str]) -> 
         ...   ],
         ...   'type': 'tuple',
         ... }
-        >>> get_normalized_abi_arg_type(abi)
+        >>> get_normalized_abi_component_type(abi_component)
         '(address,uint256,bytes)'
     """
-    if isinstance(abi_element_param, str):
-        return abi_element_param
+    if isinstance(abi_component, str):
+        return abi_component
 
-    element_type = abi_element_param["type"]
+    element_type = abi_component["type"]
     if not isinstance(element_type, str):
         raise TypeError(
             f"The 'type' must be a string, but got {repr(element_type)} of type "
@@ -754,7 +829,7 @@ def get_normalized_abi_arg_type(abi_element_param: Union[ABIComponent, str]) -> 
         return element_type
 
     delimited = ",".join(
-        get_normalized_abi_arg_type(c) for c in abi_element_param["components"]
+        get_normalized_abi_component_type(c) for c in abi_component["components"]
     )
     # Whatever comes after "tuple" is the array dims. The ABI spec states that
     # this will have the form "", "[]", or "[k]".
