@@ -26,9 +26,6 @@ from eth_typing import (
     ABIEvent,
     ABIFunction,
 )
-from typing_extensions import (
-    deprecated,
-)
 
 from eth_utils.types import (
     is_list_like,
@@ -37,49 +34,6 @@ from eth_utils.types import (
 from .crypto import (
     keccak,
 )
-
-
-@deprecated(
-    "`collapse_if_tuple(abi)` is deprecated in favor of"
-    "`get_normalized_abi_component_type(abi)`"
-)
-def collapse_if_tuple(abi: Dict[str, Any]) -> str:
-    """
-    DEPRECATED: `collapse_if_tuple` is deprecated in favor of
-    `get_normalized_abi_component_type`
-
-    Converts a tuple from a dict to a parenthesized list of its types.
-
-    .. doctest::
-
-        >>> from eth_utils.abi import collapse_if_tuple
-        >>> collapse_if_tuple(
-        ...     {
-        ...         'components': [
-        ...             {'name': 'anAddress', 'type': 'address'},
-        ...             {'name': 'anInt', 'type': 'uint256'},
-        ...             {'name': 'someBytes', 'type': 'bytes'},
-        ...         ],
-        ...         'type': 'tuple',
-        ...     }
-        ... )
-        '(address,uint256,bytes)'
-    """
-    typ = abi["type"]
-    if not isinstance(typ, str):
-        raise TypeError(
-            f"The 'type' must be a string, but got {repr(typ)} of type {type(typ)}"
-        )
-    elif not typ.startswith("tuple"):
-        return typ
-
-    delimited = ",".join(collapse_if_tuple(c) for c in abi["components"])
-    # Whatever comes after "tuple" is the array dims. The ABI spec states that
-    # this will have the form "", "[]", or "[k]".
-    array_dim = typ[5:]
-    collapsed = f"({delimited}){array_dim}"
-
-    return collapsed
 
 
 def _abi_input_types(
