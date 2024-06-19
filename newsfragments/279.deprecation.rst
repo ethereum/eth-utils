@@ -1,0 +1,1 @@
+``collapse_if_tuple`` is deprecated and will be replaced by ``get_normalized_abi_component_type``
