@@ -594,8 +594,8 @@ def test_get_abi_output_types_raises_for_non_function_types(
     )
     with pytest.raises(
         ValueError,
-        match=f"Outputs only supported for ABI type 'function'."
-        f" Provided ABI type was '{element_type}'.",
+        match=f"Outputs only supported for ABI type `function`."
+        f" Provided ABI type was `{element_type}` and outputs were `None`.",
     ):
         get_abi_output_types(abi_element)
 
@@ -758,12 +758,6 @@ def test_get_normalized_abi_component_type_with_errors(abi_component):
             ),
         ),
         (
-            FN_ABI_NO_INPUTS,
-            (),
-            {},
-            (),
-        ),
-        (
             FN_ABI_C,
             [],
             {
@@ -836,9 +830,26 @@ def test_kwargs_allowed_if_no_intersections_with_duplicate_input_names():
 
 @pytest.mark.parametrize("abi_type", (("fallback"), ("receive")))
 def test_get_normalized_abi_inputs_does_not_allow_fallback_or_receive_types(abi_type):
-    with pytest.raises(ValueError, match=re.escape("")):
+    with pytest.raises(
+        ValueError,
+        match=re.escape(
+            f"Inputs not supported for function types 'fallback' or 'receive'. "
+            f"Provided ABI type was `{abi_type}`"
+        ),
+    ):
+        get_normalized_abi_inputs({"type": abi_type, "inputs": {"a": 1}}, (1,), {})
+
+
+def test_get_normalized_abi_inputs_must_include_inputs():
+    with pytest.raises(
+        ValueError,
+        match=re.escape(
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `function` with inputs `None`."
+        ),
+    ):
         get_normalized_abi_inputs(
-            {"type": abi_type, "inputs": {}}, (1,), {"a": 2, "b": 3}
+            {"type": "function", "name": "func_no_inputs"}, (), {}
         )
 
 
@@ -1019,11 +1030,6 @@ GET_ABI_INPUTS_TESTS = (
         },
         GET_ABI_INPUTS_OUTPUT,
     ),
-    (
-        {},
-        (),
-        ((), ()),
-    ),
 )
 
 
@@ -1070,3 +1076,8 @@ def test_get_aligned_abi_inputs_raises_type_error(abi, args):
 def test_get_aligned_abi_inputs_raises_value_error(type):
     with pytest.raises(ValueError):
         get_aligned_abi_inputs({"type": type, "inputs": {}}, ({"a": 13}))
+
+
+def test_get_aligned_abi_inputs_raises_value_error_with_no_inputs():
+    with pytest.raises(ValueError):
+        get_aligned_abi_inputs({"type": "function"}, ())
