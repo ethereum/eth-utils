@@ -834,6 +834,14 @@ def test_kwargs_allowed_if_no_intersections_with_duplicate_input_names():
         get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
 
 
+@pytest.mark.parametrize("abi_type", (("fallback"), ("receive")))
+def test_get_normalized_abi_inputs_does_not_allow_fallback_or_receive_types(abi_type):
+    with pytest.raises(ValueError, match=re.escape("")):
+        get_normalized_abi_inputs(
+            {"type": abi_type, "inputs": {}}, (1,), {"a": 2, "b": 3}
+        )
+
+
 def test_get_normalized_abi_inputs_returns_args_for_error_abis():
     error_abi = {
         "name": "Invalid",
@@ -1056,3 +1064,9 @@ GET_ABI_INPUTS_RAISING_TESTS = (
 def test_get_aligned_abi_inputs_raises_type_error(abi, args):
     with pytest.raises(TypeError):
         get_aligned_abi_inputs(abi, args)
+
+
+@pytest.mark.parametrize("type", (("fallback"), ("receive")))
+def test_get_aligned_abi_inputs_raises_value_error(type):
+    with pytest.raises(ValueError):
+        get_aligned_abi_inputs({"type": type, "inputs": {}}, ({"a": 13}))

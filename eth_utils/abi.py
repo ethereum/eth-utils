@@ -317,20 +317,20 @@ def get_all_event_abis(contract_abi: ABI) -> Sequence[ABIEvent]:
 
 
 def get_normalized_abi_inputs(
-    function_abi: Union[ABIFunction, ABIError],
+    abi_element: ABIElement,
     args: Sequence[Any],
     kwargs: Dict[str, Any],
 ) -> Tuple[Any, ...]:
     r"""
     Flattens positional args (``args``) and keyword args (``kwargs``) into a Tuple and
-    uses the ``function_abi`` for validation.
+    uses the ``abi_element`` for validation.
 
     Checks to ensure that the correct number of args were given, no duplicate args were
     given, and no unknown args were given.  Returns a list of argument values aligned
-    to the order of inputs defined in ``function_abi``.
+    to the order of inputs defined in ``abi_element``.
 
-    :param function_abi: Function or error ABI.
-    :type function_abi: `ABIFunction` or `ABIError`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :param args: Positional arguments for the function.
     :type args: `Sequence[Any]`
     :param kwargs: Keyword arguments for the function.
@@ -371,7 +371,18 @@ def get_normalized_abi_inputs(
         >>> get_normalized_abi_inputs(abi, ('myName', 123), {'t': ('0x1', 1, b'\x01')})
         ('myName', 123, ('0x1', 1, b'\x01'))
     """
-    function_inputs = function_abi.get("inputs", [])
+    if (
+        "inputs" not in abi_element
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
+    ):
+        raise ValueError(
+            f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+            f" ABI type was `{abi_element.get('type')}` with inputs "
+            f"`{abi_element.get('inputs')}`."
+        )
+
+    function_inputs = abi_element["inputs"]
     if len(args) + len(kwargs) != len(function_inputs):
         raise TypeError(
             f"Incorrect argument count. Expected '{len(function_inputs)}'"
@@ -390,20 +401,20 @@ def get_normalized_abi_inputs(
     duplicate_args = kwarg_names.intersection(args_as_kwargs.keys())
     if duplicate_args:
         raise TypeError(
-            f"{function_abi.get('name')}() got multiple values for argument(s) "
+            f"{abi_element.get('name')}() got multiple values for argument(s) "
             f"'{', '.join(duplicate_args)}'"
         )
 
     # Check for unknown args
     unknown_args = kwarg_names.difference(sorted_arg_names)
     if unknown_args:
-        if function_abi.get("name"):
+        if abi_element.get("name"):
             raise TypeError(
-                f"{function_abi.get('name')}() got unexpected keyword argument(s)"
+                f"{abi_element.get('name')}() got unexpected keyword argument(s)"
                 f" '{', '.join(unknown_args)}'"
             )
         raise TypeError(
-            f"Type: '{function_abi.get('type')}' got unexpected keyword argument(s)"
+            f"Type: '{abi_element.get('type')}' got unexpected keyword argument(s)"
             f" '{', '.join(unknown_args)}'"
         )
 
@@ -425,7 +436,7 @@ def get_normalized_abi_inputs(
 
 
 def get_aligned_abi_inputs(
-    function_abi: Union[ABIFunction, ABIError],
+    abi_element: ABIElement,
     args: Union[Tuple[Any, ...], Mapping[Any, Any]],
 ) -> Tuple[Tuple[Any, ...], Tuple[Any, ...]]:
     """
@@ -435,8 +446,8 @@ def get_aligned_abi_inputs(
     The args contained in ``args`` may contain nested mappings or sequences
     corresponding to tuple-encoded values in ``abi``.
 
-    :param function_abi: Function or error ABI.
-    :type function_abi: `ABIFunction` or `ABIError`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :param args: Arguments for the function.
     :type args: `Union[Tuple[Any, ...], Mapping[Any, Any]]`
     :return: Tuple of types and aligned arguments.
@@ -466,15 +477,26 @@ def get_aligned_abi_inputs(
         >>> get_aligned_abi_inputs(abi, ('myName', 123))
         (('string', 'uint256'), ('myName', 123))
     """
-    input_abis = function_abi.get("inputs", [])
+    if (
+        "inputs" not in abi_element
+        or abi_element["type"] == "fallback"
+        or abi_element["type"] == "receive"
+    ):
+        raise ValueError(
+            f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
+            f" ABI type was `{abi_element.get('type')}` with inputs "
+            f"`{abi_element.get('inputs')}`."
+        )
 
     if isinstance(args, abc.Mapping):
         # `args` is mapping.  Align values according to abi order.
-        args = tuple(args[abi["name"]] for abi in input_abis)
+        args = tuple(args[abi["name"]] for abi in abi_element["inputs"])
 
     return (
-        tuple(get_normalized_abi_component_type(abi) for abi in input_abis),
-        type(args)(_align_abi_input(abi, arg) for abi, arg in zip(input_abis, args)),
+        tuple(get_normalized_abi_component_type(abi) for abi in abi_element["inputs"]),
+        type(args)(
+            _align_abi_input(abi, arg) for abi, arg in zip(abi_element["inputs"], args)
+        ),
     )
 
 
@@ -514,7 +536,7 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     ):
         raise ValueError(
             f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-            f" ABI type was '{abi_element['type']}'."
+            f" ABI type was '{abi_element.get('type')}'."
         )
     return [arg["name"] for arg in abi_element["inputs"]]
 
@@ -555,18 +577,18 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     ):
         raise ValueError(
             f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
-            f" ABI type was '{abi_element['type']}'."
+            f" ABI type was '{abi_element.get('type')}'."
         )
 
     return [get_normalized_abi_component_type(arg) for arg in abi_element["inputs"]]
 
 
-def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
+def get_abi_output_names(abi_element: ABIElement) -> List[str]:
     """
-    Return names for each output from the function ABI.
+    Return names for each output from the ABI element.
 
-    :param function_abi: Function ABI.
-    :type function_abi: `ABIFunction`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :return: Names for each function output in the function ABI.
     :rtype: `List[str]`
 
@@ -599,20 +621,20 @@ def get_abi_output_names(function_abi: ABIFunction) -> List[str]:
         >>> get_abi_output_names(abi)
         ['name', 's']
     """
-    if "outputs" not in function_abi or function_abi["type"] != "function":
+    if "outputs" not in abi_element or abi_element["type"] != "function":
         raise ValueError(
             f"Outputs only supported for ABI type 'function'. Provided"
-            f" ABI type was '{function_abi['type']}'."
+            f" ABI type was '{abi_element.get('type')}'."
         )
-    return [arg["name"] for arg in function_abi["outputs"]]
+    return [arg["name"] for arg in abi_element["outputs"]]
 
 
-def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
+def get_abi_output_types(abi_element: ABIElement) -> List[str]:
     """
     Return types for each output from the function ABI.
 
-    :param function_abi: Function ABI.
-    :type function_abi: `ABIFunction`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :return: Types for each function output in the function ABI.
     :rtype: `List[str]`
 
@@ -646,15 +668,13 @@ def get_abi_output_types(function_abi: ABIFunction) -> List[str]:
         ['string', 'uint256']
 
     """
-    if function_abi["type"] == "function":
-        return [
-            get_normalized_abi_component_type(arg) for arg in function_abi["outputs"]
-        ]
-
-    raise ValueError(
-        f"Outputs only supported for ABI type 'function'. Provided"
-        f" ABI type was '{function_abi['type']}'."
-    )
+    if "outputs" not in abi_element or abi_element["type"] != "function":
+        raise ValueError(
+            f"Outputs only supported for ABI type `function`. Provided"
+            f" ABI type was `{abi_element.get('type')}` and outputs were "
+            f"`{abi_element.get('outputs')}`."
+        )
+    return [get_normalized_abi_component_type(arg) for arg in abi_element["outputs"]]
 
 
 def function_signature_to_4byte_selector(function_signature: str) -> bytes:
