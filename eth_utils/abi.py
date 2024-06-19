@@ -37,16 +37,13 @@ from .crypto import (
 
 
 def _abi_input_types(
-    abi_inputs: Optional[Sequence[Union[ABIComponent, str]]] = None,
+    abi_inputs: Sequence[ABIComponent],
 ) -> str:
     """
     Parse type(s) from a list of function or event ABI arguments.
 
     Returns a string of each type separated by commas.
     """
-    if abi_inputs is None:
-        abi_inputs = []
-
     return ",".join(
         [get_normalized_abi_component_type(abi_input) for abi_input in abi_inputs]
     )
@@ -149,20 +146,23 @@ def abi_to_signature(abi_element: ABIElement) -> str:
         >>> abi_to_signature(abi_element)
         'f(uint256)'
     """
-    if abi_element["type"] == "fallback" or abi_element["type"] == "receive":
-        name = str(abi_element["type"])
-        abi_element_inputs = None
-    elif abi_element["type"] == "constructor":
-        name = abi_element["type"]
-        abi_element_inputs = abi_element["inputs"]
-    elif abi_element["type"] == "event":
-        name = abi_element["name"]
-        abi_element_inputs = abi_element["inputs"]
-    else:
-        name = str(abi_element.get("name", abi_element["type"]))
-        abi_element_inputs = abi_element.get("inputs")
+    signature = "{name}({input_types})"
 
-    return f"{name}({_abi_input_types(abi_element_inputs)})"
+    abi_type = str(abi_element.get("type", ""))
+    if abi_type == "fallback" or abi_type == "receive":
+        return signature.format(name=abi_type, input_types="")
+
+    if abi_type == "constructor":
+        fn_name = abi_type
+    else:
+        fn_name = str(abi_element.get("name", abi_type))
+
+    abi_inputs = cast(Sequence[ABIComponent], abi_element.get("inputs", []))
+    if len(abi_inputs) == 0:
+        return signature.format(name=fn_name, input_types="")
+    else:
+        fn_input_types = _abi_input_types(abi_inputs)
+        return signature.format(name=fn_name, input_types=fn_input_types)
 
 
 def filter_abi_by_name(
