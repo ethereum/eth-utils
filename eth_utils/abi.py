@@ -171,12 +171,12 @@ def filter_abi_by_name(
     """
     Get one or more function and event ABIs by name.
 
-    :param name: Name of the function or event.
+    :param name: Name of the function, event or error.
     :type name: `str`
     :param contract_abi: Contract ABI.
     :type contract_abi: `ABI`
     :return: Function or event ABIs with matching name.
-    :rtype: `List[ABIElement]`
+    :rtype: `List[ABIFunction, ABIEvent, ABIError]`
 
     .. doctest
 
@@ -240,7 +240,7 @@ def filter_abi_by_name(
 
 def filter_abi_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
     """
-    Return a list of each ``ABIElement`` that is of type ``_type``.
+    Return a list of each ``ABIElement`` that is of type ``type``.
 
     :param type: Type of ABI element to filter by.
     :type type: `str`

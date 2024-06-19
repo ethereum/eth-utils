@@ -1,1 +1,1 @@
-``web3.utils.abi.collapse_if_tuple()`` is now deprecated in favor of ``web3.utils.abi.get_normalized_abi_component_type()`` and will be removed in a later release.
+``eth_utils.abi.collapse_if_tuple()`` is now deprecated in favor of ``web3.utils.abi.get_normalized_abi_component_type()`` and will be removed in a later release.
