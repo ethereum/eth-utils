@@ -44,9 +44,7 @@ def _abi_input_types(
 
     Returns a string of each type separated by commas.
     """
-    return ",".join(
-        [get_normalized_abi_component_type(abi_input) for abi_input in abi_inputs]
-    )
+    return ",".join([collapse_if_tuple(abi_input) for abi_input in abi_inputs])
 
 
 def _align_abi_input(arg_abi: ABIComponent, arg: Any) -> Union[Any, Tuple[Any, ...]]:
@@ -112,6 +110,54 @@ def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
         return tuple_prefix, tuple_dims
 
     return None
+
+
+def collapse_if_tuple(abi_component: Union[ABIComponent, str]) -> str:
+    """
+    Extract argument types from a function or event ABI parameter.
+
+    With tuple argument types, return a Tuple of each type.
+    Returns the param if `abi_component` is an instance of str or another non-tuple
+    type.
+
+    :param abi_component: A Function or Event ABI component or a string with type info.
+    :type abi_component: `ABIComponent` or `str`
+    :return: Type(s) for the function or event ABI param.
+    :rtype: `str`
+
+    .. doctest:
+
+        >>> from eth_utils.abi import collapse_if_tuple
+        >>> abi_component = {
+        ...   'components': [
+        ...     {'name': 'anAddress', 'type': 'address'},
+        ...     {'name': 'anInt', 'type': 'uint256'},
+        ...     {'name': 'someBytes', 'type': 'bytes'},
+        ...   ],
+        ...   'type': 'tuple',
+        ... }
+        >>> collapse_if_tuple(abi_component)
+        '(address,uint256,bytes)'
+    """
+    if isinstance(abi_component, str):
+        return abi_component
+
+    element_type = abi_component["type"]
+    if not isinstance(element_type, str):
+        raise TypeError(
+            f"The 'type' must be a string, but got {repr(element_type)} of type "
+            f"{type(element_type)}"
+        )
+    elif not element_type.startswith("tuple"):
+        return element_type
+
+    delimited = ",".join(collapse_if_tuple(c) for c in abi_component["components"])
+    # Whatever comes after "tuple" is the array dims. The ABI spec states that
+    # this will have the form "", "[]", or "[k]".
+    array_dim = element_type[5:]
+    collapsed = f"({delimited}){array_dim}"
+
+    return collapsed
 
 
 def abi_to_signature(abi_element: ABIElement) -> str:
@@ -493,7 +539,7 @@ def get_aligned_abi_inputs(
         args = tuple(args[abi["name"]] for abi in abi_element["inputs"])
 
     return (
-        tuple(get_normalized_abi_component_type(abi) for abi in abi_element["inputs"]),
+        tuple(collapse_if_tuple(abi) for abi in abi_element["inputs"]),
         type(args)(
             _align_abi_input(abi, arg) for abi, arg in zip(abi_element["inputs"], args)
         ),
@@ -580,7 +626,7 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
             f" ABI type was '{abi_element.get('type')}'."
         )
 
-    return [get_normalized_abi_component_type(arg) for arg in abi_element["inputs"]]
+    return [collapse_if_tuple(arg) for arg in abi_element["inputs"]]
 
 
 def get_abi_output_names(abi_element: ABIElement) -> List[str]:
@@ -674,7 +720,7 @@ def get_abi_output_types(abi_element: ABIElement) -> List[str]:
             f" ABI type was `{abi_element.get('type')}` and outputs were "
             f"`{abi_element.get('outputs')}`."
         )
-    return [get_normalized_abi_component_type(arg) for arg in abi_element["outputs"]]
+    return [collapse_if_tuple(arg) for arg in abi_element["outputs"]]
 
 
 def function_signature_to_4byte_selector(function_signature: str) -> bytes:
@@ -761,53 +807,3 @@ def event_abi_to_log_topic(event_abi: ABIEvent) -> bytes:
     """
     event_signature = abi_to_signature(event_abi)
     return event_signature_to_log_topic(event_signature)
-
-
-def get_normalized_abi_component_type(abi_component: Union[ABIComponent, str]) -> str:
-    """
-    Extract argument types from a function or event ABI parameter.
-
-    With tuple argument types, return a Tuple of each type.
-    Returns the param if `abi_component` is an instance of str or another non-tuple
-    type.
-
-    :param abi_component: A Function or Event ABI component or a string with type info.
-    :type abi_component: `ABIComponent` or `str`
-    :return: Type(s) for the function or event ABI param.
-    :rtype: `str`
-
-    .. doctest:
-
-        >>> from eth_utils.abi import get_normalized_abi_component_type
-        >>> abi_component = {
-        ...   'components': [
-        ...     {'name': 'anAddress', 'type': 'address'},
-        ...     {'name': 'anInt', 'type': 'uint256'},
-        ...     {'name': 'someBytes', 'type': 'bytes'},
-        ...   ],
-        ...   'type': 'tuple',
-        ... }
-        >>> get_normalized_abi_component_type(abi_component)
-        '(address,uint256,bytes)'
-    """
-    if isinstance(abi_component, str):
-        return abi_component
-
-    element_type = abi_component["type"]
-    if not isinstance(element_type, str):
-        raise TypeError(
-            f"The 'type' must be a string, but got {repr(element_type)} of type "
-            f"{type(element_type)}"
-        )
-    elif not element_type.startswith("tuple"):
-        return element_type
-
-    delimited = ",".join(
-        get_normalized_abi_component_type(c) for c in abi_component["components"]
-    )
-    # Whatever comes after "tuple" is the array dims. The ABI spec states that
-    # this will have the form "", "[]", or "[k]".
-    array_dim = element_type[5:]
-    collapsed = f"({delimited}){array_dim}"
-
-    return collapsed

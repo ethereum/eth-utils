@@ -18,6 +18,7 @@ from eth_typing import (
 
 from eth_utils.abi import (
     abi_to_signature,
+    collapse_if_tuple,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     filter_abi_by_name,
@@ -31,7 +32,6 @@ from eth_utils.abi import (
     get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
-    get_normalized_abi_component_type,
     get_normalized_abi_inputs,
 )
 from eth_utils.hexadecimal import (
@@ -721,8 +721,8 @@ def test_event_signature_to_log_topic(event_signature, expected):
         ),
     ),
 )
-def test_get_normalized_abi_component_type(abi_component, expected):
-    assert get_normalized_abi_component_type(abi_component) == expected
+def test_collapse_if_tuple(abi_component, expected):
+    assert collapse_if_tuple(abi_component) == expected
 
 
 @pytest.mark.parametrize(
@@ -735,9 +735,9 @@ def test_get_normalized_abi_component_type(abi_component, expected):
         ),
     ),
 )
-def test_get_normalized_abi_component_type_with_errors(abi_component):
+def test_collapse_if_tuple_with_errors(abi_component):
     with pytest.raises(TypeError):
-        get_normalized_abi_component_type(abi_component)
+        collapse_if_tuple(abi_component)
 
 
 @pytest.mark.parametrize(

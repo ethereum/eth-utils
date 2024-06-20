@@ -4,6 +4,7 @@ from importlib.metadata import (
 
 from .abi import (
     abi_to_signature,
+    collapse_if_tuple,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
     filter_abi_by_name,
@@ -17,7 +18,6 @@ from .abi import (
     get_aligned_abi_inputs,
     get_all_event_abis,
     get_all_function_abis,
-    get_normalized_abi_component_type,
     get_normalized_abi_inputs,
 )
 from .address import (
