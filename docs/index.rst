@@ -8,7 +8,7 @@ Installation
 
 .. code-block:: bash
 
-    python -m pip install Ethereum Utilities
+    python -m pip install eth-utils
 
 
 .. toctree::
@@ -17,7 +17,6 @@ Installation
 
    overview
    utilities
-   Usage<eth_utils>
    release_notes
 
 .. toctree::
@@ -28,8 +27,7 @@ Installation
     code_of_conduct
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
