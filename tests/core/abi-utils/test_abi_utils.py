@@ -187,6 +187,37 @@ def test_fn_signature_to_4byte_selector(signature, expected):
         ),
         (FN_ABI_ZERO_TUPLE_INPUT, "zeroTupleInput(())"),
         (FN_ABI_SINGLETON_TUPLE_INPUT, "singletonTupleInput((address))"),
+        ({"type": "constructor"}, "constructor()"),
+        (
+            {"type": "constructor", "inputs": [{"state": "started", "type": "str"}]},
+            "constructor(str)",
+        ),
+        (
+            {
+                "type": "error",
+                "name": "failed",
+                "inputs": [
+                    {"x": b"1", "type": "bytes32"},
+                    {"y": "value", "type": "str"},
+                ],
+            },
+            "failed(bytes32,str)",
+        ),
+        ({"type": "error", "name": "myError"}, "myError()"),
+        ({"type": "event", "name": "foo"}, "foo()"),
+        (
+            {
+                "type": "event",
+                "inputs": [
+                    {"x": 1, "type": "int"},
+                ],
+            },
+            "event(int)",
+        ),
+        ({"type": "fallback"}, "fallback()"),  # If no name, fall back to abi type
+        ({"type": "receive"}, "receive()"),
+        ({"type": "function"}, "function()"),
+        ({"type": "error"}, "error()"),
     ),
 )
 def test_abi_to_signature(abi, expected):
@@ -1041,43 +1072,62 @@ def test_get_aligned_abi_inputs(abi, args, expected):
     assert get_aligned_abi_inputs(abi, args) == expected
 
 
-GET_ABI_INPUTS_RAISING_TESTS = (
-    (
-        TEST_FUNCTION_ABI,
-        {
-            "s": {"a": 1, "b": [2, 3, 4], "c": ["56", (7, 8), (9, 10)]},
-            "t": (11, 12),
-            "a": 13,
-            "b": [[(14, 15), (16, 17)], [(18, 19)]],
-        },
-    ),
-    (
-        TEST_FUNCTION_ABI,
-        {
-            "s": {"a": 1, "b": [2, 3, 4], "c": {(5, 6), (7, 8), (9, 10)}},
-            "t": (11, 12),
-            "a": 13,
-            "b": [[(14, 15), (16, 17)], [(18, 19)]],
-        },
-    ),
-)
-
-
 @pytest.mark.parametrize(
-    "abi, args",
-    GET_ABI_INPUTS_RAISING_TESTS,
+    "abi, args, error",
+    (
+        (
+            # raise TypeError, expects list of tuples for input 's.c'
+            TEST_FUNCTION_ABI,
+            {
+                "s": {"a": 1, "b": [2, 3, 4], "c": ["56", (7, 8), (9, 10)]},
+                "t": (11, 12),
+                "a": 13,
+                "b": [[(14, 15), (16, 17)], [(18, 19)]],
+            },
+            'Expected non-string sequence for "tuple" component type: got 56',
+        ),
+        (
+            # raise TypeError, expects list of tuples for input 's.c'
+            TEST_FUNCTION_ABI,
+            {
+                "s": {"a": 1, "b": [2, 3, 4], "c": {(5, 6), (7, 8), (9, 10)}},
+                "t": (11, 12),
+                "a": 13,
+                "b": [[(14, 15), (16, 17)], [(18, 19)]],
+            },
+            'Expected non-string sequence for "tuple[]" component type: got '
+            "{(9, 10), (5, 6), (7, 8)}",
+        ),
+    ),
 )
-def test_get_aligned_abi_inputs_raises_type_error(abi, args):
-    with pytest.raises(TypeError):
+def test_get_aligned_abi_inputs_raises_type_error_for_incorrect_input_types(
+    abi, args, error
+):
+    with pytest.raises(
+        TypeError,
+        match=re.escape(error),
+    ):
         get_aligned_abi_inputs(abi, args)
 
 
 @pytest.mark.parametrize("type", (("fallback"), ("receive")))
-def test_get_aligned_abi_inputs_raises_value_error(type):
-    with pytest.raises(ValueError):
+def test_get_aligned_abi_inputs_raises_value_error_for_fallback_or_receive_types(type):
+    with pytest.raises(
+        ValueError,
+        match=re.escape(
+            f"Inputs not supported for function types 'fallback' or 'receive'. "
+            f"Provided ABI type was `{type}` with inputs `{{}}`."
+        ),
+    ):
         get_aligned_abi_inputs({"type": type, "inputs": {}}, ({"a": 13}))
 
 
 def test_get_aligned_abi_inputs_raises_value_error_with_no_inputs():
-    with pytest.raises(ValueError):
+    with pytest.raises(
+        ValueError,
+        match=re.escape(
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `function` with inputs `None`."
+        ),
+    ):
         get_aligned_abi_inputs({"type": "function"}, ())

@@ -112,23 +112,23 @@ def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
     return None
 
 
-def collapse_if_tuple(abi_component: Union[ABIComponent, str]) -> str:
+def collapse_if_tuple(abi: Union[ABIComponent, str]) -> str:
     """
     Extract argument types from a function or event ABI parameter.
 
     With tuple argument types, return a Tuple of each type.
-    Returns the param if `abi_component` is an instance of str or another non-tuple
+    Returns the param if `abi` is an instance of str or another non-tuple
     type.
 
-    :param abi_component: A Function or Event ABI component or a string with type info.
-    :type abi_component: `ABIComponent` or `str`
+    :param abi: A Function or Event ABI component or a string with type info.
+    :type abi: `ABIComponent` or `str`
     :return: Type(s) for the function or event ABI param.
     :rtype: `str`
 
-    .. doctest:
+    .. doctest::
 
         >>> from eth_utils.abi import collapse_if_tuple
-        >>> abi_component = {
+        >>> abi = {
         ...   'components': [
         ...     {'name': 'anAddress', 'type': 'address'},
         ...     {'name': 'anInt', 'type': 'uint256'},
@@ -136,13 +136,13 @@ def collapse_if_tuple(abi_component: Union[ABIComponent, str]) -> str:
         ...   ],
         ...   'type': 'tuple',
         ... }
-        >>> collapse_if_tuple(abi_component)
+        >>> collapse_if_tuple(abi)
         '(address,uint256,bytes)'
     """
-    if isinstance(abi_component, str):
-        return abi_component
+    if isinstance(abi, str):
+        return abi
 
-    element_type = abi_component["type"]
+    element_type = abi["type"]
     if not isinstance(element_type, str):
         raise TypeError(
             f"The 'type' must be a string, but got {repr(element_type)} of type "
@@ -151,7 +151,7 @@ def collapse_if_tuple(abi_component: Union[ABIComponent, str]) -> str:
     elif not element_type.startswith("tuple"):
         return element_type
 
-    delimited = ",".join(collapse_if_tuple(c) for c in abi_component["components"])
+    delimited = ",".join(collapse_if_tuple(c) for c in abi["components"])
     # Whatever comes after "tuple" is the array dims. The ABI spec states that
     # this will have the form "", "[]", or "[k]".
     array_dim = element_type[5:]
@@ -224,9 +224,9 @@ def filter_abi_by_name(
     :return: Function or event ABIs with matching name.
     :rtype: `List[ABIFunction, ABIEvent, ABIError]`
 
-    .. doctest
+    .. doctest::
 
-            >>> from web3.utils.abi import filter_abi_by_name
+            >>> from eth_utils.abi import filter_abi_by_name
             >>> abi = [
             ...     {
             ...         "constant": False,
