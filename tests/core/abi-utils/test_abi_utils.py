@@ -1046,6 +1046,10 @@ def test_collapse_if_tuple(
             },
             "The 'type' must be a string, but got 1 of type <class 'int'>",
         ),
+        (
+            {"name": "notype"},
+            "The 'type' must be a string, but got None of type <class 'NoneType'>",
+        ),
     ),
 )
 def test_collapse_if_tuple_raises_for_invalid_component(
