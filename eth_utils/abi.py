@@ -112,7 +112,7 @@ def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
     return None
 
 
-def collapse_if_tuple(abi: Union[ABIComponent, str]) -> str:
+def collapse_if_tuple(abi: Union[ABIComponent, Dict[str, Any], str]) -> str:
     """
     Extract argument types from a function or event ABI parameter.
 
@@ -142,7 +142,7 @@ def collapse_if_tuple(abi: Union[ABIComponent, str]) -> str:
     if isinstance(abi, str):
         return abi
 
-    element_type = abi["type"]
+    element_type = abi.get("type")
     if not isinstance(element_type, str):
         raise TypeError(
             f"The 'type' must be a string, but got {repr(element_type)} of type "
