@@ -432,7 +432,7 @@ def get_normalized_abi_inputs(
     if len(args) + len(kwargs) != len(function_inputs):
         raise TypeError(
             f"Incorrect argument count. Expected '{len(function_inputs)}'"
-            f". Got '{len(args) + len(kwargs)}'"
+            f", got '{len(args) + len(kwargs)}'."
         )
 
     # If no keyword args were given, we don't need to align them
@@ -448,20 +448,22 @@ def get_normalized_abi_inputs(
     if duplicate_args:
         raise TypeError(
             f"{abi_element.get('name')}() got multiple values for argument(s) "
-            f"'{', '.join(duplicate_args)}'"
+            f"'{', '.join(duplicate_args)}'."
         )
 
     # Check for unknown args
-    unknown_args = kwarg_names.difference(sorted_arg_names)
+    # Arg names sorted to raise consistent error messages
+    unknown_args = tuple(sorted(kwarg_names.difference(sorted_arg_names)))
     if unknown_args:
+        message = "{} got unexpected keyword argument(s) '{}'."
         if abi_element.get("name"):
             raise TypeError(
-                f"{abi_element.get('name')}() got unexpected keyword argument(s)"
-                f" '{', '.join(unknown_args)}'"
+                message.format(f"{abi_element.get('name')}()", ", ".join(unknown_args))
             )
         raise TypeError(
-            f"Type: '{abi_element.get('type')}' got unexpected keyword argument(s)"
-            f" '{', '.join(unknown_args)}'"
+            message.format(
+                f"Type: '{abi_element.get('type')}'", ", ".join(unknown_args)
+            )
         )
 
     # Sort args according to their position in the ABI and unzip them from their

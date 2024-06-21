@@ -10,6 +10,7 @@ from eth_typing import (
     ABI,
     ABIConstructor,
     ABIElement,
+    ABIError,
     ABIEvent,
     ABIFallback,
     ABIFunction,
@@ -38,9 +39,9 @@ from eth_utils.hexadecimal import (
     encode_hex,
 )
 
-FN_ABI_A = {"name": "tokenLaunched", "type": "function", "inputs": []}
-FN_ABI_B = {"name": "CEILING", "type": "function", "inputs": []}
-FN_ABI_C = {
+FN_ABI_A: ABIFunction = {"name": "tokenLaunched", "type": "function", "inputs": []}
+FN_ABI_B: ABIFunction = {"name": "CEILING", "type": "function", "inputs": []}
+FN_ABI_C: ABIFunction = {
     "name": "Registrar",
     "type": "function",
     "inputs": [
@@ -49,7 +50,7 @@ FN_ABI_C = {
         {"type": "address", "name": "c"},
     ],
 }
-FN_ABI_D = {
+FN_ABI_D: ABIFunction = {
     "constant": False,
     "inputs": [
         {"name": "a", "type": "int256"},
@@ -61,7 +62,7 @@ FN_ABI_D = {
     "outputs": [],
     "type": "function",
 }
-FN_ABI_E = {
+FN_ABI_E: ABIFunction = {
     "constant": False,
     "inputs": [
         {"name": "", "type": "int256"},
@@ -71,7 +72,7 @@ FN_ABI_E = {
     "outputs": [],
     "type": "function",
 }
-FN_ABI_DUPLICATE_NAMES = {
+FN_ABI_DUPLICATE_NAMES: ABIFunction = {
     "constant": False,
     "inputs": [
         {"name": "b", "type": "int256"},
@@ -82,7 +83,7 @@ FN_ABI_DUPLICATE_NAMES = {
     "outputs": [],
     "type": "function",
 }
-FN_ABI_NESTED_TUPLE_INPUTS = {
+FN_ABI_NESTED_TUPLE_INPUTS: ABIFunction = {
     "inputs": [
         {
             "components": [
@@ -105,20 +106,20 @@ FN_ABI_NESTED_TUPLE_INPUTS = {
     "name": "nestedTupleInputs",
     "type": "function",
 }
-FN_ABI_NO_INPUTS = {"name": "noInputs", "type": "function"}
-FN_ABI_ZERO_TUPLE_INPUT = {
+FN_ABI_NO_INPUTS: ABIFunction = {"name": "noInputs", "type": "function"}
+FN_ABI_ZERO_TUPLE_INPUT: ABIFunction = {
     "inputs": [{"components": [], "type": "tuple"}],
     "name": "zeroTupleInput",
     "type": "function",
 }
-FN_ABI_SINGLETON_TUPLE_INPUT = {
+FN_ABI_SINGLETON_TUPLE_INPUT: ABIFunction = {
     "inputs": [
         {"components": [{"name": "anAddress", "type": "address"}], "type": "tuple"}
     ],
     "name": "singletonTupleInput",
     "type": "function",
 }
-FN_ABI_ARRAY_OF_TUPLES = {
+FN_ABI_ARRAY_OF_TUPLES: ABIFunction = {
     "name": "tupleArrayInput",
     "type": "function",
     "inputs": [
@@ -132,7 +133,7 @@ FN_ABI_ARRAY_OF_TUPLES = {
         }
     ],
 }
-FN_ABI_FIXED_ARRAY_OF_TUPLES = {
+FN_ABI_FIXED_ARRAY_OF_TUPLES: ABIFunction = {
     "name": "tupleFixedArrayInput",
     "type": "function",
     "inputs": [
@@ -144,6 +145,16 @@ FN_ABI_FIXED_ARRAY_OF_TUPLES = {
                 {"name": "someBytes", "type": "bytes"},
             ],
         }
+    ],
+}
+FALLBACK_ABI: ABIFallback = {"type": "fallback"}
+RECEIVE_ABI: ABIReceive = {"type": "receive"}
+ERROR_ABI: ABIError = {
+    "name": "Invalid",
+    "type": "error",
+    "inputs": [
+        {"type": "address", "name": "a"},
+        {"type": "bytes32", "name": "b"},
     ],
 }
 
@@ -802,6 +813,40 @@ def test_collapse_if_tuple_with_errors(abi_component):
                 "0x1234567890123456789012345678901234567890",
             ),
         ),
+        (
+            FN_ABI_C,
+            [1, "0x1234567890123456789012345678901234567890", b"bar"],
+            {},
+            [
+                1,
+                "0x1234567890123456789012345678901234567890",
+                b"bar",
+            ],
+        ),
+        (
+            FN_ABI_E,
+            (1, 2),
+            {},
+            (1, 2),
+        ),
+        (
+            FN_ABI_DUPLICATE_NAMES,
+            (1, 2, 3),
+            {},
+            (1, 2, 3),
+        ),
+        (
+            ERROR_ABI,
+            (
+                "0x1234567890123456789012345678901234567890",
+                b"bar",
+            ),
+            {},
+            (
+                "0x1234567890123456789012345678901234567890",
+                b"bar",
+            ),
+        ),
     ),
 )
 def test_get_normalized_abi_inputs(fn_abi, args, kwargs, expected):
@@ -810,94 +855,81 @@ def test_get_normalized_abi_inputs(fn_abi, args, kwargs, expected):
     assert inputs == expected
 
 
-def test_get_normalized_abi_inputs_returns_args_without_kwargs():
-    args = [1, "0x1234567890123456789012345678901234567890", b"bar"]
-    kwargs = {}
-    inputs = get_normalized_abi_inputs(FN_ABI_C, args, kwargs)
-
-    assert inputs == args
-
-
-def test_error_when_invalid_args_kwargs_combo_provided():
-    with pytest.raises(TypeError, match="Incorrect argument count."):
-        get_normalized_abi_inputs(
+@pytest.mark.parametrize(
+    "abi_element,args,kwargs,error_type,message",
+    (
+        (
+            ABIFunction({"type": "function", "name": "func_no_inputs"}),
+            (),
+            {},
+            ValueError,
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `function` with inputs `None`.",
+        ),
+        (
+            ABIFallback({"type": "fallback"}),
+            (),
+            {},
+            ValueError,
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `fallback` with inputs `None`.",
+        ),
+        (
+            ABIReceive({"type": "receive"}),
+            (),
+            {},
+            ValueError,
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `receive` with inputs `None`.",
+        ),
+        (
+            FN_ABI_DUPLICATE_NAMES,
+            (1,),
+            {"a": 2, "b": 3},
+            TypeError,
+            "testFn() got multiple values for argument(s) 'b'",
+        ),
+        (
+            FN_ABI_DUPLICATE_NAMES,
+            (1,),
+            {"d": 2, "e": 3},
+            TypeError,
+            "testFn() got unexpected keyword argument(s) 'd, e",
+        ),
+        (
+            FN_ABI_E,
+            tuple(),
+            {"x": 1, "y": 2},
+            TypeError,
+            "testFn() got unexpected keyword argument(s) 'x, y'",
+        ),
+        (
             FN_ABI_E,
             (
                 1,
                 2,
             ),
             {"a": 1, "b": 2},
-        )
-
-
-def test_kwargs_is_disallowed_when_merging_with_unnamed_inputs():
-    with pytest.raises(TypeError):
-        get_normalized_abi_inputs(FN_ABI_E, tuple(), {"x": 1, "y": 2})
-
-
-def test_args_works_when_merging_with_unnamed_inputs():
-    actual = get_normalized_abi_inputs(FN_ABI_E, (1, 2), {})
-    assert actual == (1, 2)
-
-
-def test_args_allowed_when_duplicate_named_inputs():
-    actual = get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1, 2, 3), {})
-    assert actual == (1, 2, 3)
-
-
-def test_kwargs_not_allowed_for_duplicate_input_names():
-    with pytest.raises(
-        TypeError, match=re.escape("testFn() got multiple values for argument(s) 'b'")
-    ):
-        get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
-
-
-def test_kwargs_allowed_if_no_intersections_with_duplicate_input_names():
-    with pytest.raises(
-        TypeError, match=re.escape("testFn() got multiple values for argument(s) 'b'")
-    ):
-        get_normalized_abi_inputs(FN_ABI_DUPLICATE_NAMES, (1,), {"a": 2, "b": 3})
-
-
-@pytest.mark.parametrize("abi_type", (("fallback"), ("receive")))
-def test_get_normalized_abi_inputs_does_not_allow_fallback_or_receive_types(abi_type):
-    with pytest.raises(
-        ValueError,
-        match=re.escape(
-            f"Inputs not supported for function types 'fallback' or 'receive'. "
-            f"Provided ABI type was `{abi_type}`"
+            TypeError,
+            "Incorrect argument count. Expected '2', got '4'.",
         ),
-    ):
-        get_normalized_abi_inputs({"type": abi_type, "inputs": {"a": 1}}, (1,), {})
-
-
-def test_get_normalized_abi_inputs_must_include_inputs():
-    with pytest.raises(
-        ValueError,
-        match=re.escape(
-            "Inputs not supported for function types 'fallback' or 'receive'. "
-            "Provided ABI type was `function` with inputs `None`."
+        (
+            ERROR_ABI,
+            (),
+            {},
+            TypeError,
+            "Incorrect argument count. Expected '2', got '0'.",
         ),
+    ),
+)
+def test_get_normalized_abi_inputs_raises_for_invalid_arguments(
+    abi_element, args, kwargs, error_type, message
+):
+    with pytest.raises(
+        error_type,
+        match=re.escape(message),
     ):
-        get_normalized_abi_inputs(
-            {"type": "function", "name": "func_no_inputs"}, (), {}
-        )
-
-
-def test_get_normalized_abi_inputs_returns_args_for_error_abis():
-    error_abi = {
-        "name": "Invalid",
-        "type": "error",
-        "inputs": [
-            {"type": "address", "name": "a"},
-            {"type": "bytes32", "name": "b"},
-        ],
-    }
-    args = ["0x1234567890123456789012345678901234567890", b"bar"]
-    kwargs = {}
-    inputs = get_normalized_abi_inputs(error_abi, args, kwargs)
-
-    assert inputs == args
+        get_normalized_abi_inputs(abi_element, args, kwargs)
 
 
 class MyXYTuple(NamedTuple):
@@ -977,7 +1009,7 @@ TEST_FUNCTION_ABI_JSON = """
   "type": "function"
 }
 """
-TEST_FUNCTION_ABI = json.loads(TEST_FUNCTION_ABI_JSON)
+TEST_FUNCTION_ABI: ABIFunction = json.loads(TEST_FUNCTION_ABI_JSON)
 
 GET_ABI_INPUTS_OUTPUT = (
     (
@@ -1073,7 +1105,7 @@ def test_get_aligned_abi_inputs(abi, args, expected):
 
 
 @pytest.mark.parametrize(
-    "abi, args, error",
+    "abi, args, error_type, message",
     (
         (
             # raise TypeError, expects list of tuples for input 's.c'
@@ -1084,6 +1116,7 @@ def test_get_aligned_abi_inputs(abi, args, expected):
                 "a": 13,
                 "b": [[(14, 15), (16, 17)], [(18, 19)]],
             },
+            TypeError,
             'Expected non-string sequence for "tuple" component type: got 56',
         ),
         (
@@ -1095,39 +1128,38 @@ def test_get_aligned_abi_inputs(abi, args, expected):
                 "a": 13,
                 "b": [[(14, 15), (16, 17)], [(18, 19)]],
             },
+            TypeError,
             'Expected non-string sequence for "tuple[]" component type: got '
             "{(9, 10), (5, 6), (7, 8)}",
+        ),
+        (
+            FALLBACK_ABI,
+            (),
+            ValueError,
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `fallback` with inputs `None`.",
+        ),
+        (
+            RECEIVE_ABI,
+            (),
+            ValueError,
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `receive` with inputs `None`.",
+        ),
+        (
+            FN_ABI_NO_INPUTS,
+            (),
+            ValueError,
+            "Inputs not supported for function types 'fallback' or 'receive'. "
+            "Provided ABI type was `function` with inputs `None`.",
         ),
     ),
 )
 def test_get_aligned_abi_inputs_raises_type_error_for_incorrect_input_types(
-    abi, args, error
+    abi, args, error_type, message
 ):
     with pytest.raises(
-        TypeError,
-        match=re.escape(error),
+        error_type,
+        match=re.escape(message),
     ):
         get_aligned_abi_inputs(abi, args)
-
-
-@pytest.mark.parametrize("type", (("fallback"), ("receive")))
-def test_get_aligned_abi_inputs_raises_value_error_for_fallback_or_receive_types(type):
-    with pytest.raises(
-        ValueError,
-        match=re.escape(
-            f"Inputs not supported for function types 'fallback' or 'receive'. "
-            f"Provided ABI type was `{type}` with inputs `{{}}`."
-        ),
-    ):
-        get_aligned_abi_inputs({"type": type, "inputs": {}}, ({"a": 13}))
-
-
-def test_get_aligned_abi_inputs_raises_value_error_with_no_inputs():
-    with pytest.raises(
-        ValueError,
-        match=re.escape(
-            "Inputs not supported for function types 'fallback' or 'receive'. "
-            "Provided ABI type was `function` with inputs `None`."
-        ),
-    ):
-        get_aligned_abi_inputs({"type": "function"}, ())
