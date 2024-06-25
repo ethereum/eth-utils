@@ -19,7 +19,6 @@ from typing import (
 
 from eth_typing import (
     ABI,
-    ABICallable,
     ABIComponent,
     ABIElement,
     ABIError,
@@ -743,28 +742,28 @@ def function_signature_to_4byte_selector(function_signature: str) -> bytes:
     return keccak(text=function_signature.replace(" ", ""))[:4]
 
 
-def function_abi_to_4byte_selector(callable_abi: ABICallable) -> bytes:
+def function_abi_to_4byte_selector(abi_element: ABIElement) -> bytes:
     r"""
     Return the 4-byte function signature of the provided function ABI.
 
-    :param callable_abi: Callable function ABI.
-    :type callable_abi: `ABICallable`
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
     :return: 4-byte function signature.
     :rtype: `bytes`
 
     .. doctest::
 
         >>> from eth_utils import function_abi_to_4byte_selector
-        >>> callable_abi = {
+        >>> abi_element = {
         ...   'type': 'function',
         ...   'name': 'myFunction',
         ...   'inputs': [],
         ...   'outputs': []
         ... }
-        >>> function_abi_to_4byte_selector(callable_abi)
+        >>> function_abi_to_4byte_selector(abi_element)
         b'\xc3x\n:'
     """
-    function_signature = abi_to_signature(callable_abi)
+    function_signature = abi_to_signature(abi_element)
     return function_signature_to_4byte_selector(function_signature)
 
 

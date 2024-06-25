@@ -14,6 +14,7 @@ from typing import (
 from eth_typing import (
     ABI,
     ABIComponent,
+    ABIComponentIndexed,
     ABIConstructor,
     ABIElement,
     ABIError,
@@ -618,7 +619,11 @@ def test_get_input_names_raises_for_fallback_or_receive_abi(
                 {
                     "type": "event",
                     "name": "LogSingleWithIndex",
-                    "inputs": [{"name": "arg0", "type": "uint256", "indexed": True}],
+                    "inputs": [
+                        ABIComponentIndexed(
+                            {"name": "arg0", "type": "uint256", "indexed": True}
+                        )
+                    ],
                 }
             ),
             [{"name": "arg0", "type": "uint256", "indexed": True}],
