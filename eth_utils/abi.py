@@ -13,6 +13,7 @@ from typing import (
     Optional,
     Sequence,
     Tuple,
+    TypeVar,
     Union,
     cast,
 )
@@ -21,7 +22,6 @@ from eth_typing import (
     ABI,
     ABIComponent,
     ABIElement,
-    ABIError,
     ABIEvent,
     ABIFunction,
 )
@@ -33,6 +33,8 @@ from eth_utils.types import (
 from .crypto import (
     keccak,
 )
+
+T = TypeVar("T")
 
 
 def _abi_input_types(
@@ -210,9 +212,7 @@ def abi_to_signature(abi_element: ABIElement) -> str:
         return signature.format(name=fn_name, input_types=fn_input_types)
 
 
-def filter_abi_by_name(
-    name: str, contract_abi: ABI
-) -> List[Union[ABIFunction, ABIEvent, ABIError]]:
+def filter_abi_by_name(name: str, contract_abi: ABI) -> List[T]:
     """
     Get one or more function and event ABIs by name.
 
@@ -221,7 +221,7 @@ def filter_abi_by_name(
     :param contract_abi: Contract ABI.
     :type contract_abi: `ABI`
     :return: Function or event ABIs with matching name.
-    :rtype: `List[ABIFunction, ABIEvent, ABIError]`
+    :rtype: `List[T]`
 
     .. doctest::
 
@@ -270,7 +270,7 @@ def filter_abi_by_name(
 'type': 'function'}]
     """
     return [
-        abi
+        cast(T, abi)
         for abi in contract_abi
         if (
             (
@@ -283,7 +283,7 @@ def filter_abi_by_name(
     ]
 
 
-def filter_abi_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
+def filter_abi_by_type(type: str, contract_abi: ABI) -> List[T]:
     """
     Return a list of each ``ABIElement`` that is of type ``type``.
 
@@ -292,7 +292,7 @@ def filter_abi_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
     :param contract_abi: Contract ABI.
     :type contract_abi: `ABI`
     :return: List of ABI elements of the specified type.
-    :rtype: `List[ABIElement]`
+    :rtype: `List[T]`
 
     .. doctest::
 
@@ -306,7 +306,7 @@ def filter_abi_by_type(type: str, contract_abi: ABI) -> List[ABIElement]:
         [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
-    return [abi for abi in contract_abi if abi["type"] == type]
+    return [cast(T, abi) for abi in contract_abi if abi["type"] == type]
 
 
 def get_all_function_abis(contract_abi: ABI) -> Sequence[ABIFunction]:
@@ -331,8 +331,10 @@ def get_all_function_abis(contract_abi: ABI) -> Sequence[ABIFunction]:
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
     return [
-        cast(ABIFunction, function_abi)
-        for function_abi in filter_abi_by_type("function", contract_abi)
+        function_abi
+        for function_abi in cast(
+            Sequence[ABIFunction], filter_abi_by_type("function", contract_abi)
+        )
     ]
 
 
@@ -357,7 +359,8 @@ def get_all_event_abis(contract_abi: ABI) -> Sequence[ABIEvent]:
         [{'type': 'event', 'name': 'MyEvent', 'inputs': []}]
     """
     return [
-        cast(ABIEvent, event) for event in filter_abi_by_type("event", contract_abi)
+        event
+        for event in cast(Sequence[ABIEvent], filter_abi_by_type("event", contract_abi))
     ]
 
 
