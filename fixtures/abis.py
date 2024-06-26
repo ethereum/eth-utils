@@ -380,6 +380,8 @@ ABI_EVENT_LOG_MULTI_ARGS = ABIEvent(
     }
 )
 
+ABI_COMPONENT = ABIComponent({"type": "str"})
+
 ABI_COMPONENT_TUPLE = ABIComponent(
     {
         "components": [

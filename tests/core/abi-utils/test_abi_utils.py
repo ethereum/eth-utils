@@ -41,6 +41,7 @@ from eth_utils.hexadecimal import (
     encode_hex,
 )
 from fixtures.abis import (
+    ABI_COMPONENT,
     ABI_COMPONENT_MULTI_DIM_TUPLE,
     ABI_COMPONENT_TUPLE,
     ABI_COMPONENT_TUPLE_ARRAY,
@@ -88,6 +89,16 @@ from fixtures.abis import (
         (ABI_FUNCTION_TOKEN_LAUNCHED, "0xde78e78a"),
         (ABI_FUNCTION_CEILING, "0xc51bf934"),
         (ABI_FUNCTION_REGISTRAR, "0xa31d5580"),
+        (ABI_FUNCTION_NO_INPUTS, "0xc1772ae8"),
+        (ABI_FUNCTION_NESTED_TUPLE_INPUTS, "0xfa89ea29"),
+        (ABI_EVENT_FINISHED, "0xbef4876b"),
+        (ABI_EVENT_FOO, "0xc2985578"),
+        (ABI_EVENT_NO_NAME, "0x77c874c7"),
+        (ABI_FALLBACK, "0x552079dc"),
+        (ABI_RECEIVE, "0xa3e76c0f"),
+        (ABI_CONSTRUCTOR, "0x90fa17bb"),
+        (ABI_CONSTRUCTOR_WITH_INPUT, "0x2757c293"),
+        (ABI_ERROR_FAILED, "0x236ac042"),
     ),
 )
 def test_fn_abi_to_4byte_selector(abi_element: ABIElement, expected: HexStr) -> None:
@@ -102,6 +113,10 @@ def test_fn_abi_to_4byte_selector(abi_element: ABIElement, expected: HexStr) -> 
         ("tokenLaunched()", "0xde78e78a"),
         ("CEILING()", "0xc51bf934"),
         ("Registrar(address,bytes32,address)", "0xa31d5580"),
+        ("failed(bytes32,str)", "0x236ac042"),
+        ("receive()", "0xa3e76c0f"),
+        ("fallback()", "0x552079dc"),
+        ("constructor()", "0x90fa17bb"),
     ),
 )
 def test_fn_signature_to_4byte_selector(signature: str, expected: HexStr) -> None:
@@ -113,23 +128,19 @@ def test_fn_signature_to_4byte_selector(signature: str, expected: HexStr) -> Non
 @pytest.mark.parametrize(
     "abi_element,expected",
     (
-        (
-            ABI_FUNCTION_NESTED_TUPLE_INPUTS,
-            "nestedTupleInputs((address,uint256,bytes,(address,uint256,bytes)))",
-        ),
+        (ABI_FUNCTION_NO_NAME, "function()"),
         (ABI_FUNCTION_NO_INPUTS, "noInputs()"),
         (ABI_FUNCTION_ARRAY_OF_TUPLES, "tupleArrayInput((address,uint256,bytes)[])"),
         (
             ABI_FUNCTION_FIXED_ARRAY_OF_TUPLES,
             "tupleFixedArrayInput((address,uint256,bytes)[5])",
         ),
+        (
+            ABI_FUNCTION_NESTED_TUPLE_INPUTS,
+            "nestedTupleInputs((address,uint256,bytes,(address,uint256,bytes)))",
+        ),
         (ABI_FUNCTION_ZERO_TUPLE_INPUT, "zeroTupleInput(())"),
         (ABI_FUNCTION_SINGLETON_TUPLE_INPUT, "singletonTupleInput((address))"),
-        (ABI_CONSTRUCTOR, "constructor()"),
-        (
-            ABI_CONSTRUCTOR_WITH_INPUT,
-            "constructor(str)",
-        ),
         (
             ABI_ERROR_FAILED,
             "failed(bytes32,str)",
@@ -140,9 +151,14 @@ def test_fn_signature_to_4byte_selector(signature: str, expected: HexStr) -> Non
             ABI_EVENT_NO_NAME,
             "event(int)",
         ),
-        (ABI_FALLBACK, "fallback()"),  # If no name, fall back to abi type
+        (ABI_EVENT_LOG_MULTI_ARGS, "LogMultiArg(uint256,uint256,uint256)"),
+        (ABI_CONSTRUCTOR, "constructor()"),
+        (
+            ABI_CONSTRUCTOR_WITH_INPUT,
+            "constructor(str)",
+        ),
+        (ABI_FALLBACK, "fallback()"),
         (ABI_RECEIVE, "receive()"),
-        (ABI_FUNCTION_NO_NAME, "function()"),
         (ABI_ERROR, "error()"),
     ),
 )
@@ -173,6 +189,7 @@ def test_abi_to_signature(abi_element: ABIElement, expected: str) -> None:
             [
                 ABI_FUNCTION_TOKEN_LAUNCHED,
                 ABI_EVENT_LOG_NO_ARG,
+                ABI_ERROR,
             ],
             [
                 ABI_EVENT_LOG_NO_ARG,
@@ -183,7 +200,13 @@ def test_abi_to_signature(abi_element: ABIElement, expected: str) -> None:
             [],
         ),
         (
-            [ABI_FUNCTION_ADD, ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR_WITH_INPUT],
+            [
+                ABI_FUNCTION_ADD,
+                ABI_FALLBACK,
+                ABI_RECEIVE,
+                ABI_CONSTRUCTOR_WITH_INPUT,
+                ABI_ERROR_FAILED,
+            ],
             [],
         ),
         (
@@ -264,7 +287,7 @@ def test_filter_abi_by_name(
 
 
 @pytest.mark.parametrize(
-    "abi_elements,abi_type,expected_abis",
+    "abi_elements,abi_type,expected_element_abis",
     (
         (
             [
@@ -283,6 +306,45 @@ def test_filter_abi_by_name(
                 ABI_FUNCTION_CEILING,
                 ABI_FUNCTION_REGISTRAR,
             ],
+            "event",
+            [ABI_EVENT_LOG_TWO_EVENTS],
+        ),
+        (
+            [
+                ABI_FALLBACK,
+            ],
+            "fallback",
+            [ABI_FALLBACK],
+        ),
+        (
+            [
+                ABI_FUNCTION_TOKEN_LAUNCHED,
+            ],
+            "fallback",
+            [],
+        ),
+        (
+            [
+                ABI_RECEIVE,
+                ABI_FALLBACK,
+            ],
+            "receive",
+            [ABI_RECEIVE],
+        ),
+        (
+            [
+                ABI_CONSTRUCTOR_WITH_INPUT,
+            ],
+            "constructor",
+            [ABI_CONSTRUCTOR_WITH_INPUT],
+        ),
+        (
+            [
+                ABI_EVENT_LOG_TWO_EVENTS,
+                ABI_FUNCTION_TOKEN_LAUNCHED,
+                ABI_FUNCTION_CEILING,
+                ABI_FUNCTION_REGISTRAR,
+            ],
             "notatype",
             [],
         ),
@@ -291,30 +353,26 @@ def test_filter_abi_by_name(
 def test_filter_abi_by_type(
     abi_elements: Sequence[ABIElement],
     abi_type: str,
-    expected_abis: Sequence[ABIElement],
+    expected_element_abis: Sequence[ABIElement],
 ) -> None:
     contract_abi = build_contract_abi(abi_elements)
-    assert filter_abi_by_type(abi_type, contract_abi) == expected_abis
+    assert filter_abi_by_type(abi_type, contract_abi) == expected_element_abis
 
 
 @pytest.mark.parametrize(
-    "abi_element,input_args",
+    "abi_element,expected_names",
     (
         (
             ABI_EVENT_LOG_SINGLE_ARG,
-            [{"name": "arg0", "type": "uint256"}],
+            ["arg0"],
         ),
         (
             ABI_EVENT_LOG_SINGLE_WITH_INDEX,
-            [{"name": "arg0", "type": "uint256", "indexed": True}],
+            ["arg0"],
         ),
         (
             ABI_EVENT_LOG_MULTI_ARGS,
-            [
-                {"name": "arg0", "type": "uint256"},
-                {"name": "arg1", "type": "uint256"},
-                {"name": "arg2", "type": "uint256"},
-            ],
+            ["arg0", "arg1", "arg2"],
         ),
         (
             ABI_EVENT_LOG_NO_ARG,
@@ -322,26 +380,30 @@ def test_filter_abi_by_type(
         ),
         (
             ABI_FUNCTION_SINGLE_ARG,
-            [{"name": "arg0", "type": "uint256"}],
+            ["arg0"],
         ),
         (
             ABI_FUNCTION_TWO_NAMED_ARGS,
-            [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "uint256"}],
+            ["arg0", "arg1"],
         ),
         (
             ABI_CONSTRUCTOR_WITH_INPUT,
-            [{"name": "started", "type": "str"}],
+            ["started"],
         ),
         (
             ABI_FUNCTION_NO_INPUTS,
             [],
         ),
+        (
+            ABI_ERROR_INVALID,
+            ["a", "b"],
+        ),
     ),
 )
 def test_get_input_names_from_abi_element(
-    abi_element: ABIElement, input_args: Sequence[ABIElement]
+    abi_element: ABIElement, expected_names: Sequence[str]
 ) -> None:
-    assert get_abi_input_names(abi_element) == [arg.get("name") for arg in input_args]
+    assert get_abi_input_names(abi_element) == expected_names
 
 
 @pytest.mark.parametrize(
@@ -401,6 +463,10 @@ def test_get_input_names_raises_for_fallback_or_receive_abi(
             ABI_CONSTRUCTOR_WITH_INPUT,
             [{"name": "inputs", "type": "str"}],
         ),
+        (
+            ABI_ERROR_INVALID,
+            [{"name": "a", "type": "address"}, {"name": "b", "type": "bytes32"}],
+        ),
     ],
 )
 def test_get_input_types_from_abi_element(
@@ -442,6 +508,10 @@ def test_get_input_types_raises_for_fallback_or_receive_abi(
             ABI_FUNCTION_MULTI_TYPED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "bytes32"}],
         ),
+        (
+            ABI_FUNCTION_TWO_UNNAMED_ARGS,
+            [],
+        ),
     ],
 )
 def test_get_abi_output_names(
@@ -459,6 +529,7 @@ def test_get_abi_output_names(
         (ABI_RECEIVE),
         (ABI_CONSTRUCTOR),
         (ABI_EVENT_LOG_NO_ARG),
+        (ABI_ERROR),
     ),
 )
 def test_get_abi_output_names_raises_for_non_function_types(
@@ -558,6 +629,7 @@ def test_get_abi_output_types_raises_for_non_function_types(
                 ABI_FUNCTION_CEILING,
                 ABI_FUNCTION_REGISTRAR,
                 ABI_RECEIVE,
+                ABI_ERROR,
             ],
             [ABI_FUNCTION_TOKEN_LAUNCHED, ABI_FUNCTION_CEILING, ABI_FUNCTION_REGISTRAR],
         ),
@@ -582,7 +654,7 @@ def test_get_abi_output_types_raises_for_non_function_types(
             [ABI_FUNCTION_TOKEN_LAUNCHED, ABI_FUNCTION_CEILING, ABI_FUNCTION_REGISTRAR],
         ),
         (
-            [ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR_WITH_INPUT],
+            [ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR_WITH_INPUT, ABI_ERROR_INVALID],
             [],
         ),
     ),
@@ -602,6 +674,18 @@ def test_get_all_function_abis(
             ABI_EVENT_TRANSFER,
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
         ),
+        (
+            ABI_EVENT_FINISHED,
+            "0xbef4876bcdde2983a1ba9fe22b5983b09081cf602d266f72a613d0d9c2f78e28",
+        ),
+        (
+            ABI_EVENT_LOG_SINGLE_ARG,
+            "0x56d2ef3c5228bf5d88573621e325a4672ab50e033749a601e4f4a5e1dce905d4",
+        ),
+        (
+            ABI_EVENT_NO_NAME,
+            "0x77c874c798a153cb8bb91a65910a8f49033a603329228caa4b3b1bb4bb5b9e18",
+        ),
     ),
 )
 def test_event_abi_to_log_topic(abi_event: ABIEvent, expected: HexStr) -> None:
@@ -616,6 +700,14 @@ def test_event_abi_to_log_topic(abi_event: ABIEvent, expected: HexStr) -> None:
         (
             "Transfer(address,address,uint256)",
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        ),
+        (
+            "Transfer(address,address,uint256)",
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        ),
+        (
+            "event()",
+            "0x4980500b48d9072058dce7e5222cd23e11759678f8aa74b3a6f0e891bb888979",
         ),
     ),
 )
@@ -639,6 +731,10 @@ def test_event_signature_to_log_topic(event_signature: str, expected: HexStr) ->
         (
             ABI_COMPONENT_MULTI_DIM_TUPLE,
             "(address,uint256,bytes)[3]",
+        ),
+        (
+            ABI_COMPONENT,
+            "str",
         ),
         (
             (
