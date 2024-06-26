@@ -579,16 +579,12 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
         >>> get_abi_input_names(abi)
         ['s']
     """
-    if (
-        "inputs" not in abi_element
-        or abi_element["type"] == "fallback"
-        or abi_element["type"] == "receive"
-    ):
+    if abi_element["type"] == "fallback" or abi_element["type"] == "receive":
         raise ValueError(
             f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
             f" ABI type was '{abi_element.get('type')}'."
         )
-    return [arg["name"] for arg in abi_element["inputs"]]
+    return [arg["name"] for arg in abi_element.get("inputs", [])]
 
 
 def get_abi_input_types(abi_element: ABIElement) -> List[str]:
@@ -620,11 +616,7 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
         >>> get_abi_input_types(abi)
         ['uint256']
     """
-    if (
-        "inputs" not in abi_element
-        or abi_element["type"] == "fallback"
-        or abi_element["type"] == "receive"
-    ):
+    if abi_element["type"] == "fallback" or abi_element["type"] == "receive":
         raise ValueError(
             f"Inputs not supported for function types 'fallback' or 'receive'. Provided"
             f" ABI type was '{abi_element.get('type')}'."
@@ -671,12 +663,12 @@ def get_abi_output_names(abi_element: ABIElement) -> List[str]:
         >>> get_abi_output_names(abi)
         ['name', 's']
     """
-    if "outputs" not in abi_element or abi_element["type"] != "function":
+    if abi_element["type"] != "function":
         raise ValueError(
             f"Outputs only supported for ABI type 'function'. Provided"
             f" ABI type was '{abi_element.get('type')}'."
         )
-    return [arg["name"] for arg in abi_element["outputs"]]
+    return [arg["name"] for arg in abi_element.get("outputs", [])]
 
 
 def get_abi_output_types(abi_element: ABIElement) -> List[str]:
@@ -718,7 +710,7 @@ def get_abi_output_types(abi_element: ABIElement) -> List[str]:
         ['string', 'uint256']
 
     """
-    if "outputs" not in abi_element or abi_element["type"] != "function":
+    if abi_element["type"] != "function":
         raise ValueError(
             f"Outputs only supported for ABI type `function`. Provided"
             f" ABI type was `{abi_element.get('type')}` and outputs were "

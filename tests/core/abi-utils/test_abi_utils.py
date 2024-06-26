@@ -13,14 +13,9 @@ from typing import (
 
 from eth_typing import (
     ABIComponent,
-    ABIComponentIndexed,
-    ABIConstructor,
     ABIElement,
-    ABIError,
     ABIEvent,
-    ABIFallback,
     ABIFunction,
-    ABIReceive,
     HexStr,
 )
 
@@ -46,12 +41,23 @@ from eth_utils.hexadecimal import (
     encode_hex,
 )
 from fixtures.abis import (
+    ABI_COMPONENT_MULTI_DIM_TUPLE,
+    ABI_COMPONENT_TUPLE,
+    ABI_COMPONENT_TUPLE_ARRAY,
     ABI_CONSTRUCTOR,
+    ABI_CONSTRUCTOR_WITH_INPUT,
     ABI_ERROR,
+    ABI_ERROR_FAILED,
+    ABI_ERROR_INVALID,
+    ABI_ERROR_MY_ERROR,
+    ABI_EVENT_FINISHED,
+    ABI_EVENT_FOO,
+    ABI_EVENT_LOG_MULTI_ARGS,
     ABI_EVENT_LOG_NO_ARG,
     ABI_EVENT_LOG_SINGLE_ARG,
     ABI_EVENT_LOG_SINGLE_WITH_INDEX,
     ABI_EVENT_LOG_TWO_EVENTS,
+    ABI_EVENT_NO_NAME,
     ABI_EVENT_TRANSFER,
     ABI_FALLBACK,
     ABI_FUNCTION_ADD,
@@ -59,12 +65,16 @@ from fixtures.abis import (
     ABI_FUNCTION_CEILING,
     ABI_FUNCTION_FIXED_ARRAY_OF_TUPLES,
     ABI_FUNCTION_MULTI_TUPLE_INPUTS,
+    ABI_FUNCTION_MULTI_TYPED_ARGS,
     ABI_FUNCTION_NESTED_TUPLE_INPUTS,
     ABI_FUNCTION_NO_INPUTS,
+    ABI_FUNCTION_NO_NAME,
     ABI_FUNCTION_REGISTRAR,
+    ABI_FUNCTION_SINGLE_ARG,
     ABI_FUNCTION_SINGLETON_TUPLE_INPUT,
     ABI_FUNCTION_THREE_NAMED_ARGS,
     ABI_FUNCTION_TOKEN_LAUNCHED,
+    ABI_FUNCTION_TWO_NAMED_ARGS,
     ABI_FUNCTION_TWO_UNNAMED_ARGS,
     ABI_FUNCTION_ZERO_TUPLE_INPUT,
     ABI_RECEIVE,
@@ -115,37 +125,25 @@ def test_fn_signature_to_4byte_selector(signature: str, expected: HexStr) -> Non
         ),
         (ABI_FUNCTION_ZERO_TUPLE_INPUT, "zeroTupleInput(())"),
         (ABI_FUNCTION_SINGLETON_TUPLE_INPUT, "singletonTupleInput((address))"),
-        ({"type": "constructor"}, "constructor()"),
+        (ABI_CONSTRUCTOR, "constructor()"),
         (
-            {"type": "constructor", "inputs": [{"state": "started", "type": "str"}]},
+            ABI_CONSTRUCTOR_WITH_INPUT,
             "constructor(str)",
         ),
         (
-            {
-                "type": "error",
-                "name": "failed",
-                "inputs": [
-                    {"x": b"1", "type": "bytes32"},
-                    {"y": "value", "type": "str"},
-                ],
-            },
+            ABI_ERROR_FAILED,
             "failed(bytes32,str)",
         ),
-        ({"type": "error", "name": "myError"}, "myError()"),
-        ({"type": "event", "name": "foo"}, "foo()"),
+        (ABI_ERROR_MY_ERROR, "myError()"),
+        (ABI_EVENT_FOO, "foo()"),
         (
-            {
-                "type": "event",
-                "inputs": [
-                    {"x": 1, "type": "int"},
-                ],
-            },
+            ABI_EVENT_NO_NAME,
             "event(int)",
         ),
-        ({"type": "fallback"}, "fallback()"),  # If no name, fall back to abi type
-        ({"type": "receive"}, "receive()"),
-        ({"type": "function"}, "function()"),
-        ({"type": "error"}, "error()"),
+        (ABI_FALLBACK, "fallback()"),  # If no name, fall back to abi type
+        (ABI_RECEIVE, "receive()"),
+        (ABI_FUNCTION_NO_NAME, "function()"),
+        (ABI_ERROR, "error()"),
     ),
 )
 def test_abi_to_signature(abi_element: ABIElement, expected: str) -> None:
@@ -185,7 +183,7 @@ def test_abi_to_signature(abi_element: ABIElement, expected: str) -> None:
             [],
         ),
         (
-            [ABI_FUNCTION_ADD, ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR],
+            [ABI_FUNCTION_ADD, ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR_WITH_INPUT],
             [],
         ),
         (
@@ -194,7 +192,7 @@ def test_abi_to_signature(abi_element: ABIElement, expected: str) -> None:
                 ABI_FUNCTION_ADD,
                 ABI_FALLBACK,
                 ABI_RECEIVE,
-                ABI_CONSTRUCTOR,
+                ABI_CONSTRUCTOR_WITH_INPUT,
                 ABI_EVENT_LOG_SINGLE_WITH_INDEX,
             ],
             [
@@ -230,9 +228,9 @@ def test_get_all_event_abis(
             [],
         ),
         (
-            [ABI_ERROR],
+            [ABI_ERROR_INVALID],
             "Invalid",
-            [ABI_ERROR],
+            [ABI_ERROR_INVALID],
         ),
         (
             [ABI_RECEIVE],  # receive abi has no name
@@ -245,7 +243,7 @@ def test_get_all_event_abis(
             [],
         ),
         (
-            [ABI_CONSTRUCTOR],  # constructor abi has no name
+            [ABI_CONSTRUCTOR_WITH_INPUT],  # constructor abi has no name
             "constructor",
             [],
         ),
@@ -303,41 +301,15 @@ def test_filter_abi_by_type(
     "abi_element,input_args",
     (
         (
-            ABIEvent(
-                {
-                    "type": "event",
-                    "name": "LogSingleArg",
-                    "inputs": [{"name": "arg0", "type": "uint256"}],
-                }
-            ),
+            ABI_EVENT_LOG_SINGLE_ARG,
             [{"name": "arg0", "type": "uint256"}],
         ),
         (
-            ABIEvent(
-                {
-                    "type": "event",
-                    "name": "LogSingleWithIndex",
-                    "inputs": [
-                        ABIComponentIndexed(
-                            {"name": "arg0", "type": "uint256", "indexed": True}
-                        )
-                    ],
-                }
-            ),
+            ABI_EVENT_LOG_SINGLE_WITH_INDEX,
             [{"name": "arg0", "type": "uint256", "indexed": True}],
         ),
         (
-            ABIEvent(
-                {
-                    "type": "event",
-                    "name": "LogMultiArg",
-                    "inputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "uint256"},
-                        {"name": "arg2", "type": "uint256"},
-                    ],
-                }
-            ),
+            ABI_EVENT_LOG_MULTI_ARGS,
             [
                 {"name": "arg0", "type": "uint256"},
                 {"name": "arg1", "type": "uint256"},
@@ -345,49 +317,23 @@ def test_filter_abi_by_type(
             ],
         ),
         (
-            ABIEvent({"type": "event", "name": "LogNoArg", "inputs": []}),
+            ABI_EVENT_LOG_NO_ARG,
             [],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnSingleArg",
-                    "inputs": [{"name": "arg0", "type": "uint256"}],
-                }
-            ),
+            ABI_FUNCTION_SINGLE_ARG,
             [{"name": "arg0", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiArg",
-                    "inputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "uint256"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_TWO_NAMED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "uint256"}],
         ),
         (
-            ABIConstructor(
-                {
-                    "type": "constructor",
-                    "inputs": [{"name": "inputs", "type": "uint256"}],
-                }
-            ),
-            [{"name": "inputs", "type": "uint256"}],
+            ABI_CONSTRUCTOR_WITH_INPUT,
+            [{"name": "started", "type": "str"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnNoArg",
-                    "inputs": [],
-                }
-            ),
+            ABI_FUNCTION_NO_INPUTS,
             [],
         ),
     ),
@@ -401,8 +347,8 @@ def test_get_input_names_from_abi_element(
 @pytest.mark.parametrize(
     "abi_element",
     (
-        ABIFallback({"type": "fallback"}),
-        ABIReceive({"type": "receive"}),
+        ABI_FALLBACK,
+        ABI_RECEIVE,
     ),
 )
 def test_get_input_names_raises_for_fallback_or_receive_abi(
@@ -420,41 +366,15 @@ def test_get_input_names_raises_for_fallback_or_receive_abi(
     "abi_element,input_args",
     [
         (
-            ABIEvent(
-                {
-                    "type": "event",
-                    "name": "LogSingleArg",
-                    "inputs": [{"name": "arg0", "type": "uint256"}],
-                }
-            ),
+            ABI_EVENT_LOG_SINGLE_ARG,
             [{"name": "arg0", "type": "uint256"}],
         ),
         (
-            ABIEvent(
-                {
-                    "type": "event",
-                    "name": "LogSingleWithIndex",
-                    "inputs": [
-                        ABIComponentIndexed(
-                            {"name": "arg0", "type": "uint256", "indexed": True}
-                        )
-                    ],
-                }
-            ),
+            ABI_EVENT_LOG_SINGLE_WITH_INDEX,
             [{"name": "arg0", "type": "uint256", "indexed": True}],
         ),
         (
-            ABIEvent(
-                {
-                    "type": "event",
-                    "name": "LogMultiArg",
-                    "inputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "uint256"},
-                        {"name": "arg2", "type": "uint256"},
-                    ],
-                }
-            ),
+            ABI_EVENT_LOG_MULTI_ARGS,
             [
                 {"name": "arg0", "type": "uint256"},
                 {"name": "arg1", "type": "uint256"},
@@ -462,53 +382,24 @@ def test_get_input_names_raises_for_fallback_or_receive_abi(
             ],
         ),
         (
-            ABIEvent({"type": "event", "name": "LogNoArg", "inputs": []}),
+            ABI_EVENT_LOG_NO_ARG,
             [],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnSingleArg",
-                    "inputs": [{"name": "arg0", "type": "uint256"}],
-                }
-            ),
+            ABI_FUNCTION_SINGLE_ARG,
             [{"name": "arg0", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiArg",
-                    "inputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "uint256"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_TWO_NAMED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiTypedArg",
-                    "inputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "bytes32"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_MULTI_TYPED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "bytes32"}],
         ),
         (
-            ABIConstructor(
-                {
-                    "type": "constructor",
-                    "inputs": [{"name": "inputs", "type": "uint256"}],
-                }
-            ),
-            [{"name": "inputs", "type": "uint256"}],
+            ABI_CONSTRUCTOR_WITH_INPUT,
+            [{"name": "inputs", "type": "str"}],
         ),
     ],
 )
@@ -521,8 +412,8 @@ def test_get_input_types_from_abi_element(
 @pytest.mark.parametrize(
     "abi_element",
     (
-        ABIFallback({"type": "fallback"}),
-        ABIReceive({"type": "receive"}),
+        ABI_FALLBACK,
+        ABI_RECEIVE,
     ),
 )
 def test_get_input_types_raises_for_fallback_or_receive_abi(
@@ -540,39 +431,15 @@ def test_get_input_types_raises_for_fallback_or_receive_abi(
     "abi_element,outputs",
     [
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnSingleArg",
-                    "outputs": [{"name": "arg0", "type": "uint256"}],
-                }
-            ),
+            ABI_FUNCTION_SINGLE_ARG,
             [{"name": "arg0", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiArg",
-                    "outputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "uint256"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_TWO_NAMED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiTypedArg",
-                    "outputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "bytes32"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_MULTI_TYPED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "bytes32"}],
         ),
     ],
@@ -588,10 +455,10 @@ def test_get_abi_output_names(
 @pytest.mark.parametrize(
     "abi_element",
     (
-        (ABIFallback({"type": "fallback"})),
-        (ABIReceive({"type": "receive"})),
-        (ABIConstructor({"type": "constructor"})),
-        (ABIEvent({"type": "event", "name": "LogNoArg", "inputs": []})),
+        (ABI_FALLBACK),
+        (ABI_RECEIVE),
+        (ABI_CONSTRUCTOR),
+        (ABI_EVENT_LOG_NO_ARG),
     ),
 )
 def test_get_abi_output_names_raises_for_non_function_types(
@@ -609,39 +476,15 @@ def test_get_abi_output_names_raises_for_non_function_types(
     "abi_element,outputs",
     [
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnSingleArg",
-                    "outputs": [{"name": "arg0", "type": "uint256"}],
-                }
-            ),
+            ABI_FUNCTION_SINGLE_ARG,
             [{"name": "arg0", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiArg",
-                    "outputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "uint256"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_TWO_NAMED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "uint256"}],
         ),
         (
-            ABIFunction(
-                {
-                    "type": "function",
-                    "name": "FnMultiTypedArg",
-                    "outputs": [
-                        {"name": "arg0", "type": "uint256"},
-                        {"name": "arg1", "type": "bytes32"},
-                    ],
-                }
-            ),
+            ABI_FUNCTION_MULTI_TYPED_ARGS,
             [{"name": "arg0", "type": "uint256"}, {"name": "arg1", "type": "bytes32"}],
         ),
     ],
@@ -657,31 +500,11 @@ def test_get_abi_output_types(
 @pytest.mark.parametrize(
     "abi_element",
     [
-        ABIConstructor(
-            {
-                "type": "constructor",
-                "inputs": [{"name": "started", "type": "str"}],
-            }
-        ),
-        ABIFallback({"type": "fallback"}),
-        ABIReceive({"type": "receive"}),
-        ABIError(
-            {
-                "type": "error",
-                "name": "Invalid",
-                "inputs": [
-                    {"type": "address", "name": "a"},
-                    {"type": "bytes32", "name": "b"},
-                ],
-            }
-        ),
-        ABIEvent(
-            {
-                "type": "event",
-                "name": "finished",
-                "inputs": [],
-            }
-        ),
+        ABI_CONSTRUCTOR_WITH_INPUT,
+        ABI_FALLBACK,
+        ABI_RECEIVE,
+        ABI_ERROR_INVALID,
+        ABI_EVENT_FINISHED,
     ],
 )
 def test_get_abi_output_types_raises_for_non_function_types(
@@ -716,7 +539,7 @@ def test_get_abi_output_types_raises_for_non_function_types(
                 ABI_FUNCTION_TOKEN_LAUNCHED,
                 ABI_FUNCTION_CEILING,
                 ABI_FUNCTION_REGISTRAR,
-                ABI_ERROR,
+                ABI_ERROR_INVALID,
             ],
             [ABI_FUNCTION_TOKEN_LAUNCHED, ABI_FUNCTION_CEILING, ABI_FUNCTION_REGISTRAR],
         ),
@@ -743,7 +566,7 @@ def test_get_abi_output_types_raises_for_non_function_types(
                 ABI_FUNCTION_TOKEN_LAUNCHED,
                 ABI_FUNCTION_CEILING,
                 ABI_FUNCTION_REGISTRAR,
-                ABI_CONSTRUCTOR,
+                ABI_CONSTRUCTOR_WITH_INPUT,
             ],
             [ABI_FUNCTION_TOKEN_LAUNCHED, ABI_FUNCTION_CEILING, ABI_FUNCTION_REGISTRAR],
         ),
@@ -754,12 +577,12 @@ def test_get_abi_output_types_raises_for_non_function_types(
                 ABI_FUNCTION_REGISTRAR,
                 ABI_FALLBACK,
                 ABI_RECEIVE,
-                ABI_CONSTRUCTOR,
+                ABI_CONSTRUCTOR_WITH_INPUT,
             ],
             [ABI_FUNCTION_TOKEN_LAUNCHED, ABI_FUNCTION_CEILING, ABI_FUNCTION_REGISTRAR],
         ),
         (
-            [ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR],
+            [ABI_FALLBACK, ABI_RECEIVE, ABI_CONSTRUCTOR_WITH_INPUT],
             [],
         ),
     ),
@@ -806,51 +629,15 @@ def test_event_signature_to_log_topic(event_signature: str, expected: HexStr) ->
     "abi_component,expected_type_signature",
     (
         (
-            (
-                ABIComponent(
-                    {
-                        "components": [
-                            {"name": "anAddress", "type": "address"},
-                            {"name": "anInt", "type": "uint256"},
-                            {"name": "someBytes", "type": "bytes"},
-                        ],
-                        "type": "tuple",
-                        "name": "aTuple",
-                    }
-                )
-            ),
+            ABI_COMPONENT_TUPLE,
             "(address,uint256,bytes)",
         ),
         (
-            (
-                ABIComponent(
-                    {
-                        "components": [
-                            {"name": "bytes32", "type": "bytes32[]"},
-                            {"name": "bytes", "type": "bytes"},
-                            {"name": "someMoarBytes", "type": "bytes"},
-                        ],
-                        "type": "tuple[]",
-                        "name": "aTupleArray",
-                    }
-                )
-            ),
+            ABI_COMPONENT_TUPLE_ARRAY,
             "(bytes32[],bytes,bytes)[]",
         ),
         (
-            (
-                ABIComponent(
-                    {
-                        "components": [
-                            {"name": "anAddress", "type": "address"},
-                            {"name": "anInt", "type": "uint256"},
-                            {"name": "someBytes", "type": "bytes"},
-                        ],
-                        "type": "tuple[3]",
-                        "name": "aMultiDimensionalTuple",
-                    }
-                )
-            ),
+            ABI_COMPONENT_MULTI_DIM_TUPLE,
             "(address,uint256,bytes)[3]",
         ),
         (
@@ -958,7 +745,7 @@ def test_collapse_if_tuple_raises_for_invalid_component(
             (1, 2, 3),
         ),
         (
-            ABI_ERROR,
+            ABI_ERROR_INVALID,
             (
                 "0x1234567890123456789012345678901234567890",
                 b"bar",
@@ -1045,7 +832,7 @@ def test_get_normalized_abi_inputs(
             "Incorrect argument count. Expected '2', got '4'.",
         ),
         (
-            ABI_ERROR,
+            ABI_ERROR_INVALID,
             (),
             {},
             TypeError,
@@ -1188,7 +975,7 @@ GET_ABI_INPUTS_OUTPUT = (
             (("uint256",), (1,)),
         ),
         (
-            ABI_ERROR,
+            ABI_ERROR_INVALID,
             ("0x1234567890123456789012345678901234567890", b"bar"),
             (
                 ("address", "bytes32"),

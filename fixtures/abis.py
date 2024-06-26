@@ -5,6 +5,7 @@ from typing import (
 
 from eth_typing import (
     ABI,
+    ABIComponent,
     ABIComponentIndexed,
     ABIConstructor,
     ABIElement,
@@ -15,14 +16,18 @@ from eth_typing import (
     ABIReceive,
 )
 
+ABI_FUNCTION_NO_NAME = ABIFunction({"type": "function"})
+
 ABI_FUNCTION_NO_INPUTS = ABIFunction({"name": "noInputs", "type": "function"})
 
 ABI_FUNCTION_TOKEN_LAUNCHED = ABIFunction(
     {"name": "tokenLaunched", "type": "function", "inputs": []}
 )
+
 ABI_FUNCTION_CEILING = ABIFunction(
     {"name": "CEILING", "type": "function", "inputs": []}
 )
+
 ABI_FUNCTION_REGISTRAR = ABIFunction(
     {
         "name": "Registrar",
@@ -34,6 +39,7 @@ ABI_FUNCTION_REGISTRAR = ABIFunction(
         ],
     }
 )
+
 ABI_FUNCTION_FOUR_NAMED_ARGS = ABIFunction(
     {
         "constant": False,
@@ -49,7 +55,6 @@ ABI_FUNCTION_FOUR_NAMED_ARGS = ABIFunction(
     }
 )
 
-
 ABI_FUNCTION_THREE_NAMED_ARGS = ABIFunction(
     {
         "constant": False,
@@ -64,6 +69,36 @@ ABI_FUNCTION_THREE_NAMED_ARGS = ABIFunction(
     }
 )
 
+ABI_FUNCTION_TWO_NAMED_ARGS = ABIFunction(
+    {
+        "type": "function",
+        "name": "FnMultiArg",
+        "inputs": [
+            {"name": "arg0", "type": "uint256"},
+            {"name": "arg1", "type": "uint256"},
+        ],
+        "outputs": [
+            {"name": "arg0", "type": "uint256"},
+            {"name": "arg1", "type": "uint256"},
+        ],
+    }
+)
+
+ABI_FUNCTION_MULTI_TYPED_ARGS = ABIFunction(
+    {
+        "type": "function",
+        "name": "FnMultiTypedArg",
+        "inputs": [
+            {"name": "arg0", "type": "uint256"},
+            {"name": "arg1", "type": "bytes32"},
+        ],
+        "outputs": [
+            {"name": "arg0", "type": "uint256"},
+            {"name": "arg1", "type": "bytes32"},
+        ],
+    }
+)
+
 ABI_FUNCTION_TWO_UNNAMED_ARGS = ABIFunction(
     {
         "constant": False,
@@ -74,6 +109,15 @@ ABI_FUNCTION_TWO_UNNAMED_ARGS = ABIFunction(
         "name": "twoUnnamedArgs",
         "outputs": [],
         "type": "function",
+    }
+)
+
+ABI_FUNCTION_SINGLE_ARG = ABIFunction(
+    {
+        "type": "function",
+        "name": "FnSingleArg",
+        "inputs": [{"name": "arg0", "type": "uint256"}],
+        "outputs": [{"name": "arg0", "type": "uint256"}],
     }
 )
 
@@ -221,7 +265,9 @@ ABI_FUNCTION_MULTI_TUPLE_INPUTS = ABIFunction(
     }
 )
 
-ABI_CONSTRUCTOR = ABIConstructor(
+ABI_CONSTRUCTOR = ABIConstructor({"type": "constructor"})
+
+ABI_CONSTRUCTOR_WITH_INPUT = ABIConstructor(
     {
         "inputs": [{"name": "started", "type": "str"}],
         "type": "constructor",
@@ -232,7 +278,9 @@ ABI_FALLBACK = ABIFallback({"type": "fallback"})
 
 ABI_RECEIVE = ABIReceive({"type": "receive"})
 
-ABI_ERROR = ABIError(
+ABI_ERROR = ABIError({"type": "error"})
+
+ABI_ERROR_INVALID = ABIError(
     {
         "name": "Invalid",
         "type": "error",
@@ -242,6 +290,30 @@ ABI_ERROR = ABIError(
         ],
     }
 )
+
+# Intentionally invalid ABIError, input names are missing
+ABI_ERROR_FAILED = {
+    "type": "error",
+    "name": "failed",
+    "inputs": [
+        {"x": b"1", "type": "bytes32"},
+        {"y": "value", "type": "str"},
+    ],
+}
+
+ABI_ERROR_MY_ERROR = ABIError({"type": "error", "name": "myError"})
+
+ABI_EVENT_FINISHED = ABIEvent({"type": "event", "name": "finished", "inputs": []})
+
+ABI_EVENT_FOO = ABIEvent({"type": "event", "name": "foo"})
+
+# Intentionally invalid ABIEvent, missing event name and input names
+ABI_EVENT_NO_NAME = {
+    "type": "event",
+    "inputs": [
+        {"x": 1, "type": "int"},
+    ],
+}
 
 ABI_EVENT_TRANSFER = ABIEvent(
     {
@@ -293,6 +365,54 @@ ABI_EVENT_LOG_TWO_EVENTS = ABIEvent(
         "inputs": [
             {"name": "_arg0", "type": "uint256"},
         ],
+    }
+)
+
+ABI_EVENT_LOG_MULTI_ARGS = ABIEvent(
+    {
+        "type": "event",
+        "name": "LogMultiArg",
+        "inputs": [
+            {"name": "arg0", "type": "uint256"},
+            {"name": "arg1", "type": "uint256"},
+            {"name": "arg2", "type": "uint256"},
+        ],
+    }
+)
+
+ABI_COMPONENT_TUPLE = ABIComponent(
+    {
+        "components": [
+            {"name": "anAddress", "type": "address"},
+            {"name": "anInt", "type": "uint256"},
+            {"name": "someBytes", "type": "bytes"},
+        ],
+        "type": "tuple",
+        "name": "aTuple",
+    }
+)
+
+ABI_COMPONENT_TUPLE_ARRAY = ABIComponent(
+    {
+        "components": [
+            {"name": "bytes32", "type": "bytes32[]"},
+            {"name": "bytes", "type": "bytes"},
+            {"name": "someMoarBytes", "type": "bytes"},
+        ],
+        "type": "tuple[]",
+        "name": "aTupleArray",
+    }
+)
+
+ABI_COMPONENT_MULTI_DIM_TUPLE = ABIComponent(
+    {
+        "components": [
+            {"name": "anAddress", "type": "address"},
+            {"name": "anInt", "type": "uint256"},
+            {"name": "someBytes", "type": "bytes"},
+        ],
+        "type": "tuple[3]",
+        "name": "aMultiDimensionalTuple",
     }
 )
 
