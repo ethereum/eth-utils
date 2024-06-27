@@ -1,5 +1,5 @@
-import logging
 import pytest
+import logging
 import uuid
 
 from eth_utils import (

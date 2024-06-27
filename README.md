@@ -8,9 +8,11 @@
 
 Common utility functions for python code that interacts with Ethereum
 
-Read more in the [documentation on ReadTheDocs](https://eth-utils.readthedocs.io/). [View the change log](https://eth-utils.readthedocs.io/en/latest/release_notes.html).
+Read the [documentation](https://eth-utils.readthedocs.io/).
 
-## Quickstart
+View the [change log](https://eth-utils.readthedocs.io/en/latest/release_notes.html).
+
+## Installation
 
 ```sh
 python -m pip install eth-utils
