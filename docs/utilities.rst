@@ -15,52 +15,21 @@ importing them through the ``curried`` module like so:
 
     >>> from eth_utils.curried import hexstr_if_str
 
-ABI Utils
-~~~~~~~~~
+ABI Utilities
+~~~~~~~~~~~~~
 
-``event_abi_to_log_topic(event_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The Application Binary Interface (ABI) may be used for encoding or decoding
+transactional data. Components of an ABI may include a descriptor of each Function or
+Event in the contract. The following utilities provide convenient methods for parsing
+components of an ABI and encoding function parameters for use in transactions.
 
-Returns the 32 byte log topic for the given event abi.
+For more information about the ABI spec, see the Solidity
+`Contract ABI specification <https://docs.soliditylang.org/en/v0.8.25/abi-spec.html>`_.
 
-.. doctest::
-
-    >>> from eth_utils import event_abi_to_log_topic
-    >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``event_signature_to_log_topic(event_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 32 byte log topic for the given event signature.
-
-.. doctest::
-
-    >>> from eth_utils import event_signature_to_log_topic
-    >>> event_signature_to_log_topic('MyEvent()')
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``function_abi_to_4byte_selector(function_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function abi.
-
-.. doctest::
-
-    >>> from eth_utils import function_abi_to_4byte_selector
-    >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})
-    b'\xc3x\n:'
-
-``function_signature_to_4byte_selector(function_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function signature.
-
-.. doctest::
-
-    >>> from eth_utils import function_signature_to_4byte_selector
-    >>> function_signature_to_4byte_selector('myFunction()')
-    b'\xc3x\n:'
+.. automodule:: eth_utils.abi
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Applicators
 ~~~~~~~~~~~
