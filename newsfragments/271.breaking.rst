@@ -1,0 +1,1 @@
+Updates to the latest ``eth-typing`` to use new ``ABI`` types for improved type checking in existing ``ABI`` utility functions.
