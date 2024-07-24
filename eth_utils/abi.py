@@ -9,20 +9,26 @@ from typing import (
     Dict,
     Iterable,
     List,
+    Literal,
     Mapping,
     Optional,
     Sequence,
     Tuple,
     Union,
     cast,
+    overload,
 )
 
 from eth_typing import (
     ABI,
     ABIComponent,
+    ABIConstructor,
     ABIElement,
+    ABIError,
     ABIEvent,
+    ABIFallback,
     ABIFunction,
+    ABIReceive,
 )
 
 from eth_utils.types import (
@@ -285,16 +291,76 @@ def filter_abi_by_name(abi_name: str, contract_abi: ABI) -> Sequence[ABIElement]
     ]
 
 
-def filter_abi_by_type(abi_type: str, contract_abi: ABI) -> Sequence[ABIElement]:
+@overload
+def filter_abi_by_type(
+    abi_type: Literal["function"],
+    contract_abi: ABI,
+) -> Sequence[ABIFunction]:
+    pass
+
+
+@overload
+def filter_abi_by_type(
+    abi_type: Literal["constructor"],
+    contract_abi: ABI,
+) -> Sequence[ABIConstructor]:
+    pass
+
+
+@overload
+def filter_abi_by_type(
+    abi_type: Literal["fallback"],
+    contract_abi: ABI,
+) -> Sequence[ABIFallback]:
+    pass
+
+
+@overload
+def filter_abi_by_type(
+    abi_type: Literal["receive"],
+    contract_abi: ABI,
+) -> Sequence[ABIReceive]:
+    pass
+
+
+@overload
+def filter_abi_by_type(
+    abi_type: Literal["event"],
+    contract_abi: ABI,
+) -> Sequence[ABIEvent]:
+    pass
+
+
+@overload
+def filter_abi_by_type(
+    abi_type: Literal["error"],
+    contract_abi: ABI,
+) -> Sequence[ABIError]:
+    pass
+
+
+def filter_abi_by_type(
+    abi_type: Literal[
+        "function", "constructor", "fallback", "receive", "event", "error"
+    ],
+    contract_abi: ABI,
+) -> Sequence[
+    Union[ABIFunction, ABIConstructor, ABIFallback, ABIReceive, ABIEvent, ABIError]
+]:
     """
     Return a list of each ``ABIElement`` that is of type ``abi_type``.
+
+    For mypy, function overloads ensures the correct type is returned based on the
+    ``abi_type``. For example, if ``abi_type`` is "function", the return type will be
+    ``Sequence[ABIFunction]``.
 
     :param abi_type: Type of ABI element to filter by.
     :type abi_type: `str`
     :param contract_abi: Contract ABI.
     :type contract_abi: `ABI`
     :return: List of ABI elements of the specified type.
-    :rtype: `Sequence[ABIElement]`
+    :rtype: `Sequence[Union[ABIFunction, ABIConstructor, ABIFallback, ABIReceive, \
+ABIEvent, ABIError]]`
 
     .. doctest::
 
@@ -308,7 +374,20 @@ def filter_abi_by_type(abi_type: str, contract_abi: ABI) -> Sequence[ABIElement]
         [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
-    return [abi for abi in contract_abi if abi["type"] == abi_type]
+    if abi_type == Literal["function"] or abi_type == "function":
+        return [abi for abi in contract_abi if abi["type"] == "function"]
+    elif abi_type == Literal["constructor"] or abi_type == "constructor":
+        return [abi for abi in contract_abi if abi["type"] == "constructor"]
+    elif abi_type == Literal["fallback"] or abi_type == "fallback":
+        return [abi for abi in contract_abi if abi["type"] == "fallback"]
+    elif abi_type == Literal["receive"] or abi_type == "receive":
+        return [abi for abi in contract_abi if abi["type"] == "receive"]
+    elif abi_type == Literal["event"] or abi_type == "event":
+        return [abi for abi in contract_abi if abi["type"] == "event"]
+    elif abi_type == Literal["error"] or abi_type == "error":
+        return [abi for abi in contract_abi if abi["type"] == "error"]
+    else:
+        raise ValueError(f"Unsupported ABI type: {abi_type}")
 
 
 def get_all_function_abis(contract_abi: ABI) -> Sequence[ABIFunction]:
@@ -332,10 +411,7 @@ def get_all_function_abis(contract_abi: ABI) -> Sequence[ABIFunction]:
         [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
-    return [
-        cast(ABIFunction, function_abi)
-        for function_abi in filter_abi_by_type("function", contract_abi)
-    ]
+    return filter_abi_by_type("function", contract_abi)
 
 
 def get_all_event_abis(contract_abi: ABI) -> Sequence[ABIEvent]:
@@ -358,9 +434,7 @@ def get_all_event_abis(contract_abi: ABI) -> Sequence[ABIEvent]:
         >>> get_all_event_abis(contract_abi)
         [{'type': 'event', 'name': 'MyEvent', 'inputs': []}]
     """
-    return [
-        cast(ABIEvent, event) for event in filter_abi_by_type("event", contract_abi)
-    ]
+    return filter_abi_by_type("event", contract_abi)
 
 
 def get_normalized_abi_inputs(
@@ -494,7 +568,7 @@ def get_aligned_abi_inputs(
     :param normalized_args: Normalized arguments for the function.
     :type normalized_args: `Union[Tuple[Any, ...], Mapping[Any, Any]]`
     :return: Tuple of types and aligned arguments.
-    :rtype: `Tuple[Tuple[Any, ...], Tuple[Any, ...]]`
+    :rtype: `Tuple[Tuple[str, ...], Tuple[Any, ...]]`
 
     .. doctest::
 

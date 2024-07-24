@@ -3,6 +3,7 @@ import re
 from typing import (
     Any,
     Dict,
+    Literal,
     Mapping,
     NamedTuple,
     Sequence,
@@ -718,6 +719,11 @@ def test_filter_abi_by_name(
             [ABI_FUNCTION_TOKEN_LAUNCHED, ABI_FUNCTION_CEILING, ABI_FUNCTION_REGISTRAR],
         ),
         (
+            [],
+            "function",
+            [],
+        ),
+        (
             [
                 ABI_EVENT_LOG_TWO_EVENTS,
                 ABI_FUNCTION_TOKEN_LAUNCHED,
@@ -728,53 +734,54 @@ def test_filter_abi_by_name(
             [ABI_EVENT_LOG_TWO_EVENTS],
         ),
         (
-            [
-                ABI_FALLBACK,
-            ],
+            [ABI_FALLBACK],
             "fallback",
             [ABI_FALLBACK],
         ),
         (
-            [
-                ABI_FUNCTION_TOKEN_LAUNCHED,
-            ],
+            [ABI_FUNCTION_TOKEN_LAUNCHED],
             "fallback",
             [],
         ),
         (
-            [
-                ABI_RECEIVE,
-                ABI_FALLBACK,
-            ],
+            [ABI_RECEIVE, ABI_FALLBACK],
             "receive",
             [ABI_RECEIVE],
         ),
         (
-            [
-                ABI_CONSTRUCTOR_WITH_INPUT,
-            ],
+            [ABI_CONSTRUCTOR_WITH_INPUT],
             "constructor",
             [ABI_CONSTRUCTOR_WITH_INPUT],
         ),
         (
-            [
-                ABI_EVENT_LOG_TWO_EVENTS,
-                ABI_FUNCTION_TOKEN_LAUNCHED,
-                ABI_FUNCTION_CEILING,
-                ABI_FUNCTION_REGISTRAR,
-            ],
-            "notatype",
-            [],
+            [ABI_ERROR_INVALID],
+            "error",
+            [ABI_ERROR_INVALID],
         ),
     ),
 )
 def test_filter_abi_by_type(
     abi_elements: Sequence[ABIElement],
-    abi_type: str,
-    expected_element_abis: Sequence[ABIElement],
+    abi_type: Literal[
+        "function", "event", "fallback", "receive", "constructor", "error"
+    ],
+    expected_element_abis: Sequence[
+        Union[ABIFunction, ABIConstructor, ABIFallback, ABIReceive, ABIEvent, ABIError]
+    ],
 ) -> None:
     contract_abi = build_contract_abi(abi_elements)
-    assert filter_abi_by_type(abi_type, contract_abi) == expected_element_abis
+    actual_element_abis = filter_abi_by_type(abi_type, contract_abi)
+    assert actual_element_abis == expected_element_abis
+    assert all(abi["type"] == abi_type for abi in actual_element_abis)
+
+
+def test_filter_abi_by_type_raises_for_invalid_abi_type() -> None:
+    contract_abi = build_contract_abi([ABI_FUNCTION_TOKEN_LAUNCHED])
+    with pytest.raises(
+        ValueError,
+        match=re.escape("Unsupported ABI type: typing.Literal['notanabitype']"),
+    ):
+        filter_abi_by_type(Literal["notanabitype"], contract_abi)  # type: ignore
 
 
 @pytest.mark.parametrize(
