@@ -53,7 +53,8 @@ If you need to make a commit that skips the ``pre-commit`` checks, you can do so
 
 This library uses type hints, which are enforced by the ``mypy`` tool (part of the
 ``pre-commit`` checks). All new code is required to land with type hints, with the
-exception of code within the ``tests`` directory.
+exception of code within the ``tests/core`` directory. Note that the ``mypy`` checks
+are also run against files within the ``tests/mypy`` directory.
 
 Documentation
 ~~~~~~~~~~~~~

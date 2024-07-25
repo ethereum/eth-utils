@@ -47,7 +47,7 @@ repos:
     rev: v1.5.1
     hooks:
     -   id: mypy
-        exclude: tests/
+        exclude: tests/core
 -   repo: https://github.com/PrincetonUniversity/blocklint
     rev: v0.2.5
     hooks:
