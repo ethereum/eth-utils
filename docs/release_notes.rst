@@ -5,6 +5,27 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.0.0-beta.1 (2024-07-25)
+------------------------------------
+
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- Updates to the latest ``eth-typing`` to use new ``ABI`` types for improved type checking in existing ``ABI`` utility functions. (`#271 <https://github.com/ethereum/eth-utils/issues/271>`__)
+
+
+Features
+~~~~~~~~
+
+- Contract Application Binary Interface (ABI) utilities to obtain type and value information for `functions` and `events`. (`#271 <https://github.com/ethereum/eth-utils/issues/271>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Merge template to use `bump-my-version` and update release Make commands. (`#280 <https://github.com/ethereum/eth-utils/issues/280>`__)
+
+
 eth-utils v4.1.1 (2024-05-06)
 -----------------------------
 

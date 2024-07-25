@@ -1,1 +1,0 @@
-Merge template to use `bump-my-version` and update release Make commands.
