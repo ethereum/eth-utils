@@ -4,12 +4,15 @@ from setuptools import (
     setup,
 )
 
+MYPY_REQUIREMENT = "mypy==1.10.0"
+
 extras_require = {
     "dev": [
         "build>=0.9.0",
         "bump_my_version>=0.19.0",
         "eth-hash[pycryptodome]",
         "ipython",
+        MYPY_REQUIREMENT,
         "pre-commit>=3.4.0",
         "tox>=4.0.0",
         "twine",
@@ -23,7 +26,7 @@ extras_require = {
     ],
     "test": [
         "hypothesis>=4.43.0",
-        "mypy==1.5.1",
+        MYPY_REQUIREMENT,
         "pytest>=7.0.0",
         "pytest-xdist>=2.4.0",
     ],
