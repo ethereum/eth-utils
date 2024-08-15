@@ -5,6 +5,15 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.0.0 (2024-08-15)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Run ``mypy`` locally via ``pre-commit`` hook, bump to ``mypy==1.10.0`` (`#282 <https://github.com/ethereum/eth-utils/issues/282>`__)
+
+
 eth-utils v5.0.0-beta.1 (2024-07-25)
 ------------------------------------
 
