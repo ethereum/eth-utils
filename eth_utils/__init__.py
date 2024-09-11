@@ -93,7 +93,7 @@ from .hexadecimal import (
 from .humanize import (
     humanize_bytes,
     humanize_hash,
-    humanize_hex_str,
+    humanize_hexstr,
     humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,

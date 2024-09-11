@@ -86,18 +86,25 @@ DISPLAY_HASH_CHARS = 4
 def humanize_bytes(value: bytes) -> str:
     if len(value) <= DISPLAY_HASH_CHARS + 1:
         return value.hex()
-
     value_as_hex = value.hex()
-    return humanize_hex_str(value_as_hex)
-
-
-def humanize_hex_str(value: str) -> str:
-    if len(value) <= DISPLAY_HASH_CHARS * 2:
-        return value
-
-    head = value[:DISPLAY_HASH_CHARS]
-    tail = value[-1 * DISPLAY_HASH_CHARS :]
+    head = value_as_hex[:DISPLAY_HASH_CHARS]
+    tail = value_as_hex[-1 * DISPLAY_HASH_CHARS :]
     return f"{head}..{tail}"
+
+
+def humanize_hexstr(value: str) -> str:
+    tail = value[-1 * DISPLAY_HASH_CHARS :]
+
+    if value[:2] == "0x":
+        if len(value[2:]) <= DISPLAY_HASH_CHARS * 2:
+            return value
+        head = value[2 : DISPLAY_HASH_CHARS + 2]
+        return f"0x{head}..{tail}"
+    else:
+        if len(value) <= DISPLAY_HASH_CHARS * 2:
+            return value
+        head = value[:DISPLAY_HASH_CHARS]
+        return f"{head}..{tail}"
 
 
 def humanize_hash(value: Hash32) -> str:
