@@ -58,6 +58,7 @@ from eth_utils import (
     hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
     humanize_hash,
+    humanize_hexstr,
     humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,

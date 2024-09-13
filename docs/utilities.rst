@@ -1381,6 +1381,28 @@ ellipsis, only showing the first and last four hexadecimal nibbles.
      '0001..1e1f'
 
 
+``humanize_hexstr(str)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provided hex string in a human readable format.
+
+If the value is 4 bytes or less it is returned in full in its hexadecimal representation (with a ``0x`` prefix)
+
+If the value is longer than 4 bytes it is returned in its hexadecimal
+representation with the middle segment replaced by an
+ellipsis, only showing the first and last four hexadecimal nibbles.
+
+.. doctest::
+
+    >>> from eth_utils import humanize_hexstr
+    >>> humanize_hexstr('0x1234')
+     '0x1234'
+    >>> humanize_hexstr('0x12345678')
+     '0x12345678'
+    >>> humanize_hexstr('0x10203040506070')
+     '0x1020..6070'
+
+
 ``humanize_hash(bytes)`` -> string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
