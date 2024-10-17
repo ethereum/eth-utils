@@ -33,10 +33,12 @@ from .types import (
 
 T = TypeVar("T")
 
+BytesLike = Union[Primitives, bytearray, memoryview]
+
 
 @validate_conversion_arguments
 def to_hex(
-    primitive: Optional[Primitives] = None,
+    primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
     text: Optional[str] = None,
 ) -> HexStr:
@@ -56,6 +58,10 @@ def to_hex(
 
     if isinstance(primitive, (bytes, bytearray)):
         return encode_hex(primitive)
+
+    if isinstance(primitive, memoryview):
+        return encode_hex(bytes(primitive))
+
     elif is_string(primitive):
         raise TypeError(
             "Unsupported type: The primitive argument must be one of: bytes,"
@@ -73,7 +79,7 @@ def to_hex(
 
 @validate_conversion_arguments
 def to_int(
-    primitive: Optional[Primitives] = None,
+    primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
     text: Optional[str] = None,
 ) -> int:
@@ -83,8 +89,9 @@ def to_int(
 
      * primitive:
 
-       * bytes, bytearrays: big-endian integer
+       * bytes, bytearray, memoryview: big-endian integer
        * bool: True => 1, False => 0
+       * int: unchanged
      * hexstr: interpret hex as integer
      * text: interpret as string of digits, like '12' => 12
     """
@@ -94,6 +101,8 @@ def to_int(
         return int(text)
     elif isinstance(primitive, (bytes, bytearray)):
         return big_endian_to_int(primitive)
+    elif isinstance(primitive, memoryview):
+        return big_endian_to_int(bytes(primitive))
     elif isinstance(primitive, str):
         raise TypeError("Pass in strings with keyword hexstr or text")
     elif isinstance(primitive, (int, bool)):
@@ -107,13 +116,13 @@ def to_int(
 
 @validate_conversion_arguments
 def to_bytes(
-    primitive: Optional[Primitives] = None,
+    primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
     text: Optional[str] = None,
 ) -> bytes:
     if is_boolean(primitive):
         return b"\x01" if primitive else b"\x00"
-    elif isinstance(primitive, bytearray):
+    elif isinstance(primitive, (bytearray, memoryview)):
         return bytes(primitive)
     elif isinstance(primitive, bytes):
         return primitive
@@ -133,7 +142,7 @@ def to_bytes(
 
 @validate_conversion_arguments
 def to_text(
-    primitive: Optional[Primitives] = None,
+    primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
     text: Optional[str] = None,
 ) -> str:
@@ -145,6 +154,8 @@ def to_text(
         return to_text(hexstr=primitive)
     elif isinstance(primitive, (bytes, bytearray)):
         return primitive.decode("utf-8")
+    elif isinstance(primitive, memoryview):
+        return bytes(primitive).decode("utf-8")
     elif is_integer(primitive):
         byte_encoding = int_to_big_endian(cast(int, primitive))
         return to_text(byte_encoding)
