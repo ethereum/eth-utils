@@ -561,8 +561,8 @@ being supplied when passing in a ``str``.
 
 *Only supply one of the arguments:*
 
-``to_bytes(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_bytes(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> bytes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its bytes equivalent. Text gets
 encoded as UTF-8.
@@ -591,8 +591,8 @@ encoded as UTF-8.
     >>> to_bytes(text='cowmö')
     b'cowm\xc3\xb6'
 
-``to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> HexStr_
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_hex(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> HexStr_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns it in its hexadecimal
 representation. It follows the rules for converting to hex in the
@@ -627,8 +627,8 @@ leading zeros on int input.
     >>> to_hex(text='cowmö')
     '0x636f776dc3b6'
 
-``to_int(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> int
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_int(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its integer equivalent.
 
@@ -650,8 +650,8 @@ Takes a variety of inputs and returns its integer equivalent.
     >>> to_int(hexstr='000F')
     15
 
-``to_text(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> str
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_text(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> str
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its string equivalent. Text gets
 decoded as UTF-8.
