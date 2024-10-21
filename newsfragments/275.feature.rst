@@ -1,1 +1,0 @@
-Removed ``_BaseHasLogger`` and ``_BaseHasExtendedDebugLogger``, and the ``logger`` attribute in the ``HasLogger`` and ``HasExtendedDebugLogger`` is type hinted directly.

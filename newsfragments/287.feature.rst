@@ -1,1 +1,0 @@
-Add ``memoryview`` to accepted input type for ``to_hex`` , ``to_int`` , ``to_bytes`` , and ``to_text``

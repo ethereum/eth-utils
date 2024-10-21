@@ -5,6 +5,24 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.1.0 (2024-10-21)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Correct error message in ``from_wei`` and ``to_wei`` (`#247 <https://github.com/ethereum/eth-utils/issues/247>`__)
+- Remove unused hexbytes dependency that is causing a cyclic dependency issue (`#284 <https://github.com/ethereum/eth-utils/issues/284>`__)
+
+
+Features
+~~~~~~~~
+
+- Removed ``_BaseHasLogger`` and ``_BaseHasExtendedDebugLogger``, and the ``logger`` attribute in the ``HasLogger`` and ``HasExtendedDebugLogger`` is type hinted directly. (`#275 <https://github.com/ethereum/eth-utils/issues/275>`__)
+- Add new humanize_hexstr function (`#285 <https://github.com/ethereum/eth-utils/issues/285>`__)
+- Add ``memoryview`` to accepted input type for ``to_hex`` , ``to_int`` , ``to_bytes`` , and ``to_text`` (`#287 <https://github.com/ethereum/eth-utils/issues/287>`__)
+
+
 eth-utils v5.0.0 (2024-08-15)
 -----------------------------
 
