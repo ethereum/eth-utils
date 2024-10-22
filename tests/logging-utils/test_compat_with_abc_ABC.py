@@ -8,8 +8,7 @@ from eth_utils import HasLoggerMeta
 
 class HasLoggerCompatWithABC(metaclass=HasLoggerMeta.meta_compat(ABCMeta)):
     @abstractmethod
-    def something(self):
-        ...
+    def something(self): ...
 
 
 def test_has_logger_compat_with_abc_ABC():

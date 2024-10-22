@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import (
-    setup,
-    find_packages,
-)
+from setuptools import find_packages, setup
 
 extras_require = {
     "test": [
@@ -11,12 +8,12 @@ extras_require = {
         "pytest>=7.0.0",
         "pytest-xdist>=2.4.0",
         "types-setuptools",
-        "mypy==0.971",  # mypy does not follow semver, leave it pinned.
+        "mypy==0.991",  # mypy does not follow semver, leave it pinned.
     ],
     "lint": [
         "flake8==3.8.3",  # flake8 claims semver but adds new warnings at minor releases, leave it pinned.
         "isort>=5.11.0",
-        "mypy==0.971",  # mypy does not follow semver, leave it pinned.
+        "mypy==0.991",  # mypy does not follow semver, leave it pinned.
         "pydocstyle>=5.0.0",
         "black>=23",
         "types-setuptools",

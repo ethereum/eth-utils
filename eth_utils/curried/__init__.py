@@ -113,22 +113,19 @@ TValue = TypeVar("TValue")
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool]
-) -> Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]]:
-    ...
+) -> Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]]: ...
 
 
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool], formatter: Callable[..., TReturn]
-) -> Callable[[TValue], Union[TReturn, TValue]]:
-    ...
+) -> Callable[[TValue], Union[TReturn, TValue]]: ...
 
 
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool], formatter: Callable[..., TReturn], value: TValue
-) -> Union[TReturn, TValue]:
-    ...
+) -> Union[TReturn, TValue]: ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
@@ -141,8 +138,7 @@ def apply_formatter_if(
     Callable[[TValue], Union[TReturn, TValue]],
     TReturn,
     TValue,
-]:
-    ...
+]: ...
 
 
 @overload
@@ -150,8 +146,7 @@ def apply_one_of_formatters(
     formatter_condition_pairs: Sequence[
         Tuple[Callable[..., bool], Callable[..., TReturn]]
     ]
-) -> Callable[[TValue], TReturn]:
-    ...
+) -> Callable[[TValue], TReturn]: ...
 
 
 @overload
@@ -160,8 +155,7 @@ def apply_one_of_formatters(
         Tuple[Callable[..., bool], Callable[..., TReturn]]
     ],
     value: TValue,
-) -> TReturn:
-    ...
+) -> TReturn: ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
@@ -170,70 +164,62 @@ def apply_one_of_formatters(
         Tuple[Callable[..., bool], Callable[..., TReturn]]
     ],
     value: TValue = None,
-) -> TReturn:
-    ...
+) -> TReturn: ...
 
 
 @overload
 def hexstr_if_str(
     to_type: Callable[..., TReturn]
-) -> Callable[[Union[bytes, int, str]], TReturn]:
-    ...
+) -> Callable[[Union[bytes, int, str]], TReturn]: ...
 
 
 @overload
 def hexstr_if_str(
     to_type: Callable[..., TReturn], to_format: Union[bytes, int, str]
-) -> TReturn:
-    ...
+) -> TReturn: ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def hexstr_if_str(
     to_type: Callable[..., TReturn], to_format: Union[bytes, int, str] = None
-) -> TReturn:
-    ...
+) -> TReturn: ...
 
 
 @overload
 def text_if_str(
     to_type: Callable[..., TReturn]
-) -> Callable[[Union[bytes, int, str]], TReturn]:
-    ...
+) -> Callable[[Union[bytes, int, str]], TReturn]: ...
 
 
 @overload
 def text_if_str(
     to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str]
-) -> TReturn:
-    ...
+) -> TReturn: ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def text_if_str(
     to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str] = None
-) -> TReturn:
-    ...
+) -> TReturn: ...
 
 
 @overload
 def apply_formatters_to_dict(
     formatters: Dict[Any, Any]
-) -> Callable[[Dict[Any, Any]], TReturn]:
-    ...
+) -> Callable[[Dict[Any, Any]], TReturn]: ...
 
 
 @overload
 def apply_formatters_to_dict(
     formatters: Dict[Any, Any], value: Dict[Any, Any]
-) -> TReturn:
+) -> TReturn:  # type: ignore
     ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def apply_formatters_to_dict(
     formatters: Dict[Any, Any], value: Optional[Dict[Any, Any]] = None
-) -> TReturn:
+) -> TReturn:  # type: ignore
     ...
 
 
