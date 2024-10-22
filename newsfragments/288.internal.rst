@@ -1,0 +1,1 @@
+Bump ``mypy`` to ``v0.991`` and fix lint errors
