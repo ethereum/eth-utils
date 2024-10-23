@@ -5,6 +5,21 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v2.3.2 (2024-10-23)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Bump ``mypy`` to ``v0.991`` and fix lint errors (`#288 <https://github.com/ethereum/eth-utils/issues/288>`__)
+
+
+Miscellaneous Changes
+~~~~~~~~~~~~~~~~~~~~~
+
+- `#288 <https://github.com/ethereum/eth-utils/issues/288>`__
+
+
 eth-utils v2.3.1 (2023-11-07)
 -----------------------------
 
