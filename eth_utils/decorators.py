@@ -85,7 +85,7 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
     def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
-        def wrapper(*args: Any, **kwargs: Any) -> T:
+        def wrapper(*args: Any, **kwargs: Any) -> T:  # type: ignore
             result = to_wrap(*args, **kwargs)
             ReturnType = type(args[at_position])
             return ReturnType(result)  # type: ignore
