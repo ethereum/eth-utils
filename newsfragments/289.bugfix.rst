@@ -1,0 +1,1 @@
+Update types in `is_same_address` to accept `AnyAddress`, `str`, or `bytes`.
