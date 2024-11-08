@@ -110,7 +110,9 @@ def is_canonical_address(address: Any) -> bool:
     return cast(bool, is_equal)
 
 
-def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
+def is_same_address(
+    left: Union[AnyAddress, str, bytes], right: Union[AnyAddress, str, bytes]
+) -> bool:
     """
     Checks if both addresses are same or not.
     """
