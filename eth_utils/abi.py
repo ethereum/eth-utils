@@ -817,6 +817,46 @@ def function_abi_to_4byte_selector(abi_element: ABIElement) -> bytes:
     function_signature = abi_to_signature(abi_element)
     return function_signature_to_4byte_selector(function_signature)
 
+def error_signature_to_4byte_selector(error_signature: str) -> bytes:
+    r"""
+    Return the 4-byte function selector from a error signature string.
+
+    :param error_signature: String representation of the error name and arguments.
+    :type error_signature: `str`
+    :return: 4-byte error selector.
+    :rtype: `bytes`
+
+    .. doctest::
+
+        >>> from eth_utils import error_signature_to_4byte_selector
+        >>> error_signature_to_4byte_selector('myError()')
+        b'\xc3x\n:'
+    """
+    return keccak(text=error_signature.replace(" ", ""))[:4]
+
+
+def error_abi_to_4byte_selector(abi_element: ABIElement) -> bytes:
+    r"""
+    Return the 4-byte error signature of the provided error ABI.
+
+    :param abi_element: ABI element.
+    :type abi_element: `ABIElement`
+    :return: 4-byte error signature.
+    :rtype: `bytes`
+
+    .. doctest::
+
+        >>> from eth_utils import error_signature_to_4byte_selector
+        >>> abi_element = {
+        ...   'type': 'error',
+        ...   'name': 'myError',
+        ...   'inputs': [],
+        ... }
+        >>> error_signature_to_4byte_selector(abi_element)
+        b'\xc3x\n:'
+    """
+    error_signature = abi_to_signature(abi_element)
+    return error_signature_to_4byte_selector(error_signature)
 
 def event_signature_to_log_topic(event_signature: str) -> bytes:
     r"""
