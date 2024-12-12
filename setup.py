@@ -22,7 +22,7 @@ extras_require = {
         "sphinx>=6.0.0",
         "sphinx-autobuild>=2021.3.14",
         "sphinx_rtd_theme>=1.0.0",
-        "towncrier>=21,<22",
+        "towncrier>=24,<25",
     ],
     "test": [
         "hypothesis>=4.43.0",
@@ -78,5 +78,6 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
     ],
 )
