@@ -57,8 +57,10 @@ setup(
     install_requires=[
         "eth-hash>=0.3.1",
         "eth-typing>=5.0.0",
-        "toolz>0.8.2;implementation_name=='pypy'",
-        "cytoolz>=0.10.1;implementation_name=='cpython'",
+        # cytoolz doesn't have wheels for Python 3.13 yet. See:
+        # https://github.com/pytoolz/cytoolz/issues/209
+        "toolz>0.8.2;implementation_name=='pypy' or python_version>='3.13'",
+        "cytoolz>=0.10.1;implementation_name=='cpython' and python_version<'3.13'",
     ],
     python_requires=">=3.8, <4",
     extras_require=extras_require,
