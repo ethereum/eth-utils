@@ -25,9 +25,3 @@ Installation
 
     contributing
     code_of_conduct
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
