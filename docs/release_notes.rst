@@ -5,6 +5,21 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.2.0 (2025-01-21)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Update types in `is_same_address` to accept `AnyAddress`, `str`, or `bytes`. (`#289 <https://github.com/ethereum/eth-utils/issues/289>`__)
+
+
+Features
+~~~~~~~~
+
+- Add Python 3.13 support and other misc. template updates (`#296 <https://github.com/ethereum/eth-utils/issues/296>`__)
+
+
 eth-utils v5.1.0 (2024-10-21)
 -----------------------------
 
