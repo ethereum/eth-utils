@@ -1,0 +1,1 @@
+Replace ``arg["name"]`` with ``arg.get("name")`` to correctly handle optional names.

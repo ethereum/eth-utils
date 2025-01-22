@@ -612,7 +612,7 @@ def get_aligned_abi_inputs(
     )
 
 
-def get_abi_input_names(abi_element: ABIElement) -> List[str]:
+def get_abi_input_names(abi_element: ABIElement) -> List[str | None]:
     """
     Return names for each input from the function or event ABI.
 
@@ -643,7 +643,7 @@ def get_abi_input_names(abi_element: ABIElement) -> List[str]:
     """
     _raise_if_fallback_or_receive_abi(abi_element)
     return [
-        arg["name"]
+        arg.get("name", None)
         for arg in cast(Sequence[ABIComponent], abi_element.get("inputs", []))
     ]
 
@@ -684,7 +684,7 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     ]
 
 
-def get_abi_output_names(abi_element: ABIElement) -> List[str]:
+def get_abi_output_names(abi_element: ABIElement) -> List[str | None]:
     """
     Return names for each output from the ABI element.
 
@@ -724,7 +724,7 @@ def get_abi_output_names(abi_element: ABIElement) -> List[str]:
     """
     _raise_if_not_function_abi(abi_element)
     return [
-        arg["name"]
+        arg.get("name", None)
         for arg in cast(Sequence[ABIComponent], abi_element.get("outputs", []))
     ]
 
