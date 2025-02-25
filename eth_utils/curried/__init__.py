@@ -19,6 +19,7 @@ from eth_utils import (
     HasLoggerMeta,
     Network,
     ValidationError,
+    abi_to_signature,
     add_0x_prefix,
     apply_formatter_at_index,
     apply_formatter_if as non_curried_apply_formatter_if,
@@ -30,6 +31,7 @@ from eth_utils import (
     apply_to_return_value,
     big_endian_to_int,
     clamp,
+    collapse_if_tuple,
     combine_argument_formatters,
     combomethod,
     decode_hex,
@@ -37,15 +39,26 @@ from eth_utils import (
     encode_hex,
     event_abi_to_log_topic,
     event_signature_to_log_topic,
+    filter_abi_by_name,
+    filter_abi_by_type,
     flatten_return,
     from_wei,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
+    get_abi_input_names,
+    get_abi_input_types,
+    get_abi_output_names,
+    get_abi_output_types,
+    get_aligned_abi_inputs,
+    get_all_event_abis,
+    get_all_function_abis,
     get_extended_debug_logger,
     get_logger,
+    get_normalized_abi_inputs,
     hexstr_if_str as non_curried_hexstr_if_str,
     humanize_bytes,
     humanize_hash,
+    humanize_hexstr,
     humanize_integer_sequence,
     humanize_ipfs_uri,
     humanize_seconds,
@@ -241,8 +254,12 @@ apply_formatters_to_dict = curry(non_curried_apply_formatters_to_dict)  # noqa: 
 apply_formatters_to_sequence = curry(apply_formatters_to_sequence)
 apply_key_map = curry(apply_key_map)
 apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F811
+filter_abi_by_name = curry(filter_abi_by_name)
+filter_abi_by_type = curry(filter_abi_by_type)
 from_wei = curry(from_wei)
+get_aligned_abi_inputs = curry(get_aligned_abi_inputs)
 get_logger = curry(get_logger)
+get_normalized_abi_inputs = curry(get_normalized_abi_inputs)
 hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)
 text_if_str = curry(non_curried_text_if_str)  # noqa: F811

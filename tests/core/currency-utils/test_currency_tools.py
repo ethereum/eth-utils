@@ -1,10 +1,10 @@
+import pytest
 import decimal
 
 from hypothesis import (
     given,
     strategies as st,
 )
-import pytest
 
 from eth_utils.currency import (
     MAX_WEI,

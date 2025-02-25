@@ -15,52 +15,21 @@ importing them through the ``curried`` module like so:
 
     >>> from eth_utils.curried import hexstr_if_str
 
-ABI Utils
-~~~~~~~~~
+ABI Utilities
+~~~~~~~~~~~~~
 
-``event_abi_to_log_topic(event_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The Application Binary Interface (ABI) may be used for encoding or decoding
+transactional data. Components of an ABI may include a descriptor of each Function or
+Event in the contract. The following utilities provide convenient methods for parsing
+components of an ABI and encoding function parameters for use in transactions.
 
-Returns the 32 byte log topic for the given event abi.
+For more information about the ABI spec, see the Solidity
+`Contract ABI specification <https://docs.soliditylang.org/en/v0.8.25/abi-spec.html>`_.
 
-.. doctest::
-
-    >>> from eth_utils import event_abi_to_log_topic
-    >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``event_signature_to_log_topic(event_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 32 byte log topic for the given event signature.
-
-.. doctest::
-
-    >>> from eth_utils import event_signature_to_log_topic
-    >>> event_signature_to_log_topic('MyEvent()')
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``function_abi_to_4byte_selector(function_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function abi.
-
-.. doctest::
-
-    >>> from eth_utils import function_abi_to_4byte_selector
-    >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})
-    b'\xc3x\n:'
-
-``function_signature_to_4byte_selector(function_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function signature.
-
-.. doctest::
-
-    >>> from eth_utils import function_signature_to_4byte_selector
-    >>> function_signature_to_4byte_selector('myFunction()')
-    b'\xc3x\n:'
+.. automodule:: eth_utils.abi
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Applicators
 ~~~~~~~~~~~
@@ -592,8 +561,8 @@ being supplied when passing in a ``str``.
 
 *Only supply one of the arguments:*
 
-``to_bytes(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_bytes(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> bytes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its bytes equivalent. Text gets
 encoded as UTF-8.
@@ -622,8 +591,8 @@ encoded as UTF-8.
     >>> to_bytes(text='cowmö')
     b'cowm\xc3\xb6'
 
-``to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> HexStr_
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_hex(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> HexStr_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns it in its hexadecimal
 representation. It follows the rules for converting to hex in the
@@ -658,8 +627,8 @@ leading zeros on int input.
     >>> to_hex(text='cowmö')
     '0x636f776dc3b6'
 
-``to_int(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> int
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_int(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its integer equivalent.
 
@@ -681,8 +650,8 @@ Takes a variety of inputs and returns its integer equivalent.
     >>> to_int(hexstr='000F')
     15
 
-``to_text(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> str
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_text(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> str
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its string equivalent. Text gets
 decoded as UTF-8.
@@ -1410,6 +1379,28 @@ ellipsis, only showing the first and last four hexadecimal nibbles.
      '0001020304'
     >>> humanize_bytes(bytes(range(32)))
      '0001..1e1f'
+
+
+``humanize_hexstr(str)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provided hex string in a human readable format.
+
+If the value is 4 bytes or less it is returned in full in its hexadecimal representation (with a ``0x`` prefix)
+
+If the value is longer than 4 bytes it is returned in its hexadecimal
+representation with the middle segment replaced by an
+ellipsis, only showing the first and last four hexadecimal nibbles.
+
+.. doctest::
+
+    >>> from eth_utils import humanize_hexstr
+    >>> humanize_hexstr('0x1234')
+     '0x1234'
+    >>> humanize_hexstr('0x12345678')
+     '0x12345678'
+    >>> humanize_hexstr('0x10203040506070')
+     '0x1020..6070'
 
 
 ``humanize_hash(bytes)`` -> string

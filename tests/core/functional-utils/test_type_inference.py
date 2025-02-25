@@ -1,3 +1,4 @@
+import pytest
 from typing import (
     List,
 )
@@ -5,7 +6,6 @@ from typing import (
 from mypy import (
     api,
 )
-import pytest
 
 MYPY_ARGS = ["--ignore-missing-imports"]
 FIXTURE_DIR = "fixtures/mypy/"

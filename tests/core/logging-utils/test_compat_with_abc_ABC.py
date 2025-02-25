@@ -1,10 +1,9 @@
+import pytest
 from abc import (
     ABCMeta,
     abstractmethod,
 )
 import logging
-
-import pytest
 
 from eth_utils import (
     HasLoggerMeta,

@@ -35,8 +35,8 @@ from eth_utils.address import (
         # checksummed - valid
         ("0x5B2063246F2191f18F2675ceDB8b28102e957458", True, True, False),
         (b"0x5B2063246F2191f18F2675ceDB8b28102e957458", False, False, False),
+        ("0x5b2063246F2191f18F2675ceDB8b28102e957458", True, True, False),
         # checksummed - invalid
-        ("0x5b2063246F2191f18F2675ceDB8b28102e957458", False, True, False),
         (b"0x5b2063246F2191f18F2675ceDB8b28102e957458", False, False, False),
         # too short - unprefixed
         ("c6d9d2cd449a754c494264e1809c50e34d64562", False, False, False),

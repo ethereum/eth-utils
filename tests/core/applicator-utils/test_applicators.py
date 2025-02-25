@@ -1,6 +1,5 @@
-import collections
-
 import pytest
+import collections
 
 import eth_utils
 from eth_utils.curried import (

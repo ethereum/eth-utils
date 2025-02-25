@@ -5,6 +5,105 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.2.0 (2025-01-21)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Update types in `is_same_address` to accept `AnyAddress`, `str`, or `bytes`. (`#289 <https://github.com/ethereum/eth-utils/issues/289>`__)
+
+
+Features
+~~~~~~~~
+
+- Add Python 3.13 support and other misc. template updates (`#296 <https://github.com/ethereum/eth-utils/issues/296>`__)
+
+
+eth-utils v5.1.0 (2024-10-21)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Correct error message in ``from_wei`` and ``to_wei`` (`#247 <https://github.com/ethereum/eth-utils/issues/247>`__)
+- Remove unused hexbytes dependency that is causing a cyclic dependency issue (`#284 <https://github.com/ethereum/eth-utils/issues/284>`__)
+
+
+Features
+~~~~~~~~
+
+- Removed ``_BaseHasLogger`` and ``_BaseHasExtendedDebugLogger``, and the ``logger`` attribute in the ``HasLogger`` and ``HasExtendedDebugLogger`` is type hinted directly. (`#275 <https://github.com/ethereum/eth-utils/issues/275>`__)
+- Add new humanize_hexstr function (`#285 <https://github.com/ethereum/eth-utils/issues/285>`__)
+- Add ``memoryview`` to accepted input type for ``to_hex`` , ``to_int`` , ``to_bytes`` , and ``to_text`` (`#287 <https://github.com/ethereum/eth-utils/issues/287>`__)
+
+
+eth-utils v5.0.0 (2024-08-15)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Run ``mypy`` locally via ``pre-commit`` hook, bump to ``mypy==1.10.0`` (`#282 <https://github.com/ethereum/eth-utils/issues/282>`__)
+
+
+eth-utils v5.0.0-beta.1 (2024-07-25)
+------------------------------------
+
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- Updates to the latest ``eth-typing`` to use new ``ABI`` types for improved type checking in existing ``ABI`` utility functions. (`#271 <https://github.com/ethereum/eth-utils/issues/271>`__)
+
+
+Features
+~~~~~~~~
+
+- Contract Application Binary Interface (ABI) utilities to obtain type and value information for `functions` and `events`. (`#271 <https://github.com/ethereum/eth-utils/issues/271>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Merge template to use `bump-my-version` and update release Make commands. (`#280 <https://github.com/ethereum/eth-utils/issues/280>`__)
+
+
+eth-utils v4.1.1 (2024-05-06)
+-----------------------------
+
+Features
+~~~~~~~~
+
+- Update networks for latest changes and testnets. (`#276 <https://github.com/ethereum/eth-utils/issues/276>`__)
+
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Merge template updates, fixing docs CI and setting nightly CI runs for all testing (`#272 <https://github.com/ethereum/eth-utils/issues/272>`__)
+- Updated ``eth_networks.json`` with latest networks. (`#273 <https://github.com/ethereum/eth-utils/issues/273>`__)
+- No warning for outdated networks. (`#278 <https://github.com/ethereum/eth-utils/issues/278>`__)
+
+
+eth-utils v4.1.0 (2024-04-01)
+-----------------------------
+
+Internal Changes - for eth-utils Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Upgrades from the template with support for Python 3.12 and linting with ``blocklint``. (`#268 <https://github.com/ethereum/eth-utils/issues/268>`__)
+- Remove ``cached_property`` dependency, as it was only for ``<=py37`` (`#269 <https://github.com/ethereum/eth-utils/issues/269>`__)
+
+
+eth-utils v4.0.0 (2024-02-22)
+-----------------------------
+
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- `Web3.is_address` now returns True for non-checksummed addresses. (`#265 <https://github.com/ethereum/eth-utils/issues/265>`__)
+
+
 eth-utils v3.0.0 (2024-01-10)
 -----------------------------
 

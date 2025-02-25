@@ -92,6 +92,21 @@ def humanize_bytes(value: bytes) -> str:
     return f"{head}..{tail}"
 
 
+def humanize_hexstr(value: str) -> str:
+    tail = value[-1 * DISPLAY_HASH_CHARS :]
+
+    if value[:2] == "0x":
+        if len(value[2:]) <= DISPLAY_HASH_CHARS * 2:
+            return value
+        head = value[2 : DISPLAY_HASH_CHARS + 2]
+        return f"0x{head}..{tail}"
+    else:
+        if len(value) <= DISPLAY_HASH_CHARS * 2:
+            return value
+        head = value[:DISPLAY_HASH_CHARS]
+        return f"{head}..{tail}"
+
+
 def humanize_hash(value: Hash32) -> str:
     return humanize_bytes(value)
 

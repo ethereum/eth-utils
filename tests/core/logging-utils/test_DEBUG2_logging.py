@@ -1,7 +1,6 @@
+import pytest
 import logging
 import uuid
-
-import pytest
 
 from eth_utils import (
     ExtendedDebugLogger,

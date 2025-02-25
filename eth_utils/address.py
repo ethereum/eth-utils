@@ -59,12 +59,7 @@ def is_address(value: Any) -> bool:
     """
     Is the given string an address in any of the known formats?
     """
-    if is_hex_address(value):
-        if _is_checksum_formatted(value):
-            return is_checksum_address(value)
-        return True
-
-    if is_binary_address(value):
+    if is_hex_address(value) or is_binary_address(value):
         return True
 
     return False
@@ -115,7 +110,9 @@ def is_canonical_address(address: Any) -> bool:
     return cast(bool, is_equal)
 
 
-def is_same_address(left: AnyAddress, right: AnyAddress) -> bool:
+def is_same_address(
+    left: Union[AnyAddress, str, bytes], right: Union[AnyAddress, str, bytes]
+) -> bool:
     """
     Checks if both addresses are same or not.
     """
