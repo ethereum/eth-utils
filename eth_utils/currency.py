@@ -45,7 +45,7 @@ MIN_WEI = 0
 MAX_WEI = 2**256 - 1
 
 
-def from_wei(number: int, unit: Union[str | int]) -> Union[int, decimal.Decimal]:
+def from_wei(number: int, unit: Union[str, int]) -> Union[int, decimal.Decimal]:
     """
     Takes a number of wei and converts it to any other ether unit.
     """
@@ -72,7 +72,7 @@ def from_wei(number: int, unit: Union[str | int]) -> Union[int, decimal.Decimal]
 
 
 def to_wei(
-    number: Union[int, float, str, decimal.Decimal], unit: Union[str | int]
+    number: Union[int, float, str, decimal.Decimal], unit: Union[str, int]
 ) -> int:
     """
     Takes a number of a unit and converts it to wei.
