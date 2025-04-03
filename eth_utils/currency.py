@@ -44,21 +44,15 @@ class denoms:
 MIN_WEI = 0
 MAX_WEI = 2**256 - 1
 
+_NumberType = Union[int, float, str, decimal.Decimal]
 
-def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
-    """
-    Takes a number of wei and converts it to any other ether unit.
-    """
-    if unit.lower() not in units:
-        raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
 
+def _from_wei(number: int, unit_value: decimal.Decimal) -> Union[int, decimal.Decimal]:
     if number == 0:
         return 0
 
     if number < MIN_WEI or number > MAX_WEI:
         raise ValueError("value must be between 0 and 2**256 - 1")
-
-    unit_value = units[unit.lower()]
 
     with localcontext() as ctx:
         ctx.prec = 999
@@ -68,13 +62,7 @@ def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
     return result_value
 
 
-def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
-    """
-    Takes a number of a unit and converts it to wei.
-    """
-    if unit.lower() not in units:
-        raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
-
+def _to_wei(number: _NumberType, unit_value: decimal.Decimal) -> int:
     if is_integer(number) or is_string(number):
         d_number = decimal.Decimal(value=number)
     elif isinstance(number, float):
@@ -84,11 +72,10 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
     else:
         raise TypeError("Unsupported type. Must be one of integer, float, or string")
 
-    s_number = str(number)
-    unit_value = units[unit.lower()]
-
     if d_number == decimal.Decimal(0):
         return 0
+
+    s_number = str(number)
 
     if d_number < 1 and "." in s_number:
         with localcontext() as ctx:
@@ -105,3 +92,47 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
         raise ValueError("Resulting wei value must be between 0 and 2**256 - 1")
 
     return int(result_value)
+
+
+def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
+    """
+    Takes a number of wei and converts it to any other ether unit.
+    """
+    if unit.lower() not in units:
+        raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
+
+    unit_value = units[unit.lower()]
+
+    return _from_wei(number, unit_value)
+
+
+def to_wei(number: _NumberType, unit: str) -> int:
+    """
+    Takes a number of a unit and converts it to wei.
+    """
+    if unit.lower() not in units:
+        raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
+
+    unit_value = units[unit.lower()]
+
+    return _to_wei(number, unit_value)
+
+
+def from_wei_decimals(number: int, decimals: int) -> Union[int, decimal.Decimal]:
+    """
+    Takes a number of wei and converts it to a decimal with the specified
+    number of decimals.
+    """
+    unit_value = decimal.Decimal(10) ** decimal.Decimal(value=decimals)
+
+    return _from_wei(number, unit_value)
+
+
+def to_wei_decimals(number: _NumberType, decimals: int) -> int:
+    """
+    Takes a number of a unit and converts it to wei with the specified
+    number of decimals.
+    """
+    unit_value = decimal.Decimal(10) ** decimal.Decimal(value=decimals)
+
+    return _to_wei(number, unit_value)
