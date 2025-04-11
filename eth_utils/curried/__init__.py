@@ -12,6 +12,7 @@ from typing import (
 )
 
 from eth_utils import (
+    CamelModel,
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
     HasExtendedDebugLoggerMeta,
@@ -121,7 +122,7 @@ TValue = TypeVar("TValue")
 
 @overload
 def apply_formatter_if(
-    condition: Callable[..., bool]
+    condition: Callable[..., bool],
 ) -> Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]]:
     pass
 
@@ -158,7 +159,7 @@ def apply_formatter_if(  # type: ignore
 def apply_one_of_formatters(
     formatter_condition_pairs: Sequence[
         Tuple[Callable[..., bool], Callable[..., TReturn]]
-    ]
+    ],
 ) -> Callable[[TValue], TReturn]:
     ...
 
@@ -185,7 +186,7 @@ def apply_one_of_formatters(  # type: ignore
 
 @overload
 def hexstr_if_str(
-    to_type: Callable[..., TReturn]
+    to_type: Callable[..., TReturn],
 ) -> Callable[[Union[bytes, int, str]], TReturn]:
     ...
 
@@ -206,7 +207,7 @@ def hexstr_if_str(  # type: ignore
 
 @overload
 def text_if_str(
-    to_type: Callable[..., TReturn]
+    to_type: Callable[..., TReturn],
 ) -> Callable[[Union[bytes, int, str]], TReturn]:
     ...
 
@@ -228,21 +229,23 @@ def text_if_str(  # type: ignore
 
 @overload
 def apply_formatters_to_dict(
-    formatters: Dict[Any, Any]
+    formatters: Dict[Any, Any], unaliased: bool = False
 ) -> Callable[[Dict[Any, Any]], TReturn]:
     ...
 
 
 @overload
 def apply_formatters_to_dict(
-    formatters: Dict[Any, Any], value: Dict[Any, Any]
+    formatters: Dict[Any, Any], value: Union[Dict[Any, Any], CamelModel]
 ) -> Dict[Any, Any]:
     ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def apply_formatters_to_dict(  # type: ignore
-    formatters: Dict[Any, Any], value: Optional[Dict[Any, Any]] = None
+    formatters: Dict[Any, Any],
+    value: Optional[Union[Dict[Any, Any], CamelModel]] = None,
+    unaliased: bool = False,
 ) -> Dict[Any, Any]:
     ...
 

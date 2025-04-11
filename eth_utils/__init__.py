@@ -122,6 +122,9 @@ from .network import (
 from .numeric import (
     clamp,
 )
+from .pydantic import (
+    CamelModel,
+)
 from .types import (
     is_boolean,
     is_bytes,

@@ -5,6 +5,7 @@ from typing import (
     Generator,
     List,
     Tuple,
+    Union,
 )
 import warnings
 
@@ -13,6 +14,9 @@ from .decorators import (
 )
 from .functional import (
     to_dict,
+)
+from .pydantic import (
+    CamelModel,
 )
 from .toolz import (
     compose,
@@ -89,8 +93,24 @@ def apply_formatter_if(
 
 @to_dict
 def apply_formatters_to_dict(
-    formatters: Dict[Any, Any], value: Dict[Any, Any]
+    formatters: Dict[Any, Any],
+    value: Union[Dict[Any, Any], CamelModel],
+    unaliased: bool = False,
 ) -> Generator[Tuple[Any, Any], None, None]:
+    """
+    Apply formatters to a dictionary of values. If the value is a pydantic model,
+    it will be serialized to a dictionary first, taking into account the
+    ``unaliased`` parameter.
+
+    :param formatters: The formatters to apply to the dictionary.
+    :param value: The dictionary-like object to apply the formatters to.
+    :param unaliased: If the model is a ``CamelModel``, whether to turn off
+        serialization by alias (camelCase).
+    :return: A generator that yields the formatted key-value pairs.
+    """
+    if isinstance(value, CamelModel):
+        value = value.model_dump(by_alias=not unaliased)
+
     for key, item in value.items():
         if key in formatters:
             try:
