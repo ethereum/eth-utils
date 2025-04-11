@@ -207,8 +207,8 @@ the same type as it was supplied. For example:
     >>> list_formatter((1.2, 3.4, 5.6, 7.8))
     (True, 3, '5.6', 7.8)
 
-``apply_formatters_to_dict(formatter_dict, <dict_like>)`` -> dict
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``apply_formatters_to_dict(formatter_dict, <dict_like>, unaliased=False)`` -> dict
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This function will apply the formatter to the element with the matching
 key in ``dict_like``, passing through values with keys that have no
@@ -230,6 +230,34 @@ matching formatter.
     ... })
     >>> result == {'should_be_int': 1, 'should_be_bool': True, 'pass_through': 5.6}
     True
+
+The ``CamelModel`` pydantic model is included in expected dict-like types. If the
+dict-like object is an instance of a ``CamelModel``, the ``unaliased`` argument
+can be set to ``True`` to pre-serialize the object as "non-aliased", according to
+pydantic. By default, it will be pre-serialized as "aliased", which ``CamelModel``
+interprets as camelCase keys.
+
+.. doctest::
+
+    >>> from eth_utils.curried import apply_formatters_to_dict
+    >>> from eth_utils import CamelModel, to_bytes, to_int
+    >>> from pydantic import Field
+
+    >>> class PydanticModel(CamelModel):
+    ...     to_bytes_from_int: int = 1
+    ...     to_int_from_bytes: bytes = b"\x02"
+    ...     # class fields excluded from serialization
+    ...     excluded_field: int = Field(default=3, exclude=True)
+    ...     excluded_field_two: str = Field(default="4", exclude=True)
+
+    >>> dict_formatter = apply_formatters_to_dict({
+    ...     "toBytesFromInt": to_bytes,
+    ...     "toIntFromBytes": to_int
+    ... })
+
+    >>> dict_formatter(PydanticModel())
+    {'toBytesFromInt': b'\x01', 'toIntFromBytes': 2}
+
 
 ``apply_key_map(formatter_dict, <dict_like>)`` -> dict
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

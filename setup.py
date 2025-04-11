@@ -59,6 +59,7 @@ setup(
         "eth-typing>=5.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",
         "cytoolz>=0.10.1;implementation_name=='cpython'",
+        "pydantic>=2.0.0,<3",
     ],
     python_requires=">=3.8, <4",
     extras_require=extras_require,

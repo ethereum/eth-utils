@@ -1,6 +1,10 @@
 import pytest
 import collections
 
+from pydantic import (
+    Field,
+)
+
 import eth_utils
 from eth_utils.curried import (
     apply_formatter_at_index,
@@ -12,6 +16,9 @@ from eth_utils.curried import (
     apply_one_of_formatters,
     is_list_like,
     is_string,
+)
+from eth_utils.pydantic import (
+    CamelModel,
 )
 
 
@@ -33,20 +40,46 @@ def test_format_dict_error():
     assert "myfield" in str(exc_info.value)
 
 
+class PydanticModel(CamelModel):
+    to_bytes_from_int: int = 1
+    to_int_from_bytes: bytes = b"\x02"
+    excluded_field: int = Field(default=3, exclude=True)
+    excluded_field_two: str = Field(default="4", exclude=True)
+
+
 @pytest.mark.parametrize(
-    "formatter, value, expected",
+    "formatter,value,expected,unaliased",
     (
         (
             {"should_be_int": int, "should_be_bool": bool},
             {"should_be_int": 1.2, "should_be_bool": 3.4, "pass_through": 5.6},
             {"should_be_int": 1, "should_be_bool": True, "pass_through": 5.6},
+            False,  # does not apply
+        ),
+        (
+            {"toBytesFromInt": eth_utils.to_bytes, "toIntFromBytes": eth_utils.to_int},
+            PydanticModel(),
+            {"toBytesFromInt": b"\x01", "toIntFromBytes": 2},
+            False,
+        ),
+        (
+            {
+                "to_bytes_from_int": eth_utils.to_bytes,
+                "to_int_from_bytes": eth_utils.to_int,
+            },
+            PydanticModel(),
+            {"to_bytes_from_int": b"\x01", "to_int_from_bytes": 2},
+            True,
         ),
     ),
 )
-def test_apply_formatters_to_dict(formatter, value, expected):
-    assert eth_utils.apply_formatters_to_dict(formatter, value) == expected
+def test_apply_formatters_to_dict(formatter, value, expected, unaliased):
+    assert (
+        eth_utils.apply_formatters_to_dict(formatter, value, unaliased=unaliased)
+        == expected
+    )
 
-    mapper = apply_formatters_to_dict(formatter)
+    mapper = apply_formatters_to_dict(formatter, unaliased=unaliased)
     assert mapper(value) == expected
 
 
