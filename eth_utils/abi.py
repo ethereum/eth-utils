@@ -612,14 +612,14 @@ def get_aligned_abi_inputs(
     )
 
 
-def get_abi_input_names(abi_element: ABIElement) -> List[str | None]:
+def get_abi_input_names(abi_element: ABIElement) -> List[Optional[str]]:
     """
     Return names for each input from the function or event ABI.
 
     :param abi_element: ABI element.
     :type abi_element: `ABIElement`
     :return: Names for each input in the function or event ABI.
-    :rtype: `List[str]`
+    :rtype: `List[Optional[str]]`
 
     .. doctest::
 
@@ -684,14 +684,14 @@ def get_abi_input_types(abi_element: ABIElement) -> List[str]:
     ]
 
 
-def get_abi_output_names(abi_element: ABIElement) -> List[str | None]:
+def get_abi_output_names(abi_element: ABIElement) -> List[Optional[str]]:
     """
     Return names for each output from the ABI element.
 
     :param abi_element: ABI element.
     :type abi_element: `ABIElement`
     :return: Names for each function output in the function ABI.
-    :rtype: `List[str]`
+    :rtype: `List[Optional[str]]`
 
     .. doctest::
 
