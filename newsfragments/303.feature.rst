@@ -1,1 +1,0 @@
-Add ``CamelModel`` pydantic model for validating objects and serializing to camelCase when used with ``by_alias=True``, with the general expectation of a well-formed JSON-RPC object.

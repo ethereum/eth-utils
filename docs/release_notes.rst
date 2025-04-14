@@ -5,6 +5,22 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.3.0 (2025-04-14)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Replace ``arg["name"]`` with ``arg.get("name")`` to correctly handle optional names. (`#299 <https://github.com/ethereum/eth-utils/issues/299>`__)
+
+
+Features
+~~~~~~~~
+
+- Add new methods: ``to_wei_decimals``, and ``from_wei_decimals`` which take a number instead of a string (`#302 <https://github.com/ethereum/eth-utils/issues/302>`__)
+- Add ``CamelModel`` pydantic model for validating objects and serializing to camelCase when used with ``by_alias=True``, with the general expectation of a well-formed JSON-RPC object. (`#303 <https://github.com/ethereum/eth-utils/issues/303>`__)
+
+
 eth-utils v5.2.0 (2025-01-21)
 -----------------------------
 
