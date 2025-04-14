@@ -849,6 +849,18 @@ the *wei* denomination.
     >>> to_wei(1, 'ether')
     1000000000000000000
 
+``to_wei_decimals(value, decimals)`` -> integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Converts ``value`` in the given ``denomination`` to its equivalent in
+the *wei* denomination.
+
+.. doctest::
+
+    >>> from eth_utils import to_wei_decimals
+    >>> to_wei_decimals(1, 18)
+    1000000000000000000
+
 ``from_wei(value, denomination)`` -> decimal.Decimal
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -862,6 +874,21 @@ the appropriate precision to be a lossless conversion.
     >>> from_wei(1000000000000000000, 'ether')
     Decimal('1')
     >>> from_wei(123456789, 'ether')
+    Decimal('1.23456789E-10')
+
+``from_wei_decimals(value, decimals)`` -> decimal.Decimal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Converts the ``value`` in the *wei* denomination to the number of specified
+decimals. Return value is a ``decimal.Decimal`` with
+the appropriate precision to be a lossless conversion.
+
+.. doctest::
+
+    >>> from eth_utils import from_wei_decimals
+    >>> from_wei_decimals(100, 3)
+    Decimal('0.1')
+    >>> from_wei_decimals(123456789, 18)
     Decimal('1.23456789E-10')
 
 Debug Utils
