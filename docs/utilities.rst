@@ -850,7 +850,7 @@ the *wei* denomination.
     1000000000000000000
 
 ``to_wei_decimals(value, decimals)`` -> integer
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Converts ``value`` in the given ``denomination`` to its equivalent in
 the *wei* denomination.
@@ -877,7 +877,7 @@ the appropriate precision to be a lossless conversion.
     Decimal('1.23456789E-10')
 
 ``from_wei_decimals(value, decimals)`` -> decimal.Decimal
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Converts the ``value`` in the *wei* denomination to the number of specified
 decimals. Return value is a ``decimal.Decimal`` with
