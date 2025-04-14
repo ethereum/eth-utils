@@ -57,7 +57,9 @@ from .crypto import (
 from .currency import (
     denoms,
     from_wei,
+    from_wei_decimals,
     to_wei,
+    to_wei_decimals,
 )
 from .decorators import (
     combomethod,

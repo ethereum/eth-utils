@@ -1,0 +1,1 @@
+Add new methods: ``to_wei_decimals``, and ``from_wei_decimals`` which take a number instead of a string
