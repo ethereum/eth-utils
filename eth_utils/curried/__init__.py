@@ -43,6 +43,7 @@ from eth_utils import (
     filter_abi_by_type,
     flatten_return,
     from_wei,
+    from_wei_decimals,
     function_abi_to_4byte_selector,
     function_signature_to_4byte_selector,
     get_abi_input_names,
@@ -110,6 +111,7 @@ from eth_utils import (
     to_text,
     to_tuple,
     to_wei,
+    to_wei_decimals,
 )
 from eth_utils.toolz import (
     curry,
@@ -257,6 +259,7 @@ apply_one_of_formatters = curry(non_curried_apply_one_of_formatters)  # noqa: F8
 filter_abi_by_name = curry(filter_abi_by_name)
 filter_abi_by_type = curry(filter_abi_by_type)
 from_wei = curry(from_wei)
+from_wei_decimals = curry(from_wei_decimals)
 get_aligned_abi_inputs = curry(get_aligned_abi_inputs)
 get_logger = curry(get_logger)
 get_normalized_abi_inputs = curry(get_normalized_abi_inputs)
@@ -264,6 +267,7 @@ hexstr_if_str = curry(non_curried_hexstr_if_str)  # noqa: F811
 is_same_address = curry(is_same_address)
 text_if_str = curry(non_curried_text_if_str)  # noqa: F811
 to_wei = curry(to_wei)
+to_wei_decimals = curry(to_wei_decimals)
 clamp = curry(clamp)
 
 # Delete any methods and classes that are not intended to be importable from
