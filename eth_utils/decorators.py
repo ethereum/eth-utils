@@ -9,10 +9,13 @@ from typing import (
     TypeVar,
 )
 
+from typing_extensions import ParamSpec
+
 from .types import (
     is_text,
 )
 
+P = ParamSpec("P")
 T = TypeVar("T")
 
 
@@ -68,7 +71,7 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
         )
 
 
-def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]:
+def validate_conversion_arguments(to_wrap: Callable[P, T]) -> Callable[P, T]:
     """
     Validates arguments for conversion functions.
     - Only a single argument is present
@@ -77,7 +80,7 @@ def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]
     """
 
     @functools.wraps(to_wrap)
-    def wrapper(*args: Any, **kwargs: Any) -> T:
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
@@ -108,15 +111,15 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
 def replace_exceptions(
     old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
-) -> Callable[[Callable[..., T]], Callable[..., T]]:
+) -> Callable[[Callable[P, T]], Callable[P, T]]:
     """
     Replaces old exceptions with new exceptions to be raised in their place.
     """
     old_exceptions = tuple(old_to_new_exceptions.keys())
 
-    def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
+    def decorator(to_wrap: Callable[P, T]) -> Callable[P, T]:
         @functools.wraps(to_wrap)
-        def wrapped(*args: Any, **kwargs: Any) -> T:
+        def wrapped(*args: P.args, **kwargs: P.kwargs) -> T:
             try:
                 return to_wrap(*args, **kwargs)
             except old_exceptions as err:
