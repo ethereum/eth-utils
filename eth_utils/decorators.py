@@ -13,7 +13,6 @@ from .types import (
     is_text,
 )
 
-
 T = TypeVar("T")
 
 
