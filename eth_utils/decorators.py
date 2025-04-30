@@ -9,13 +9,11 @@ from typing import (
     TypeVar,
 )
 
-from typing_extensions import ParamSpec
-
 from .types import (
     is_text,
 )
 
-P = ParamSpec("P")
+
 T = TypeVar("T")
 
 
@@ -34,6 +32,23 @@ class combomethod:
                 return self.method(objtype, *args, **kwargs)
 
         return _wrapper
+
+
+def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
+    """
+    Wrap the return value with the result of `type(args[at_position])`.
+    """
+
+    def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
+        @functools.wraps(to_wrap)
+        def wrapper(*args: Any, **kwargs: Any) -> T:  # type: ignore
+            result = to_wrap(*args, **kwargs)
+            ReturnType = type(args[at_position])
+            return ReturnType(result)  # type: ignore
+
+        return wrapper
+
+    return decorator
 
 
 def _has_one_val(*args: T, **kwargs: T) -> bool:
@@ -71,65 +86,105 @@ def _validate_supported_kwarg(kwargs: Any) -> None:
         )
 
 
-def validate_conversion_arguments(to_wrap: Callable[P, T]) -> Callable[P, T]:
-    """
-    Validates arguments for conversion functions.
-    - Only a single argument is present
-    - Kwarg must be 'primitive' 'hexstr' or 'text'
-    - If it is 'hexstr' or 'text' that it is a text type
-    """
+try:  # If you're using a recent enough version of python, we can enhance decorator typing with ParamSpec
+    from typing_extensions import ParamSpec
 
-    @functools.wraps(to_wrap)
-    def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
-        _assert_one_val(*args, **kwargs)
-        if kwargs:
-            _validate_supported_kwarg(kwargs)
+    
+    P = ParamSpec("P")
 
-        if len(args) == 0 and "primitive" not in kwargs:
-            _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
-        return to_wrap(*args, **kwargs)
-
-    return wrapper
-
-
-def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
-    """
-    Wrap the return value with the result of `type(args[at_position])`.
-    """
-
-    def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
+    
+    def validate_conversion_arguments(to_wrap: Callable[P, T]) -> Callable[P, T]:
+        """
+        Validates arguments for conversion functions.
+        - Only a single argument is present
+        - Kwarg must be 'primitive' 'hexstr' or 'text'
+        - If it is 'hexstr' or 'text' that it is a text type
+        """
+    
         @functools.wraps(to_wrap)
-        def wrapper(*args: Any, **kwargs: Any) -> T:  # type: ignore
-            result = to_wrap(*args, **kwargs)
-            ReturnType = type(args[at_position])
-            return ReturnType(result)  # type: ignore
-
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            _assert_one_val(*args, **kwargs)
+            if kwargs:
+                _validate_supported_kwarg(kwargs)
+    
+            if len(args) == 0 and "primitive" not in kwargs:
+                _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
+            return to_wrap(*args, **kwargs)
+    
         return wrapper
-
-    return decorator
-
-
-def replace_exceptions(
-    old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
-) -> Callable[[Callable[P, T]], Callable[P, T]]:
-    """
-    Replaces old exceptions with new exceptions to be raised in their place.
-    """
-    old_exceptions = tuple(old_to_new_exceptions.keys())
-
-    def decorator(to_wrap: Callable[P, T]) -> Callable[P, T]:
-        @functools.wraps(to_wrap)
-        def wrapped(*args: P.args, **kwargs: P.kwargs) -> T:
-            try:
-                return to_wrap(*args, **kwargs)
-            except old_exceptions as err:
+    
+    
+    def replace_exceptions(
+        old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
+    ) -> Callable[[Callable[P, T]], Callable[P, T]]:
+        """
+        Replaces old exceptions with new exceptions to be raised in their place.
+        """
+        old_exceptions = tuple(old_to_new_exceptions.keys())
+    
+        def decorator(to_wrap: Callable[P, T]) -> Callable[P, T]:
+            @functools.wraps(to_wrap)
+            def wrapped(*args: P.args, **kwargs: P.kwargs) -> T:
                 try:
-                    raise old_to_new_exceptions[type(err)](err) from err
-                except KeyError:
-                    raise TypeError(
-                        f"could not look up new exception to use for {repr(err)}"
-                    ) from err
+                    return to_wrap(*args, **kwargs)
+                except old_exceptions as err:
+                    try:
+                        raise old_to_new_exceptions[type(err)](err) from err
+                    except KeyError:
+                        raise TypeError(
+                            f"could not look up new exception to use for {repr(err)}"
+                        ) from err
+    
+            return wrapped
+    
+        return decorator
 
-        return wrapped
+except ImportError:  # Your python version is too low to use ParamSpec
 
-    return decorator
+    
+    def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]:
+        """
+        Validates arguments for conversion functions.
+        - Only a single argument is present
+        - Kwarg must be 'primitive' 'hexstr' or 'text'
+        - If it is 'hexstr' or 'text' that it is a text type
+        """
+    
+        @functools.wraps(to_wrap)
+        def wrapper(*args: Any, **kwargs: Any) -> T:
+            _assert_one_val(*args, **kwargs)
+            if kwargs:
+                _validate_supported_kwarg(kwargs)
+    
+            if len(args) == 0 and "primitive" not in kwargs:
+                _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
+            return to_wrap(*args, **kwargs)
+    
+        return wrapper
+    
+    
+    def replace_exceptions(
+        old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
+    ) -> Callable[[Callable[..., T]], Callable[..., T]]:
+        """
+        Replaces old exceptions with new exceptions to be raised in their place.
+        """
+        old_exceptions = tuple(old_to_new_exceptions.keys())
+    
+        def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
+            @functools.wraps(to_wrap)
+            def wrapped(*args: Any, **kwargs: Any) -> T:
+                try:
+                    return to_wrap(*args, **kwargs)
+                except old_exceptions as err:
+                    try:
+                        raise old_to_new_exceptions[type(err)](err) from err
+                    except KeyError:
+                        raise TypeError(
+                            f"could not look up new exception to use for {repr(err)}"
+                        ) from err
+    
+            return wrapped
+    
+        return decorator
+    
