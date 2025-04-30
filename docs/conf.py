@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Ethereum Utilities documentation build configuration file, created by
 # sphinx-quickstart on Thu Oct 16 20:43:24 2014.
 #
@@ -19,7 +17,7 @@
 
 import os
 
-DIR = os.path.dirname("__file__")
+DIR = os.path.dirname(__file__)
 with open(os.path.join(DIR, "../setup.py"), "r") as f:
     for line in f:
         if "version=" in line:
@@ -196,6 +194,8 @@ htmlhelp_basename = "eth_utilsdoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
+
+latex_engine = "xelatex"
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').

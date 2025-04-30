@@ -1,9 +1,23 @@
-from typing import Callable, TypeVar, Union
+from typing import (
+    Callable,
+    Optional,
+    TypeVar,
+    Union,
+    cast,
+)
 
-from eth_typing import HexStr, Primitives
+from eth_typing import (
+    HexStr,
+    Primitives,
+)
 
-from .decorators import validate_conversion_arguments
-from .encoding import big_endian_to_int, int_to_big_endian
+from .decorators import (
+    validate_conversion_arguments,
+)
+from .encoding import (
+    big_endian_to_int,
+    int_to_big_endian,
+)
 from .hexadecimal import (
     add_0x_prefix,
     decode_hex,
@@ -11,14 +25,22 @@ from .hexadecimal import (
     is_hexstr,
     remove_0x_prefix,
 )
-from .types import is_boolean, is_integer, is_string
+from .types import (
+    is_boolean,
+    is_integer,
+    is_string,
+)
 
 T = TypeVar("T")
+
+BytesLike = Union[Primitives, bytearray, memoryview]
 
 
 @validate_conversion_arguments
 def to_hex(
-    primitive: Primitives = None, hexstr: HexStr = None, text: str = None
+    primitive: Optional[BytesLike] = None,
+    hexstr: Optional[HexStr] = None,
+    text: Optional[str] = None,
 ) -> HexStr:
     """
     Auto converts any supported value into its hex representation.
@@ -36,6 +58,10 @@ def to_hex(
 
     if isinstance(primitive, (bytes, bytearray)):
         return encode_hex(primitive)
+
+    if isinstance(primitive, memoryview):
+        return encode_hex(bytes(primitive))
+
     elif is_string(primitive):
         raise TypeError(
             "Unsupported type: The primitive argument must be one of: bytes,"
@@ -43,17 +69,19 @@ def to_hex(
         )
 
     if is_integer(primitive):
-        return HexStr(hex(primitive))
+        return HexStr(hex(cast(int, primitive)))
 
     raise TypeError(
-        "Unsupported type: '{0}'.  Must be one of: bool, str, bytes, bytearray"
-        "or int.".format(repr(type(primitive)))
+        f"Unsupported type: '{repr(type(primitive))}'. Must be one of: bool, str, "
+        "bytes, bytearray or int."
     )
 
 
 @validate_conversion_arguments
 def to_int(
-    primitive: Primitives = None, hexstr: HexStr = None, text: str = None
+    primitive: Optional[BytesLike] = None,
+    hexstr: Optional[HexStr] = None,
+    text: Optional[str] = None,
 ) -> int:
     """
     Converts value to its integer representation.
@@ -61,8 +89,9 @@ def to_int(
 
      * primitive:
 
-       * bytes, bytearrays: big-endian integer
+       * bytes, bytearray, memoryview: big-endian integer
        * bool: True => 1, False => 0
+       * int: unchanged
      * hexstr: interpret hex as integer
      * text: interpret as string of digits, like '12' => 12
     """
@@ -72,24 +101,28 @@ def to_int(
         return int(text)
     elif isinstance(primitive, (bytes, bytearray)):
         return big_endian_to_int(primitive)
+    elif isinstance(primitive, memoryview):
+        return big_endian_to_int(bytes(primitive))
     elif isinstance(primitive, str):
         raise TypeError("Pass in strings with keyword hexstr or text")
     elif isinstance(primitive, (int, bool)):
         return int(primitive)
     else:
         raise TypeError(
-            "Invalid type.  Expected one of int/bool/str/bytes/bytearray.  Got "
-            "{0}".format(type(primitive))
+            "Invalid type. Expected one of int/bool/str/bytes/bytearray. Got "
+            f"{type(primitive)}"
         )
 
 
 @validate_conversion_arguments
 def to_bytes(
-    primitive: Primitives = None, hexstr: HexStr = None, text: str = None
+    primitive: Optional[BytesLike] = None,
+    hexstr: Optional[HexStr] = None,
+    text: Optional[str] = None,
 ) -> bytes:
     if is_boolean(primitive):
         return b"\x01" if primitive else b"\x00"
-    elif isinstance(primitive, bytearray):
+    elif isinstance(primitive, (bytearray, memoryview)):
         return bytes(primitive)
     elif isinstance(primitive, bytes):
         return primitive
@@ -97,9 +130,7 @@ def to_bytes(
         return to_bytes(hexstr=to_hex(primitive))
     elif hexstr is not None:
         if len(hexstr) % 2:
-            # type check ignored here because casting an
-            # Optional arg to str is not possible
-            hexstr = "0x0" + remove_0x_prefix(hexstr)  # type: ignore
+            hexstr = cast(HexStr, "0x0" + remove_0x_prefix(hexstr))
         return decode_hex(hexstr)
     elif text is not None:
         return text.encode("utf-8")
@@ -111,7 +142,9 @@ def to_bytes(
 
 @validate_conversion_arguments
 def to_text(
-    primitive: Primitives = None, hexstr: HexStr = None, text: str = None
+    primitive: Optional[BytesLike] = None,
+    hexstr: Optional[HexStr] = None,
+    text: Optional[str] = None,
 ) -> str:
     if hexstr is not None:
         return to_bytes(hexstr=hexstr).decode("utf-8")
@@ -121,8 +154,10 @@ def to_text(
         return to_text(hexstr=primitive)
     elif isinstance(primitive, (bytes, bytearray)):
         return primitive.decode("utf-8")
+    elif isinstance(primitive, memoryview):
+        return bytes(primitive).decode("utf-8")
     elif is_integer(primitive):
-        byte_encoding = int_to_big_endian(primitive)
+        byte_encoding = int_to_big_endian(cast(int, primitive))
         return to_text(byte_encoding)
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 
@@ -158,9 +193,8 @@ def hexstr_if_str(
             hexstr_or_primitive
         ):
             raise ValueError(
-                "when sending a str, it must be a hex string. Got: {0!r}".format(
-                    hexstr_or_primitive
-                )
+                "when sending a str, it must be a hex string. "
+                f"Got: {repr(hexstr_or_primitive)}"
             )
         return to_type(hexstr=hexstr_or_primitive)
     else:

@@ -1,14 +1,22 @@
 import contextlib
+from functools import (
+    cached_property,
+)
 import logging
-import sys
-from typing import Any, Dict, Iterator, Tuple, Type, TypeVar, cast
+from typing import (
+    Any,
+    Dict,
+    Iterator,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
-from .toolz import assoc
-
-if sys.version_info < (3, 8):
-    from cached_property import cached_property
-else:
-    from functools import cached_property
+from .toolz import (
+    assoc,
+)
 
 DEBUG2_LEVEL_NUM = 8
 
@@ -45,7 +53,7 @@ def setup_DEBUG2_logging() -> None:
     """
     if not hasattr(logging, "DEBUG2"):
         logging.addLevelName(DEBUG2_LEVEL_NUM, "DEBUG2")
-        setattr(logging, "DEBUG2", DEBUG2_LEVEL_NUM)  # typing: ignore
+        logging.DEBUG2 = DEBUG2_LEVEL_NUM  # type: ignore
 
 
 @contextlib.contextmanager
@@ -58,12 +66,12 @@ def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
         logging.setLoggerClass(original_logger_class)
 
 
-def get_logger(name: str, logger_class: Type[TLogger] = None) -> TLogger:
+def get_logger(name: str, logger_class: Union[Type[TLogger], None] = None) -> TLogger:
     if logger_class is None:
         return cast(TLogger, logging.getLogger(name))
     else:
         with _use_logger_class(logger_class):
-            # The logging module caches logger instances.  The following code
+            # The logging module caches logger instances. The following code
             # ensures that if there is a cached instance that we don't
             # accidentally return the incorrect logger type because the logging
             # module does not *update* the cached instance in the event that
@@ -126,26 +134,12 @@ class HasLoggerMeta(type):
         return type(mcls.__name__, (mcls, other), {})
 
 
-class _BaseHasLogger(metaclass=HasLoggerMeta):
-    # This class exists to a allow us to define the type of the logger.  Once
-    # python3.5 is deprecated this can be removed in favor of a simple type
-    # annotation on the main class.
-    logger = logging.Logger("")  # type: logging.Logger
-
-
-class HasLogger(_BaseHasLogger):
-    pass
+class HasLogger(metaclass=HasLoggerMeta):
+    logger: logging.Logger
 
 
 HasExtendedDebugLoggerMeta = HasLoggerMeta.replace_logger_class(ExtendedDebugLogger)
 
 
-class _BaseHasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
-    # This class exists to a allow us to define the type of the logger.  Once
-    # python3.5 is deprecated this can be removed in favor of a simple type
-    # annotation on the main class.
-    logger = ExtendedDebugLogger("")  # type: ExtendedDebugLogger
-
-
-class HasExtendedDebugLogger(_BaseHasExtendedDebugLogger):
-    pass
+class HasExtendedDebugLogger(metaclass=HasExtendedDebugLoggerMeta):  # type: ignore
+    logger: ExtendedDebugLogger

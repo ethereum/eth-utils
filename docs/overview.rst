@@ -31,12 +31,12 @@ Documentation
 Building Sphinx docs locally:
 
 .. code:: sh
-   
+
    python -m pip install -e ".[docs]"
    cd docs
    make html
 
-Docs are written in `reStructuredText <http://docutils.sourceforge.net/rst.html>`__ and built using the 
+Docs are written in `reStructuredText <http://docutils.sourceforge.net/rst.html>`__ and built using the
 `Sphinx <http://www.sphinx-doc.org/>`__ documentation generator.
 
 Running the tests

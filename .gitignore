@@ -8,6 +8,7 @@
 *.egg-info
 dist
 build
+.build
 eggs
 .eggs
 parts
@@ -60,6 +61,9 @@ chains
 .cache
 .pytest_cache
 
+# pycache
+__pycache__/
+
 # Test output logs
 logs
 
@@ -74,6 +78,12 @@ logs
 
 # pyenv
 .python-version
+
+# vs-code
+.vscode
+
+# jupyter notebook files
+*.ipynb
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # For a more precise, explicit template, see:

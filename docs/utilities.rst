@@ -15,52 +15,21 @@ importing them through the ``curried`` module like so:
 
     >>> from eth_utils.curried import hexstr_if_str
 
-ABI Utils
-~~~~~~~~~
+ABI Utilities
+~~~~~~~~~~~~~
 
-``event_abi_to_log_topic(event_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The Application Binary Interface (ABI) may be used for encoding or decoding
+transactional data. Components of an ABI may include a descriptor of each Function or
+Event in the contract. The following utilities provide convenient methods for parsing
+components of an ABI and encoding function parameters for use in transactions.
 
-Returns the 32 byte log topic for the given event abi.
+For more information about the ABI spec, see the Solidity
+`Contract ABI specification <https://docs.soliditylang.org/en/v0.8.25/abi-spec.html>`_.
 
-.. doctest::
-
-    >>> from eth_utils import event_abi_to_log_topic
-    >>> event_abi_to_log_topic({'type': 'event', 'anonymous': False, 'name': 'MyEvent', 'inputs': []})
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``event_signature_to_log_topic(event_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 32 byte log topic for the given event signature.
-
-.. doctest::
-
-    >>> from eth_utils import event_signature_to_log_topic
-    >>> event_signature_to_log_topic('MyEvent()')
-    b'M\xbf\xb6\x8bC\xdd\xdf\xa1+Q\xeb\xe9\x9a\xb8\xfd\xedb\x0f\x9a\n\xc21B\x87\x9aO\x19*\x1byR\xd2'
-
-``function_abi_to_4byte_selector(function_abi)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function abi.
-
-.. doctest::
-
-    >>> from eth_utils import function_abi_to_4byte_selector
-    >>> function_abi_to_4byte_selector({'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []})
-    b'\xc3x\n:'
-
-``function_signature_to_4byte_selector(function_signature)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns the 4 byte function selector for the given function signature.
-
-.. doctest::
-
-    >>> from eth_utils import function_signature_to_4byte_selector
-    >>> function_signature_to_4byte_selector('myFunction()')
-    b'\xc3x\n:'
+.. automodule:: eth_utils.abi
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Applicators
 ~~~~~~~~~~~
@@ -238,8 +207,8 @@ the same type as it was supplied. For example:
     >>> list_formatter((1.2, 3.4, 5.6, 7.8))
     (True, 3, '5.6', 7.8)
 
-``apply_formatters_to_dict(formatter_dict, <dict_like>)`` -> dict
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``apply_formatters_to_dict(formatter_dict, <dict_like>, unaliased=False)`` -> dict
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This function will apply the formatter to the element with the matching
 key in ``dict_like``, passing through values with keys that have no
@@ -261,6 +230,34 @@ matching formatter.
     ... })
     >>> result == {'should_be_int': 1, 'should_be_bool': True, 'pass_through': 5.6}
     True
+
+The ``CamelModel`` pydantic model is included in expected dict-like types. If the
+dict-like object is an instance of a ``CamelModel``, the ``unaliased`` argument
+can be set to ``True`` to pre-serialize the object as "non-aliased", according to
+pydantic. By default, it will be pre-serialized as "aliased", which ``CamelModel``
+interprets as camelCase keys.
+
+.. doctest::
+
+    >>> from eth_utils.curried import apply_formatters_to_dict
+    >>> from eth_utils import CamelModel, to_bytes, to_int
+    >>> from pydantic import Field
+
+    >>> class PydanticModel(CamelModel):
+    ...     to_bytes_from_int: int = 1
+    ...     to_int_from_bytes: bytes = b"\x02"
+    ...     # class fields excluded from serialization
+    ...     excluded_field: int = Field(default=3, exclude=True)
+    ...     excluded_field_two: str = Field(default="4", exclude=True)
+
+    >>> dict_formatter = apply_formatters_to_dict({
+    ...     "toBytesFromInt": to_bytes,
+    ...     "toIntFromBytes": to_int
+    ... })
+
+    >>> dict_formatter(PydanticModel())
+    {'toBytesFromInt': b'\x01', 'toIntFromBytes': 2}
+
 
 ``apply_key_map(formatter_dict, <dict_like>)`` -> dict
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -592,8 +589,8 @@ being supplied when passing in a ``str``.
 
 *Only supply one of the arguments:*
 
-``to_bytes(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> bytes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_bytes(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> bytes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its bytes equivalent. Text gets
 encoded as UTF-8.
@@ -622,8 +619,8 @@ encoded as UTF-8.
     >>> to_bytes(text='cowmö')
     b'cowm\xc3\xb6'
 
-``to_hex(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> HexStr_
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_hex(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> HexStr_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns it in its hexadecimal
 representation. It follows the rules for converting to hex in the
@@ -658,8 +655,8 @@ leading zeros on int input.
     >>> to_hex(text='cowmö')
     '0x636f776dc3b6'
 
-``to_int(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> int
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_int(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its integer equivalent.
 
@@ -681,8 +678,8 @@ Takes a variety of inputs and returns its integer equivalent.
     >>> to_int(hexstr='000F')
     15
 
-``to_text(<bytes/int/bool>, text=<str>, hexstr=<str>)`` -> str
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``to_text(<bytes/int/bool/bytearray/memoryview>, text=<str>, hexstr=<str>)`` -> str
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Takes a variety of inputs and returns its string equivalent. Text gets
 decoded as UTF-8.
@@ -839,11 +836,11 @@ ether. Available denominations are:
 +--------------+---------------------------------+
 | micro        | 1000000000000                   |
 +--------------+---------------------------------+
-| finney       | 1000000000000000                | 
+| finney       | 1000000000000000                |
 +--------------+---------------------------------+
-| milliether   | 1000000000000000                | 
+| milliether   | 1000000000000000                |
 +--------------+---------------------------------+
-| milli        | 1000000000000000                | 
+| milli        | 1000000000000000                |
 +--------------+---------------------------------+
 | ether        | 1000000000000000000             |
 +--------------+---------------------------------+
@@ -880,6 +877,18 @@ the *wei* denomination.
     >>> to_wei(1, 'ether')
     1000000000000000000
 
+``to_wei_decimals(value, decimals)`` -> integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Converts ``value`` in the given ``denomination`` to its equivalent in
+the *wei* denomination.
+
+.. doctest::
+
+    >>> from eth_utils import to_wei_decimals
+    >>> to_wei_decimals(1, 18)
+    1000000000000000000
+
 ``from_wei(value, denomination)`` -> decimal.Decimal
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -893,6 +902,21 @@ the appropriate precision to be a lossless conversion.
     >>> from_wei(1000000000000000000, 'ether')
     Decimal('1')
     >>> from_wei(123456789, 'ether')
+    Decimal('1.23456789E-10')
+
+``from_wei_decimals(value, decimals)`` -> decimal.Decimal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Converts the ``value`` in the *wei* denomination to the number of specified
+decimals. Return value is a ``decimal.Decimal`` with
+the appropriate precision to be a lossless conversion.
+
+.. doctest::
+
+    >>> from eth_utils import from_wei_decimals
+    >>> from_wei_decimals(100, 3)
+    Decimal('0.1')
+    >>> from_wei_decimals(123456789, 18)
     Decimal('1.23456789E-10')
 
 Debug Utils
@@ -970,7 +994,7 @@ As usual, instances create their own copy on assignment.
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Replaces `Old` exceptions in a method with `New` exceptions.
-Accepts a Dict, with `Old` exceptions pointing to 
+Accepts a Dict, with `Old` exceptions pointing to
 `New` exceptions.
 
 .. doctest::
@@ -1190,8 +1214,8 @@ set.
     ...     yield 'a'  # duplicate
     ...     yield 'c'
     ...
-    >>> build_thing() == {'c', 'b', 'a'} 
-    True 
+    >>> build_thing() == {'c', 'b', 'a'}
+    True
 
 ``apply_to_return_value(callable)`` => decorator_fn
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1412,6 +1436,28 @@ ellipsis, only showing the first and last four hexadecimal nibbles.
      '0001..1e1f'
 
 
+``humanize_hexstr(str)`` -> string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the provided hex string in a human readable format.
+
+If the value is 4 bytes or less it is returned in full in its hexadecimal representation (with a ``0x`` prefix)
+
+If the value is longer than 4 bytes it is returned in its hexadecimal
+representation with the middle segment replaced by an
+ellipsis, only showing the first and last four hexadecimal nibbles.
+
+.. doctest::
+
+    >>> from eth_utils import humanize_hexstr
+    >>> humanize_hexstr('0x1234')
+     '0x1234'
+    >>> humanize_hexstr('0x12345678')
+     '0x12345678'
+    >>> humanize_hexstr('0x10203040506070')
+     '0x1020..6070'
+
+
 ``humanize_hash(bytes)`` -> string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1525,7 +1571,7 @@ available on the attribute ``logger``
 The ``name`` of the logger instance is derived from the ``__qualname__`` for
 the class.
 
-.. warning:: 
+.. warning::
 
      This class will not behave nicely with the standard library
      ``typing.Generic``.  If you need to create a ``Generic`` class then you'll
@@ -1536,9 +1582,9 @@ the class.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A subclass of ``logging.Logger`` which exposes a ``debug2`` function which can
-be used to log a message at the ``DEBUG2`` log level.  
+be used to log a message at the ``DEBUG2`` log level.
 
-.. note:: 
+.. note::
 
      This class works fine on its own but will produce cleaner logs if you make
      sure to call ``eth_utils.setup_DEBUG2_logging`` at least once before
@@ -1622,7 +1668,7 @@ Raises an ImportError if the module could not be found.
 Networks
 ~~~~~~~~
 
-The :class:`~eth-utils.Networks` class provides methods to obtain network names and 
+The :class:`~eth-utils.Networks` class provides methods to obtain network names and
 other metadata given a ``chain_id``.
 
 ``network_from_chain_id(chain_id)`` -> Network

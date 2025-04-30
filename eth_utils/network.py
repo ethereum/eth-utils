@@ -1,12 +1,19 @@
-from dataclasses import dataclass
+from dataclasses import (
+    dataclass,
+)
 import json
 import os
-from typing import List
-import warnings
+from typing import (
+    List,
+)
 
-from eth_typing import ChainId
+from eth_typing import (
+    ChainId,
+)
 
-from eth_utils import ValidationError
+from eth_utils import (
+    ValidationError,
+)
 
 
 @dataclass
@@ -25,7 +32,6 @@ def initialize_network_objects() -> List[Network]:
     )
     with open(
         os.path.join(networks_json_path, "eth_networks.json"),
-        "r",
         encoding="UTF-8",
     ) as open_file:
         network_data = json.load(open_file)
@@ -40,13 +46,11 @@ def initialize_network_objects() -> List[Network]:
             )
             networks_obj.append(network)
         except ValueError:
-            # Entry does not have a valid ChainId constant in eth-typing
-            warnings.warn(
-                f"Network {entry['chainId']} with name '{entry['name']}' does not have "
-                f"a valid ChainId. eth-typing should be updated with the latest "
-                f"networks."
-            )
+            # Chain does not have a valid ChainId, network files in eth-utils and
+            # eth-typing should to be updated. Run `python update_networks.py` in the
+            # project root.
             pass
+
     return networks_obj
 
 
