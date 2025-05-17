@@ -36,7 +36,7 @@ def apply_formatter_at_index(
         raise IndexError(
             f"Not enough values in iterable to apply formatter. Got: {len(value)}. "
             f"Need: {at_index + 1}"
-        )
+        ) from None
 
     yield from value[:at_index]
     yield formatter(item)
