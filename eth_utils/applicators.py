@@ -30,16 +30,18 @@ Formatters = Callable[[List[Any]], List[Any]]
 def apply_formatter_at_index(
     formatter: Callable[..., Any], at_index: int, value: List[Any]
 ) -> Generator[List[Any], None, None]:
-    if at_index + 1 > len(value):
+    try:
+        item = value[at_index]
+    except IndexError:
         raise IndexError(
             f"Not enough values in iterable to apply formatter. Got: {len(value)}. "
             f"Need: {at_index + 1}"
         )
-    for index, item in enumerate(value):
-        if index == at_index:
-            yield formatter(item)
-        else:
-            yield item
+
+    yield from value[:at_index]
+    yield formatter(item)
+    if remaining := value[at_index+1:]:
+        yield from remaining
 
 
 def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Formatters:
