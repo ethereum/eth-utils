@@ -40,8 +40,7 @@ def apply_formatter_at_index(
 
     yield from value[:at_index]
     yield formatter(item)
-    if remaining := value[at_index + 1 :]:
-        yield from remaining
+    yield from value[at_index + 1 :]
 
 
 def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Formatters:
