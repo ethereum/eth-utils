@@ -5,6 +5,7 @@ from typing import (
     Generator,
     List,
     Tuple,
+    TypeVar,
     Union,
 )
 import warnings
@@ -22,6 +23,9 @@ from .toolz import (
     compose,
     curry,
 )
+
+TArg = TypeVar("TArg")
+TReturn = TypeVar("TReturn")
 
 Formatters = Callable[[List[Any]], List[Any]]
 
@@ -84,8 +88,8 @@ def apply_formatters_to_sequence(
 
 
 def apply_formatter_if(
-    condition: Callable[..., bool], formatter: Callable[..., Any], value: Any
-) -> Any:
+    condition: Callable[[TArg], bool], formatter: Callable[[TArg], TReturn], value: TArg
+) -> Union[TArg, TReturn]:
     if condition(value):
         return formatter(value)
     else:
@@ -132,8 +136,8 @@ def apply_formatters_to_dict(
 
 @return_arg_type(1)
 def apply_formatter_to_array(
-    formatter: Callable[..., Any], value: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatter: Callable[[TArg], TReturn], value: List[TArg]
+) -> Generator[TReturn, None, None]:
     for item in value:
         yield formatter(item)
 
