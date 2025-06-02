@@ -1,6 +1,7 @@
 import re
 from typing import (
     Any,
+    Final,
     Union,
     cast,
 )
@@ -31,7 +32,7 @@ from .types import (
     is_text,
 )
 
-_HEX_ADDRESS_REGEXP = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
+_HEX_ADDRESS_REGEXP: Final = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
 
 
 def is_hex_address(value: Any) -> bool:

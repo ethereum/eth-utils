@@ -1,5 +1,6 @@
 import functools
 import itertools
+import os
 from typing import (
     Any,
     Callable,
@@ -7,6 +8,7 @@ from typing import (
     Optional,
     Type,
     TypeVar,
+    final,
 )
 
 from .types import (
@@ -16,6 +18,7 @@ from .types import (
 T = TypeVar("T")
 
 
+@final
 class combomethod:
     def __init__(self, method: Callable[..., Any]) -> None:
         self.method = method
@@ -31,64 +34,6 @@ class combomethod:
                 return self.method(objtype, *args, **kwargs)
 
         return _wrapper
-
-
-def _has_one_val(*args: T, **kwargs: T) -> bool:
-    vals = itertools.chain(args, kwargs.values())
-    not_nones = list(filter(lambda val: val is not None, vals))
-    return len(not_nones) == 1
-
-
-def _assert_one_val(*args: T, **kwargs: T) -> None:
-    if not _has_one_val(*args, **kwargs):
-        raise TypeError(
-            "Exactly one of the passed values can be specified. "
-            f"Instead, values were: {repr(args)}, {repr(kwargs)}"
-        )
-
-
-def _hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> bool:
-    value = kwargs["hexstr"] if "hexstr" in kwargs else kwargs["text"]
-    return is_text(value)
-
-
-def _assert_hexstr_or_text_kwarg_is_text_type(**kwargs: T) -> None:
-    if not _hexstr_or_text_kwarg_is_text_type(**kwargs):
-        raise TypeError(
-            "Arguments passed as hexstr or text must be of text type. "
-            f"Instead, value was: {(repr(next(iter(list(kwargs.values())))))}"
-        )
-
-
-def _validate_supported_kwarg(kwargs: Any) -> None:
-    if next(iter(kwargs)) not in ["primitive", "hexstr", "text"]:
-        raise TypeError(
-            "Kwarg must be 'primitive', 'hexstr', or 'text'. "
-            f"Instead, kwarg was: {repr(next(iter(kwargs)))}"
-        )
-
-
-def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]:
-    """
-    Validates arguments for conversion functions.
-    - Only a single argument is present
-    - Kwarg must be 'primitive' 'hexstr' or 'text'
-    - If it is 'hexstr' or 'text' that it is a text type
-    """
-    if os.environ.get("ETH_UTILS_NOVALIDATE"):
-        return to_wrap
-
-    @functools.wraps(to_wrap)
-    def wrapper(*args: Any, **kwargs: Any) -> T:
-        _assert_one_val(*args, **kwargs)
-        if kwargs:
-            _validate_supported_kwarg(kwargs)
-
-        if len(args) == 0 and "primitive" not in kwargs:
-            _assert_hexstr_or_text_kwarg_is_text_type(**kwargs)
-        return to_wrap(*args, **kwargs)
-
-    return wrapper
 
 
 def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:

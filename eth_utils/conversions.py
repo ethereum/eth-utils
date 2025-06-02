@@ -11,9 +11,6 @@ from eth_typing import (
     Primitives,
 )
 
-from .decorators import (
-    validate_conversion_arguments,
-)
 from .encoding import (
     big_endian_to_int,
     int_to_big_endian,
@@ -36,7 +33,6 @@ T = TypeVar("T")
 BytesLike = Union[Primitives, bytearray, memoryview]
 
 
-@validate_conversion_arguments
 def to_hex(
     primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
@@ -77,7 +73,6 @@ def to_hex(
     )
 
 
-@validate_conversion_arguments
 def to_int(
     primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
@@ -114,7 +109,6 @@ def to_int(
         )
 
 
-@validate_conversion_arguments
 def to_bytes(
     primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,
@@ -140,7 +134,6 @@ def to_bytes(
     )
 
 
-@validate_conversion_arguments
 def to_text(
     primitive: Optional[BytesLike] = None,
     hexstr: Optional[HexStr] = None,

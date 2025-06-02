@@ -97,13 +97,7 @@ def _get_tuple_type_str_and_dims(s: str) -> Optional[Tuple[str, Optional[str]]]:
     tuple_type_str_re = "^(tuple)((\\[([1-9]\\d*\b)?])*)??$"
     match = re.compile(tuple_type_str_re).match(s)
 
-    if match is not None:
-        tuple_prefix = match.group(1)
-        tuple_dims = match.group(2)
-
-        return tuple_prefix, tuple_dims
-
-    return None
+    return None if match is None else (match[1], match[2])
 
 
 def _raise_if_not_function_abi(abi_element: ABIElement) -> None:
@@ -116,7 +110,7 @@ def _raise_if_not_function_abi(abi_element: ABIElement) -> None:
 
 
 def _raise_if_fallback_or_receive_abi(abi_element: ABIElement) -> None:
-    if abi_element["type"] == "fallback" or abi_element["type"] == "receive":
+    if abi_element["type"] in ["fallback", "receive"]:
         raise ValueError(
             f"Inputs not supported for function types `fallback` or `receive`. Provided"
             f" ABI type was `{abi_element.get('type')}` with inputs "
@@ -167,9 +161,7 @@ def collapse_if_tuple(abi: Union[ABIComponent, Dict[str, Any], str]) -> str:
     # Whatever comes after "tuple" is the array dims. The ABI spec states that
     # this will have the form "", "[]", or "[k]".
     array_dim = element_type[5:]
-    collapsed = f"({delimited}){array_dim}"
-
-    return collapsed
+    return f"({delimited}){array_dim}"
 
 
 def abi_to_signature(abi_element: ABIElement) -> str:
@@ -207,7 +199,7 @@ def abi_to_signature(abi_element: ABIElement) -> str:
     signature = "{name}({input_types})"
 
     abi_type = str(abi_element.get("type", ""))
-    if abi_type == "fallback" or abi_type == "receive":
+    if abi_type in {"fallback", "receive"}:
         return signature.format(name=abi_type, input_types="")
 
     if abi_type == "constructor":
@@ -280,14 +272,8 @@ def filter_abi_by_name(abi_name: str, contract_abi: ABI) -> Sequence[ABIElement]
     return [
         abi
         for abi in contract_abi
-        if (
-            (
-                abi["type"] == "function"
-                or abi["type"] == "event"
-                or abi["type"] == "error"
-            )
-            and abi["name"] == abi_name
-        )
+        if abi["type"] in ["function", "event", "error"]
+        and abi["name"] == abi_name
     ]
 
 
@@ -295,7 +281,7 @@ def filter_abi_by_name(abi_name: str, contract_abi: ABI) -> Sequence[ABIElement]
 def filter_abi_by_type(
     abi_type: Literal["function"],
     contract_abi: ABI,
-) -> Sequence[ABIFunction]:
+) -> List[ABIFunction]:
     pass
 
 
@@ -303,7 +289,7 @@ def filter_abi_by_type(
 def filter_abi_by_type(
     abi_type: Literal["constructor"],
     contract_abi: ABI,
-) -> Sequence[ABIConstructor]:
+) -> List[ABIConstructor]:
     pass
 
 
@@ -311,7 +297,7 @@ def filter_abi_by_type(
 def filter_abi_by_type(
     abi_type: Literal["fallback"],
     contract_abi: ABI,
-) -> Sequence[ABIFallback]:
+) -> List[ABIFallback]:
     pass
 
 
@@ -319,7 +305,7 @@ def filter_abi_by_type(
 def filter_abi_by_type(
     abi_type: Literal["receive"],
     contract_abi: ABI,
-) -> Sequence[ABIReceive]:
+) -> List[ABIReceive]:
     pass
 
 
@@ -327,7 +313,7 @@ def filter_abi_by_type(
 def filter_abi_by_type(
     abi_type: Literal["event"],
     contract_abi: ABI,
-) -> Sequence[ABIEvent]:
+) -> List[ABIEvent]:
     pass
 
 
@@ -335,7 +321,7 @@ def filter_abi_by_type(
 def filter_abi_by_type(
     abi_type: Literal["error"],
     contract_abi: ABI,
-) -> Sequence[ABIError]:
+) -> List[ABIError]:
     pass
 
 
@@ -344,8 +330,8 @@ def filter_abi_by_type(
         "function", "constructor", "fallback", "receive", "event", "error"
     ],
     contract_abi: ABI,
-) -> Sequence[
-    Union[ABIFunction, ABIConstructor, ABIFallback, ABIReceive, ABIEvent, ABIError]
+) -> Union[
+    List[ABIFunction], List[ABIConstructor], List[ABIFallback], List[ABIReceive], List[ABIEvent], List[ABIError]
 ]:
     """
     Return a list of each ``ABIElement`` that is of type ``abi_type``.
@@ -512,8 +498,7 @@ def get_normalized_abi_inputs(
     args_as_kwargs = dict(zip(sorted_arg_names, args))
 
     # Check for duplicate args
-    duplicate_args = kwarg_names.intersection(args_as_kwargs.keys())
-    if duplicate_args:
+    if duplicate_args := kwarg_names.intersection(args_as_kwargs.keys()):
         raise TypeError(
             f"{abi_element.get('name')}() got multiple values for argument(s) "
             f"'{', '.join(duplicate_args)}'."
@@ -521,8 +506,7 @@ def get_normalized_abi_inputs(
 
     # Check for unknown args
     # Arg names sorted to raise consistent error messages
-    unknown_args = tuple(sorted(kwarg_names.difference(sorted_arg_names)))
-    if unknown_args:
+    if unknown_args := tuple(sorted(kwarg_names.difference(sorted_arg_names))):
         message = "{} got unexpected keyword argument(s) '{}'."
         if abi_element.get("name"):
             raise TypeError(
@@ -545,10 +529,7 @@ def get_normalized_abi_inputs(
         )
     )
 
-    if len(sorted_args) > 0:
-        return tuple(sorted_args[1])
-    else:
-        return tuple()
+    return tuple(sorted_args[1]) if sorted_args else ()
 
 
 def get_aligned_abi_inputs(
