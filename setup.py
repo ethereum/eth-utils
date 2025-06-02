@@ -68,17 +68,17 @@ with open("./README.md") as readme:
 
 
 setup(
-    name="eth-utils",
+    name="faster-eth-utils",
     # *IMPORTANT*: Don't manually change the version here. Use `make bump`, as described in readme
     version="4.1.1",
     description=(
-        """eth-utils: Common utility functions for python code that interacts with Ethereum"""
+        """A fork of eth-utils: Common utility functions for python code that interacts with Ethereum, implemented in C"""
     ),
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="The Ethereum Foundation",
     author_email="snakecharmers@ethereum.org",
-    url="https://github.com/ethereum/eth-utils",
+    url="https://github.com/BobTheBuidler/eth-utils",
     include_package_data=True,
     install_requires=[
         "eth-hash>=0.3.1",
@@ -94,7 +94,7 @@ setup(
     keywords="ethereum",
     packages=find_packages(exclude=["scripts", "scripts.*", "tests", "tests.*"]),
     ext_modules=ext_modules,
-    package_data={"eth_utils": ["py.typed"]},
+    package_data={"faster_eth_utils": ["py.typed"]},
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
@@ -105,5 +105,6 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: Implementation :: CPython",
     ],
 )
