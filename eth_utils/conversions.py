@@ -11,9 +11,6 @@ from eth_typing import (
     Primitives,
 )
 
-from .decorators import (
-    validate_conversion_arguments,
-)
 from .encoding import (
     big_endian_to_int,
     int_to_big_endian,
@@ -34,7 +31,6 @@ from .types import (
 T = TypeVar("T")
 
 
-@validate_conversion_arguments
 def to_hex(
     primitive: Optional[Primitives] = None,
     hexstr: Optional[HexStr] = None,
@@ -71,7 +67,6 @@ def to_hex(
     )
 
 
-@validate_conversion_arguments
 def to_int(
     primitive: Optional[Primitives] = None,
     hexstr: Optional[HexStr] = None,
@@ -105,7 +100,6 @@ def to_int(
         )
 
 
-@validate_conversion_arguments
 def to_bytes(
     primitive: Optional[Primitives] = None,
     hexstr: Optional[HexStr] = None,
@@ -131,7 +125,6 @@ def to_bytes(
     )
 
 
-@validate_conversion_arguments
 def to_text(
     primitive: Optional[Primitives] = None,
     hexstr: Optional[HexStr] = None,

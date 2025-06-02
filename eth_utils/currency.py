@@ -3,7 +3,9 @@ from decimal import (
     localcontext,
 )
 from typing import (
+    Final,
     Union,
+    final,
 )
 
 from .types import (
@@ -15,34 +17,35 @@ from .units import (
 )
 
 
+@final
 class denoms:
-    wei = int(units["wei"])
-    kwei = int(units["kwei"])
-    babbage = int(units["babbage"])
-    femtoether = int(units["femtoether"])
-    mwei = int(units["mwei"])
-    lovelace = int(units["lovelace"])
-    picoether = int(units["picoether"])
-    gwei = int(units["gwei"])
-    shannon = int(units["shannon"])
-    nanoether = int(units["nanoether"])
-    nano = int(units["nano"])
-    szabo = int(units["szabo"])
-    microether = int(units["microether"])
-    micro = int(units["micro"])
-    finney = int(units["finney"])
-    milliether = int(units["milliether"])
-    milli = int(units["milli"])
-    ether = int(units["ether"])
-    kether = int(units["kether"])
-    grand = int(units["grand"])
-    mether = int(units["mether"])
-    gether = int(units["gether"])
-    tether = int(units["tether"])
+    wei: Final = int(units["wei"])
+    kwei: Final = int(units["kwei"])
+    babbage: Final = int(units["babbage"])
+    femtoether: Final = int(units["femtoether"])
+    mwei: Final = int(units["mwei"])
+    lovelace: Final = int(units["lovelace"])
+    picoether: Final = int(units["picoether"])
+    gwei: Final = int(units["gwei"])
+    shannon: Final = int(units["shannon"])
+    nanoether: Final = int(units["nanoether"])
+    nano: Final = int(units["nano"])
+    szabo: Final = int(units["szabo"])
+    microether: Final = int(units["microether"])
+    micro: Final = int(units["micro"])
+    finney: Final = int(units["finney"])
+    milliether: Final = int(units["milliether"])
+    milli: Final = int(units["milli"])
+    ether: Final = int(units["ether"])
+    kether: Final = int(units["kether"])
+    grand: Final = int(units["grand"])
+    mether: Final = int(units["mether"])
+    gether: Final = int(units["gether"])
+    tether: Final = int(units["tether"])
 
 
-MIN_WEI = 0
-MAX_WEI = 2**256 - 1
+MIN_WEI: Final = 0
+MAX_WEI: Final = 2**256 - 1
 
 
 def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:

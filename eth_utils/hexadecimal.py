@@ -5,6 +5,7 @@ import re
 from typing import (
     Any,
     AnyStr,
+    Final,
 )
 
 from eth_typing import (
@@ -16,7 +17,7 @@ from .types import (
     is_text,
 )
 
-_HEX_REGEXP = re.compile("(0[xX])?[0-9a-fA-F]*")
+_HEX_REGEXP: Final = re.compile("(0[xX])?[0-9a-fA-F]*")
 
 
 def decode_hex(value: str) -> bytes:
