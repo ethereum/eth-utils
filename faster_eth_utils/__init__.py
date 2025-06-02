@@ -141,4 +141,4 @@ from .types import (
     is_tuple,
 )
 
-__version__ = __version("eth-utils")
+__version__ = __version("faster-eth-utils")

@@ -68,6 +68,7 @@ def _align_abi_input(
 
         sub_abis = itertools.repeat(new_abi)
 
+    aligned_arg: Any
     if isinstance(normalized_arg, abc.Mapping):
         # normalized_arg is mapping.  Align values according to abi order.
         aligned_arg = tuple(normalized_arg[abi["name"]] for abi in sub_abis)

@@ -413,8 +413,8 @@ PyObject *CPyDef_abi____align_abi_input(PyObject *cpy_r_arg_abi, PyObject *cpy_r
     char cpy_r_r64;
     PyObject *cpy_r_r65;
     PyObject *cpy_r_aligned_arg;
-    PyObject *cpy_r_r66;
-    char cpy_r_r67;
+    char cpy_r_r66;
+    PyObject *cpy_r_r67;
     PyObject *cpy_r_r68;
     PyObject *cpy_r_r69;
     PyObject *cpy_r_r70;
@@ -425,60 +425,54 @@ PyObject *CPyDef_abi____align_abi_input(PyObject *cpy_r_arg_abi, PyObject *cpy_r
     PyObject *cpy_r_r75;
     PyObject *cpy_r_r76;
     PyObject *cpy_r_r77;
-    PyObject *cpy_r_r78;
-    PyObject **cpy_r_r80;
+    PyObject **cpy_r_r79;
+    PyObject *cpy_r_r80;
     PyObject *cpy_r_r81;
-    PyObject *cpy_r_r82;
-    int32_t cpy_r_r83;
+    int32_t cpy_r_r82;
+    char cpy_r_r83;
     char cpy_r_r84;
-    char cpy_r_r85;
+    PyObject *cpy_r_r85;
     PyObject *cpy_r_r86;
     PyObject *cpy_r_r87;
-    PyObject *cpy_r_r88;
     PyObject *cpy_r_typing;
+    PyObject *cpy_r_r88;
     PyObject *cpy_r_r89;
     PyObject *cpy_r_r90;
-    CPyTagged cpy_r_r91;
+    PyObject *cpy_r_r91;
     PyObject *cpy_r_r92;
-    CPyPtr cpy_r_r93;
-    int64_t cpy_r_r94;
-    CPyTagged cpy_r_r95;
+    PyObject *cpy_r_r93;
+    PyObject *cpy_r_r94;
+    int32_t cpy_r_r95;
     char cpy_r_r96;
-    PyObject *cpy_r_r97;
-    PyObject *cpy_r_r98;
+    char cpy_r_r97;
+    char cpy_r_r98;
     PyObject *cpy_r_r99;
-    int32_t cpy_r_r100;
-    char cpy_r_r101;
-    CPyTagged cpy_r_r102;
-    char cpy_r_r103;
-    PyObject *cpy_r_r104;
-    PyObject **cpy_r_r106;
-    PyObject *cpy_r_r107;
-    PyObject *cpy_r_r108;
-    PyObject *cpy_r_r109;
+    PyObject **cpy_r_r101;
+    PyObject *cpy_r_r102;
+    PyObject *cpy_r_r103;
     cpy_r_r0 = CPyStatics[3]; /* 'type' */
     cpy_r_r1 = CPyStatics[4]; /* '' */
     cpy_r_r2 = CPyDict_Get(cpy_r_arg_abi, cpy_r_r0, cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 50, CPyStatic_abi___globals);
-        goto CPyL70;
+        goto CPyL67;
     }
     if (likely(PyUnicode_Check(cpy_r_r2)))
         cpy_r_r3 = cpy_r_r2;
     else {
         CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 50, CPyStatic_abi___globals, "str", cpy_r_r2);
-        goto CPyL70;
+        goto CPyL67;
     }
     cpy_r_r4 = CPyDef_abi____get_tuple_type_str_and_dims(cpy_r_r3);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 50, CPyStatic_abi___globals);
-        goto CPyL70;
+        goto CPyL67;
     }
     cpy_r_r5 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r6 = cpy_r_r4 == cpy_r_r5;
     if (cpy_r_r6) {
-        goto CPyL71;
+        goto CPyL68;
     } else
         goto CPyL5;
 CPyL4: ;
@@ -549,7 +543,7 @@ __LL8: ;
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r7.f0 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 56, CPyStatic_abi___globals);
-        goto CPyL70;
+        goto CPyL67;
     }
     cpy_r_r8 = cpy_r_r7.f0;
     cpy_r_r9 = cpy_r_r7.f1;
@@ -558,7 +552,7 @@ __LL8: ;
     cpy_r_r12 = (PyObject *)&_Py_NoneStruct;
     cpy_r_r13 = cpy_r_r11 == cpy_r_r12;
     if (cpy_r_r13) {
-        goto CPyL72;
+        goto CPyL69;
     } else
         goto CPyL10;
 CPyL7: ;
@@ -566,13 +560,13 @@ CPyL7: ;
     cpy_r_r15 = PyList_New(0);
     if (unlikely(cpy_r_r15 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 60, CPyStatic_abi___globals);
-        goto CPyL70;
+        goto CPyL67;
     }
     cpy_r_r16 = CPyDict_Get(cpy_r_arg_abi, cpy_r_r14, cpy_r_r15);
     CPy_DECREF_NO_IMM(cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 60, CPyStatic_abi___globals);
-        goto CPyL70;
+        goto CPyL67;
     }
     cpy_r_sub_abis = cpy_r_r16;
     goto CPyL23;
@@ -581,7 +575,7 @@ CPyL10: ;
         cpy_r_r17 = cpy_r_r11;
     else {
         CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 62, CPyStatic_abi___globals, "str", cpy_r_r11);
-        goto CPyL73;
+        goto CPyL70;
     }
     cpy_r_r18 = CPyStatics[6]; /* '[' */
     cpy_r_r19 = CPyStatics[7]; /* 'count' */
@@ -590,7 +584,7 @@ CPyL10: ;
     cpy_r_r22 = PyObject_VectorcallMethod(cpy_r_r19, cpy_r_r21, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r22 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 62, CPyStatic_abi___globals);
-        goto CPyL74;
+        goto CPyL71;
     }
     CPy_DECREF(cpy_r_r17);
     if (likely(PyLong_Check(cpy_r_r22)))
@@ -601,14 +595,14 @@ CPyL10: ;
     CPy_DECREF(cpy_r_r22);
     if (unlikely(cpy_r_r23 == CPY_INT_TAG)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 62, CPyStatic_abi___globals);
-        goto CPyL73;
+        goto CPyL70;
     }
     cpy_r_r24 = CPyModule_copy;
     cpy_r_r25 = CPyStatics[8]; /* 'copy' */
     cpy_r_r26 = CPyObject_GetAttr(cpy_r_r24, cpy_r_r25);
     if (unlikely(cpy_r_r26 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 66, CPyStatic_abi___globals);
-        goto CPyL75;
+        goto CPyL72;
     }
     PyObject *cpy_r_r27[1] = {cpy_r_arg_abi};
     cpy_r_r28 = (PyObject **)&cpy_r_r27;
@@ -616,13 +610,13 @@ CPyL10: ;
     CPy_DECREF(cpy_r_r26);
     if (unlikely(cpy_r_r29 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 66, CPyStatic_abi___globals);
-        goto CPyL75;
+        goto CPyL72;
     }
     if (likely(PyDict_Check(cpy_r_r29)))
         cpy_r_r30 = cpy_r_r29;
     else {
         CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 66, CPyStatic_abi___globals, "dict", cpy_r_r29);
-        goto CPyL75;
+        goto CPyL72;
     }
     cpy_r_r31 = CPyStatics[9]; /* '[]' */
     cpy_r_r32 = CPyTagged_Subtract(cpy_r_r23, 2);
@@ -632,20 +626,20 @@ CPyL10: ;
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r34 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 67, CPyStatic_abi___globals);
-        goto CPyL76;
+        goto CPyL73;
     }
     if (likely(PyUnicode_Check(cpy_r_r34)))
         cpy_r_r35 = cpy_r_r34;
     else {
         CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 67, CPyStatic_abi___globals, "str", cpy_r_r34);
-        goto CPyL76;
+        goto CPyL73;
     }
     cpy_r_r36 = PyUnicode_Concat(cpy_r_r10, cpy_r_r35);
     CPy_DECREF(cpy_r_r10);
     CPy_DECREF(cpy_r_r35);
     if (unlikely(cpy_r_r36 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 67, CPyStatic_abi___globals);
-        goto CPyL77;
+        goto CPyL74;
     }
     cpy_r_r37 = CPyStatics[3]; /* 'type' */
     cpy_r_r38 = CPyDict_SetItem(cpy_r_r30, cpy_r_r37, cpy_r_r36);
@@ -653,14 +647,14 @@ CPyL10: ;
     cpy_r_r39 = cpy_r_r38 >= 0;
     if (unlikely(!cpy_r_r39)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 67, CPyStatic_abi___globals);
-        goto CPyL77;
+        goto CPyL74;
     }
     cpy_r_r40 = CPyModule_itertools;
     cpy_r_r41 = CPyStatics[10]; /* 'repeat' */
     cpy_r_r42 = CPyObject_GetAttr(cpy_r_r40, cpy_r_r41);
     if (unlikely(cpy_r_r42 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 69, CPyStatic_abi___globals);
-        goto CPyL77;
+        goto CPyL74;
     }
     PyObject *cpy_r_r43[1] = {cpy_r_r30};
     cpy_r_r44 = (PyObject **)&cpy_r_r43;
@@ -668,7 +662,7 @@ CPyL10: ;
     CPy_DECREF(cpy_r_r42);
     if (unlikely(cpy_r_r45 == NULL)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 69, CPyStatic_abi___globals);
-        goto CPyL77;
+        goto CPyL74;
     }
     CPy_DECREF(cpy_r_r30);
     cpy_r_sub_abis = cpy_r_r45;
@@ -677,366 +671,359 @@ CPyL23: ;
     cpy_r_r47 = CPyStatics[11]; /* 'abc' */
     cpy_r_r48 = CPyDict_GetItem(cpy_r_r46, cpy_r_r47);
     if (unlikely(cpy_r_r48 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 71, CPyStatic_abi___globals);
-        goto CPyL78;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 72, CPyStatic_abi___globals);
+        goto CPyL75;
     }
     cpy_r_r49 = CPyStatics[12]; /* 'Mapping' */
     cpy_r_r50 = CPyObject_GetAttr(cpy_r_r48, cpy_r_r49);
     CPy_DECREF(cpy_r_r48);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 71, CPyStatic_abi___globals);
-        goto CPyL78;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 72, CPyStatic_abi___globals);
+        goto CPyL75;
     }
     cpy_r_r51 = PyObject_IsInstance(cpy_r_normalized_arg, cpy_r_r50);
     CPy_DECREF(cpy_r_r50);
     cpy_r_r52 = cpy_r_r51 >= 0;
     if (unlikely(!cpy_r_r52)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 71, CPyStatic_abi___globals);
-        goto CPyL78;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 72, CPyStatic_abi___globals);
+        goto CPyL75;
     }
     cpy_r_r53 = cpy_r_r51;
     if (!cpy_r_r53) goto CPyL38;
     cpy_r_r54 = PyList_New(0);
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL78;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL75;
     }
     cpy_r_r55 = PyObject_GetIter(cpy_r_sub_abis);
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL79;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL76;
     }
 CPyL29: ;
     cpy_r_r56 = PyIter_Next(cpy_r_r55);
-    if (cpy_r_r56 == NULL) goto CPyL80;
+    if (cpy_r_r56 == NULL) goto CPyL77;
     if (likely(PyDict_Check(cpy_r_r56)))
         cpy_r_r57 = cpy_r_r56;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals, "dict", cpy_r_r56);
-        goto CPyL81;
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals, "dict", cpy_r_r56);
+        goto CPyL78;
     }
     cpy_r_r58 = CPyStatics[13]; /* 'name' */
     cpy_r_r59 = CPyDict_GetItem(cpy_r_r57, cpy_r_r58);
     CPy_DECREF(cpy_r_r57);
     if (unlikely(cpy_r_r59 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL81;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL78;
     }
     if (likely(PyUnicode_Check(cpy_r_r59)))
         cpy_r_r60 = cpy_r_r59;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals, "str", cpy_r_r59);
-        goto CPyL81;
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals, "str", cpy_r_r59);
+        goto CPyL78;
     }
     cpy_r_r61 = PyObject_GetItem(cpy_r_normalized_arg, cpy_r_r60);
     CPy_DECREF(cpy_r_r60);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL81;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL78;
     }
     cpy_r_r62 = PyList_Append(cpy_r_r54, cpy_r_r61);
     CPy_DECREF(cpy_r_r61);
     cpy_r_r63 = cpy_r_r62 >= 0;
     if (unlikely(!cpy_r_r63)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL81;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL78;
     } else
         goto CPyL29;
 CPyL35: ;
     cpy_r_r64 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r64)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL79;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL76;
     }
     cpy_r_r65 = PyList_AsTuple(cpy_r_r54);
     CPy_DECREF_NO_IMM(cpy_r_r54);
     if (unlikely(cpy_r_r65 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 73, CPyStatic_abi___globals);
-        goto CPyL78;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 74, CPyStatic_abi___globals);
+        goto CPyL75;
     }
     cpy_r_aligned_arg = cpy_r_r65;
-    goto CPyL40;
+    goto CPyL39;
 CPyL38: ;
     CPy_INCREF(cpy_r_normalized_arg);
-    if (likely(PyTuple_Check(cpy_r_normalized_arg)))
-        cpy_r_r66 = cpy_r_normalized_arg;
-    else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 75, CPyStatic_abi___globals, "tuple", cpy_r_normalized_arg);
-        goto CPyL78;
+    cpy_r_aligned_arg = cpy_r_normalized_arg;
+CPyL39: ;
+    cpy_r_r66 = CPyDef_types___is_list_like(cpy_r_aligned_arg);
+    if (unlikely(cpy_r_r66 == 2)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 78, CPyStatic_abi___globals);
+        goto CPyL79;
     }
-    cpy_r_aligned_arg = cpy_r_r66;
-CPyL40: ;
-    cpy_r_r67 = CPyDef_types___is_list_like(cpy_r_aligned_arg);
-    if (unlikely(cpy_r_r67 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 77, CPyStatic_abi___globals);
+    if (cpy_r_r66) {
+        goto CPyL50;
+    } else
+        goto CPyL80;
+CPyL41: ;
+    cpy_r_r67 = CPyStatics[14]; /* 'Expected non-string sequence for "' */
+    cpy_r_r68 = CPyStatics[3]; /* 'type' */
+    cpy_r_r69 = CPyDict_GetWithNone(cpy_r_arg_abi, cpy_r_r68);
+    if (unlikely(cpy_r_r69 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 80, CPyStatic_abi___globals);
+        goto CPyL81;
+    }
+    if (PyUnicode_Check(cpy_r_r69))
+        cpy_r_r70 = cpy_r_r69;
+    else {
+        cpy_r_r70 = NULL;
+    }
+    if (cpy_r_r70 != NULL) goto __LL9;
+    if (cpy_r_r69 == Py_None)
+        cpy_r_r70 = cpy_r_r69;
+    else {
+        cpy_r_r70 = NULL;
+    }
+    if (cpy_r_r70 != NULL) goto __LL9;
+    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 80, CPyStatic_abi___globals, "str or None", cpy_r_r69);
+    goto CPyL81;
+__LL9: ;
+    cpy_r_r71 = PyObject_Str(cpy_r_r70);
+    CPy_DECREF(cpy_r_r70);
+    if (unlikely(cpy_r_r71 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 80, CPyStatic_abi___globals);
+        goto CPyL81;
+    }
+    cpy_r_r72 = CPyStatics[15]; /* '" component type: got ' */
+    cpy_r_r73 = PyObject_Str(cpy_r_aligned_arg);
+    CPy_DECREF(cpy_r_aligned_arg);
+    if (unlikely(cpy_r_r73 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 80, CPyStatic_abi___globals);
         goto CPyL82;
     }
-    if (cpy_r_r67) {
-        goto CPyL51;
-    } else
-        goto CPyL83;
-CPyL42: ;
-    cpy_r_r68 = CPyStatics[14]; /* 'Expected non-string sequence for "' */
-    cpy_r_r69 = CPyStatics[3]; /* 'type' */
-    cpy_r_r70 = CPyDict_GetWithNone(cpy_r_arg_abi, cpy_r_r69);
-    if (unlikely(cpy_r_r70 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
-        goto CPyL84;
-    }
-    if (PyUnicode_Check(cpy_r_r70))
-        cpy_r_r71 = cpy_r_r70;
-    else {
-        cpy_r_r71 = NULL;
-    }
-    if (cpy_r_r71 != NULL) goto __LL9;
-    if (cpy_r_r70 == Py_None)
-        cpy_r_r71 = cpy_r_r70;
-    else {
-        cpy_r_r71 = NULL;
-    }
-    if (cpy_r_r71 != NULL) goto __LL9;
-    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals, "str or None", cpy_r_r70);
-    goto CPyL84;
-__LL9: ;
-    cpy_r_r72 = PyObject_Str(cpy_r_r71);
+    cpy_r_r74 = CPyStr_Build(4, cpy_r_r67, cpy_r_r71, cpy_r_r72, cpy_r_r73);
     CPy_DECREF(cpy_r_r71);
-    if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
-        goto CPyL84;
-    }
-    cpy_r_r73 = CPyStatics[15]; /* '" component type: got ' */
-    cpy_r_r74 = PyObject_Str(cpy_r_aligned_arg);
-    CPy_DECREF(cpy_r_aligned_arg);
+    CPy_DECREF(cpy_r_r73);
     if (unlikely(cpy_r_r74 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
-        goto CPyL85;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 80, CPyStatic_abi___globals);
+        goto CPyL67;
     }
-    cpy_r_r75 = CPyStr_Build(4, cpy_r_r68, cpy_r_r72, cpy_r_r73, cpy_r_r74);
-    CPy_DECREF(cpy_r_r72);
+    cpy_r_r75 = CPyModule_builtins;
+    cpy_r_r76 = CPyStatics[16]; /* 'TypeError' */
+    cpy_r_r77 = CPyObject_GetAttr(cpy_r_r75, cpy_r_r76);
+    if (unlikely(cpy_r_r77 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
+        goto CPyL83;
+    }
+    PyObject *cpy_r_r78[1] = {cpy_r_r74};
+    cpy_r_r79 = (PyObject **)&cpy_r_r78;
+    cpy_r_r80 = PyObject_Vectorcall(cpy_r_r77, cpy_r_r79, 1, 0);
+    CPy_DECREF(cpy_r_r77);
+    if (unlikely(cpy_r_r80 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
+        goto CPyL83;
+    }
     CPy_DECREF(cpy_r_r74);
-    if (unlikely(cpy_r_r75 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
-        goto CPyL70;
-    }
-    cpy_r_r76 = CPyModule_builtins;
-    cpy_r_r77 = CPyStatics[16]; /* 'TypeError' */
-    cpy_r_r78 = CPyObject_GetAttr(cpy_r_r76, cpy_r_r77);
-    if (unlikely(cpy_r_r78 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 78, CPyStatic_abi___globals);
-        goto CPyL86;
-    }
-    PyObject *cpy_r_r79[1] = {cpy_r_r75};
-    cpy_r_r80 = (PyObject **)&cpy_r_r79;
-    cpy_r_r81 = PyObject_Vectorcall(cpy_r_r78, cpy_r_r80, 1, 0);
-    CPy_DECREF(cpy_r_r78);
-    if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 78, CPyStatic_abi___globals);
-        goto CPyL86;
-    }
-    CPy_DECREF(cpy_r_r75);
-    CPy_Raise(cpy_r_r81);
-    CPy_DECREF(cpy_r_r81);
+    CPy_Raise(cpy_r_r80);
+    CPy_DECREF(cpy_r_r80);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 78, CPyStatic_abi___globals);
-        goto CPyL70;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 79, CPyStatic_abi___globals);
+        goto CPyL67;
     }
     CPy_Unreachable();
-CPyL51: ;
-    cpy_r_r82 = (PyObject *)&PyTuple_Type;
-    cpy_r_r83 = PyObject_IsInstance(cpy_r_aligned_arg, cpy_r_r82);
-    cpy_r_r84 = cpy_r_r83 >= 0;
-    if (unlikely(!cpy_r_r84)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 84, CPyStatic_abi___globals);
-        goto CPyL82;
+CPyL50: ;
+    cpy_r_r81 = (PyObject *)&PyTuple_Type;
+    cpy_r_r82 = PyObject_IsInstance(cpy_r_aligned_arg, cpy_r_r81);
+    cpy_r_r83 = cpy_r_r82 >= 0;
+    if (unlikely(!cpy_r_r83)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 85, CPyStatic_abi___globals);
+        goto CPyL79;
     }
-    cpy_r_r85 = cpy_r_r83;
-    if (!cpy_r_r85) goto CPyL54;
-    cpy_r_r86 = (PyObject *)&PyTuple_Type;
-    CPy_INCREF(cpy_r_r86);
-    cpy_r_r87 = cpy_r_r86;
-    goto CPyL55;
+    cpy_r_r84 = cpy_r_r82;
+    if (!cpy_r_r84) goto CPyL53;
+    cpy_r_r85 = (PyObject *)&PyTuple_Type;
+    CPy_INCREF(cpy_r_r85);
+    cpy_r_r86 = cpy_r_r85;
+    goto CPyL54;
+CPyL53: ;
+    cpy_r_r87 = PyObject_Type(cpy_r_aligned_arg);
+    cpy_r_r86 = cpy_r_r87;
 CPyL54: ;
-    cpy_r_r88 = PyObject_Type(cpy_r_aligned_arg);
-    cpy_r_r87 = cpy_r_r88;
-CPyL55: ;
-    cpy_r_typing = cpy_r_r87;
-    cpy_r_r89 = PyList_New(0);
-    if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
-        goto CPyL87;
+    cpy_r_typing = cpy_r_r86;
+    cpy_r_r88 = PyList_New(0);
+    if (unlikely(cpy_r_r88 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
+        goto CPyL84;
     }
-    cpy_r_r90 = PyObject_GetIter(cpy_r_sub_abis);
+    cpy_r_r89 = PyObject_GetIter(cpy_r_sub_abis);
     CPy_DECREF(cpy_r_sub_abis);
+    if (unlikely(cpy_r_r89 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
+        goto CPyL85;
+    }
+    cpy_r_r90 = PyObject_GetIter(cpy_r_aligned_arg);
+    CPy_DECREF(cpy_r_aligned_arg);
     if (unlikely(cpy_r_r90 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
-        goto CPyL88;
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
+        goto CPyL86;
     }
-    cpy_r_r91 = 0;
-CPyL58: ;
+CPyL57: ;
+    cpy_r_r91 = PyIter_Next(cpy_r_r89);
+    if (cpy_r_r91 == NULL) goto CPyL87;
     cpy_r_r92 = PyIter_Next(cpy_r_r90);
-    if (cpy_r_r92 == NULL) goto CPyL89;
-    cpy_r_r93 = (CPyPtr)&((PyVarObject *)cpy_r_aligned_arg)->ob_size;
-    cpy_r_r94 = *(int64_t *)cpy_r_r93;
-    cpy_r_r95 = cpy_r_r94 << 1;
-    cpy_r_r96 = (Py_ssize_t)cpy_r_r91 < (Py_ssize_t)cpy_r_r95;
-    if (!cpy_r_r96) goto CPyL90;
-    if (likely(PyDict_Check(cpy_r_r92)))
-        cpy_r_r97 = cpy_r_r92;
+    if (cpy_r_r92 == NULL) goto CPyL88;
+    if (likely(PyDict_Check(cpy_r_r91)))
+        cpy_r_r93 = cpy_r_r91;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals, "dict", cpy_r_r92);
-        goto CPyL91;
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals, "dict", cpy_r_r91);
+        goto CPyL89;
     }
-    cpy_r_r98 = CPySequenceTuple_GetItem(cpy_r_aligned_arg, cpy_r_r91);
-    if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
-        goto CPyL92;
+    cpy_r_r94 = CPyDef_abi____align_abi_input(cpy_r_r93, cpy_r_r92);
+    CPy_DECREF(cpy_r_r93);
+    CPy_DECREF(cpy_r_r92);
+    if (unlikely(cpy_r_r94 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 88, CPyStatic_abi___globals);
+        goto CPyL90;
     }
-    cpy_r_r99 = CPyDef_abi____align_abi_input(cpy_r_r97, cpy_r_r98);
-    CPy_DECREF(cpy_r_r97);
-    CPy_DECREF(cpy_r_r98);
-    if (unlikely(cpy_r_r99 == NULL)) {
+    cpy_r_r95 = PyList_Append(cpy_r_r88, cpy_r_r94);
+    CPy_DECREF(cpy_r_r94);
+    cpy_r_r96 = cpy_r_r95 >= 0;
+    if (unlikely(!cpy_r_r96)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
+        goto CPyL90;
+    } else
+        goto CPyL57;
+CPyL62: ;
+    cpy_r_r97 = CPy_NoErrOccurred();
+    if (unlikely(!cpy_r_r97)) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
         goto CPyL91;
     }
-    cpy_r_r100 = PyList_Append(cpy_r_r89, cpy_r_r99);
-    CPy_DECREF(cpy_r_r99);
-    cpy_r_r101 = cpy_r_r100 >= 0;
-    if (unlikely(!cpy_r_r101)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
+    cpy_r_r98 = CPy_NoErrOccurred();
+    if (unlikely(!cpy_r_r98)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
         goto CPyL91;
     }
-    cpy_r_r102 = cpy_r_r91 + 2;
-    cpy_r_r91 = cpy_r_r102;
-    goto CPyL58;
-CPyL65: ;
-    cpy_r_r103 = CPy_NoErrOccurred();
-    if (unlikely(!cpy_r_r103)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
+    cpy_r_r99 = PyObject_GetIter(cpy_r_r88);
+    CPy_DECREF_NO_IMM(cpy_r_r88);
+    if (unlikely(cpy_r_r99 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
+        goto CPyL92;
+    }
+    PyObject *cpy_r_r100[1] = {cpy_r_r99};
+    cpy_r_r101 = (PyObject **)&cpy_r_r100;
+    cpy_r_r102 = PyObject_Vectorcall(cpy_r_typing, cpy_r_r101, 1, 0);
+    CPy_DECREF(cpy_r_typing);
+    if (unlikely(cpy_r_r102 == NULL)) {
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 87, CPyStatic_abi___globals);
         goto CPyL93;
     }
-    cpy_r_r104 = PyObject_GetIter(cpy_r_r89);
-    CPy_DECREF_NO_IMM(cpy_r_r89);
-    if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
-        goto CPyL94;
-    }
-    PyObject *cpy_r_r105[1] = {cpy_r_r104};
-    cpy_r_r106 = (PyObject **)&cpy_r_r105;
-    cpy_r_r107 = PyObject_Vectorcall(cpy_r_typing, cpy_r_r106, 1, 0);
-    CPy_DECREF(cpy_r_typing);
-    if (unlikely(cpy_r_r107 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals);
-        goto CPyL95;
-    }
-    CPy_DECREF(cpy_r_r104);
-    if (likely(PyTuple_Check(cpy_r_r107)))
-        cpy_r_r108 = cpy_r_r107;
-    else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_align_abi_input", 86, CPyStatic_abi___globals, "tuple", cpy_r_r107);
-        goto CPyL70;
-    }
-    return cpy_r_r108;
-CPyL70: ;
-    cpy_r_r109 = NULL;
-    return cpy_r_r109;
-CPyL71: ;
+    CPy_DECREF(cpy_r_r99);
+    return cpy_r_r102;
+CPyL67: ;
+    cpy_r_r103 = NULL;
+    return cpy_r_r103;
+CPyL68: ;
     CPy_DECREF(cpy_r_r4);
     goto CPyL4;
-CPyL72: ;
+CPyL69: ;
     CPy_DECREF(cpy_r_r10);
     CPy_DECREF(cpy_r_r11);
     goto CPyL7;
-CPyL73: ;
+CPyL70: ;
     CPy_DecRef(cpy_r_r10);
-    goto CPyL70;
-CPyL74: ;
+    goto CPyL67;
+CPyL71: ;
     CPy_DecRef(cpy_r_r10);
     CPy_DecRef(cpy_r_r17);
-    goto CPyL70;
-CPyL75: ;
+    goto CPyL67;
+CPyL72: ;
     CPy_DecRef(cpy_r_r10);
     CPyTagged_DecRef(cpy_r_r23);
-    goto CPyL70;
-CPyL76: ;
+    goto CPyL67;
+CPyL73: ;
     CPy_DecRef(cpy_r_r10);
     CPy_DecRef(cpy_r_r30);
-    goto CPyL70;
-CPyL77: ;
+    goto CPyL67;
+CPyL74: ;
     CPy_DecRef(cpy_r_r30);
-    goto CPyL70;
-CPyL78: ;
+    goto CPyL67;
+CPyL75: ;
     CPy_DecRef(cpy_r_sub_abis);
-    goto CPyL70;
-CPyL79: ;
+    goto CPyL67;
+CPyL76: ;
     CPy_DecRef(cpy_r_sub_abis);
     CPy_DecRef(cpy_r_r54);
-    goto CPyL70;
-CPyL80: ;
+    goto CPyL67;
+CPyL77: ;
     CPy_DECREF(cpy_r_r55);
     goto CPyL35;
-CPyL81: ;
+CPyL78: ;
     CPy_DecRef(cpy_r_sub_abis);
     CPy_DecRef(cpy_r_r54);
     CPy_DecRef(cpy_r_r55);
-    goto CPyL70;
-CPyL82: ;
+    goto CPyL67;
+CPyL79: ;
     CPy_DecRef(cpy_r_sub_abis);
     CPy_DecRef(cpy_r_aligned_arg);
-    goto CPyL70;
-CPyL83: ;
+    goto CPyL67;
+CPyL80: ;
     CPy_DECREF(cpy_r_sub_abis);
-    goto CPyL42;
-CPyL84: ;
+    goto CPyL41;
+CPyL81: ;
     CPy_DecRef(cpy_r_aligned_arg);
-    goto CPyL70;
-CPyL85: ;
-    CPy_DecRef(cpy_r_r72);
-    goto CPyL70;
-CPyL86: ;
-    CPy_DecRef(cpy_r_r75);
-    goto CPyL70;
-CPyL87: ;
+    goto CPyL67;
+CPyL82: ;
+    CPy_DecRef(cpy_r_r71);
+    goto CPyL67;
+CPyL83: ;
+    CPy_DecRef(cpy_r_r74);
+    goto CPyL67;
+CPyL84: ;
     CPy_DecRef(cpy_r_sub_abis);
     CPy_DecRef(cpy_r_aligned_arg);
     CPy_DecRef(cpy_r_typing);
-    goto CPyL70;
+    goto CPyL67;
+CPyL85: ;
+    CPy_DecRef(cpy_r_aligned_arg);
+    CPy_DecRef(cpy_r_typing);
+    CPy_DecRef(cpy_r_r88);
+    goto CPyL67;
+CPyL86: ;
+    CPy_DecRef(cpy_r_typing);
+    CPy_DecRef(cpy_r_r88);
+    CPy_DecRef(cpy_r_r89);
+    goto CPyL67;
+CPyL87: ;
+    CPy_DECREF(cpy_r_r89);
+    CPy_DECREF(cpy_r_r90);
+    goto CPyL62;
 CPyL88: ;
-    CPy_DecRef(cpy_r_aligned_arg);
-    CPy_DecRef(cpy_r_typing);
-    CPy_DecRef(cpy_r_r89);
-    goto CPyL70;
+    CPy_DECREF(cpy_r_r89);
+    CPy_DECREF(cpy_r_r90);
+    CPy_DECREF(cpy_r_r91);
+    goto CPyL62;
 CPyL89: ;
-    CPy_DECREF(cpy_r_aligned_arg);
-    CPy_DECREF(cpy_r_r90);
-    goto CPyL65;
+    CPy_DecRef(cpy_r_typing);
+    CPy_DecRef(cpy_r_r88);
+    CPy_DecRef(cpy_r_r89);
+    CPy_DecRef(cpy_r_r90);
+    CPy_DecRef(cpy_r_r92);
+    goto CPyL67;
 CPyL90: ;
-    CPy_DECREF(cpy_r_aligned_arg);
-    CPy_DECREF(cpy_r_r90);
-    CPy_DECREF(cpy_r_r92);
-    goto CPyL65;
+    CPy_DecRef(cpy_r_typing);
+    CPy_DecRef(cpy_r_r88);
+    CPy_DecRef(cpy_r_r89);
+    CPy_DecRef(cpy_r_r90);
+    goto CPyL67;
 CPyL91: ;
-    CPy_DecRef(cpy_r_aligned_arg);
     CPy_DecRef(cpy_r_typing);
-    CPy_DecRef(cpy_r_r89);
-    CPy_DecRef(cpy_r_r90);
-    goto CPyL70;
+    CPy_DecRef(cpy_r_r88);
+    goto CPyL67;
 CPyL92: ;
-    CPy_DecRef(cpy_r_aligned_arg);
     CPy_DecRef(cpy_r_typing);
-    CPy_DecRef(cpy_r_r89);
-    CPy_DecRef(cpy_r_r90);
-    CPy_DecRef(cpy_r_r97);
-    goto CPyL70;
+    goto CPyL67;
 CPyL93: ;
-    CPy_DecRef(cpy_r_typing);
-    CPy_DecRef(cpy_r_r89);
-    goto CPyL70;
-CPyL94: ;
-    CPy_DecRef(cpy_r_typing);
-    goto CPyL70;
-CPyL95: ;
-    CPy_DecRef(cpy_r_r104);
-    goto CPyL70;
+    CPy_DecRef(cpy_r_r99);
+    goto CPyL67;
 }
 
 PyObject *CPyPy_abi____align_abi_input(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
@@ -1095,7 +1082,7 @@ PyObject *CPyDef_abi____get_tuple_type_str_and_dims(PyObject *cpy_r_s) {
     cpy_r_r2 = CPyStatics[18]; /* 'compile' */
     cpy_r_r3 = CPyObject_GetAttr(cpy_r_r1, cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 98, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 99, CPyStatic_abi___globals);
         goto CPyL13;
     }
     PyObject *cpy_r_r4[1] = {cpy_r_r0};
@@ -1103,7 +1090,7 @@ PyObject *CPyDef_abi____get_tuple_type_str_and_dims(PyObject *cpy_r_s) {
     cpy_r_r6 = PyObject_Vectorcall(cpy_r_r3, cpy_r_r5, 1, 0);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 98, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 99, CPyStatic_abi___globals);
         goto CPyL13;
     }
     CPy_DECREF(cpy_r_r0);
@@ -1112,7 +1099,7 @@ PyObject *CPyDef_abi____get_tuple_type_str_and_dims(PyObject *cpy_r_s) {
     cpy_r_r9 = (PyObject **)&cpy_r_r8;
     cpy_r_r10 = PyObject_VectorcallMethod(cpy_r_r7, cpy_r_r9, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 98, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 99, CPyStatic_abi___globals);
         goto CPyL14;
     }
     CPy_DECREF(cpy_r_r6);
@@ -1134,7 +1121,7 @@ CPyL5: ;
     cpy_r_r17 = PyObject_GetItem(cpy_r_r15, cpy_r_r16);
     CPy_DECREF(cpy_r_r15);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 100, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 101, CPyStatic_abi___globals);
         goto CPyL16;
     }
     cpy_r_r18 = cpy_r_r17;
@@ -1143,7 +1130,7 @@ CPyL5: ;
     cpy_r_r21 = PyObject_GetItem(cpy_r_r19, cpy_r_r20);
     CPy_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r21 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 100, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 101, CPyStatic_abi___globals);
         goto CPyL17;
     }
     cpy_r_r22 = cpy_r_r21;
@@ -1192,7 +1179,7 @@ __LL13: ;
         cpy_r_r25 = NULL;
     }
     if (cpy_r_r25 != NULL) goto __LL12;
-    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 100, CPyStatic_abi___globals, "tuple[str, union[str, None]] or None", cpy_r_r14);
+    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 101, CPyStatic_abi___globals, "tuple[str, union[str, None]] or None", cpy_r_r14);
     goto CPyL12;
 __LL12: ;
     return cpy_r_r25;
@@ -1233,7 +1220,7 @@ PyObject *CPyPy_abi____get_tuple_type_str_and_dims(PyObject *self, PyObject *con
     PyObject *retval = CPyDef_abi____get_tuple_type_str_and_dims(arg_s);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 92, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "_get_tuple_type_str_and_dims", 93, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -1268,13 +1255,13 @@ char CPyDef_abi____raise_if_not_function_abi(PyObject *cpy_r_abi_element) {
     cpy_r_r0 = CPyStatics[3]; /* 'type' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_abi_element, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 104, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 105, CPyStatic_abi___globals);
         goto CPyL17;
     }
     if (likely(PyUnicode_Check(cpy_r_r1)))
         cpy_r_r2 = cpy_r_r1;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 104, CPyStatic_abi___globals, "str", cpy_r_r1);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 105, CPyStatic_abi___globals, "str", cpy_r_r1);
         goto CPyL17;
     }
     cpy_r_r3 = CPyStatics[20]; /* 'function' */
@@ -1287,7 +1274,7 @@ char CPyDef_abi____raise_if_not_function_abi(PyObject *cpy_r_abi_element) {
     if (!cpy_r_r7) goto CPyL5;
     cpy_r_r8 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r8)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 104, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 105, CPyStatic_abi___globals);
         goto CPyL17;
     }
 CPyL5: ;
@@ -1298,7 +1285,7 @@ CPyL5: ;
     cpy_r_r11 = CPyStatics[3]; /* 'type' */
     cpy_r_r12 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r11);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 107, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 108, CPyStatic_abi___globals);
         goto CPyL17;
     }
     if (PyUnicode_Check(cpy_r_r12))
@@ -1313,26 +1300,26 @@ CPyL5: ;
         cpy_r_r13 = NULL;
     }
     if (cpy_r_r13 != NULL) goto __LL15;
-    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 107, CPyStatic_abi___globals, "str or None", cpy_r_r12);
+    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 108, CPyStatic_abi___globals, "str or None", cpy_r_r12);
     goto CPyL17;
 __LL15: ;
     cpy_r_r14 = PyObject_Str(cpy_r_r13);
     CPy_DECREF(cpy_r_r13);
     if (unlikely(cpy_r_r14 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 106, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 107, CPyStatic_abi___globals);
         goto CPyL17;
     }
     cpy_r_r15 = CPyStatics[22]; /* '` and outputs were `' */
     cpy_r_r16 = CPyStatics[23]; /* 'outputs' */
     cpy_r_r17 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r16);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 108, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 109, CPyStatic_abi___globals);
         goto CPyL18;
     }
     cpy_r_r18 = PyObject_Str(cpy_r_r17);
     CPy_DECREF(cpy_r_r17);
     if (unlikely(cpy_r_r18 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 106, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 107, CPyStatic_abi___globals);
         goto CPyL18;
     }
     cpy_r_r19 = CPyStatics[24]; /* '`.' */
@@ -1340,14 +1327,14 @@ __LL15: ;
     CPy_DECREF(cpy_r_r14);
     CPy_DECREF(cpy_r_r18);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 106, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 107, CPyStatic_abi___globals);
         goto CPyL17;
     }
     cpy_r_r21 = CPyModule_builtins;
     cpy_r_r22 = CPyStatics[25]; /* 'ValueError' */
     cpy_r_r23 = CPyObject_GetAttr(cpy_r_r21, cpy_r_r22);
     if (unlikely(cpy_r_r23 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 105, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 106, CPyStatic_abi___globals);
         goto CPyL19;
     }
     PyObject *cpy_r_r24[1] = {cpy_r_r20};
@@ -1355,14 +1342,14 @@ __LL15: ;
     cpy_r_r26 = PyObject_Vectorcall(cpy_r_r23, cpy_r_r25, 1, 0);
     CPy_DECREF(cpy_r_r23);
     if (unlikely(cpy_r_r26 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 105, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 106, CPyStatic_abi___globals);
         goto CPyL19;
     }
     CPy_DECREF(cpy_r_r20);
     CPy_Raise(cpy_r_r26);
     CPy_DECREF(cpy_r_r26);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 105, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 106, CPyStatic_abi___globals);
         goto CPyL17;
     }
     CPy_Unreachable();
@@ -1401,7 +1388,7 @@ PyObject *CPyPy_abi____raise_if_not_function_abi(PyObject *self, PyObject *const
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 103, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_not_function_abi", 104, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -1445,13 +1432,13 @@ char CPyDef_abi____raise_if_fallback_or_receive_abi(PyObject *cpy_r_abi_element)
     cpy_r_r0 = CPyStatics[3]; /* 'type' */
     cpy_r_r1 = CPyDict_GetItem(cpy_r_abi_element, cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 113, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals);
         goto CPyL23;
     }
     if (likely(PyUnicode_Check(cpy_r_r1)))
         cpy_r_r2 = cpy_r_r1;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 113, CPyStatic_abi___globals, "str", cpy_r_r1);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals, "str", cpy_r_r1);
         goto CPyL23;
     }
     cpy_r_r3 = CPyStatics[26]; /* 'fallback' */
@@ -1478,13 +1465,13 @@ CPyL7: ;
     cpy_r_r10 = CPyStatics[3]; /* 'type' */
     cpy_r_r11 = CPyDict_GetItem(cpy_r_abi_element, cpy_r_r10);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 113, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals);
         goto CPyL23;
     }
     if (likely(PyUnicode_Check(cpy_r_r11)))
         cpy_r_r12 = cpy_r_r11;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 113, CPyStatic_abi___globals, "str", cpy_r_r11);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals, "str", cpy_r_r11);
         goto CPyL23;
     }
     cpy_r_r13 = CPyStatics[27]; /* 'receive' */
@@ -1509,26 +1496,26 @@ CPyL13: ;
     cpy_r_r21 = CPyStatics[3]; /* 'type' */
     cpy_r_r22 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r21);
     if (unlikely(cpy_r_r22 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 116, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 117, CPyStatic_abi___globals);
         goto CPyL23;
     }
     cpy_r_r23 = PyObject_Str(cpy_r_r22);
     CPy_DECREF(cpy_r_r22);
     if (unlikely(cpy_r_r23 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 115, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 116, CPyStatic_abi___globals);
         goto CPyL23;
     }
     cpy_r_r24 = CPyStatics[29]; /* '` with inputs `' */
     cpy_r_r25 = CPyStatics[30]; /* 'inputs' */
     cpy_r_r26 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r25);
     if (unlikely(cpy_r_r26 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 117, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 118, CPyStatic_abi___globals);
         goto CPyL24;
     }
     cpy_r_r27 = PyObject_Str(cpy_r_r26);
     CPy_DECREF(cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 115, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 116, CPyStatic_abi___globals);
         goto CPyL24;
     }
     cpy_r_r28 = CPyStatics[24]; /* '`.' */
@@ -1536,14 +1523,14 @@ CPyL13: ;
     CPy_DECREF(cpy_r_r23);
     CPy_DECREF(cpy_r_r27);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 115, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 116, CPyStatic_abi___globals);
         goto CPyL23;
     }
     cpy_r_r30 = CPyModule_builtins;
     cpy_r_r31 = CPyStatics[25]; /* 'ValueError' */
     cpy_r_r32 = CPyObject_GetAttr(cpy_r_r30, cpy_r_r31);
     if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 115, CPyStatic_abi___globals);
         goto CPyL25;
     }
     PyObject *cpy_r_r33[1] = {cpy_r_r29};
@@ -1551,14 +1538,14 @@ CPyL13: ;
     cpy_r_r35 = PyObject_Vectorcall(cpy_r_r32, cpy_r_r34, 1, 0);
     CPy_DECREF(cpy_r_r32);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 115, CPyStatic_abi___globals);
         goto CPyL25;
     }
     CPy_DECREF(cpy_r_r29);
     CPy_Raise(cpy_r_r35);
     CPy_DECREF(cpy_r_r35);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 114, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 115, CPyStatic_abi___globals);
         goto CPyL23;
     }
     CPy_Unreachable();
@@ -1597,7 +1584,7 @@ PyObject *CPyPy_abi____raise_if_fallback_or_receive_abi(PyObject *self, PyObject
     CPy_INCREF(retbox);
     return retbox;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 112, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "_raise_if_fallback_or_receive_abi", 113, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -1656,7 +1643,7 @@ PyObject *CPyDef_abi___collapse_if_tuple(PyObject *cpy_r_abi) {
     cpy_r_r1 = PyObject_IsInstance(cpy_r_abi, cpy_r_r0);
     cpy_r_r2 = cpy_r_r1 >= 0;
     if (unlikely(!cpy_r_r2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 148, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 149, CPyStatic_abi___globals);
         goto CPyL34;
     }
     cpy_r_r3 = cpy_r_r1;
@@ -1665,7 +1652,7 @@ PyObject *CPyDef_abi___collapse_if_tuple(PyObject *cpy_r_abi) {
     if (likely(PyUnicode_Check(cpy_r_abi)))
         cpy_r_r4 = cpy_r_abi;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 149, CPyStatic_abi___globals, "str", cpy_r_abi);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 150, CPyStatic_abi___globals, "str", cpy_r_abi);
         goto CPyL34;
     }
     return cpy_r_r4;
@@ -1674,14 +1661,14 @@ CPyL4: ;
     if (likely(PyDict_Check(cpy_r_abi)))
         cpy_r_r5 = cpy_r_abi;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 151, CPyStatic_abi___globals, "dict", cpy_r_abi);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 152, CPyStatic_abi___globals, "dict", cpy_r_abi);
         goto CPyL34;
     }
     cpy_r_r6 = CPyStatics[3]; /* 'type' */
     cpy_r_r7 = CPyDict_GetWithNone(cpy_r_r5, cpy_r_r6);
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r7 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 151, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 152, CPyStatic_abi___globals);
         goto CPyL34;
     }
     cpy_r_element_type = cpy_r_r7;
@@ -1689,7 +1676,7 @@ CPyL4: ;
     cpy_r_r9 = PyObject_IsInstance(cpy_r_element_type, cpy_r_r8);
     cpy_r_r10 = cpy_r_r9 >= 0;
     if (unlikely(!cpy_r_r10)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 152, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 153, CPyStatic_abi___globals);
         goto CPyL35;
     }
     cpy_r_r11 = cpy_r_r9;
@@ -1697,7 +1684,7 @@ CPyL4: ;
     cpy_r_r12 = CPyStatics[31]; /* "The 'type' must be a string, but got " */
     cpy_r_r13 = PyObject_Repr(cpy_r_element_type);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 154, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 155, CPyStatic_abi___globals);
         goto CPyL35;
     }
     cpy_r_r14 = CPyStatics[32]; /* ' of type ' */
@@ -1706,21 +1693,21 @@ CPyL4: ;
     cpy_r_r16 = PyObject_Str(cpy_r_r15);
     CPy_DECREF(cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 154, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 155, CPyStatic_abi___globals);
         goto CPyL36;
     }
     cpy_r_r17 = CPyStr_Build(4, cpy_r_r12, cpy_r_r13, cpy_r_r14, cpy_r_r16);
     CPy_DECREF(cpy_r_r13);
     CPy_DECREF(cpy_r_r16);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 154, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 155, CPyStatic_abi___globals);
         goto CPyL34;
     }
     cpy_r_r18 = CPyModule_builtins;
     cpy_r_r19 = CPyStatics[16]; /* 'TypeError' */
     cpy_r_r20 = CPyObject_GetAttr(cpy_r_r18, cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 153, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 154, CPyStatic_abi___globals);
         goto CPyL37;
     }
     PyObject *cpy_r_r21[1] = {cpy_r_r17};
@@ -1728,14 +1715,14 @@ CPyL4: ;
     cpy_r_r23 = PyObject_Vectorcall(cpy_r_r20, cpy_r_r22, 1, 0);
     CPy_DECREF(cpy_r_r20);
     if (unlikely(cpy_r_r23 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 153, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 154, CPyStatic_abi___globals);
         goto CPyL37;
     }
     CPy_DECREF(cpy_r_r17);
     CPy_Raise(cpy_r_r23);
     CPy_DECREF(cpy_r_r23);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 153, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 154, CPyStatic_abi___globals);
         goto CPyL34;
     }
     CPy_Unreachable();
@@ -1744,7 +1731,7 @@ CPyL15: ;
     if (likely(PyUnicode_Check(cpy_r_element_type)))
         cpy_r_r24 = cpy_r_element_type;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 157, CPyStatic_abi___globals, "str", cpy_r_element_type);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 158, CPyStatic_abi___globals, "str", cpy_r_element_type);
         goto CPyL35;
     }
     cpy_r_r25 = CPyStatics[33]; /* 'tuple' */
@@ -1755,7 +1742,7 @@ CPyL15: ;
     if (likely(PyUnicode_Check(cpy_r_element_type)))
         cpy_r_r28 = cpy_r_element_type;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 158, CPyStatic_abi___globals, "str", cpy_r_element_type);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 159, CPyStatic_abi___globals, "str", cpy_r_element_type);
         goto CPyL34;
     }
     return cpy_r_r28;
@@ -1763,27 +1750,27 @@ CPyL19: ;
     cpy_r_r29 = CPyStatics[34]; /* ',' */
     cpy_r_r30 = PyList_New(0);
     if (unlikely(cpy_r_r30 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL35;
     }
     CPy_INCREF(cpy_r_abi);
     if (likely(PyDict_Check(cpy_r_abi)))
         cpy_r_r31 = cpy_r_abi;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals, "dict", cpy_r_abi);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals, "dict", cpy_r_abi);
         goto CPyL38;
     }
     cpy_r_r32 = CPyStatics[5]; /* 'components' */
     cpy_r_r33 = CPyDict_GetItem(cpy_r_r31, cpy_r_r32);
     CPy_DECREF(cpy_r_r31);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL38;
     }
     cpy_r_r34 = PyObject_GetIter(cpy_r_r33);
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r34 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL38;
     }
 CPyL23: ;
@@ -1802,51 +1789,51 @@ CPyL23: ;
         cpy_r_r36 = NULL;
     }
     if (cpy_r_r36 != NULL) goto __LL16;
-    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals, "union[dict, str]", cpy_r_c);
+    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals, "union[dict, str]", cpy_r_c);
     goto CPyL40;
 __LL16: ;
     cpy_r_r37 = CPyDef_abi___collapse_if_tuple(cpy_r_r36);
     CPy_DECREF(cpy_r_r36);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL40;
     }
     cpy_r_r38 = PyList_Append(cpy_r_r30, cpy_r_r37);
     CPy_DECREF(cpy_r_r37);
     cpy_r_r39 = cpy_r_r38 >= 0;
     if (unlikely(!cpy_r_r39)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL40;
     } else
         goto CPyL23;
 CPyL27: ;
     cpy_r_r40 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r40)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL38;
     }
     cpy_r_r41 = PyUnicode_Join(cpy_r_r29, cpy_r_r30);
     CPy_DECREF_NO_IMM(cpy_r_r30);
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 160, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 161, CPyStatic_abi___globals);
         goto CPyL35;
     }
     if (likely(PyUnicode_Check(cpy_r_element_type)))
         cpy_r_r42 = cpy_r_element_type;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 163, CPyStatic_abi___globals, "str", cpy_r_element_type);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 164, CPyStatic_abi___globals, "str", cpy_r_element_type);
         goto CPyL41;
     }
     cpy_r_r43 = CPyStr_GetSlice(cpy_r_r42, 10, 9223372036854775806LL);
     CPy_DECREF(cpy_r_r42);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 163, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 164, CPyStatic_abi___globals);
         goto CPyL41;
     }
     if (likely(PyUnicode_Check(cpy_r_r43)))
         cpy_r_r44 = cpy_r_r43;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 163, CPyStatic_abi___globals, "str", cpy_r_r43);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 164, CPyStatic_abi___globals, "str", cpy_r_r43);
         goto CPyL41;
     }
     cpy_r_r45 = CPyStatics[35]; /* '(' */
@@ -1855,7 +1842,7 @@ CPyL27: ;
     CPy_DECREF(cpy_r_r41);
     CPy_DECREF(cpy_r_r44);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 164, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 165, CPyStatic_abi___globals);
         goto CPyL34;
     }
     return cpy_r_r47;
@@ -1914,7 +1901,7 @@ __LL17: ;
     PyObject *retval = CPyDef_abi___collapse_if_tuple(arg_abi);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 121, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "collapse_if_tuple", 122, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -1960,20 +1947,20 @@ PyObject *CPyDef_abi___abi_to_signature(PyObject *cpy_r_abi_element) {
     cpy_r_r2 = CPyStatics[4]; /* '' */
     cpy_r_r3 = CPyDict_Get(cpy_r_abi_element, cpy_r_r1, cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 201, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 202, CPyStatic_abi___globals);
         goto CPyL21;
     }
     cpy_r_r4 = PyObject_Str(cpy_r_r3);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 201, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 202, CPyStatic_abi___globals);
         goto CPyL21;
     }
-    cpy_r_r5 = CPyStatics[395]; /* frozenset({'receive', 'fallback'}) */
+    cpy_r_r5 = CPyStatics[395]; /* frozenset({'fallback', 'receive'}) */
     cpy_r_r6 = PySet_Contains(cpy_r_r5, cpy_r_r4);
     cpy_r_r7 = cpy_r_r6 >= 0;
     if (unlikely(!cpy_r_r7)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 202, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 203, CPyStatic_abi___globals);
         goto CPyL22;
     }
     cpy_r_r8 = cpy_r_r6;
@@ -1985,7 +1972,7 @@ PyObject *CPyDef_abi___abi_to_signature(PyObject *cpy_r_abi_element) {
     cpy_r_r13 = CPyStatics[338]; /* ('name', 'input_types') */
     cpy_r_r14 = PyObject_VectorcallMethod(cpy_r_r10, cpy_r_r12, 9223372036854775809ULL, cpy_r_r13);
     if (unlikely(cpy_r_r14 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 203, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 204, CPyStatic_abi___globals);
         goto CPyL22;
     }
     CPy_DECREF(cpy_r_r0);
@@ -1993,7 +1980,7 @@ PyObject *CPyDef_abi___abi_to_signature(PyObject *cpy_r_abi_element) {
     if (likely(PyUnicode_Check(cpy_r_r14)))
         cpy_r_r15 = cpy_r_r14;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "abi_to_signature", 203, CPyStatic_abi___globals, "str", cpy_r_r14);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "abi_to_signature", 204, CPyStatic_abi___globals, "str", cpy_r_r14);
         goto CPyL20;
     }
     return cpy_r_r15;
@@ -2007,7 +1994,7 @@ CPyL7: ;
     if (!cpy_r_r20) goto CPyL10;
     cpy_r_r21 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r21)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 205, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 206, CPyStatic_abi___globals);
         goto CPyL22;
     }
 CPyL10: ;
@@ -2020,13 +2007,13 @@ CPyL12: ;
     cpy_r_r24 = CPyDict_Get(cpy_r_abi_element, cpy_r_r23, cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 208, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 209, CPyStatic_abi___globals);
         goto CPyL21;
     }
     cpy_r_r25 = PyObject_Str(cpy_r_r24);
     CPy_DECREF(cpy_r_r24);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 208, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 209, CPyStatic_abi___globals);
         goto CPyL21;
     }
     cpy_r_fn_name = cpy_r_r25;
@@ -2034,13 +2021,13 @@ CPyL15: ;
     cpy_r_r26 = CPyStatics[34]; /* ',' */
     cpy_r_r27 = CPyDef_abi___get_abi_input_types(cpy_r_abi_element);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 211, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 212, CPyStatic_abi___globals);
         goto CPyL23;
     }
     cpy_r_r28 = PyUnicode_Join(cpy_r_r26, cpy_r_r27);
     CPy_DECREF_NO_IMM(cpy_r_r27);
     if (unlikely(cpy_r_r28 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 211, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 212, CPyStatic_abi___globals);
         goto CPyL23;
     }
     cpy_r_r29 = CPyStatics[38]; /* 'format' */
@@ -2049,7 +2036,7 @@ CPyL15: ;
     cpy_r_r32 = CPyStatics[338]; /* ('name', 'input_types') */
     cpy_r_r33 = PyObject_VectorcallMethod(cpy_r_r29, cpy_r_r31, 9223372036854775809ULL, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 210, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 211, CPyStatic_abi___globals);
         goto CPyL24;
     }
     CPy_DECREF(cpy_r_r0);
@@ -2058,7 +2045,7 @@ CPyL15: ;
     if (likely(PyUnicode_Check(cpy_r_r33)))
         cpy_r_r34 = cpy_r_r33;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "abi_to_signature", 210, CPyStatic_abi___globals, "str", cpy_r_r33);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "abi_to_signature", 211, CPyStatic_abi___globals, "str", cpy_r_r33);
         goto CPyL20;
     }
     return cpy_r_r34;
@@ -2100,7 +2087,7 @@ PyObject *CPyPy_abi___abi_to_signature(PyObject *self, PyObject *const *args, si
     PyObject *retval = CPyDef_abi___abi_to_signature(arg_abi_element);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 167, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", 168, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -2155,12 +2142,12 @@ PyObject *CPyDef_abi___filter_abi_by_name(PyObject *cpy_r_abi_name, PyObject *cp
     PyObject *cpy_r_r47;
     cpy_r_r0 = PyList_New(0);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 272, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 273, CPyStatic_abi___globals);
         goto CPyL35;
     }
     cpy_r_r1 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 272, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 273, CPyStatic_abi___globals);
         goto CPyL36;
     }
 CPyL2: ;
@@ -2169,19 +2156,19 @@ CPyL2: ;
     if (likely(PyDict_Check(cpy_r_r2)))
         cpy_r_r3 = cpy_r_r2;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 272, CPyStatic_abi___globals, "dict", cpy_r_r2);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 273, CPyStatic_abi___globals, "dict", cpy_r_r2);
         goto CPyL38;
     }
     cpy_r_r4 = CPyStatics[3]; /* 'type' */
     cpy_r_r5 = CPyDict_GetItem(cpy_r_r3, cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 275, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals);
         goto CPyL39;
     }
     if (likely(PyUnicode_Check(cpy_r_r5)))
         cpy_r_r6 = cpy_r_r5;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 275, CPyStatic_abi___globals, "str", cpy_r_r5);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals, "str", cpy_r_r5);
         goto CPyL39;
     }
     cpy_r_r7 = CPyStatics[20]; /* 'function' */
@@ -2206,13 +2193,13 @@ CPyL11: ;
     cpy_r_r15 = CPyStatics[3]; /* 'type' */
     cpy_r_r16 = CPyDict_GetItem(cpy_r_r3, cpy_r_r15);
     if (unlikely(cpy_r_r16 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 275, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals);
         goto CPyL39;
     }
     if (likely(PyUnicode_Check(cpy_r_r16)))
         cpy_r_r17 = cpy_r_r16;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 275, CPyStatic_abi___globals, "str", cpy_r_r16);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals, "str", cpy_r_r16);
         goto CPyL39;
     }
     cpy_r_r18 = CPyStatics[41]; /* 'event' */
@@ -2239,13 +2226,13 @@ CPyL19: ;
     cpy_r_r26 = CPyStatics[3]; /* 'type' */
     cpy_r_r27 = CPyDict_GetItem(cpy_r_r3, cpy_r_r26);
     if (unlikely(cpy_r_r27 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 275, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals);
         goto CPyL39;
     }
     if (likely(PyUnicode_Check(cpy_r_r27)))
         cpy_r_r28 = cpy_r_r27;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 275, CPyStatic_abi___globals, "str", cpy_r_r27);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals, "str", cpy_r_r27);
         goto CPyL39;
     }
     cpy_r_r29 = CPyStatics[42]; /* 'error' */
@@ -2273,13 +2260,13 @@ CPyL27: ;
     cpy_r_r38 = CPyStatics[13]; /* 'name' */
     cpy_r_r39 = CPyDict_GetItem(cpy_r_r3, cpy_r_r38);
     if (unlikely(cpy_r_r39 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 277, CPyStatic_abi___globals);
         goto CPyL39;
     }
     cpy_r_r40 = PyObject_RichCompare(cpy_r_r39, cpy_r_abi_name, 2);
     CPy_DECREF(cpy_r_r39);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 276, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 277, CPyStatic_abi___globals);
         goto CPyL39;
     }
     cpy_r_r37 = cpy_r_r40;
@@ -2297,14 +2284,14 @@ CPyL30: ;
     CPy_DECREF(cpy_r_r3);
     cpy_r_r45 = cpy_r_r44 >= 0;
     if (unlikely(!cpy_r_r45)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 272, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 273, CPyStatic_abi___globals);
         goto CPyL38;
     } else
         goto CPyL2;
 CPyL33: ;
     cpy_r_r46 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r46)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 272, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 273, CPyStatic_abi___globals);
         goto CPyL36;
     }
     return cpy_r_r0;
@@ -2350,7 +2337,7 @@ PyObject *CPyPy_abi___filter_abi_by_name(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_abi___filter_abi_by_name(arg_abi_name, arg_contract_abi);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 215, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_name", 216, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -2563,20 +2550,20 @@ PyObject *CPyDef_abi___filter_abi_by_type(PyObject *cpy_r_abi_type, PyObject *cp
     cpy_r_r1 = CPyStatics[43]; /* 'Literal' */
     cpy_r_r2 = CPyDict_GetItem(cpy_r_r0, cpy_r_r1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 363, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r3 = CPyStatics[20]; /* 'function' */
     cpy_r_r4 = PyObject_GetItem(cpy_r_r2, cpy_r_r3);
     CPy_DECREF(cpy_r_r2);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 363, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r5 = PyObject_RichCompare(cpy_r_abi_type, cpy_r_r4, 2);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 363, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (unlikely(!PyBool_Check(cpy_r_r5))) {
@@ -2585,7 +2572,7 @@ PyObject *CPyDef_abi___filter_abi_by_type(PyObject *cpy_r_abi_type, PyObject *cp
         cpy_r_r6 = cpy_r_r5 == Py_True;
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r6 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 363, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (cpy_r_r6) goto CPyL9;
@@ -2598,7 +2585,7 @@ PyObject *CPyDef_abi___filter_abi_by_type(PyObject *cpy_r_abi_type, PyObject *cp
     if (!cpy_r_r11) goto CPyL8;
     cpy_r_r12 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r12)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 363, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
         goto CPyL139;
     }
 CPyL8: ;
@@ -2607,12 +2594,12 @@ CPyL8: ;
 CPyL9: ;
     cpy_r_r14 = PyList_New(0);
     if (unlikely(cpy_r_r14 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r15 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r15 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
         goto CPyL140;
     }
 CPyL11: ;
@@ -2621,19 +2608,19 @@ CPyL11: ;
     if (likely(PyDict_Check(cpy_r_r16)))
         cpy_r_r17 = cpy_r_r16;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals, "dict", cpy_r_r16);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals, "dict", cpy_r_r16);
         goto CPyL142;
     }
     cpy_r_r18 = CPyStatics[3]; /* 'type' */
     cpy_r_r19 = CPyDict_GetItem(cpy_r_r17, cpy_r_r18);
     if (unlikely(cpy_r_r19 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
         goto CPyL143;
     }
     if (likely(PyUnicode_Check(cpy_r_r19)))
         cpy_r_r20 = cpy_r_r19;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals, "str", cpy_r_r19);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals, "str", cpy_r_r19);
         goto CPyL143;
     }
     cpy_r_r21 = CPyStatics[20]; /* 'function' */
@@ -2646,7 +2633,7 @@ CPyL11: ;
     if (!cpy_r_r25) goto CPyL18;
     cpy_r_r26 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r26)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
         goto CPyL143;
     }
 CPyL18: ;
@@ -2656,14 +2643,14 @@ CPyL18: ;
     CPy_DECREF(cpy_r_r17);
     cpy_r_r29 = cpy_r_r28 >= 0;
     if (unlikely(!cpy_r_r29)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
         goto CPyL142;
     } else
         goto CPyL11;
 CPyL20: ;
     cpy_r_r30 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r30)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 364, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
         goto CPyL140;
     }
     return cpy_r_r14;
@@ -2672,20 +2659,20 @@ CPyL22: ;
     cpy_r_r32 = CPyStatics[43]; /* 'Literal' */
     cpy_r_r33 = CPyDict_GetItem(cpy_r_r31, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r34 = CPyStatics[40]; /* 'constructor' */
     cpy_r_r35 = PyObject_GetItem(cpy_r_r33, cpy_r_r34);
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r35 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r36 = PyObject_RichCompare(cpy_r_abi_type, cpy_r_r35, 2);
     CPy_DECREF(cpy_r_r35);
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (unlikely(!PyBool_Check(cpy_r_r36))) {
@@ -2694,7 +2681,7 @@ CPyL22: ;
         cpy_r_r37 = cpy_r_r36 == Py_True;
     CPy_DECREF(cpy_r_r36);
     if (unlikely(cpy_r_r37 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (cpy_r_r37) goto CPyL31;
@@ -2707,7 +2694,7 @@ CPyL22: ;
     if (!cpy_r_r42) goto CPyL30;
     cpy_r_r43 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r43)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 365, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
         goto CPyL139;
     }
 CPyL30: ;
@@ -2716,12 +2703,12 @@ CPyL30: ;
 CPyL31: ;
     cpy_r_r45 = PyList_New(0);
     if (unlikely(cpy_r_r45 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r46 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r46 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
         goto CPyL145;
     }
 CPyL33: ;
@@ -2730,19 +2717,19 @@ CPyL33: ;
     if (likely(PyDict_Check(cpy_r_r47)))
         cpy_r_r48 = cpy_r_r47;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals, "dict", cpy_r_r47);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals, "dict", cpy_r_r47);
         goto CPyL147;
     }
     cpy_r_r49 = CPyStatics[3]; /* 'type' */
     cpy_r_r50 = CPyDict_GetItem(cpy_r_r48, cpy_r_r49);
     if (unlikely(cpy_r_r50 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
         goto CPyL148;
     }
     if (likely(PyUnicode_Check(cpy_r_r50)))
         cpy_r_r51 = cpy_r_r50;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals, "str", cpy_r_r50);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals, "str", cpy_r_r50);
         goto CPyL148;
     }
     cpy_r_r52 = CPyStatics[40]; /* 'constructor' */
@@ -2755,7 +2742,7 @@ CPyL33: ;
     if (!cpy_r_r56) goto CPyL40;
     cpy_r_r57 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r57)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
         goto CPyL148;
     }
 CPyL40: ;
@@ -2765,14 +2752,14 @@ CPyL40: ;
     CPy_DECREF(cpy_r_r48);
     cpy_r_r60 = cpy_r_r59 >= 0;
     if (unlikely(!cpy_r_r60)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
         goto CPyL147;
     } else
         goto CPyL33;
 CPyL42: ;
     cpy_r_r61 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r61)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 366, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
         goto CPyL145;
     }
     return cpy_r_r45;
@@ -2781,20 +2768,20 @@ CPyL44: ;
     cpy_r_r63 = CPyStatics[43]; /* 'Literal' */
     cpy_r_r64 = CPyDict_GetItem(cpy_r_r62, cpy_r_r63);
     if (unlikely(cpy_r_r64 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r65 = CPyStatics[26]; /* 'fallback' */
     cpy_r_r66 = PyObject_GetItem(cpy_r_r64, cpy_r_r65);
     CPy_DECREF(cpy_r_r64);
     if (unlikely(cpy_r_r66 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r67 = PyObject_RichCompare(cpy_r_abi_type, cpy_r_r66, 2);
     CPy_DECREF(cpy_r_r66);
     if (unlikely(cpy_r_r67 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (unlikely(!PyBool_Check(cpy_r_r67))) {
@@ -2803,7 +2790,7 @@ CPyL44: ;
         cpy_r_r68 = cpy_r_r67 == Py_True;
     CPy_DECREF(cpy_r_r67);
     if (unlikely(cpy_r_r68 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (cpy_r_r68) goto CPyL53;
@@ -2816,7 +2803,7 @@ CPyL44: ;
     if (!cpy_r_r73) goto CPyL52;
     cpy_r_r74 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r74)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 367, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
         goto CPyL139;
     }
 CPyL52: ;
@@ -2825,12 +2812,12 @@ CPyL52: ;
 CPyL53: ;
     cpy_r_r76 = PyList_New(0);
     if (unlikely(cpy_r_r76 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r77 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r77 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
         goto CPyL150;
     }
 CPyL55: ;
@@ -2839,19 +2826,19 @@ CPyL55: ;
     if (likely(PyDict_Check(cpy_r_r78)))
         cpy_r_r79 = cpy_r_r78;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals, "dict", cpy_r_r78);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals, "dict", cpy_r_r78);
         goto CPyL152;
     }
     cpy_r_r80 = CPyStatics[3]; /* 'type' */
     cpy_r_r81 = CPyDict_GetItem(cpy_r_r79, cpy_r_r80);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
         goto CPyL153;
     }
     if (likely(PyUnicode_Check(cpy_r_r81)))
         cpy_r_r82 = cpy_r_r81;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals, "str", cpy_r_r81);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals, "str", cpy_r_r81);
         goto CPyL153;
     }
     cpy_r_r83 = CPyStatics[26]; /* 'fallback' */
@@ -2864,7 +2851,7 @@ CPyL55: ;
     if (!cpy_r_r87) goto CPyL62;
     cpy_r_r88 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r88)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
         goto CPyL153;
     }
 CPyL62: ;
@@ -2874,14 +2861,14 @@ CPyL62: ;
     CPy_DECREF(cpy_r_r79);
     cpy_r_r91 = cpy_r_r90 >= 0;
     if (unlikely(!cpy_r_r91)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
         goto CPyL152;
     } else
         goto CPyL55;
 CPyL64: ;
     cpy_r_r92 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r92)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 368, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
         goto CPyL150;
     }
     return cpy_r_r76;
@@ -2890,20 +2877,20 @@ CPyL66: ;
     cpy_r_r94 = CPyStatics[43]; /* 'Literal' */
     cpy_r_r95 = CPyDict_GetItem(cpy_r_r93, cpy_r_r94);
     if (unlikely(cpy_r_r95 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r96 = CPyStatics[27]; /* 'receive' */
     cpy_r_r97 = PyObject_GetItem(cpy_r_r95, cpy_r_r96);
     CPy_DECREF(cpy_r_r95);
     if (unlikely(cpy_r_r97 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r98 = PyObject_RichCompare(cpy_r_abi_type, cpy_r_r97, 2);
     CPy_DECREF(cpy_r_r97);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (unlikely(!PyBool_Check(cpy_r_r98))) {
@@ -2912,7 +2899,7 @@ CPyL66: ;
         cpy_r_r99 = cpy_r_r98 == Py_True;
     CPy_DECREF(cpy_r_r98);
     if (unlikely(cpy_r_r99 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (cpy_r_r99) goto CPyL75;
@@ -2925,7 +2912,7 @@ CPyL66: ;
     if (!cpy_r_r104) goto CPyL74;
     cpy_r_r105 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r105)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 369, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
         goto CPyL139;
     }
 CPyL74: ;
@@ -2934,12 +2921,12 @@ CPyL74: ;
 CPyL75: ;
     cpy_r_r107 = PyList_New(0);
     if (unlikely(cpy_r_r107 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r108 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r108 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
         goto CPyL155;
     }
 CPyL77: ;
@@ -2948,19 +2935,19 @@ CPyL77: ;
     if (likely(PyDict_Check(cpy_r_r109)))
         cpy_r_r110 = cpy_r_r109;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals, "dict", cpy_r_r109);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals, "dict", cpy_r_r109);
         goto CPyL157;
     }
     cpy_r_r111 = CPyStatics[3]; /* 'type' */
     cpy_r_r112 = CPyDict_GetItem(cpy_r_r110, cpy_r_r111);
     if (unlikely(cpy_r_r112 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
         goto CPyL158;
     }
     if (likely(PyUnicode_Check(cpy_r_r112)))
         cpy_r_r113 = cpy_r_r112;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals, "str", cpy_r_r112);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals, "str", cpy_r_r112);
         goto CPyL158;
     }
     cpy_r_r114 = CPyStatics[27]; /* 'receive' */
@@ -2973,7 +2960,7 @@ CPyL77: ;
     if (!cpy_r_r118) goto CPyL84;
     cpy_r_r119 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r119)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
         goto CPyL158;
     }
 CPyL84: ;
@@ -2983,14 +2970,14 @@ CPyL84: ;
     CPy_DECREF(cpy_r_r110);
     cpy_r_r122 = cpy_r_r121 >= 0;
     if (unlikely(!cpy_r_r122)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
         goto CPyL157;
     } else
         goto CPyL77;
 CPyL86: ;
     cpy_r_r123 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r123)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 370, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
         goto CPyL155;
     }
     return cpy_r_r107;
@@ -2999,20 +2986,20 @@ CPyL88: ;
     cpy_r_r125 = CPyStatics[43]; /* 'Literal' */
     cpy_r_r126 = CPyDict_GetItem(cpy_r_r124, cpy_r_r125);
     if (unlikely(cpy_r_r126 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r127 = CPyStatics[41]; /* 'event' */
     cpy_r_r128 = PyObject_GetItem(cpy_r_r126, cpy_r_r127);
     CPy_DECREF(cpy_r_r126);
     if (unlikely(cpy_r_r128 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r129 = PyObject_RichCompare(cpy_r_abi_type, cpy_r_r128, 2);
     CPy_DECREF(cpy_r_r128);
     if (unlikely(cpy_r_r129 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (unlikely(!PyBool_Check(cpy_r_r129))) {
@@ -3021,7 +3008,7 @@ CPyL88: ;
         cpy_r_r130 = cpy_r_r129 == Py_True;
     CPy_DECREF(cpy_r_r129);
     if (unlikely(cpy_r_r130 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (cpy_r_r130) goto CPyL97;
@@ -3034,7 +3021,7 @@ CPyL88: ;
     if (!cpy_r_r135) goto CPyL96;
     cpy_r_r136 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r136)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 371, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
         goto CPyL139;
     }
 CPyL96: ;
@@ -3043,12 +3030,12 @@ CPyL96: ;
 CPyL97: ;
     cpy_r_r138 = PyList_New(0);
     if (unlikely(cpy_r_r138 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r139 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r139 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
         goto CPyL160;
     }
 CPyL99: ;
@@ -3057,19 +3044,19 @@ CPyL99: ;
     if (likely(PyDict_Check(cpy_r_r140)))
         cpy_r_r141 = cpy_r_r140;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals, "dict", cpy_r_r140);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals, "dict", cpy_r_r140);
         goto CPyL162;
     }
     cpy_r_r142 = CPyStatics[3]; /* 'type' */
     cpy_r_r143 = CPyDict_GetItem(cpy_r_r141, cpy_r_r142);
     if (unlikely(cpy_r_r143 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
         goto CPyL163;
     }
     if (likely(PyUnicode_Check(cpy_r_r143)))
         cpy_r_r144 = cpy_r_r143;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals, "str", cpy_r_r143);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals, "str", cpy_r_r143);
         goto CPyL163;
     }
     cpy_r_r145 = CPyStatics[41]; /* 'event' */
@@ -3082,7 +3069,7 @@ CPyL99: ;
     if (!cpy_r_r149) goto CPyL106;
     cpy_r_r150 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r150)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
         goto CPyL163;
     }
 CPyL106: ;
@@ -3092,14 +3079,14 @@ CPyL106: ;
     CPy_DECREF(cpy_r_r141);
     cpy_r_r153 = cpy_r_r152 >= 0;
     if (unlikely(!cpy_r_r153)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
         goto CPyL162;
     } else
         goto CPyL99;
 CPyL108: ;
     cpy_r_r154 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r154)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 372, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
         goto CPyL160;
     }
     return cpy_r_r138;
@@ -3108,20 +3095,20 @@ CPyL110: ;
     cpy_r_r156 = CPyStatics[43]; /* 'Literal' */
     cpy_r_r157 = CPyDict_GetItem(cpy_r_r155, cpy_r_r156);
     if (unlikely(cpy_r_r157 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r158 = CPyStatics[42]; /* 'error' */
     cpy_r_r159 = PyObject_GetItem(cpy_r_r157, cpy_r_r158);
     CPy_DECREF(cpy_r_r157);
     if (unlikely(cpy_r_r159 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r160 = PyObject_RichCompare(cpy_r_abi_type, cpy_r_r159, 2);
     CPy_DECREF(cpy_r_r159);
     if (unlikely(cpy_r_r160 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (unlikely(!PyBool_Check(cpy_r_r160))) {
@@ -3130,7 +3117,7 @@ CPyL110: ;
         cpy_r_r161 = cpy_r_r160 == Py_True;
     CPy_DECREF(cpy_r_r160);
     if (unlikely(cpy_r_r161 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
         goto CPyL139;
     }
     if (cpy_r_r161) goto CPyL119;
@@ -3143,7 +3130,7 @@ CPyL110: ;
     if (!cpy_r_r166) goto CPyL118;
     cpy_r_r167 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r167)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 373, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
         goto CPyL139;
     }
 CPyL118: ;
@@ -3152,12 +3139,12 @@ CPyL118: ;
 CPyL119: ;
     cpy_r_r169 = PyList_New(0);
     if (unlikely(cpy_r_r169 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r170 = PyObject_GetIter(cpy_r_contract_abi);
     if (unlikely(cpy_r_r170 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals);
         goto CPyL165;
     }
 CPyL121: ;
@@ -3166,19 +3153,19 @@ CPyL121: ;
     if (likely(PyDict_Check(cpy_r_r171)))
         cpy_r_r172 = cpy_r_r171;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals, "dict", cpy_r_r171);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals, "dict", cpy_r_r171);
         goto CPyL167;
     }
     cpy_r_r173 = CPyStatics[3]; /* 'type' */
     cpy_r_r174 = CPyDict_GetItem(cpy_r_r172, cpy_r_r173);
     if (unlikely(cpy_r_r174 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals);
         goto CPyL168;
     }
     if (likely(PyUnicode_Check(cpy_r_r174)))
         cpy_r_r175 = cpy_r_r174;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals, "str", cpy_r_r174);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals, "str", cpy_r_r174);
         goto CPyL168;
     }
     cpy_r_r176 = CPyStatics[42]; /* 'error' */
@@ -3191,7 +3178,7 @@ CPyL121: ;
     if (!cpy_r_r180) goto CPyL128;
     cpy_r_r181 = CPy_KeepPropagating();
     if (unlikely(!cpy_r_r181)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals);
         goto CPyL168;
     }
 CPyL128: ;
@@ -3201,14 +3188,14 @@ CPyL128: ;
     CPy_DECREF(cpy_r_r172);
     cpy_r_r184 = cpy_r_r183 >= 0;
     if (unlikely(!cpy_r_r184)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals);
         goto CPyL167;
     } else
         goto CPyL121;
 CPyL130: ;
     cpy_r_r185 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r185)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 374, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 375, CPyStatic_abi___globals);
         goto CPyL165;
     }
     return cpy_r_r169;
@@ -3222,12 +3209,12 @@ CPyL132: ;
     cpy_r_r192 = (PyObject **)&cpy_r_r191;
     cpy_r_r193 = PyObject_VectorcallMethod(cpy_r_r190, cpy_r_r192, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r193 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 376, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 377, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r194 = PyList_New(2);
     if (unlikely(cpy_r_r194 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 376, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 377, CPyStatic_abi___globals);
         goto CPyL170;
     }
     cpy_r_r195 = (CPyPtr)&((PyListObject *)cpy_r_r194)->ob_item;
@@ -3239,14 +3226,14 @@ CPyL132: ;
     cpy_r_r198 = PyUnicode_Join(cpy_r_r186, cpy_r_r194);
     CPy_DECREF_NO_IMM(cpy_r_r194);
     if (unlikely(cpy_r_r198 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 376, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 377, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r199 = CPyModule_builtins;
     cpy_r_r200 = CPyStatics[25]; /* 'ValueError' */
     cpy_r_r201 = CPyObject_GetAttr(cpy_r_r199, cpy_r_r200);
     if (unlikely(cpy_r_r201 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 376, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 377, CPyStatic_abi___globals);
         goto CPyL171;
     }
     PyObject *cpy_r_r202[1] = {cpy_r_r198};
@@ -3254,14 +3241,14 @@ CPyL132: ;
     cpy_r_r204 = PyObject_Vectorcall(cpy_r_r201, cpy_r_r203, 1, 0);
     CPy_DECREF(cpy_r_r201);
     if (unlikely(cpy_r_r204 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 376, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 377, CPyStatic_abi___globals);
         goto CPyL171;
     }
     CPy_DECREF(cpy_r_r198);
     CPy_Raise(cpy_r_r204);
     CPy_DECREF(cpy_r_r204);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 376, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 377, CPyStatic_abi___globals);
         goto CPyL139;
     }
     CPy_Unreachable();
@@ -3403,7 +3390,7 @@ PyObject *CPyPy_abi___filter_abi_by_type(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_abi___filter_abi_by_type(arg_abi_type, arg_contract_abi);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 328, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "filter_abi_by_type", 329, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -3414,7 +3401,7 @@ PyObject *CPyDef_abi___get_all_function_abis(PyObject *cpy_r_contract_abi) {
     cpy_r_r0 = CPyStatics[20]; /* 'function' */
     cpy_r_r1 = CPyDef_abi___filter_abi_by_type(cpy_r_r0, cpy_r_contract_abi);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_function_abis", 400, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_function_abis", 401, CPyStatic_abi___globals);
         goto CPyL2;
     }
     return cpy_r_r1;
@@ -3434,7 +3421,7 @@ PyObject *CPyPy_abi___get_all_function_abis(PyObject *self, PyObject *const *arg
     PyObject *retval = CPyDef_abi___get_all_function_abis(arg_contract_abi);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_function_abis", 379, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_function_abis", 380, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -3445,7 +3432,7 @@ PyObject *CPyDef_abi___get_all_event_abis(PyObject *cpy_r_contract_abi) {
     cpy_r_r0 = CPyStatics[41]; /* 'event' */
     cpy_r_r1 = CPyDef_abi___filter_abi_by_type(cpy_r_r0, cpy_r_contract_abi);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_event_abis", 423, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_event_abis", 424, CPyStatic_abi___globals);
         goto CPyL2;
     }
     return cpy_r_r1;
@@ -3465,7 +3452,7 @@ PyObject *CPyPy_abi___get_all_event_abis(PyObject *self, PyObject *const *args, 
     PyObject *retval = CPyDef_abi___get_all_event_abis(arg_contract_abi);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_event_abis", 403, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_all_event_abis", 404, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -3518,7 +3505,7 @@ CPyTagged CPyDef_abi_____mypyc_lambda__0_get_normalized_abi_inputs_obj_____call_
     CPyTagged cpy_r_r8;
     cpy_r_r0 = ((faster_eth_utils___abi_____mypyc_lambda__0_get_normalized_abi_inputs_objObject *)cpy_r___mypyc_self__)->___mypyc_env__;
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AttributeError("faster_eth_utils/abi.py", "<lambda>", "__mypyc_lambda__0_get_normalized_abi_inputs_obj", "__mypyc_env__", 527, CPyStatic_abi___globals);
+        CPy_AttributeError("faster_eth_utils/abi.py", "<lambda>", "__mypyc_lambda__0_get_normalized_abi_inputs_obj", "__mypyc_env__", 528, CPyStatic_abi___globals);
         goto CPyL5;
     }
     CPy_INCREF_NO_IMM(cpy_r_r0);
@@ -3531,7 +3518,7 @@ CPyL1: ;
     }
     CPy_DECREF_NO_IMM(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 527, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 528, CPyStatic_abi___globals);
         goto CPyL5;
     }
 CPyL2: ;
@@ -3542,7 +3529,7 @@ CPyL2: ;
     cpy_r_r5 = (PyObject **)&cpy_r_r4;
     cpy_r_r6 = PyObject_VectorcallMethod(cpy_r_r3, cpy_r_r5, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 527, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 528, CPyStatic_abi___globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r1);
@@ -3554,7 +3541,7 @@ CPyL2: ;
     }
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r7 == CPY_INT_TAG)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 527, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 528, CPyStatic_abi___globals);
         goto CPyL5;
     }
     return cpy_r_r7;
@@ -3647,7 +3634,7 @@ __LL25: ;
     PyObject *retbox = CPyTagged_StealAsObject(retval);
     return retbox;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 527, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "<lambda>", 528, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -3818,24 +3805,24 @@ PyObject *CPyDef_abi___get_normalized_abi_inputs(PyObject *cpy_r_abi_element, Py
     PyObject *cpy_r_r174;
     cpy_r_r0 = CPyDef_abi___get_normalized_abi_inputs_env();
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 426, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 427, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r1 = CPyDef_abi____raise_if_fallback_or_receive_abi(cpy_r_abi_element);
     if (unlikely(cpy_r_r1 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 483, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 484, CPyStatic_abi___globals);
         goto CPyL102;
     }
     cpy_r_r2 = CPyStatics[30]; /* 'inputs' */
     cpy_r_r3 = PyList_New(0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 485, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 486, CPyStatic_abi___globals);
         goto CPyL102;
     }
     cpy_r_r4 = CPyDict_Get(cpy_r_abi_element, cpy_r_r2, cpy_r_r3);
     CPy_DECREF_NO_IMM(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 485, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 486, CPyStatic_abi___globals);
         goto CPyL102;
     }
     cpy_r_r5 = (CPyPtr)&((PyVarObject *)cpy_r_args)->ob_size;
@@ -3846,7 +3833,7 @@ PyObject *CPyDef_abi___get_normalized_abi_inputs(PyObject *cpy_r_abi_element, Py
     cpy_r_r10 = CPyTagged_Add(cpy_r_r7, cpy_r_r9);
     cpy_r_r11 = CPyObject_Size(cpy_r_r4);
     if (unlikely(cpy_r_r11 == CPY_INT_TAG)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 486, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 487, CPyStatic_abi___globals);
         goto CPyL103;
     }
     cpy_r_r12 = cpy_r_r10 & 1;
@@ -3871,13 +3858,13 @@ CPyL9: ;
     cpy_r_r19 = CPyObject_Size(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r19 == CPY_INT_TAG)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 489, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r20 = CPyTagged_Str(cpy_r_r19);
     CPyTagged_DECREF(cpy_r_r19);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 489, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r21 = CPyStatics[48]; /* "', got '" */
@@ -3890,7 +3877,7 @@ CPyL9: ;
     cpy_r_r28 = CPyTagged_Str(cpy_r_r27);
     CPyTagged_DECREF(cpy_r_r27);
     if (unlikely(cpy_r_r28 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 489, CPyStatic_abi___globals);
         goto CPyL105;
     }
     cpy_r_r29 = CPyStatics[49]; /* "'." */
@@ -3898,14 +3885,14 @@ CPyL9: ;
     CPy_DECREF(cpy_r_r20);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r30 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 489, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r31 = CPyModule_builtins;
     cpy_r_r32 = CPyStatics[16]; /* 'TypeError' */
     cpy_r_r33 = CPyObject_GetAttr(cpy_r_r31, cpy_r_r32);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 487, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
         goto CPyL106;
     }
     PyObject *cpy_r_r34[1] = {cpy_r_r30};
@@ -3913,14 +3900,14 @@ CPyL9: ;
     cpy_r_r36 = PyObject_Vectorcall(cpy_r_r33, cpy_r_r35, 1, 0);
     CPy_DECREF(cpy_r_r33);
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 487, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
         goto CPyL106;
     }
     CPy_DECREF(cpy_r_r30);
     CPy_Raise(cpy_r_r36);
     CPy_DECREF(cpy_r_r36);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 487, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 488, CPyStatic_abi___globals);
         goto CPyL101;
     }
     CPy_Unreachable();
@@ -3938,24 +3925,24 @@ CPyL18: ;
 CPyL19: ;
     cpy_r_r40 = CPyDict_KeysView(cpy_r_kwargs);
     if (unlikely(cpy_r_r40 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 496, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
         goto CPyL108;
     }
     cpy_r_r41 = PySet_New(cpy_r_r40);
     CPy_DECREF(cpy_r_r40);
     if (unlikely(cpy_r_r41 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 496, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
         goto CPyL108;
     }
     cpy_r_r42 = PyList_New(0);
     if (unlikely(cpy_r_r42 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL109;
     }
     cpy_r_r43 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r43 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL110;
     }
 CPyL23: ;
@@ -3964,40 +3951,40 @@ CPyL23: ;
     if (likely(PyDict_Check(cpy_r_r44)))
         cpy_r_r45 = cpy_r_r44;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals, "dict", cpy_r_r44);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals, "dict", cpy_r_r44);
         goto CPyL112;
     }
     cpy_r_r46 = CPyStatics[13]; /* 'name' */
     cpy_r_r47 = CPyDict_GetItem(cpy_r_r45, cpy_r_r46);
     CPy_DECREF(cpy_r_r45);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL112;
     }
     if (likely(PyUnicode_Check(cpy_r_r47)))
         cpy_r_r48 = cpy_r_r47;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals, "str", cpy_r_r47);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals, "str", cpy_r_r47);
         goto CPyL112;
     }
     cpy_r_r49 = PyList_Append(cpy_r_r42, cpy_r_r48);
     CPy_DECREF(cpy_r_r48);
     cpy_r_r50 = cpy_r_r49 >= 0;
     if (unlikely(!cpy_r_r50)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL112;
     } else
         goto CPyL23;
 CPyL28: ;
     cpy_r_r51 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r51)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL110;
     }
     cpy_r_r52 = PyList_AsTuple(cpy_r_r42);
     CPy_DECREF_NO_IMM(cpy_r_r42);
     if (unlikely(cpy_r_r52 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL113;
     }
     if (((faster_eth_utils___abi___get_normalized_abi_inputs_envObject *)cpy_r_r0)->_sorted_arg_names != NULL) {
@@ -4006,12 +3993,12 @@ CPyL28: ;
     ((faster_eth_utils___abi___get_normalized_abi_inputs_envObject *)cpy_r_r0)->_sorted_arg_names = cpy_r_r52;
     cpy_r_r53 = 1;
     if (unlikely(!cpy_r_r53)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 497, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
         goto CPyL113;
     }
     cpy_r_r54 = ((faster_eth_utils___abi___get_normalized_abi_inputs_envObject *)cpy_r_r0)->_sorted_arg_names;
     if (unlikely(cpy_r_r54 == NULL)) {
-        CPy_AttributeError("faster_eth_utils/abi.py", "get_normalized_abi_inputs", "get_normalized_abi_inputs_env", "sorted_arg_names", 498, CPyStatic_abi___globals);
+        CPy_AttributeError("faster_eth_utils/abi.py", "get_normalized_abi_inputs", "get_normalized_abi_inputs_env", "sorted_arg_names", 499, CPyStatic_abi___globals);
         goto CPyL113;
     }
     CPy_INCREF(cpy_r_r54);
@@ -4020,7 +4007,7 @@ CPyL32: ;
     cpy_r_r56 = CPyStatics[50]; /* 'zip' */
     cpy_r_r57 = CPyObject_GetAttr(cpy_r_r55, cpy_r_r56);
     if (unlikely(cpy_r_r57 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 499, CPyStatic_abi___globals);
         goto CPyL114;
     }
     PyObject *cpy_r_r58[2] = {cpy_r_r54, cpy_r_args};
@@ -4028,19 +4015,19 @@ CPyL32: ;
     cpy_r_r60 = PyObject_Vectorcall(cpy_r_r57, cpy_r_r59, 2, 0);
     CPy_DECREF(cpy_r_r57);
     if (unlikely(cpy_r_r60 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 499, CPyStatic_abi___globals);
         goto CPyL114;
     }
     CPy_DECREF(cpy_r_r54);
     cpy_r_r61 = CPyDict_FromAny(cpy_r_r60);
     CPy_DECREF(cpy_r_r60);
     if (unlikely(cpy_r_r61 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 498, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 499, CPyStatic_abi___globals);
         goto CPyL113;
     }
     cpy_r_r62 = CPyDict_KeysView(cpy_r_r61);
     if (unlikely(cpy_r_r62 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 501, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals);
         goto CPyL115;
     }
     cpy_r_r63 = CPyStatics[51]; /* 'intersection' */
@@ -4048,14 +4035,14 @@ CPyL32: ;
     cpy_r_r65 = (PyObject **)&cpy_r_r64;
     cpy_r_r66 = PyObject_VectorcallMethod(cpy_r_r63, cpy_r_r65, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r66 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 501, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals);
         goto CPyL116;
     }
     CPy_DECREF(cpy_r_r62);
     if (likely(PySet_Check(cpy_r_r66)))
         cpy_r_r67 = cpy_r_r66;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 501, CPyStatic_abi___globals, "set", cpy_r_r66);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals, "set", cpy_r_r66);
         goto CPyL115;
     }
     CPy_INCREF(cpy_r_r67);
@@ -4063,7 +4050,7 @@ CPyL32: ;
     CPy_DECREF(cpy_r_r67);
     cpy_r_r69 = cpy_r_r68 >= 0;
     if (unlikely(!cpy_r_r69)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 501, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals);
         goto CPyL117;
     }
     cpy_r_r70 = cpy_r_r68;
@@ -4075,13 +4062,13 @@ CPyL40: ;
     cpy_r_r71 = CPyStatics[13]; /* 'name' */
     cpy_r_r72 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r71);
     if (unlikely(cpy_r_r72 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 503, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 504, CPyStatic_abi___globals);
         goto CPyL120;
     }
     cpy_r_r73 = PyObject_Str(cpy_r_r72);
     CPy_DECREF(cpy_r_r72);
     if (unlikely(cpy_r_r73 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 503, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 504, CPyStatic_abi___globals);
         goto CPyL120;
     }
     cpy_r_r74 = CPyStatics[52]; /* "() got multiple values for argument(s) '" */
@@ -4089,7 +4076,7 @@ CPyL40: ;
     cpy_r_r76 = PyUnicode_Join(cpy_r_r75, cpy_r_r67);
     CPy_DECREF(cpy_r_r67);
     if (unlikely(cpy_r_r76 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 504, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 505, CPyStatic_abi___globals);
         goto CPyL121;
     }
     cpy_r_r77 = CPyStatics[49]; /* "'." */
@@ -4097,14 +4084,14 @@ CPyL40: ;
     CPy_DECREF(cpy_r_r73);
     CPy_DECREF(cpy_r_r76);
     if (unlikely(cpy_r_r78 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 503, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 504, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r79 = CPyModule_builtins;
     cpy_r_r80 = CPyStatics[16]; /* 'TypeError' */
     cpy_r_r81 = CPyObject_GetAttr(cpy_r_r79, cpy_r_r80);
     if (unlikely(cpy_r_r81 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 503, CPyStatic_abi___globals);
         goto CPyL122;
     }
     PyObject *cpy_r_r82[1] = {cpy_r_r78};
@@ -4112,21 +4099,21 @@ CPyL40: ;
     cpy_r_r84 = PyObject_Vectorcall(cpy_r_r81, cpy_r_r83, 1, 0);
     CPy_DECREF(cpy_r_r81);
     if (unlikely(cpy_r_r84 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 503, CPyStatic_abi___globals);
         goto CPyL122;
     }
     CPy_DECREF(cpy_r_r78);
     CPy_Raise(cpy_r_r84);
     CPy_DECREF(cpy_r_r84);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 502, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 503, CPyStatic_abi___globals);
         goto CPyL101;
     }
     CPy_Unreachable();
 CPyL48: ;
     cpy_r_r85 = ((faster_eth_utils___abi___get_normalized_abi_inputs_envObject *)cpy_r_r0)->_sorted_arg_names;
     if (unlikely(cpy_r_r85 == NULL)) {
-        CPy_AttributeError("faster_eth_utils/abi.py", "get_normalized_abi_inputs", "get_normalized_abi_inputs_env", "sorted_arg_names", 509, CPyStatic_abi___globals);
+        CPy_AttributeError("faster_eth_utils/abi.py", "get_normalized_abi_inputs", "get_normalized_abi_inputs_env", "sorted_arg_names", 510, CPyStatic_abi___globals);
         goto CPyL115;
     }
     CPy_INCREF(cpy_r_r85);
@@ -4136,7 +4123,7 @@ CPyL49: ;
     cpy_r_r88 = (PyObject **)&cpy_r_r87;
     cpy_r_r89 = PyObject_VectorcallMethod(cpy_r_r86, cpy_r_r88, 9223372036854775810ULL, 0);
     if (unlikely(cpy_r_r89 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 509, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 510, CPyStatic_abi___globals);
         goto CPyL123;
     }
     CPy_DECREF(cpy_r_r41);
@@ -4144,19 +4131,19 @@ CPyL49: ;
     if (likely(PySet_Check(cpy_r_r89)))
         cpy_r_r90 = cpy_r_r89;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 509, CPyStatic_abi___globals, "set", cpy_r_r89);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 510, CPyStatic_abi___globals, "set", cpy_r_r89);
         goto CPyL124;
     }
     cpy_r_r91 = CPySequence_Sort(cpy_r_r90);
     CPy_DECREF(cpy_r_r90);
     if (unlikely(cpy_r_r91 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 509, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 510, CPyStatic_abi___globals);
         goto CPyL124;
     }
     cpy_r_r92 = PyList_AsTuple(cpy_r_r91);
     CPy_DECREF_NO_IMM(cpy_r_r91);
     if (unlikely(cpy_r_r92 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 509, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 510, CPyStatic_abi___globals);
         goto CPyL124;
     }
     CPy_INCREF(cpy_r_r92);
@@ -4164,7 +4151,7 @@ CPyL49: ;
     CPy_DECREF(cpy_r_r92);
     cpy_r_r94 = cpy_r_r93 >= 0;
     if (unlikely(!cpy_r_r94)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 509, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 510, CPyStatic_abi___globals);
         goto CPyL125;
     }
     cpy_r_r95 = cpy_r_r93;
@@ -4178,14 +4165,14 @@ CPyL55: ;
     cpy_r_r97 = CPyStatics[13]; /* 'name' */
     cpy_r_r98 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r97);
     if (unlikely(cpy_r_r98 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 511, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 512, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r99 = PyObject_IsTrue(cpy_r_r98);
     CPy_DECREF(cpy_r_r98);
     cpy_r_r100 = cpy_r_r99 >= 0;
     if (unlikely(!cpy_r_r100)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 511, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 512, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r101 = cpy_r_r99;
@@ -4193,27 +4180,27 @@ CPyL55: ;
     cpy_r_r102 = CPyStatics[13]; /* 'name' */
     cpy_r_r103 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r102);
     if (unlikely(cpy_r_r103 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 514, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r104 = PyObject_Str(cpy_r_r103);
     CPy_DECREF(cpy_r_r103);
     if (unlikely(cpy_r_r104 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 514, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r105 = CPyStatics[56]; /* '()' */
     cpy_r_r106 = CPyStr_Build(2, cpy_r_r104, cpy_r_r105);
     CPy_DECREF(cpy_r_r104);
     if (unlikely(cpy_r_r106 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 514, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r107 = CPyStatics[53]; /* ', ' */
     cpy_r_r108 = PyUnicode_Join(cpy_r_r107, cpy_r_r92);
     CPy_DECREF(cpy_r_r92);
     if (unlikely(cpy_r_r108 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 514, CPyStatic_abi___globals);
         goto CPyL129;
     }
     cpy_r_r109 = CPyStatics[38]; /* 'format' */
@@ -4221,7 +4208,7 @@ CPyL55: ;
     cpy_r_r111 = (PyObject **)&cpy_r_r110;
     cpy_r_r112 = PyObject_VectorcallMethod(cpy_r_r109, cpy_r_r111, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r112 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 514, CPyStatic_abi___globals);
         goto CPyL130;
     }
     CPy_DECREF(cpy_r_r96);
@@ -4230,14 +4217,14 @@ CPyL55: ;
     if (likely(PyUnicode_Check(cpy_r_r112)))
         cpy_r_r113 = cpy_r_r112;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals, "str", cpy_r_r112);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 514, CPyStatic_abi___globals, "str", cpy_r_r112);
         goto CPyL101;
     }
     cpy_r_r114 = CPyModule_builtins;
     cpy_r_r115 = CPyStatics[16]; /* 'TypeError' */
     cpy_r_r116 = CPyObject_GetAttr(cpy_r_r114, cpy_r_r115);
     if (unlikely(cpy_r_r116 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 512, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
         goto CPyL131;
     }
     PyObject *cpy_r_r117[1] = {cpy_r_r113};
@@ -4245,14 +4232,14 @@ CPyL55: ;
     cpy_r_r119 = PyObject_Vectorcall(cpy_r_r116, cpy_r_r118, 1, 0);
     CPy_DECREF(cpy_r_r116);
     if (unlikely(cpy_r_r119 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 512, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
         goto CPyL131;
     }
     CPy_DECREF(cpy_r_r113);
     CPy_Raise(cpy_r_r119);
     CPy_DECREF(cpy_r_r119);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 512, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 513, CPyStatic_abi___globals);
         goto CPyL101;
     }
     CPy_Unreachable();
@@ -4261,27 +4248,27 @@ CPyL68: ;
     cpy_r_r121 = CPyStatics[3]; /* 'type' */
     cpy_r_r122 = CPyDict_GetWithNone(cpy_r_abi_element, cpy_r_r121);
     if (unlikely(cpy_r_r122 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 517, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 518, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r123 = PyObject_Str(cpy_r_r122);
     CPy_DECREF(cpy_r_r122);
     if (unlikely(cpy_r_r123 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 517, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 518, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r124 = CPyStatics[58]; /* "'" */
     cpy_r_r125 = CPyStr_Build(3, cpy_r_r120, cpy_r_r123, cpy_r_r124);
     CPy_DECREF(cpy_r_r123);
     if (unlikely(cpy_r_r125 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 517, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 518, CPyStatic_abi___globals);
         goto CPyL128;
     }
     cpy_r_r126 = CPyStatics[53]; /* ', ' */
     cpy_r_r127 = PyUnicode_Join(cpy_r_r126, cpy_r_r92);
     CPy_DECREF(cpy_r_r92);
     if (unlikely(cpy_r_r127 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 517, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 518, CPyStatic_abi___globals);
         goto CPyL132;
     }
     cpy_r_r128 = CPyStatics[38]; /* 'format' */
@@ -4289,7 +4276,7 @@ CPyL68: ;
     cpy_r_r130 = (PyObject **)&cpy_r_r129;
     cpy_r_r131 = PyObject_VectorcallMethod(cpy_r_r128, cpy_r_r130, 9223372036854775811ULL, 0);
     if (unlikely(cpy_r_r131 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 516, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 517, CPyStatic_abi___globals);
         goto CPyL133;
     }
     CPy_DECREF(cpy_r_r96);
@@ -4298,14 +4285,14 @@ CPyL68: ;
     if (likely(PyUnicode_Check(cpy_r_r131)))
         cpy_r_r132 = cpy_r_r131;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 516, CPyStatic_abi___globals, "str", cpy_r_r131);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 517, CPyStatic_abi___globals, "str", cpy_r_r131);
         goto CPyL101;
     }
     cpy_r_r133 = CPyModule_builtins;
     cpy_r_r134 = CPyStatics[16]; /* 'TypeError' */
     cpy_r_r135 = CPyObject_GetAttr(cpy_r_r133, cpy_r_r134);
     if (unlikely(cpy_r_r135 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 515, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 516, CPyStatic_abi___globals);
         goto CPyL134;
     }
     PyObject *cpy_r_r136[1] = {cpy_r_r132};
@@ -4313,34 +4300,34 @@ CPyL68: ;
     cpy_r_r138 = PyObject_Vectorcall(cpy_r_r135, cpy_r_r137, 1, 0);
     CPy_DECREF(cpy_r_r135);
     if (unlikely(cpy_r_r138 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 515, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 516, CPyStatic_abi___globals);
         goto CPyL134;
     }
     CPy_DECREF(cpy_r_r132);
     CPy_Raise(cpy_r_r138);
     CPy_DECREF(cpy_r_r138);
     if (unlikely(!0)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 515, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 516, CPyStatic_abi___globals);
         goto CPyL101;
     }
     CPy_Unreachable();
 CPyL78: ;
     cpy_r_r139 = CPyDict_ItemsView(cpy_r_kwargs);
     if (unlikely(cpy_r_r139 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 527, CPyStatic_abi___globals);
         goto CPyL124;
     }
     cpy_r_r140 = CPyDict_ItemsView(cpy_r_r61);
     CPy_DECREF(cpy_r_r61);
     if (unlikely(cpy_r_r140 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 527, CPyStatic_abi___globals);
         goto CPyL135;
     }
     cpy_r_r141 = CPyModule_itertools;
     cpy_r_r142 = CPyStatics[59]; /* 'chain' */
     cpy_r_r143 = CPyObject_GetAttr(cpy_r_r141, cpy_r_r142);
     if (unlikely(cpy_r_r143 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 527, CPyStatic_abi___globals);
         goto CPyL136;
     }
     PyObject *cpy_r_r144[2] = {cpy_r_r139, cpy_r_r140};
@@ -4348,14 +4335,14 @@ CPyL78: ;
     cpy_r_r146 = PyObject_Vectorcall(cpy_r_r143, cpy_r_r145, 2, 0);
     CPy_DECREF(cpy_r_r143);
     if (unlikely(cpy_r_r146 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 527, CPyStatic_abi___globals);
         goto CPyL136;
     }
     CPy_DECREF(cpy_r_r139);
     CPy_DECREF(cpy_r_r140);
     cpy_r_r147 = CPyDef_abi_____mypyc_lambda__0_get_normalized_abi_inputs_obj();
     if (unlikely(cpy_r_r147 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 527, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 528, CPyStatic_abi___globals);
         goto CPyL137;
     }
     if (((faster_eth_utils___abi_____mypyc_lambda__0_get_normalized_abi_inputs_objObject *)cpy_r_r147)->___mypyc_env__ != NULL) {
@@ -4364,14 +4351,14 @@ CPyL78: ;
     ((faster_eth_utils___abi_____mypyc_lambda__0_get_normalized_abi_inputs_objObject *)cpy_r_r147)->___mypyc_env__ = cpy_r_r0;
     cpy_r_r148 = 1;
     if (unlikely(!cpy_r_r148)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 527, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 528, CPyStatic_abi___globals);
         goto CPyL138;
     }
     cpy_r_r149 = CPyModule_builtins;
     cpy_r_r150 = CPyStatics[60]; /* 'sorted' */
     cpy_r_r151 = CPyObject_GetAttr(cpy_r_r149, cpy_r_r150);
     if (unlikely(cpy_r_r151 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals);
         goto CPyL138;
     }
     PyObject *cpy_r_r152[2] = {cpy_r_r146, cpy_r_r147};
@@ -4380,7 +4367,7 @@ CPyL78: ;
     cpy_r_r155 = PyObject_Vectorcall(cpy_r_r151, cpy_r_r153, 1, cpy_r_r154);
     CPy_DECREF(cpy_r_r151);
     if (unlikely(cpy_r_r155 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals);
         goto CPyL138;
     }
     CPy_DECREF(cpy_r_r146);
@@ -4388,25 +4375,25 @@ CPyL78: ;
     if (likely(PyList_Check(cpy_r_r155)))
         cpy_r_r156 = cpy_r_r155;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals, "list", cpy_r_r155);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 526, CPyStatic_abi___globals, "list", cpy_r_r155);
         goto CPyL101;
     }
     cpy_r_r157 = CPyModule_builtins;
     cpy_r_r158 = CPyStatics[50]; /* 'zip' */
     cpy_r_r159 = CPyObject_GetAttr(cpy_r_r157, cpy_r_r158);
     if (unlikely(cpy_r_r159 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
         goto CPyL139;
     }
     cpy_r_r160 = PyList_New(0);
     if (unlikely(cpy_r_r160 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
         goto CPyL140;
     }
     cpy_r_r161 = CPyList_Extend(cpy_r_r160, cpy_r_r156);
     CPy_DECREF_NO_IMM(cpy_r_r156);
     if (unlikely(cpy_r_r161 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
         goto CPyL141;
     } else
         goto CPyL142;
@@ -4414,12 +4401,12 @@ CPyL90: ;
     cpy_r_r162 = PyList_AsTuple(cpy_r_r160);
     CPy_DECREF_NO_IMM(cpy_r_r160);
     if (unlikely(cpy_r_r162 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
         goto CPyL143;
     }
     cpy_r_r163 = PyDict_New();
     if (unlikely(cpy_r_r163 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
         goto CPyL144;
     }
     cpy_r_r164 = PyObject_Call(cpy_r_r159, cpy_r_r162, cpy_r_r163);
@@ -4427,19 +4414,19 @@ CPyL90: ;
     CPy_DECREF(cpy_r_r162);
     CPy_DECREF(cpy_r_r163);
     if (unlikely(cpy_r_r164 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 525, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r165 = PySequence_Tuple(cpy_r_r164);
     CPy_DECREF(cpy_r_r164);
     if (unlikely(cpy_r_r165 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 523, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r166 = PyObject_IsTrue(cpy_r_r165);
     cpy_r_r167 = cpy_r_r166 >= 0;
     if (unlikely(!cpy_r_r167)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 523, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 524, CPyStatic_abi___globals);
         goto CPyL145;
     }
     cpy_r_r168 = cpy_r_r166;
@@ -4447,13 +4434,13 @@ CPyL90: ;
     cpy_r_r169 = CPySequenceTuple_GetItem(cpy_r_r165, 2);
     CPy_DECREF(cpy_r_r165);
     if (unlikely(cpy_r_r169 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 532, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 533, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r170 = PySequence_Tuple(cpy_r_r169);
     CPy_DECREF(cpy_r_r169);
     if (unlikely(cpy_r_r170 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 532, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 533, CPyStatic_abi___globals);
         goto CPyL101;
     }
     cpy_r_r171 = cpy_r_r170;
@@ -4677,7 +4664,7 @@ PyObject *CPyPy_abi___get_normalized_abi_inputs(PyObject *self, PyObject *const 
 fail: ;
     CPy_DECREF(obj_args);
     CPy_DECREF(obj_kwargs);
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 426, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_normalized_abi_inputs", 427, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -4742,52 +4729,52 @@ tuple_T2OO CPyDef_abi___get_aligned_abi_inputs(PyObject *cpy_r_abi_element, PyOb
     tuple_T2OO cpy_r_r58;
     cpy_r_r0 = CPyDef_abi____raise_if_fallback_or_receive_abi(cpy_r_abi_element);
     if (unlikely(cpy_r_r0 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 578, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 579, CPyStatic_abi___globals);
         goto CPyL44;
     }
     cpy_r_r1 = CPyStatics[30]; /* 'inputs' */
     cpy_r_r2 = PyList_New(0);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 580, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 581, CPyStatic_abi___globals);
         goto CPyL44;
     }
     cpy_r_r3 = CPyDict_Get(cpy_r_abi_element, cpy_r_r1, cpy_r_r2);
     CPy_DECREF_NO_IMM(cpy_r_r2);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 580, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 581, CPyStatic_abi___globals);
         goto CPyL44;
     }
     cpy_r_r4 = CPyStatic_abi___globals;
     cpy_r_r5 = CPyStatics[11]; /* 'abc' */
     cpy_r_r6 = CPyDict_GetItem(cpy_r_r4, cpy_r_r5);
     if (unlikely(cpy_r_r6 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 581, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 582, CPyStatic_abi___globals);
         goto CPyL45;
     }
     cpy_r_r7 = CPyStatics[12]; /* 'Mapping' */
     cpy_r_r8 = CPyObject_GetAttr(cpy_r_r6, cpy_r_r7);
     CPy_DECREF(cpy_r_r6);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 581, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 582, CPyStatic_abi___globals);
         goto CPyL45;
     }
     cpy_r_r9 = PyObject_IsInstance(cpy_r_normalized_args, cpy_r_r8);
     CPy_DECREF(cpy_r_r8);
     cpy_r_r10 = cpy_r_r9 >= 0;
     if (unlikely(!cpy_r_r10)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 581, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 582, CPyStatic_abi___globals);
         goto CPyL45;
     }
     cpy_r_r11 = cpy_r_r9;
     if (!cpy_r_r11) goto CPyL46;
     cpy_r_r12 = PyList_New(0);
     if (unlikely(cpy_r_r12 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 583, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
         goto CPyL45;
     }
     cpy_r_r13 = PyObject_GetIter(cpy_r_r3);
     if (unlikely(cpy_r_r13 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 583, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
         goto CPyL47;
     }
 CPyL9: ;
@@ -4796,20 +4783,20 @@ CPyL9: ;
     if (likely(PyDict_Check(cpy_r_r14)))
         cpy_r_r15 = cpy_r_r14;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 583, CPyStatic_abi___globals, "dict", cpy_r_r14);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals, "dict", cpy_r_r14);
         goto CPyL49;
     }
     cpy_r_r16 = CPyStatics[13]; /* 'name' */
     cpy_r_r17 = CPyDict_GetItem(cpy_r_r15, cpy_r_r16);
     CPy_DECREF(cpy_r_r15);
     if (unlikely(cpy_r_r17 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 585, CPyStatic_abi___globals);
         goto CPyL49;
     }
     if (likely(PyUnicode_Check(cpy_r_r17)))
         cpy_r_r18 = cpy_r_r17;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals, "str", cpy_r_r17);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 585, CPyStatic_abi___globals, "str", cpy_r_r17);
         goto CPyL49;
     }
     CPy_INCREF(cpy_r_normalized_args);
@@ -4818,39 +4805,39 @@ CPyL9: ;
     CPy_DECREF(cpy_r_r19);
     CPy_DECREF(cpy_r_r18);
     if (unlikely(cpy_r_r20 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 585, CPyStatic_abi___globals);
         goto CPyL49;
     }
     cpy_r_r21 = PyList_Append(cpy_r_r12, cpy_r_r20);
     CPy_DECREF(cpy_r_r20);
     cpy_r_r22 = cpy_r_r21 >= 0;
     if (unlikely(!cpy_r_r22)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 583, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
         goto CPyL49;
     } else
         goto CPyL9;
 CPyL16: ;
     cpy_r_r23 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r23)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 583, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
         goto CPyL47;
     }
     cpy_r_r24 = PyList_AsTuple(cpy_r_r12);
     CPy_DECREF_NO_IMM(cpy_r_r12);
     if (unlikely(cpy_r_r24 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 583, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 584, CPyStatic_abi___globals);
         goto CPyL45;
     }
     cpy_r_normalized_args = cpy_r_r24;
 CPyL19: ;
     cpy_r_r25 = PyList_New(0);
     if (unlikely(cpy_r_r25 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
         goto CPyL50;
     }
     cpy_r_r26 = PyObject_GetIter(cpy_r_r3);
     if (unlikely(cpy_r_r26 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
         goto CPyL51;
     }
 CPyL21: ;
@@ -4859,59 +4846,59 @@ CPyL21: ;
     if (likely(PyDict_Check(cpy_r_r27)))
         cpy_r_r28 = cpy_r_r27;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals, "dict", cpy_r_r27);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals, "dict", cpy_r_r27);
         goto CPyL53;
     }
     cpy_r_r29 = CPyDef_abi___collapse_if_tuple(cpy_r_r28);
     CPy_DECREF(cpy_r_r28);
     if (unlikely(cpy_r_r29 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
         goto CPyL53;
     }
     cpy_r_r30 = PyList_Append(cpy_r_r25, cpy_r_r29);
     CPy_DECREF(cpy_r_r29);
     cpy_r_r31 = cpy_r_r30 >= 0;
     if (unlikely(!cpy_r_r31)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
         goto CPyL53;
     } else
         goto CPyL21;
 CPyL25: ;
     cpy_r_r32 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r32)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
         goto CPyL51;
     }
     cpy_r_r33 = PyList_AsTuple(cpy_r_r25);
     CPy_DECREF_NO_IMM(cpy_r_r25);
     if (unlikely(cpy_r_r33 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 588, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
         goto CPyL50;
     }
     CPy_INCREF(cpy_r_normalized_args);
     if (likely(PyTuple_Check(cpy_r_normalized_args)))
         cpy_r_r34 = cpy_r_normalized_args;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals, "tuple", cpy_r_normalized_args);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals, "tuple", cpy_r_normalized_args);
         goto CPyL54;
     }
     cpy_r_r35 = PyObject_Type(cpy_r_r34);
     CPy_DECREF(cpy_r_r34);
     cpy_r_r36 = PyList_New(0);
     if (unlikely(cpy_r_r36 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL55;
     }
     cpy_r_r37 = PyObject_GetIter(cpy_r_r3);
     CPy_DECREF(cpy_r_r3);
     if (unlikely(cpy_r_r37 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL56;
     }
     if (likely(PyTuple_Check(cpy_r_normalized_args)))
         cpy_r_r38 = cpy_r_normalized_args;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 591, CPyStatic_abi___globals, "tuple", cpy_r_normalized_args);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 592, CPyStatic_abi___globals, "tuple", cpy_r_normalized_args);
         goto CPyL57;
     }
     cpy_r_r39 = 0;
@@ -4926,26 +4913,26 @@ CPyL32: ;
     if (likely(PyDict_Check(cpy_r_r40)))
         cpy_r_r45 = cpy_r_r40;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals, "dict", cpy_r_r40);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals, "dict", cpy_r_r40);
         goto CPyL60;
     }
     cpy_r_r46 = CPySequenceTuple_GetItem(cpy_r_r38, cpy_r_r39);
     if (unlikely(cpy_r_r46 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL61;
     }
     cpy_r_r47 = CPyDef_abi____align_abi_input(cpy_r_r45, cpy_r_r46);
     CPy_DECREF(cpy_r_r45);
     CPy_DECREF(cpy_r_r46);
     if (unlikely(cpy_r_r47 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 591, CPyStatic_abi___globals);
         goto CPyL60;
     }
     cpy_r_r48 = PyList_Append(cpy_r_r36, cpy_r_r47);
     CPy_DECREF(cpy_r_r47);
     cpy_r_r49 = cpy_r_r48 >= 0;
     if (unlikely(!cpy_r_r49)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL60;
     }
     cpy_r_r50 = cpy_r_r39 + 2;
@@ -4954,13 +4941,13 @@ CPyL32: ;
 CPyL39: ;
     cpy_r_r51 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r51)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL62;
     }
     cpy_r_r52 = PyObject_GetIter(cpy_r_r36);
     CPy_DECREF_NO_IMM(cpy_r_r36);
     if (unlikely(cpy_r_r52 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL63;
     }
     PyObject *cpy_r_r53[1] = {cpy_r_r52};
@@ -4968,14 +4955,14 @@ CPyL39: ;
     cpy_r_r55 = PyObject_Vectorcall(cpy_r_r35, cpy_r_r54, 1, 0);
     CPy_DECREF(cpy_r_r35);
     if (unlikely(cpy_r_r55 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals);
         goto CPyL64;
     }
     CPy_DECREF(cpy_r_r52);
     if (likely(PyTuple_Check(cpy_r_r55)))
         cpy_r_r56 = cpy_r_r55;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 589, CPyStatic_abi___globals, "tuple", cpy_r_r55);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 590, CPyStatic_abi___globals, "tuple", cpy_r_r55);
         goto CPyL65;
     }
     cpy_r_r57.f0 = cpy_r_r33;
@@ -5126,7 +5113,7 @@ __LL27: ;
     PyTuple_SET_ITEM(retbox, 1, __tmp29);
     return retbox;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 535, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_aligned_abi_inputs", 536, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5149,30 +5136,30 @@ PyObject *CPyDef_abi___get_abi_input_names(PyObject *cpy_r_abi_element) {
     PyObject *cpy_r_r15;
     cpy_r_r0 = CPyDef_abi____raise_if_fallback_or_receive_abi(cpy_r_abi_element);
     if (unlikely(cpy_r_r0 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 625, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 626, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r1 = PyList_New(0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 626, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r2 = CPyStatics[30]; /* 'inputs' */
     cpy_r_r3 = PyList_New(0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 628, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 629, CPyStatic_abi___globals);
         goto CPyL13;
     }
     cpy_r_r4 = CPyDict_Get(cpy_r_abi_element, cpy_r_r2, cpy_r_r3);
     CPy_DECREF_NO_IMM(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 628, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 629, CPyStatic_abi___globals);
         goto CPyL13;
     }
     cpy_r_r5 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 626, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals);
         goto CPyL13;
     }
 CPyL5: ;
@@ -5181,7 +5168,7 @@ CPyL5: ;
     if (likely(PyDict_Check(cpy_r_r6)))
         cpy_r_r7 = cpy_r_r6;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 626, CPyStatic_abi___globals, "dict", cpy_r_r6);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals, "dict", cpy_r_r6);
         goto CPyL15;
     }
     cpy_r_r8 = CPyStatics[13]; /* 'name' */
@@ -5189,7 +5176,7 @@ CPyL5: ;
     cpy_r_r10 = CPyDict_Get(cpy_r_r7, cpy_r_r8, cpy_r_r9);
     CPy_DECREF(cpy_r_r7);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 628, CPyStatic_abi___globals);
         goto CPyL15;
     }
     if (PyUnicode_Check(cpy_r_r10))
@@ -5204,21 +5191,21 @@ CPyL5: ;
         cpy_r_r11 = NULL;
     }
     if (cpy_r_r11 != NULL) goto __LL30;
-    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals, "str or None", cpy_r_r10);
+    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 628, CPyStatic_abi___globals, "str or None", cpy_r_r10);
     goto CPyL15;
 __LL30: ;
     cpy_r_r12 = PyList_Append(cpy_r_r1, cpy_r_r11);
     CPy_DECREF(cpy_r_r11);
     cpy_r_r13 = cpy_r_r12 >= 0;
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 626, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals);
         goto CPyL15;
     } else
         goto CPyL5;
 CPyL10: ;
     cpy_r_r14 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 626, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 627, CPyStatic_abi___globals);
         goto CPyL13;
     }
     return cpy_r_r1;
@@ -5254,7 +5241,7 @@ PyObject *CPyPy_abi___get_abi_input_names(PyObject *self, PyObject *const *args,
     PyObject *retval = CPyDef_abi___get_abi_input_names(arg_abi_element);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 596, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_names", 597, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5274,30 +5261,30 @@ PyObject *CPyDef_abi___get_abi_input_types(PyObject *cpy_r_abi_element) {
     PyObject *cpy_r_r12;
     cpy_r_r0 = CPyDef_abi____raise_if_fallback_or_receive_abi(cpy_r_abi_element);
     if (unlikely(cpy_r_r0 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 661, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 662, CPyStatic_abi___globals);
         goto CPyL11;
     }
     cpy_r_r1 = PyList_New(0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 662, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 663, CPyStatic_abi___globals);
         goto CPyL11;
     }
     cpy_r_r2 = CPyStatics[30]; /* 'inputs' */
     cpy_r_r3 = PyList_New(0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 664, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 665, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r4 = CPyDict_Get(cpy_r_abi_element, cpy_r_r2, cpy_r_r3);
     CPy_DECREF_NO_IMM(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 664, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 665, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r5 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 662, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 663, CPyStatic_abi___globals);
         goto CPyL12;
     }
 CPyL5: ;
@@ -5306,27 +5293,27 @@ CPyL5: ;
     if (likely(PyDict_Check(cpy_r_r6)))
         cpy_r_r7 = cpy_r_r6;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 662, CPyStatic_abi___globals, "dict", cpy_r_r6);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 663, CPyStatic_abi___globals, "dict", cpy_r_r6);
         goto CPyL14;
     }
     cpy_r_r8 = CPyDef_abi___collapse_if_tuple(cpy_r_r7);
     CPy_DECREF(cpy_r_r7);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 663, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 664, CPyStatic_abi___globals);
         goto CPyL14;
     }
     cpy_r_r9 = PyList_Append(cpy_r_r1, cpy_r_r8);
     CPy_DECREF(cpy_r_r8);
     cpy_r_r10 = cpy_r_r9 >= 0;
     if (unlikely(!cpy_r_r10)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 662, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 663, CPyStatic_abi___globals);
         goto CPyL14;
     } else
         goto CPyL5;
 CPyL9: ;
     cpy_r_r11 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r11)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 662, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 663, CPyStatic_abi___globals);
         goto CPyL12;
     }
     return cpy_r_r1;
@@ -5362,7 +5349,7 @@ PyObject *CPyPy_abi___get_abi_input_types(PyObject *self, PyObject *const *args,
     PyObject *retval = CPyDef_abi___get_abi_input_types(arg_abi_element);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 632, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_input_types", 633, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5385,30 +5372,30 @@ PyObject *CPyDef_abi___get_abi_output_names(PyObject *cpy_r_abi_element) {
     PyObject *cpy_r_r15;
     cpy_r_r0 = CPyDef_abi____raise_if_not_function_abi(cpy_r_abi_element);
     if (unlikely(cpy_r_r0 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 706, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 707, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r1 = PyList_New(0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 707, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r2 = CPyStatics[23]; /* 'outputs' */
     cpy_r_r3 = PyList_New(0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 709, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 710, CPyStatic_abi___globals);
         goto CPyL13;
     }
     cpy_r_r4 = CPyDict_Get(cpy_r_abi_element, cpy_r_r2, cpy_r_r3);
     CPy_DECREF_NO_IMM(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 709, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 710, CPyStatic_abi___globals);
         goto CPyL13;
     }
     cpy_r_r5 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 707, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals);
         goto CPyL13;
     }
 CPyL5: ;
@@ -5417,7 +5404,7 @@ CPyL5: ;
     if (likely(PyDict_Check(cpy_r_r6)))
         cpy_r_r7 = cpy_r_r6;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 707, CPyStatic_abi___globals, "dict", cpy_r_r6);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals, "dict", cpy_r_r6);
         goto CPyL15;
     }
     cpy_r_r8 = CPyStatics[13]; /* 'name' */
@@ -5425,7 +5412,7 @@ CPyL5: ;
     cpy_r_r10 = CPyDict_Get(cpy_r_r7, cpy_r_r8, cpy_r_r9);
     CPy_DECREF(cpy_r_r7);
     if (unlikely(cpy_r_r10 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 709, CPyStatic_abi___globals);
         goto CPyL15;
     }
     if (PyUnicode_Check(cpy_r_r10))
@@ -5440,21 +5427,21 @@ CPyL5: ;
         cpy_r_r11 = NULL;
     }
     if (cpy_r_r11 != NULL) goto __LL31;
-    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals, "str or None", cpy_r_r10);
+    CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 709, CPyStatic_abi___globals, "str or None", cpy_r_r10);
     goto CPyL15;
 __LL31: ;
     cpy_r_r12 = PyList_Append(cpy_r_r1, cpy_r_r11);
     CPy_DECREF(cpy_r_r11);
     cpy_r_r13 = cpy_r_r12 >= 0;
     if (unlikely(!cpy_r_r13)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 707, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals);
         goto CPyL15;
     } else
         goto CPyL5;
 CPyL10: ;
     cpy_r_r14 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r14)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 707, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 708, CPyStatic_abi___globals);
         goto CPyL13;
     }
     return cpy_r_r1;
@@ -5490,7 +5477,7 @@ PyObject *CPyPy_abi___get_abi_output_names(PyObject *self, PyObject *const *args
     PyObject *retval = CPyDef_abi___get_abi_output_names(arg_abi_element);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 668, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_names", 669, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5510,30 +5497,30 @@ PyObject *CPyDef_abi___get_abi_output_types(PyObject *cpy_r_abi_element) {
     PyObject *cpy_r_r12;
     cpy_r_r0 = CPyDef_abi____raise_if_not_function_abi(cpy_r_abi_element);
     if (unlikely(cpy_r_r0 == 2)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 752, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 753, CPyStatic_abi___globals);
         goto CPyL11;
     }
     cpy_r_r1 = PyList_New(0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 753, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 754, CPyStatic_abi___globals);
         goto CPyL11;
     }
     cpy_r_r2 = CPyStatics[23]; /* 'outputs' */
     cpy_r_r3 = PyList_New(0);
     if (unlikely(cpy_r_r3 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 755, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 756, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r4 = CPyDict_Get(cpy_r_abi_element, cpy_r_r2, cpy_r_r3);
     CPy_DECREF_NO_IMM(cpy_r_r3);
     if (unlikely(cpy_r_r4 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 755, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 756, CPyStatic_abi___globals);
         goto CPyL12;
     }
     cpy_r_r5 = PyObject_GetIter(cpy_r_r4);
     CPy_DECREF(cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 753, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 754, CPyStatic_abi___globals);
         goto CPyL12;
     }
 CPyL5: ;
@@ -5542,27 +5529,27 @@ CPyL5: ;
     if (likely(PyDict_Check(cpy_r_r6)))
         cpy_r_r7 = cpy_r_r6;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 753, CPyStatic_abi___globals, "dict", cpy_r_r6);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 754, CPyStatic_abi___globals, "dict", cpy_r_r6);
         goto CPyL14;
     }
     cpy_r_r8 = CPyDef_abi___collapse_if_tuple(cpy_r_r7);
     CPy_DECREF(cpy_r_r7);
     if (unlikely(cpy_r_r8 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 754, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 755, CPyStatic_abi___globals);
         goto CPyL14;
     }
     cpy_r_r9 = PyList_Append(cpy_r_r1, cpy_r_r8);
     CPy_DECREF(cpy_r_r8);
     cpy_r_r10 = cpy_r_r9 >= 0;
     if (unlikely(!cpy_r_r10)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 753, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 754, CPyStatic_abi___globals);
         goto CPyL14;
     } else
         goto CPyL5;
 CPyL9: ;
     cpy_r_r11 = CPy_NoErrOccurred();
     if (unlikely(!cpy_r_r11)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 753, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 754, CPyStatic_abi___globals);
         goto CPyL12;
     }
     return cpy_r_r1;
@@ -5598,7 +5585,7 @@ PyObject *CPyPy_abi___get_abi_output_types(PyObject *self, PyObject *const *args
     PyObject *retval = CPyDef_abi___get_abi_output_types(arg_abi_element);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 713, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "get_abi_output_types", 714, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5619,14 +5606,14 @@ PyObject *CPyDef_abi___function_signature_to_4byte_selector(PyObject *cpy_r_func
     cpy_r_r1 = CPyStatics[4]; /* '' */
     cpy_r_r2 = PyUnicode_Replace(cpy_r_function_signature, cpy_r_r0, cpy_r_r1, -1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 774, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 775, CPyStatic_abi___globals);
         goto CPyL6;
     }
     cpy_r_r3 = CPyStatic_abi___globals;
     cpy_r_r4 = CPyStatics[63]; /* 'keccak' */
     cpy_r_r5 = CPyDict_GetItem(cpy_r_r3, cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 774, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 775, CPyStatic_abi___globals);
         goto CPyL7;
     }
     PyObject *cpy_r_r6[1] = {cpy_r_r2};
@@ -5635,20 +5622,20 @@ PyObject *CPyDef_abi___function_signature_to_4byte_selector(PyObject *cpy_r_func
     cpy_r_r9 = PyObject_Vectorcall(cpy_r_r5, cpy_r_r7, 0, cpy_r_r8);
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 774, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 775, CPyStatic_abi___globals);
         goto CPyL7;
     }
     CPy_DECREF(cpy_r_r2);
     if (likely(PyBytes_Check(cpy_r_r9) || PyByteArray_Check(cpy_r_r9)))
         cpy_r_r10 = cpy_r_r9;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 774, CPyStatic_abi___globals, "bytes", cpy_r_r9);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 775, CPyStatic_abi___globals, "bytes", cpy_r_r9);
         goto CPyL6;
     }
     cpy_r_r11 = CPyBytes_GetSlice(cpy_r_r10, 0, 8);
     CPy_DECREF(cpy_r_r10);
     if (unlikely(cpy_r_r11 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 774, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 775, CPyStatic_abi___globals);
         goto CPyL6;
     }
     return cpy_r_r11;
@@ -5677,7 +5664,7 @@ PyObject *CPyPy_abi___function_signature_to_4byte_selector(PyObject *self, PyObj
     PyObject *retval = CPyDef_abi___function_signature_to_4byte_selector(arg_function_signature);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 759, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "function_signature_to_4byte_selector", 760, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5687,13 +5674,13 @@ PyObject *CPyDef_abi___function_abi_to_4byte_selector(PyObject *cpy_r_abi_elemen
     PyObject *cpy_r_r2;
     cpy_r_r0 = CPyDef_abi___abi_to_signature(cpy_r_abi_element);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "function_abi_to_4byte_selector", 798, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "function_abi_to_4byte_selector", 799, CPyStatic_abi___globals);
         goto CPyL3;
     }
     cpy_r_r1 = CPyDef_abi___function_signature_to_4byte_selector(cpy_r_r0);
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "function_abi_to_4byte_selector", 799, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "function_abi_to_4byte_selector", 800, CPyStatic_abi___globals);
         goto CPyL3;
     }
     return cpy_r_r1;
@@ -5719,7 +5706,7 @@ PyObject *CPyPy_abi___function_abi_to_4byte_selector(PyObject *self, PyObject *c
     PyObject *retval = CPyDef_abi___function_abi_to_4byte_selector(arg_abi_element);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "function_abi_to_4byte_selector", 777, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "function_abi_to_4byte_selector", 778, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5739,14 +5726,14 @@ PyObject *CPyDef_abi___event_signature_to_log_topic(PyObject *cpy_r_event_signat
     cpy_r_r1 = CPyStatics[4]; /* '' */
     cpy_r_r2 = PyUnicode_Replace(cpy_r_event_signature, cpy_r_r0, cpy_r_r1, -1);
     if (unlikely(cpy_r_r2 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 817, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 818, CPyStatic_abi___globals);
         goto CPyL5;
     }
     cpy_r_r3 = CPyStatic_abi___globals;
     cpy_r_r4 = CPyStatics[63]; /* 'keccak' */
     cpy_r_r5 = CPyDict_GetItem(cpy_r_r3, cpy_r_r4);
     if (unlikely(cpy_r_r5 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 817, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 818, CPyStatic_abi___globals);
         goto CPyL6;
     }
     PyObject *cpy_r_r6[1] = {cpy_r_r2};
@@ -5755,14 +5742,14 @@ PyObject *CPyDef_abi___event_signature_to_log_topic(PyObject *cpy_r_event_signat
     cpy_r_r9 = PyObject_Vectorcall(cpy_r_r5, cpy_r_r7, 0, cpy_r_r8);
     CPy_DECREF(cpy_r_r5);
     if (unlikely(cpy_r_r9 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 817, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 818, CPyStatic_abi___globals);
         goto CPyL6;
     }
     CPy_DECREF(cpy_r_r2);
     if (likely(PyBytes_Check(cpy_r_r9) || PyByteArray_Check(cpy_r_r9)))
         cpy_r_r10 = cpy_r_r9;
     else {
-        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 817, CPyStatic_abi___globals, "bytes", cpy_r_r9);
+        CPy_TypeErrorTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 818, CPyStatic_abi___globals, "bytes", cpy_r_r9);
         goto CPyL5;
     }
     return cpy_r_r10;
@@ -5791,7 +5778,7 @@ PyObject *CPyPy_abi___event_signature_to_log_topic(PyObject *self, PyObject *con
     PyObject *retval = CPyDef_abi___event_signature_to_log_topic(arg_event_signature);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 802, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "event_signature_to_log_topic", 803, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -5801,13 +5788,13 @@ PyObject *CPyDef_abi___event_abi_to_log_topic(PyObject *cpy_r_event_abi) {
     PyObject *cpy_r_r2;
     cpy_r_r0 = CPyDef_abi___abi_to_signature(cpy_r_event_abi);
     if (unlikely(cpy_r_r0 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "event_abi_to_log_topic", 841, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "event_abi_to_log_topic", 842, CPyStatic_abi___globals);
         goto CPyL3;
     }
     cpy_r_r1 = CPyDef_abi___event_signature_to_log_topic(cpy_r_r0);
     CPy_DECREF(cpy_r_r0);
     if (unlikely(cpy_r_r1 == NULL)) {
-        CPy_AddTraceback("faster_eth_utils/abi.py", "event_abi_to_log_topic", 842, CPyStatic_abi___globals);
+        CPy_AddTraceback("faster_eth_utils/abi.py", "event_abi_to_log_topic", 843, CPyStatic_abi___globals);
         goto CPyL3;
     }
     return cpy_r_r1;
@@ -5833,7 +5820,7 @@ PyObject *CPyPy_abi___event_abi_to_log_topic(PyObject *self, PyObject *const *ar
     PyObject *retval = CPyDef_abi___event_abi_to_log_topic(arg_event_abi);
     return retval;
 fail: ;
-    CPy_AddTraceback("faster_eth_utils/abi.py", "event_abi_to_log_topic", 820, CPyStatic_abi___globals);
+    CPy_AddTraceback("faster_eth_utils/abi.py", "event_abi_to_log_topic", 821, CPyStatic_abi___globals);
     return NULL;
 }
 
@@ -30891,7 +30878,7 @@ const int CPyLit_Tuple[] = {
     71, 108, 73, 273, 77, 78, 1, 257, 2, 275, 276, 2, 198, 277, 2, 264,
     252, 1, 296, 1, 71, 3, 306, 66, 66, 3, 307, 307, 307, 2, 392, 393
 };
-const int CPyLit_FrozenSet[] = {1, 2, 27, 26};
+const int CPyLit_FrozenSet[] = {1, 2, 26, 27};
 CPyModule *CPyModule_faster_eth_utils___abi_internal = NULL;
 CPyModule *CPyModule_faster_eth_utils___abi;
 PyObject *CPyStatic_abi___globals;
