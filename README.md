@@ -1,3 +1,11 @@
+### I forked eth-utils and compiled it to C. It does the same stuff, now faster
+
+##### This fork will be kept up-to-date with [eth-utils](https://github.com/ethereum/eth-utils). I will pull updates as they are released and push new faster-eth-utils releases to PyPI.
+
+##### You can find the compiled C code on faster-eth-utils [master](https://github.com/BobTheBuidler/eth-utils/tree/master) branch
+
+##### The original eth-utils readme is below:
+
 # Ethereum Utilities
 
 [![Join the conversation on Discord](https://img.shields.io/discord/809793915578089484?color=blue&label=chat&logo=discord&logoColor=white)](https://discord.gg/GHryRvPB84)
