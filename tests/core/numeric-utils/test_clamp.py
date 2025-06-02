@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.numeric import (
+from faster_eth_utils.numeric import (
     clamp,
 )
 

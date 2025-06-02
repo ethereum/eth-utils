@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.hexadecimal import (
+from faster_eth_utils.hexadecimal import (
     is_0x_prefixed,
 )
 

@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.address import (
+from faster_eth_utils.address import (
     is_address,
     is_binary_address,
     is_canonical_address,

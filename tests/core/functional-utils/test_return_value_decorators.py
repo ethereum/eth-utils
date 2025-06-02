@@ -1,6 +1,6 @@
 import collections
 
-from eth_utils import (
+from faster_eth_utils import (
     flatten_return,
     reversed_return,
     sort_return,

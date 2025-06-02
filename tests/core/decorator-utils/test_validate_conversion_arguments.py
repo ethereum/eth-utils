@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.decorators import (
+from faster_eth_utils.decorators import (
     validate_conversion_arguments,
 )
 

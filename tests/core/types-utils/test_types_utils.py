@@ -1,6 +1,6 @@
 import pytest
 
-from eth_utils.types import (
+from faster_eth_utils.types import (
     is_boolean,
     is_dict,
     is_integer,

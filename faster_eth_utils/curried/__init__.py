@@ -11,7 +11,7 @@ from typing import (
     overload,
 )
 
-from eth_utils import (
+from faster_eth_utils import (
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
     HasExtendedDebugLoggerMeta,
@@ -98,7 +98,7 @@ from eth_utils import (
     to_tuple,
     to_wei,
 )
-from eth_utils.toolz import (
+from faster_eth_utils.toolz import (
     curry,
 )
 

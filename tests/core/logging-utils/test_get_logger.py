@@ -2,7 +2,7 @@ import logging
 import pickle
 import uuid
 
-from eth_utils.logging import (
+from faster_eth_utils.logging import (
     ExtendedDebugLogger,
     get_extended_debug_logger,
     get_logger,

@@ -2,7 +2,7 @@ from typing import (
     List,
 )
 
-from eth_utils import (
+from faster_eth_utils import (
     apply_to_return_value,
 )
 

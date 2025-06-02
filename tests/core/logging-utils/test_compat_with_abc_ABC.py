@@ -5,7 +5,7 @@ from abc import (
 import logging
 import pytest
 
-from eth_utils import (
+from faster_eth_utils import (
     HasLoggerMeta,
 )
 

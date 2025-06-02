@@ -1,8 +1,8 @@
 import collections
 import pytest
 
-import eth_utils
-from eth_utils.curried import (
+import faster_eth_utils
+from faster_eth_utils.curried import (
     apply_formatter_at_index,
     apply_formatter_if,
     apply_formatter_to_array,
@@ -29,7 +29,7 @@ def test_format_dict_error():
     with pytest.raises(ValueError) as exc_info:
         apply_formatters_to_dict({"myfield": int}, {"myfield": "a"})
     with pytest.raises(ValueError) as exc_info:
-        eth_utils.apply_formatters_to_dict({"myfield": int}, {"myfield": "a"})
+        faster_eth_utils.apply_formatters_to_dict({"myfield": int}, {"myfield": "a"})
     assert "myfield" in str(exc_info.value)
 
 
@@ -44,7 +44,7 @@ def test_format_dict_error():
     ),
 )
 def test_apply_formatters_to_dict(formatter, value, expected):
-    assert eth_utils.apply_formatters_to_dict(formatter, value) == expected
+    assert faster_eth_utils.apply_formatters_to_dict(formatter, value) == expected
 
     mapper = apply_formatters_to_dict(formatter)
     assert mapper(value) == expected
@@ -61,7 +61,7 @@ def test_apply_formatters_to_dict(formatter, value, expected):
     ),
 )
 def test_apply_key_map(formatter, value, expected):
-    assert eth_utils.apply_key_map(formatter, value) == expected
+    assert faster_eth_utils.apply_key_map(formatter, value) == expected
 
     mapper = apply_key_map(formatter)
     assert mapper(value) == expected
@@ -78,7 +78,7 @@ def test_apply_key_map(formatter, value, expected):
 )
 def test_apply_key_map_with_key_conflicts_raises_exception(formatter, value):
     with pytest.raises(KeyError):
-        eth_utils.apply_key_map(formatter, value)
+        faster_eth_utils.apply_key_map(formatter, value)
 
 
 @pytest.mark.parametrize(
@@ -90,7 +90,7 @@ def test_apply_key_map_with_key_conflicts_raises_exception(formatter, value):
     ),
 )
 def test_apply_formatter_if(condition, formatter, value, expected):
-    assert eth_utils.apply_formatter_if(condition, formatter, value) == expected
+    assert faster_eth_utils.apply_formatter_if(condition, formatter, value) == expected
 
     # must be able to curry
     conditional_formatter = apply_formatter_if(condition, formatter)
@@ -110,10 +110,10 @@ def test_apply_one_of_formatters(condition_formatters, value, expected):
         with pytest.raises(expected):
             apply_one_of_formatters(condition_formatters, value)
         with pytest.raises(expected):
-            eth_utils.apply_one_of_formatters(condition_formatters, value)
+            faster_eth_utils.apply_one_of_formatters(condition_formatters, value)
     else:
         assert (
-            eth_utils.apply_one_of_formatters(condition_formatters, value) == expected
+            faster_eth_utils.apply_one_of_formatters(condition_formatters, value) == expected
         )
 
         # must be able to curry
@@ -134,9 +134,9 @@ def test_apply_formatter_at_index(formatter, index, value, expected):
         with pytest.raises(expected):
             apply_formatter_at_index(formatter, index, value)
         with pytest.raises(expected):
-            eth_utils.apply_formatter_at_index(formatter, index, value)
+            faster_eth_utils.apply_formatter_at_index(formatter, index, value)
     else:
-        assert eth_utils.apply_formatter_at_index(formatter, index, value) == expected
+        assert faster_eth_utils.apply_formatter_at_index(formatter, index, value) == expected
 
         # must be able to curry
         targetted_formatter = apply_formatter_at_index(formatter, index)
@@ -159,7 +159,7 @@ LOOSE_SEQUENCE_FORMATTER_PARAMETERS = SEQUENCE_FORMATTER_PARAMETERS + (
 )
 def test_combine_argument_formatters(formatters, value, expected):
     with pytest.warns(DeprecationWarning):
-        list_formatter = eth_utils.combine_argument_formatters(*formatters)
+        list_formatter = faster_eth_utils.combine_argument_formatters(*formatters)
     if isinstance(expected, type) and issubclass(expected, Exception):
         with pytest.raises(expected):
             list_formatter(value)
@@ -190,9 +190,9 @@ def test_apply_formatters_to_sequence_curried(formatters, value, expected):
 def test_apply_formatters_to_sequence(formatters, value, expected):
     if isinstance(expected, type) and issubclass(expected, Exception):
         with pytest.raises(expected):
-            eth_utils.apply_formatters_to_sequence(formatters, value)
+            faster_eth_utils.apply_formatters_to_sequence(formatters, value)
     else:
-        assert eth_utils.apply_formatters_to_sequence(formatters, value) == expected
+        assert faster_eth_utils.apply_formatters_to_sequence(formatters, value) == expected
 
 
 @pytest.mark.parametrize(
@@ -200,7 +200,7 @@ def test_apply_formatters_to_sequence(formatters, value, expected):
     ((int, [1.2, 3.4, 5.6], [1, 3, 5]), (int, (1.2, 3.4, 5.6), (1, 3, 5))),
 )
 def test_apply_formatter_to_array(formatter, value, expected):
-    assert eth_utils.apply_formatter_to_array(formatter, value) == expected
+    assert faster_eth_utils.apply_formatter_to_array(formatter, value) == expected
 
     mapper = apply_formatter_to_array(formatter)
     assert mapper(value) == expected
