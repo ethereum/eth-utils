@@ -68,19 +68,19 @@ def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Format
 def apply_formatters_to_sequence(
     formatters: List[Any], sequence: List[Any]
 ) -> Generator[List[Any], None, None]:
-    if len(formatters) > len(sequence):
+    if len(formatters) == len(sequence):
+        for formatter, item in zip(formatters, sequence):
+            yield formatter(item)
+    elif len(formatters) > len(sequence):
         raise IndexError(
             f"Too many formatters for sequence: {len(formatters)} formatters for "
             f"{repr(sequence)}"
         )
-    elif len(formatters) < len(sequence):
+    else:
         raise IndexError(
             f"Too few formatters for sequence: {len(formatters)} formatters for "
             f"{repr(sequence)}"
         )
-    else:
-        for formatter, item in zip(formatters, sequence):
-            yield formatter(item)
 
 
 def apply_formatter_if(
