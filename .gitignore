@@ -1,13 +1,15 @@
 *.py[cod]
 
 # C extensions
+*.o
 *.so
 
 # Packages
 *.egg
 *.egg-info
 dist
-build
+build/**/*.py
+build/ops.txt
 .build
 eggs
 .eggs

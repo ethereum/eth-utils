@@ -111,3 +111,6 @@ check-git:
 		echo "Error: You must have a remote named 'upstream' that points to 'eth-utils'"; \
 		exit 1; \
 	fi
+
+compile:
+	mypyc faster_eth_utils/abi.py faster_eth_utils/address.py faster_eth_utils/conversions.py faster_eth_utils/currency.py faster_eth_utils/debug.py faster_eth_utils/decorators.py faster_eth_utils/encoding.py faster_eth_utils/exceptions.py faster_eth_utils/hexadecimal.py faster_eth_utils/humanize.py faster_eth_utils/module_loading.py faster_eth_utils/types.py faster_eth_utils/units.py --pretty --install-types --disable-error-code=attr-defined --disable-error-code=comparison-overlap --disable-error-code=typeddict-item --disable-error-code=no-any-return --disable-error-code=misc
