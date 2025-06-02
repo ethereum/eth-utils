@@ -3,7 +3,7 @@ from typing import (
     Tuple,
 )
 
-from eth_utils import (
+from faster_eth_utils import (
     to_dict,
 )
 

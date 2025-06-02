@@ -6,7 +6,7 @@ from hypothesis import (
     strategies as st,
 )
 
-from eth_utils.currency import (
+from faster_eth_utils.currency import (
     MAX_WEI,
     MIN_WEI,
     from_wei,

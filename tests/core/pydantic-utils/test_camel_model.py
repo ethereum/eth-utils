@@ -2,7 +2,7 @@ from pydantic import (
     Field,
 )
 
-from eth_utils.pydantic import (
+from faster_eth_utils.pydantic import (
     CamelModel,
 )
 

@@ -1,7 +1,7 @@
-from eth_utils import (
+from faster_eth_utils import (
     denoms,
 )
-from eth_utils.units import (
+from faster_eth_utils.units import (
     units,
 )
 

@@ -31,7 +31,7 @@ from eth_typing import (
     ABIReceive,
 )
 
-from eth_utils.types import (
+from faster_eth_utils.types import (
     is_list_like,
 )
 

@@ -27,7 +27,7 @@ from eth_typing import (
     HexStr,
 )
 
-from eth_utils.abi import (
+from faster_eth_utils.abi import (
     abi_to_signature,
     collapse_if_tuple,
     event_abi_to_log_topic,
@@ -45,7 +45,7 @@ from eth_utils.abi import (
     get_all_function_abis,
     get_normalized_abi_inputs,
 )
-from eth_utils.hexadecimal import (
+from faster_eth_utils.hexadecimal import (
     encode_hex,
 )
 

@@ -15,7 +15,7 @@ from eth_typing import (
     Hash32,
 )
 
-from eth_utils.currency import (
+from faster_eth_utils.currency import (
     denoms,
     from_wei,
 )

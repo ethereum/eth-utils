@@ -11,7 +11,7 @@ from typing import (
     overload,
 )
 
-from eth_utils import (
+from faster_eth_utils import (
     CamelModel,
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
@@ -114,7 +114,7 @@ from eth_utils import (
     to_wei,
     to_wei_decimals,
 )
-from eth_utils.toolz import (
+from faster_eth_utils.toolz import (
     curry,
 )
 

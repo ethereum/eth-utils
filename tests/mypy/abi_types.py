@@ -3,10 +3,10 @@ from typing import (
     Sequence,
 )
 
-from eth_utils import (
+from faster_eth_utils import (
     filter_abi_by_type,
 )
-from eth_utils.abi import (
+from faster_eth_utils.abi import (
     ABIConstructor,
     ABIError,
     ABIEvent,

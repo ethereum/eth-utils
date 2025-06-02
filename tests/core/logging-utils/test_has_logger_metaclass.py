@@ -1,6 +1,6 @@
 import logging
 
-from eth_utils.logging import (
+from faster_eth_utils.logging import (
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
     HasLogger,

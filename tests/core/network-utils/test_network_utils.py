@@ -4,7 +4,7 @@ from eth_typing import (
     ChainId,
 )
 
-from eth_utils import (
+from faster_eth_utils import (
     Network,
     ValidationError,
     name_from_chain_id,

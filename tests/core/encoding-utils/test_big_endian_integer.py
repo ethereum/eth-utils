@@ -5,7 +5,7 @@ from hypothesis import (
     strategies as st,
 )
 
-from eth_utils.encoding import (
+from faster_eth_utils.encoding import (
     big_endian_to_int,
     int_to_big_endian,
 )
