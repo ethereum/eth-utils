@@ -32,6 +32,7 @@ else:
             "--disable-error-code=typeddict-item",
             "--disable-error-code=no-any-return",
             "--disable-error-code=misc",
+            "--disable-error-code=unused-ignore",
         ],
     )
 
