@@ -9,6 +9,7 @@
 *.egg-info
 dist
 build/**/*.py
+build/**/*.typed
 build/ops.txt
 .build
 eggs
