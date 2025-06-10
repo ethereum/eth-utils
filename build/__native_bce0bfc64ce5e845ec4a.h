@@ -454,6 +454,8 @@ struct export_table_bce0bfc64ce5e845ec4a {
     char (*CPyDef_hexadecimal___is_hexstr)(PyObject *cpy_r_value);
     char (*CPyDef_hexadecimal___is_hex)(PyObject *cpy_r_value);
     char (*CPyDef_hexadecimal_____top_level__)(void);
+    PyObject **CPyStatic_humanize___sliding_window;
+    PyObject **CPyStatic_humanize___take;
     tuple_T7T2IOT2IOT2IOT2IOT2IOT2IOT2IO *CPyStatic_humanize___UNITS;
     PyTypeObject **CPyType_humanize____consume_leading_zero_units_env;
     PyObject *(*CPyDef_humanize____consume_leading_zero_units_env)(void);

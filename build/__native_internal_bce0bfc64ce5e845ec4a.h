@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[396];
+extern PyObject *CPyStatics[393];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -64,7 +64,7 @@ extern CPyModule *CPyModule_faster_eth_utils___humanize_internal;
 extern CPyModule *CPyModule_faster_eth_utils___humanize;
 extern PyObject *CPyStatic_humanize___globals;
 extern CPyModule *CPyModule_urllib;
-extern CPyModule *CPyModule_faster_eth_utils___toolz;
+extern CPyModule *CPyModule_faster_eth_utils;
 extern CPyModule *CPyModule_faster_eth_utils___module_loading_internal;
 extern CPyModule *CPyModule_faster_eth_utils___module_loading;
 extern PyObject *CPyStatic_module_loading___globals;
@@ -284,6 +284,8 @@ extern PyObject *CPyPy_hexadecimal___is_hexstr(PyObject *self, PyObject *const *
 extern char CPyDef_hexadecimal___is_hex(PyObject *cpy_r_value);
 extern PyObject *CPyPy_hexadecimal___is_hex(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_hexadecimal_____top_level__(void);
+extern PyObject *CPyStatic_humanize___sliding_window;
+extern PyObject *CPyStatic_humanize___take;
 extern tuple_T7T2IOT2IOT2IOT2IOT2IOT2IOT2IO CPyStatic_humanize___UNITS;
 extern PyTypeObject *CPyType_humanize____consume_leading_zero_units_env;
 extern PyObject *CPyDef_humanize____consume_leading_zero_units_env(void);
