@@ -445,7 +445,9 @@ struct export_table_bce0bfc64ce5e845ec4a {
     char (*CPyDef_encoding_____top_level__)(void);
     PyTypeObject **CPyType_exceptions___ValidationError;
     char (*CPyDef_exceptions_____top_level__)(void);
-    PyObject **CPyStatic_hexadecimal____HEX_REGEXP;
+    PyObject **CPyStatic_hexadecimal____HEX_REGEXP_MATCH;
+    PyObject **CPyStatic_hexadecimal___hexlify;
+    PyObject **CPyStatic_hexadecimal___unhexlify;
     PyObject *(*CPyDef_hexadecimal___decode_hex)(PyObject *cpy_r_value);
     PyObject *(*CPyDef_hexadecimal___encode_hex)(PyObject *cpy_r_value);
     char (*CPyDef_hexadecimal___is_0x_prefixed)(PyObject *cpy_r_value);

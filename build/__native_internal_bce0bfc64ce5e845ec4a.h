@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[393];
+extern PyObject *CPyStatics[392];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -268,7 +268,9 @@ extern PyObject *CPyPy_encoding___big_endian_to_int(PyObject *self, PyObject *co
 extern char CPyDef_encoding_____top_level__(void);
 extern PyTypeObject *CPyType_exceptions___ValidationError;
 extern char CPyDef_exceptions_____top_level__(void);
-extern PyObject *CPyStatic_hexadecimal____HEX_REGEXP;
+extern PyObject *CPyStatic_hexadecimal____HEX_REGEXP_MATCH;
+extern PyObject *CPyStatic_hexadecimal___hexlify;
+extern PyObject *CPyStatic_hexadecimal___unhexlify;
 extern PyObject *CPyDef_hexadecimal___decode_hex(PyObject *cpy_r_value);
 extern PyObject *CPyPy_hexadecimal___decode_hex(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_hexadecimal___encode_hex(PyObject *cpy_r_value);
