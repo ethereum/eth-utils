@@ -3,7 +3,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    cast,
 )
 
 from eth_typing import (
@@ -23,8 +22,6 @@ from .hexadecimal import (
     remove_0x_prefix,
 )
 from .types import (
-    is_boolean,
-    is_integer,
     is_string,
 )
 
@@ -49,7 +46,7 @@ def to_hex(
     if text is not None:
         return encode_hex(text.encode("utf-8"))
 
-    if is_boolean(primitive):
+    if isinstance(primitive, bool):
         return HexStr("0x1") if primitive else HexStr("0x0")
 
     if isinstance(primitive, (bytes, bytearray)):
@@ -64,8 +61,8 @@ def to_hex(
             "bytearray, int or bool and not str"
         )
 
-    if is_integer(primitive):
-        return HexStr(hex(cast(int, primitive)))
+    if isinstance(primitive, int):
+        return HexStr(hex(primitive))
 
     raise TypeError(
         f"Unsupported type: '{repr(type(primitive))}'. Must be one of: bool, str, "
@@ -114,17 +111,17 @@ def to_bytes(
     hexstr: Optional[HexStr] = None,
     text: Optional[str] = None,
 ) -> bytes:
-    if is_boolean(primitive):
+    if isinstance(primitive, bool):
         return b"\x01" if primitive else b"\x00"
     elif isinstance(primitive, (bytearray, memoryview)):
         return bytes(primitive)
     elif isinstance(primitive, bytes):
         return primitive
-    elif is_integer(primitive):
+    elif isinstance(primitive, int):
         return to_bytes(hexstr=to_hex(primitive))
     elif hexstr is not None:
         if len(hexstr) % 2:
-            hexstr = cast(HexStr, "0x0" + remove_0x_prefix(hexstr))
+            hexstr = "0x0" + remove_0x_prefix(hexstr)  # type: ignore [assignment]
         return decode_hex(hexstr)
     elif text is not None:
         return text.encode("utf-8")
@@ -149,8 +146,8 @@ def to_text(
         return primitive.decode("utf-8")
     elif isinstance(primitive, memoryview):
         return bytes(primitive).decode("utf-8")
-    elif is_integer(primitive):
-        byte_encoding = int_to_big_endian(cast(int, primitive))
+    elif isinstance(primitive, int):
+        byte_encoding = int_to_big_endian(primitive)
         return to_text(byte_encoding)
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 
