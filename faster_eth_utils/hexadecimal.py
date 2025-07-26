@@ -6,6 +6,7 @@ from typing import (
     Any,
     AnyStr,
     Final,
+    TypeGuard,
 )
 
 from eth_typing import (
@@ -66,13 +67,13 @@ def add_0x_prefix(value: HexStr) -> HexStr:
     return HexStr("0x" + value)
 
 
-def is_hexstr(value: Any) -> bool:
+def is_hexstr(value: Any) -> TypeGuard[HexStr]:
     if not isinstance(value, str) or not value:
         return False
     return _HEX_REGEXP_MATCH(value) is not None
 
 
-def is_hex(value: Any) -> bool:
+def is_hex(value: Any) -> TypeGuard[HexStr]:
     if not isinstance(value, str):
         raise TypeError(f"is_hex requires text typed arguments. Got: {repr(value)}")
     if not value:

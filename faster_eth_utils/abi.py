@@ -84,7 +84,7 @@ def _align_abi_input(
     # convert NamedTuple to regular tuple
     typing = tuple if isinstance(aligned_arg, tuple) else type(aligned_arg)
 
-    return typing(
+    return typing(  # type: ignore [call-arg]
         _align_abi_input(sub_abi, sub_arg)
         for sub_abi, sub_arg in zip(sub_abis, aligned_arg)
     )

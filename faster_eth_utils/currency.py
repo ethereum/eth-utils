@@ -67,7 +67,7 @@ def _from_wei(number: int, unit_value: decimal.Decimal) -> Union[int, decimal.De
 
 def _to_wei(number: _NumberType, unit_value: decimal.Decimal) -> int:
     if is_integer(number) or is_string(number):
-        d_number = decimal.Decimal(value=number)
+        d_number = decimal.Decimal(value=number)  # type: ignore [arg-type]
     elif isinstance(number, float):
         d_number = decimal.Decimal(value=str(number))
     elif isinstance(number, decimal.Decimal):
@@ -84,7 +84,7 @@ def _to_wei(number: _NumberType, unit_value: decimal.Decimal) -> int:
         with localcontext() as ctx:
             multiplier = len(s_number) - s_number.index(".") - 1
             ctx.prec = multiplier
-            d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier
+            d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier  # type: ignore [arg-type]
         unit_value /= 10**multiplier
 
     with localcontext() as ctx:

@@ -2,6 +2,7 @@ import re
 from typing import (
     Any,
     Final,
+    TypeGuard,
     Union,
     cast,
 )
@@ -35,7 +36,7 @@ from .types import (
 _HEX_ADDRESS_REGEXP: Final = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
 
 
-def is_hex_address(value: Any) -> bool:
+def is_hex_address(value: Any) -> TypeGuard[HexAddress]:
     """
     Checks if the given string of text type is an address in hexadecimal encoded form.
     """
@@ -44,7 +45,7 @@ def is_hex_address(value: Any) -> bool:
     return _HEX_ADDRESS_REGEXP.fullmatch(value) is not None
 
 
-def is_binary_address(value: Any) -> bool:
+def is_binary_address(value: Any) -> TypeGuard[bytes]:
     """
     Checks if the given string is an address in raw bytes form.
     """
@@ -83,7 +84,7 @@ def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
         )
 
 
-def is_normalized_address(value: Any) -> bool:
+def is_normalized_address(value: Any) -> TypeGuard[HexAddress]:
     """
     Returns whether the provided value is an address in its normalized form.
     """
@@ -97,15 +98,12 @@ def to_canonical_address(address: Union[AnyAddress, str, bytes]) -> Address:
     return Address(decode_hex(to_normalized_address(address)))
 
 
-def is_canonical_address(address: Any) -> bool:
+def is_canonical_address(address: Any) -> TypeGuard[Address]:
     """
     Returns `True` if the `value` is an address in its canonical form.
     """
-    if not is_bytes(address) or len(address) != 20:
-        return False
-    is_equal = address == to_canonical_address(address)
-    return cast(bool, is_equal)
-
+    return is_binary_address(address) and address == to_canonical_address(address)
+8
 
 def is_same_address(
     left: Union[AnyAddress, str, bytes], right: Union[AnyAddress, str, bytes]
@@ -141,14 +139,10 @@ def to_checksum_address(value: Union[AnyAddress, str, bytes]) -> ChecksumAddress
     return ChecksumAddress(HexAddress(checksum_address))
 
 
-def is_checksum_address(value: Any) -> bool:
-    if not is_text(value):
-        return False
-
+def is_checksum_address(value: Any) -> TypeGuard[ChecksumAddress]:
     if not is_hex_address(value):
         return False
-    is_equal = value == to_checksum_address(value)
-    return cast(bool, is_equal)
+    return value == to_checksum_address(value)
 
 
 def _is_checksum_formatted(value: Any) -> bool:
