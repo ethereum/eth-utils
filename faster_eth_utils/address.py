@@ -2,7 +2,6 @@ import re
 from typing import (
     Any,
     Final,
-    TypeGuard,
     Union,
     cast,
 )
@@ -13,6 +12,9 @@ from eth_typing import (
     ChecksumAddress,
     HexAddress,
     HexStr,
+)
+from typing_extensions import (
+    TypeGuard,
 )
 
 from .conversions import (
