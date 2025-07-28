@@ -5,8 +5,11 @@ from typing import (
     List,
     Literal,
     Tuple,
-    TypeGuard,
     Union,
+)
+
+from typing_extensions import (
+    TypeGuard,
 )
 
 bytes_types = (bytes, bytearray)

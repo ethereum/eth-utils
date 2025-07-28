@@ -6,11 +6,13 @@ from typing import (
     Any,
     AnyStr,
     Final,
-    TypeGuard,
 )
 
 from eth_typing import (
     HexStr,
+)
+from typing_extensions import (
+    TypeGuard,
 )
 
 from .types import (
