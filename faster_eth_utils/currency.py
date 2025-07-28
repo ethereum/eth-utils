@@ -79,7 +79,7 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
         raise ValueError(f"Unknown unit. Must be one of {'/'.join(units.keys())}")
 
     if is_integer(number) or is_string(number):
-        d_number = decimal.Decimal(value=number)
+        d_number = decimal.Decimal(value=number)  # type: ignore [arg-type]
     elif isinstance(number, float):
         d_number = decimal.Decimal(value=str(number))
     elif isinstance(number, decimal.Decimal):
@@ -97,7 +97,7 @@ def to_wei(number: Union[int, float, str, decimal.Decimal], unit: str) -> int:
         with localcontext() as ctx:
             multiplier = len(s_number) - s_number.index(".") - 1
             ctx.prec = multiplier
-            d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier
+            d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier  # type: ignore [arg-type]
         unit_value /= 10**multiplier
 
     with localcontext() as ctx:

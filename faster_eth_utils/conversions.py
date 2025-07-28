@@ -3,7 +3,6 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    cast,
 )
 
 from eth_typing import (
@@ -59,7 +58,7 @@ def to_hex(
         )
 
     if is_integer(primitive):
-        return HexStr(hex(cast(int, primitive)))
+        return HexStr(hex(primitive))
 
     raise TypeError(
         f"Unsupported type: '{repr(type(primitive))}'. Must be one of: bool, str, "
@@ -115,7 +114,7 @@ def to_bytes(
         return to_bytes(hexstr=to_hex(primitive))
     elif hexstr is not None:
         if len(hexstr) % 2:
-            hexstr = cast(HexStr, "0x0" + remove_0x_prefix(hexstr))
+            hexstr = "0x0" + remove_0x_prefix(hexstr)  # type: ignore [assignment]
         return decode_hex(hexstr)
     elif text is not None:
         return text.encode("utf-8")
@@ -139,7 +138,7 @@ def to_text(
     elif isinstance(primitive, (bytes, bytearray)):
         return primitive.decode("utf-8")
     elif is_integer(primitive):
-        byte_encoding = int_to_big_endian(cast(int, primitive))
+        byte_encoding = int_to_big_endian(primitive)
         return to_text(byte_encoding)
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 
