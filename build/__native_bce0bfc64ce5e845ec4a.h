@@ -224,95 +224,51 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_units_iter;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
     PyObject *___mypyc_temp__1;
     CPyTagged _amount;
     PyObject *_unit;
     PyObject *___mypyc_temp__2;
     tuple_T3OOO ___mypyc_temp__3;
-} faster_eth_utils___humanize____consume_leading_zero_units_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } faster_eth_utils___humanize____consume_leading_zero_units_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     CPyTagged _seconds;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     CPyTagged _remainder;
     tuple_T7T2IOT2IOT2IOT2IOT2IOT2IOT2IO ___mypyc_temp__4;
     PyObject *___mypyc_temp__5;
     CPyTagged _duration;
     PyObject *_unit;
     CPyTagged _num;
-} faster_eth_utils___humanize____humanize_seconds_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } faster_eth_utils___humanize____humanize_seconds_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_values;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__6;
     PyObject *___mypyc_temp__7;
     CPyTagged _index;
     PyObject *_left;
     PyObject *_right;
-} faster_eth_utils___humanize____find_breakpoints_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } faster_eth_utils___humanize____find_breakpoints_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_self__;
     PyObject *_values;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    CPyTagged ___mypyc_next_label__;
+    int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__8;
     PyObject *___mypyc_temp__9;
     PyObject *_left;
     PyObject *_right;
     PyObject *_chunk;
-} faster_eth_utils___humanize____extract_integer_ranges_envObject;
-
-typedef struct {
-    PyObject_HEAD
-    CPyVTableItem *vtable;
-    PyObject *___mypyc_env__;
 } faster_eth_utils___humanize____extract_integer_ranges_genObject;
 
 
@@ -459,20 +415,12 @@ struct export_table_bce0bfc64ce5e845ec4a {
     PyObject **CPyStatic_humanize___sliding_window;
     PyObject **CPyStatic_humanize___take;
     tuple_T7T2IOT2IOT2IOT2IOT2IOT2IOT2IO *CPyStatic_humanize___UNITS;
-    PyTypeObject **CPyType_humanize____consume_leading_zero_units_env;
-    PyObject *(*CPyDef_humanize____consume_leading_zero_units_env)(void);
     PyTypeObject **CPyType_humanize____consume_leading_zero_units_gen;
     PyObject *(*CPyDef_humanize____consume_leading_zero_units_gen)(void);
-    PyTypeObject **CPyType_humanize____humanize_seconds_env;
-    PyObject *(*CPyDef_humanize____humanize_seconds_env)(void);
     PyTypeObject **CPyType_humanize____humanize_seconds_gen;
     PyObject *(*CPyDef_humanize____humanize_seconds_gen)(void);
-    PyTypeObject **CPyType_humanize____find_breakpoints_env;
-    PyObject *(*CPyDef_humanize____find_breakpoints_env)(void);
     PyTypeObject **CPyType_humanize____find_breakpoints_gen;
     PyObject *(*CPyDef_humanize____find_breakpoints_gen)(void);
-    PyTypeObject **CPyType_humanize____extract_integer_ranges_env;
-    PyObject *(*CPyDef_humanize____extract_integer_ranges_env)(void);
     PyTypeObject **CPyType_humanize____extract_integer_ranges_gen;
     PyObject *(*CPyDef_humanize____extract_integer_ranges_gen)(void);
     PyObject *(*CPyDef_humanize___humanize_seconds)(PyObject *cpy_r_seconds);
