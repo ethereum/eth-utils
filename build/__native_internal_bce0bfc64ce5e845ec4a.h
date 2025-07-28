@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[329];
+extern PyObject *CPyStatics[330];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -239,26 +239,17 @@ extern char CPyDef_hexadecimal___is_hex(PyObject *cpy_r_value);
 extern PyObject *CPyPy_hexadecimal___is_hex(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_hexadecimal_____top_level__(void);
 extern tuple_T7T2IOT2IOT2IOT2IOT2IOT2IOT2IO CPyStatic_humanize___UNITS;
-extern PyTypeObject *CPyType_humanize____consume_leading_zero_units_env;
-extern PyObject *CPyDef_humanize____consume_leading_zero_units_env(void);
 extern PyTypeObject *CPyType_humanize____consume_leading_zero_units_gen;
 extern PyObject *CPyDef_humanize____consume_leading_zero_units_gen(void);
-extern PyTypeObject *CPyType_humanize____humanize_seconds_env;
-extern PyObject *CPyDef_humanize____humanize_seconds_env(void);
 extern PyTypeObject *CPyType_humanize____humanize_seconds_gen;
 extern PyObject *CPyDef_humanize____humanize_seconds_gen(void);
-extern PyTypeObject *CPyType_humanize____find_breakpoints_env;
-extern PyObject *CPyDef_humanize____find_breakpoints_env(void);
 extern PyTypeObject *CPyType_humanize____find_breakpoints_gen;
 extern PyObject *CPyDef_humanize____find_breakpoints_gen(void);
-extern PyTypeObject *CPyType_humanize____extract_integer_ranges_env;
-extern PyObject *CPyDef_humanize____extract_integer_ranges_env(void);
 extern PyTypeObject *CPyType_humanize____extract_integer_ranges_gen;
 extern PyObject *CPyDef_humanize____extract_integer_ranges_gen(void);
 extern PyObject *CPyDef_humanize___humanize_seconds(PyObject *cpy_r_seconds);
 extern PyObject *CPyPy_humanize___humanize_seconds(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____consume_leading_zero_units_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
-extern PyObject *CPyPy_humanize____consume_leading_zero_units_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____consume_leading_zero_units_gen_____next__(PyObject *cpy_r___mypyc_self__);
 extern PyObject *CPyPy_humanize____consume_leading_zero_units_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____consume_leading_zero_units_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
@@ -272,7 +263,6 @@ extern PyObject *CPyPy_humanize____consume_leading_zero_units_gen___close(PyObje
 extern PyObject *CPyDef_humanize____consume_leading_zero_units(PyObject *cpy_r_units_iter);
 extern PyObject *CPyPy_humanize____consume_leading_zero_units(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____humanize_seconds_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
-extern PyObject *CPyPy_humanize____humanize_seconds_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____humanize_seconds_gen_____next__(PyObject *cpy_r___mypyc_self__);
 extern PyObject *CPyPy_humanize____humanize_seconds_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____humanize_seconds_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
@@ -296,7 +286,6 @@ extern PyObject *CPyPy_humanize___is_ipfs_uri(PyObject *self, PyObject *const *a
 extern char CPyDef_humanize____is_CIDv0_ipfs_hash(PyObject *cpy_r_ipfs_hash);
 extern PyObject *CPyPy_humanize____is_CIDv0_ipfs_hash(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____find_breakpoints_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
-extern PyObject *CPyPy_humanize____find_breakpoints_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____find_breakpoints_gen_____next__(PyObject *cpy_r___mypyc_self__);
 extern PyObject *CPyPy_humanize____find_breakpoints_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____find_breakpoints_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
@@ -310,7 +299,6 @@ extern PyObject *CPyPy_humanize____find_breakpoints_gen___close(PyObject *self, 
 extern PyObject *CPyDef_humanize____find_breakpoints(PyObject *cpy_r_values);
 extern PyObject *CPyPy_humanize____find_breakpoints(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____extract_integer_ranges_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
-extern PyObject *CPyPy_humanize____extract_integer_ranges_gen_____mypyc_generator_helper__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____extract_integer_ranges_gen_____next__(PyObject *cpy_r___mypyc_self__);
 extern PyObject *CPyPy_humanize____extract_integer_ranges_gen_____next__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_humanize____extract_integer_ranges_gen___send(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);

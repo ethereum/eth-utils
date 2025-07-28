@@ -20,14 +20,15 @@ jobs:
           # Check out the PR branch
           ref: ${{ github.head_ref }}
 
-      # Python 3.12
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install Mypyc (3.12)
-        run: pip install "mypy[mypyc]==1.16.0" .
-      - name: Run Mypyc (3.12)
+          
+      - name: Install Mypyc
+        run: pip install "mypy[mypyc]==1.17.0" .
+        
+      - name: Run Mypyc
         env:
           MYPYC_STRICT_DUNDER_TYPING: 1
         run: make compile

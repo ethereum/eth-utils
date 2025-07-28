@@ -12,16 +12,11 @@ from eth_typing import (
     HexStr,
 )
 
-from .types import (
-    is_string,
-    is_text,
-)
-
 _HEX_REGEXP: Final = re.compile("(0[xX])?[0-9a-fA-F]*")
 
 
 def decode_hex(value: str) -> bytes:
-    if not is_text(value):
+    if not isinstance(value, str):
         raise TypeError("Value must be an instance of str")
     non_prefixed = remove_0x_prefix(HexStr(value))
     # unhexlify will only accept bytes type someday
@@ -30,19 +25,19 @@ def decode_hex(value: str) -> bytes:
 
 
 def encode_hex(value: AnyStr) -> HexStr:
-    if not is_string(value):
-        raise TypeError("Value must be an instance of str or unicode")
-    elif isinstance(value, (bytes, bytearray)):
+    if isinstance(value, (bytes, bytearray)):
         ascii_bytes = value
+    elif isinstance(value, str):
+        ascii_bytes = value.encode("ascii")  # type: ignore [assignment]
     else:
-        ascii_bytes = value.encode("ascii")
+        raise TypeError("Value must be an instance of str or unicode")
 
     binary_hex = binascii.hexlify(ascii_bytes)
     return add_0x_prefix(HexStr(binary_hex.decode("ascii")))
 
 
 def is_0x_prefixed(value: str) -> bool:
-    if not is_text(value):
+    if not isinstance(value, str):
         raise TypeError(
             f"is_0x_prefixed requires text typed arguments. Got: {repr(value)}"
         )
@@ -62,13 +57,13 @@ def add_0x_prefix(value: HexStr) -> HexStr:
 
 
 def is_hexstr(value: Any) -> bool:
-    if not is_text(value) or not value:
+    if not isinstance(value, str) or not value:
         return False
     return _HEX_REGEXP.fullmatch(value) is not None
 
 
 def is_hex(value: Any) -> bool:
-    if not is_text(value):
+    if not isinstance(value, str):
         raise TypeError(f"is_hex requires text typed arguments. Got: {repr(value)}")
     if not value:
         return False
