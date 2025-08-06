@@ -1,5 +1,11 @@
 [build-system]
-requires = ["setuptools", "wheel", "mypy[mypyc]>=1.14.1,<1.17.1"]
+requires = [
+  "setuptools",
+  "wheel",
+  "mypy[mypyc]>=1.14.1,<1.17.1",
+  "eth-hash>=0.3.1",
+  "eth-typing>=5.0.0",
+]
 
 [tool.autoflake]
 exclude = "__init__.py"
