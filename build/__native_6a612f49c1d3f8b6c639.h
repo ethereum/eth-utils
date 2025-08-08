@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_bce0bfc64ce5e845ec4a_H
-#define MYPYC_NATIVE_bce0bfc64ce5e845ec4a_H
+#ifndef MYPYC_NATIVE_6a612f49c1d3f8b6c639_H
+#define MYPYC_NATIVE_6a612f49c1d3f8b6c639_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T2OO
@@ -224,6 +224,115 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_f;
+    PyObject *_g;
+    PyObject *_combined;
+} faster_eth_utils___functional___combine_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___combined_combine_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_callback;
+    PyObject *_outer;
+} faster_eth_utils___functional___apply_to_return_value_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *___mypyc_env__;
+    PyObject *_fn;
+    PyObject *_inner;
+    PyObject *_callback;
+    PyObject *_outer;
+} faster_eth_utils___functional___outer_apply_to_return_value_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___outer_apply_to_return_value_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___inner_apply_to_return_value_outer_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_fn;
+    PyObject *_to_tuple_wrap;
+} faster_eth_utils___functional___to_tuple_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___to_tuple_wrap_to_tuple_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_fn;
+    PyObject *_to_list_wrap;
+} faster_eth_utils___functional___to_list_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___to_list_wrap_to_list_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_fn;
+    PyObject *_to_set_wrap;
+} faster_eth_utils___functional___to_set_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___to_set_wrap_to_set_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *___mypyc_self__;
+    PyObject *_fn;
+    PyObject *_to_dict_wrap;
+} faster_eth_utils___functional___to_dict_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___functional___to_dict_wrap_to_dict_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
     PyObject *_units_iter;
     int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__0;
@@ -272,7 +381,7 @@ typedef struct {
 } faster_eth_utils___humanize____extract_integer_ranges_genObject;
 
 
-struct export_table_bce0bfc64ce5e845ec4a {
+struct export_table_6a612f49c1d3f8b6c639 {
     PyTypeObject **CPyType_abi___get_normalized_abi_inputs_env;
     PyObject *(*CPyDef_abi___get_normalized_abi_inputs_env)(void);
     PyTypeObject **CPyType_abi_____mypyc_lambda__0_get_normalized_abi_inputs_obj;
@@ -401,6 +510,56 @@ struct export_table_bce0bfc64ce5e845ec4a {
     char (*CPyDef_encoding_____top_level__)(void);
     PyTypeObject **CPyType_exceptions___ValidationError;
     char (*CPyDef_exceptions_____top_level__)(void);
+    PyTypeObject **CPyType_functional___combine_env;
+    PyObject *(*CPyDef_functional___combine_env)(void);
+    PyTypeObject **CPyType_functional___combined_combine_obj;
+    PyObject *(*CPyDef_functional___combined_combine_obj)(void);
+    PyTypeObject **CPyType_functional___apply_to_return_value_env;
+    PyObject *(*CPyDef_functional___apply_to_return_value_env)(void);
+    PyTypeObject **CPyType_functional___outer_apply_to_return_value_env;
+    PyObject *(*CPyDef_functional___outer_apply_to_return_value_env)(void);
+    PyTypeObject **CPyType_functional___outer_apply_to_return_value_obj;
+    PyObject *(*CPyDef_functional___outer_apply_to_return_value_obj)(void);
+    PyTypeObject **CPyType_functional___inner_apply_to_return_value_outer_obj;
+    PyObject *(*CPyDef_functional___inner_apply_to_return_value_outer_obj)(void);
+    PyTypeObject **CPyType_functional___to_tuple_env;
+    PyObject *(*CPyDef_functional___to_tuple_env)(void);
+    PyTypeObject **CPyType_functional___to_tuple_wrap_to_tuple_obj;
+    PyObject *(*CPyDef_functional___to_tuple_wrap_to_tuple_obj)(void);
+    PyTypeObject **CPyType_functional___to_list_env;
+    PyObject *(*CPyDef_functional___to_list_env)(void);
+    PyTypeObject **CPyType_functional___to_list_wrap_to_list_obj;
+    PyObject *(*CPyDef_functional___to_list_wrap_to_list_obj)(void);
+    PyTypeObject **CPyType_functional___to_set_env;
+    PyObject *(*CPyDef_functional___to_set_env)(void);
+    PyTypeObject **CPyType_functional___to_set_wrap_to_set_obj;
+    PyObject *(*CPyDef_functional___to_set_wrap_to_set_obj)(void);
+    PyTypeObject **CPyType_functional___to_dict_env;
+    PyObject *(*CPyDef_functional___to_dict_env)(void);
+    PyTypeObject **CPyType_functional___to_dict_wrap_to_dict_obj;
+    PyObject *(*CPyDef_functional___to_dict_wrap_to_dict_obj)(void);
+    PyObject *(*CPyDef_functional___identity)(PyObject *cpy_r_value);
+    PyObject *(*CPyDef_functional___combined_combine_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___combined_combine_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_x);
+    PyObject *(*CPyDef_functional___combine)(PyObject *cpy_r_f, PyObject *cpy_r_g);
+    PyObject *(*CPyDef_functional___inner_apply_to_return_value_outer_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___inner_apply_to_return_value_outer_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+    PyObject *(*CPyDef_functional___outer_apply_to_return_value_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___outer_apply_to_return_value_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_fn);
+    PyObject *(*CPyDef_functional___apply_to_return_value)(PyObject *cpy_r_callback);
+    PyObject *(*CPyDef_functional___to_tuple_wrap_to_tuple_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___to_tuple_wrap_to_tuple_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+    PyObject *(*CPyDef_functional___to_tuple)(PyObject *cpy_r_fn);
+    PyObject *(*CPyDef_functional___to_list_wrap_to_list_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___to_list_wrap_to_list_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+    PyObject *(*CPyDef_functional___to_list)(PyObject *cpy_r_fn);
+    PyObject *(*CPyDef_functional___to_set_wrap_to_set_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___to_set_wrap_to_set_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+    PyObject *(*CPyDef_functional___to_set)(PyObject *cpy_r_fn);
+    PyObject *(*CPyDef_functional___to_dict_wrap_to_dict_obj_____get__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_instance, PyObject *cpy_r_owner);
+    PyObject *(*CPyDef_functional___to_dict_wrap_to_dict_obj_____call__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_args, PyObject *cpy_r_kwargs);
+    PyObject *(*CPyDef_functional___to_dict)(PyObject *cpy_r_fn);
+    char (*CPyDef_functional_____top_level__)(void);
     PyObject **CPyStatic_hexadecimal____HEX_REGEXP_MATCH;
     PyObject **CPyStatic_hexadecimal___hexlify;
     PyObject **CPyStatic_hexadecimal___unhexlify;

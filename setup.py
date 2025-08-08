@@ -19,6 +19,7 @@ else:
             "faster_eth_utils/decorators.py",
             "faster_eth_utils/encoding.py",
             "faster_eth_utils/exceptions.py",
+            "faster_eth_utils/functional.py",
             "faster_eth_utils/hexadecimal.py",
             "faster_eth_utils/humanize.py",
             "faster_eth_utils/module_loading.py",

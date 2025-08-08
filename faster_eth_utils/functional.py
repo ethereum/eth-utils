@@ -2,7 +2,6 @@ import collections
 import functools
 import itertools
 from typing import (  # noqa: F401
-    Any,
     Callable,
     Dict,
     Iterable,
@@ -14,10 +13,13 @@ from typing import (  # noqa: F401
     Union,
 )
 
+from typing_extensions import ParamSpec
+
 from .toolz import (
     compose as _compose,
 )
 
+P = ParamSpec("P")
 T = TypeVar("T")
 
 
@@ -33,41 +35,53 @@ TFOut = TypeVar("TFOut")
 def combine(
     f: Callable[[TGOut], TFOut], g: Callable[[TGIn], TGOut]
 ) -> Callable[[TGIn], TFOut]:
-    return lambda x: f(g(x))
+    def combined(x: TGIn) -> TFOut:
+        return f(g(x))
+    return combined
+
+
+TCb = TypeVar("TCb")
 
 
 def apply_to_return_value(
-    callback: Callable[..., T]
-) -> Callable[..., Callable[..., T]]:
-    def outer(fn: Callable[..., T]) -> Callable[..., T]:
-        # We would need to type annotate *args and **kwargs but doing so segfaults
-        # the PyPy builds. We ignore instead.
+    callback: Callable[[T], TCb]
+) -> Callable[[Callable[P, T]], Callable[P, TCb]]:
+    def outer(fn: Callable[P, T]) -> Callable[P, TCb]:
         @functools.wraps(fn)
-        def inner(*args, **kwargs) -> T:  # type: ignore
+        def inner(*args: P.args, **kwargs: P.kwargs) -> TCb:
             return callback(fn(*args, **kwargs))
-
         return inner
-
     return outer
 
 
 TVal = TypeVar("TVal")
 TKey = TypeVar("TKey")
-to_tuple = apply_to_return_value(
-    tuple
-)  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., Tuple[TVal, ...]]]  # noqa: E501
-to_list = apply_to_return_value(
-    list
-)  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., List[TVal]]]  # noqa: E501
-to_set = apply_to_return_value(
-    set
-)  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., Set[TVal]]]  # noqa: E501
-to_dict = apply_to_return_value(
-    dict
-)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TKey, TVal], Tuple[TKey, TVal]]]]], Callable[..., Dict[TKey, TVal]]]  # noqa: E501
-to_ordered_dict = apply_to_return_value(
+
+def to_tuple(fn: Callable[P, Iterable[TVal]]) -> Callable[P, Tuple[TVal, ...]]:
+    def to_tuple_wrap(*args: P.args, **kwargs: P.kwargs) -> Tuple[TVal, ...]:
+        return tuple(fn(*args, **kwargs))
+    return to_tuple_wrap
+
+def to_list(fn: Callable[P, Iterable[TVal]]) -> Callable[P, List[TVal]]:
+    def to_list_wrap(*args: P.args, **kwargs: P.kwargs) -> List[TVal]:
+        return list(fn(*args, **kwargs))
+    return to_list_wrap
+
+def to_set(fn: Callable[P, Iterable[TVal]]) -> Callable[P, Set[TVal]]:
+    def to_set_wrap(*args: P.args, **kwargs: P.kwargs) -> Set[TVal]:
+        return set(fn(*args, **kwargs))
+    return to_set_wrap
+
+def to_dict(
+    fn: Callable[P, Union[Mapping[TKey, TVal], Iterable[Tuple[TKey, TVal]]]]
+) -> Callable[P, Dict[TKey, TVal]]:
+    def to_dict_wrap(*args: P.args, **kwargs: P.kwargs) -> Dict[TKey, TVal]:
+        return dict(fn(*args, **kwargs))
+    return to_dict_wrap
+
+to_ordered_dict = apply_to_return_value(  # type: ignore [assignment]
     collections.OrderedDict
-)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TKey, TVal], Tuple[TKey, TVal]]]]], Callable[..., collections.OrderedDict[TKey, TVal]]]  # noqa: E501
+)  # type: Callable[[Callable[P, Union[Mapping[TKey, TVal], Iterable[Tuple[TKey, TVal]]]]], Callable[P, collections.OrderedDict[TKey, TVal]]]  # noqa: E501
 sort_return = _compose(to_tuple, apply_to_return_value(sorted))
 flatten_return = _compose(
     to_tuple, apply_to_return_value(itertools.chain.from_iterable)
