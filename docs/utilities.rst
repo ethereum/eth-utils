@@ -1820,36 +1820,6 @@ sequence (such as a list or tuple).
     >>> is_list_like(tuple())
     True
 
-``is_list(value)`` -> bool
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns ``True`` if ``value`` is a non-string sequence such as a list.
-
-.. doctest::
-
-    >>> from eth_utils import is_list
-    >>> is_list('abcd')
-    False
-    >>> is_list([])
-    True
-    >>> is_list(tuple())
-    False
-
-``is_tuple(value)`` -> bool
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Returns ``True`` if ``value`` is a non-string sequence such as a tuple.
-
-.. doctest::
-
-    >>> from eth_utils import is_tuple
-    >>> is_tuple('abcd')
-    False
-    >>> is_tuple([])
-    False
-    >>> is_tuple(tuple())
-    True
-
 ``is_null(value)`` -> bool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
