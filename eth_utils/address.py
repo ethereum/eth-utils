@@ -21,7 +21,6 @@ from .crypto import (
     keccak,
 )
 from .hexadecimal import (
-    add_0x_prefix,
     decode_hex,
     encode_hex,
     remove_0x_prefix,
@@ -38,31 +37,21 @@ def is_hex_address(value: Any) -> bool:
     """
     Checks if the given string of text type is an address in hexadecimal encoded form.
     """
-    if not is_text(value):
-        return False
-    return _HEX_ADDRESS_REGEXP.fullmatch(value) is not None
+    return is_text(value) and _HEX_ADDRESS_REGEXP.fullmatch(value) is not None
 
 
 def is_binary_address(value: Any) -> bool:
     """
     Checks if the given string is an address in raw bytes form.
     """
-    if not is_bytes(value):
-        return False
-    elif len(value) != 20:
-        return False
-    else:
-        return True
+    return is_bytes(value) and len(value) == 20
 
 
 def is_address(value: Any) -> bool:
     """
     Is the given string an address in any of the known formats?
     """
-    if is_hex_address(value) or is_binary_address(value):
-        return True
-
-    return False
+    return is_hex_address(value) or is_binary_address(value)
 
 
 def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
@@ -88,9 +77,8 @@ def is_normalized_address(value: Any) -> bool:
     """
     if not is_address(value):
         return False
-    else:
-        is_equal = value == to_normalized_address(value)
-        return cast(bool, is_equal)
+
+    return cast(bool, value == to_normalized_address(value))
 
 
 def to_canonical_address(address: Union[AnyAddress, str, bytes]) -> Address:
@@ -106,8 +94,8 @@ def is_canonical_address(address: Any) -> bool:
     """
     if not is_bytes(address) or len(address) != 20:
         return False
-    is_equal = address == to_canonical_address(address)
-    return cast(bool, is_equal)
+
+    return cast(bool, address == to_canonical_address(address))
 
 
 def is_same_address(
@@ -118,40 +106,32 @@ def is_same_address(
     """
     if not is_address(left) or not is_address(right):
         raise ValueError("Both values must be valid addresses")
-    else:
-        return bool(to_normalized_address(left) == to_normalized_address(right))
+
+    return to_normalized_address(left) == to_normalized_address(right)
 
 
 def to_checksum_address(value: Union[AnyAddress, str, bytes]) -> ChecksumAddress:
     """
     Makes a checksum address given a supported format.
     """
-    norm_address = to_normalized_address(value)
-    address_hash = encode_hex(keccak(text=remove_0x_prefix(HexStr(norm_address))))
-
-    checksum_address = add_0x_prefix(
-        HexStr(
-            "".join(
-                (
-                    norm_address[i].upper()
-                    if int(address_hash[i], 16) > 7
-                    else norm_address[i]
+    address_part = to_normalized_address(value)[2:42]
+    hash_hex = encode_hex(keccak(text=address_part))[2:]
+    return ChecksumAddress(
+        HexAddress(
+            HexStr(
+                "0x"
+                + "".join(
+                    addr_char.upper() if int(hash_char, 16) > 7 else addr_char
+                    for hash_char, addr_char in zip(hash_hex, address_part)
                 )
-                for i in range(2, 42)
             )
         )
     )
-    return ChecksumAddress(HexAddress(checksum_address))
 
 
 def is_checksum_address(value: Any) -> bool:
-    if not is_text(value):
-        return False
-
-    if not is_hex_address(value):
-        return False
-    is_equal = value == to_checksum_address(value)
-    return cast(bool, is_equal)
+    # is_hex_address already checks if it is_text
+    return is_hex_address(value) and bool(value == to_checksum_address(value))
 
 
 def _is_checksum_formatted(value: Any) -> bool:
