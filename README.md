@@ -1,5 +1,8 @@
 ### I forked eth-utils and compiled it to C. It does the same stuff, now faster
 
+[![PyPI](https://img.shields.io/pypi/v/faster-eth-utils.svg?logo=Python&logoColor=white)](https://pypi.org/project/faster-eth-utils)
+[![Monthly Downloads](https://img.shields.io/pypi/dm/faster-eth-utils)](https://pypistats.org/packages/faster-eth-utils)
+
 ##### This fork will be kept up-to-date with [eth-utils](https://github.com/ethereum/eth-utils). I will pull updates as they are released and push new faster-eth-utils releases to PyPI.
 
 ##### You can find the compiled C code on faster-eth-utils [master](https://github.com/BobTheBuidler/eth-utils/tree/master) branch
