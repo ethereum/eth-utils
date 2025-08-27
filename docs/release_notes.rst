@@ -5,6 +5,15 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v5.3.1 (2025-08-27)
+-----------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Loosen expectation in ``test_get_aligned_abi_inputs_raises_type_error_for_incorrect_input_types`` (`#313 <https://github.com/ethereum/eth-utils/issues/313>`__)
+
+
 eth-utils v5.3.0 (2025-04-14)
 -----------------------------
 
