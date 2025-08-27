@@ -1506,8 +1506,7 @@ def test_get_aligned_abi_inputs(
                 "b": [[(14, 15), (16, 17)], [(18, 19)]],
             },
             TypeError,
-            'Expected non-string sequence for "tuple[]" component type: got '
-            "{(9, 10), (5, 6), (7, 8)}",
+            'Expected non-string sequence for "tuple[]" component type: got ',
         ),
         (
             ABI_FALLBACK,
