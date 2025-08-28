@@ -80,18 +80,20 @@ def combine_argument_formatters(*formatters: Callable[..., Any]) -> Formatters:
 def apply_formatters_to_sequence(
     formatters: List[Callable[[Any], TReturn]], sequence: Sequence[Any]
 ) -> Generator[TReturn, None, None]:
-    if len(formatters) == len(sequence):
+    num_formatters = len(formatters)
+    num_items = len(sequence)
+    if num_formatters == num_items:
         for formatter, item in zip(formatters, sequence):
             yield formatter(item)
-    elif len(formatters) > len(sequence):
+    elif num_formatters > num_items:
         raise IndexError(
-            f"Too many formatters for sequence: {len(formatters)} formatters for "
-            f"{repr(sequence)}"
+            f"Too many formatters for sequence: {num_formatters} formatters for "
+            f"{sequence!r}"
         )
     else:
         raise IndexError(
-            f"Too few formatters for sequence: {len(formatters)} formatters for "
-            f"{repr(sequence)}"
+            f"Too few formatters for sequence: {num_formatters} formatters for "
+            f"{sequence!r}"
         )
 
 
