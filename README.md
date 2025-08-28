@@ -2,6 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/faster-eth-utils.svg?logo=Python&logoColor=white)](https://pypi.org/project/faster-eth-utils)
 [![Monthly Downloads](https://img.shields.io/pypi/dm/faster-eth-utils)](https://pypistats.org/packages/faster-eth-utils)
+[![Codspeed.io Status](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/BobTheBuidler/faster-eth-utils)
 
 ##### This fork will be kept up-to-date with [eth-utils](https://github.com/ethereum/eth-utils). I will pull updates as they are released and push new faster-eth-utils releases to PyPI.
 
