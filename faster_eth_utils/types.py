@@ -2,6 +2,7 @@ import collections.abc
 import numbers
 from typing import (
     Any,
+    Final,
     List,
     Literal,
     Tuple,
@@ -12,14 +13,19 @@ from typing_extensions import (
     TypeGuard,
 )
 
-bytes_types = (bytes, bytearray)
-integer_types = (int,)
-text_types = (str,)
-string_types = (bytes, str, bytearray)
+Mapping: Final = collections.abc.Mapping
+Sequence: Final = collections.abc.Sequence
+
+Number: Final = numbers.Number
+
+bytes_types: Final = (bytes, bytearray)
+integer_types: Final = (int,)
+text_types: Final = (str,)
+string_types: Final = (bytes, str, bytearray)
 
 
 def is_integer(value: Any) -> TypeGuard[int]:
-    return isinstance(value, integer_types) and not isinstance(value, bool)
+    return isinstance(value, int) and not isinstance(value, bool)
 
 
 def is_bytes(value: Any) -> TypeGuard[Union[bytes, bytearray]]:
@@ -27,7 +33,7 @@ def is_bytes(value: Any) -> TypeGuard[Union[bytes, bytearray]]:
 
 
 def is_text(value: Any) -> TypeGuard[str]:
-    return isinstance(value, text_types)
+    return isinstance(value, str)
 
 
 def is_string(value: Any) -> TypeGuard[Union[bytes, str, bytearray]]:
@@ -39,11 +45,11 @@ def is_boolean(value: Any) -> TypeGuard[bool]:
 
 
 def is_dict(obj: Any) -> TypeGuard[collections.abc.Mapping[Any, Any]]:
-    return isinstance(obj, collections.abc.Mapping)
+    return isinstance(obj, Mapping)
 
 
 def is_list_like(obj: Any) -> TypeGuard[collections.abc.Sequence[Any]]:
-    return not is_string(obj) and isinstance(obj, collections.abc.Sequence)
+    return not is_string(obj) and isinstance(obj, Sequence)
 
 
 def is_list(obj: Any) -> TypeGuard[List[Any]]:
@@ -59,4 +65,4 @@ def is_null(obj: Any) -> TypeGuard[Literal[None]]:
 
 
 def is_number(obj: Any) -> TypeGuard[numbers.Number]:
-    return isinstance(obj, numbers.Number)
+    return isinstance(obj, Number)

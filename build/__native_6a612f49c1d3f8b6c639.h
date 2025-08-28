@@ -623,6 +623,13 @@ struct export_table_6a612f49c1d3f8b6c639 {
     char (*CPyDef_humanize_____top_level__)(void);
     PyObject *(*CPyDef_module_loading___import_string)(PyObject *cpy_r_dotted_path);
     char (*CPyDef_module_loading_____top_level__)(void);
+    PyObject **CPyStatic_types___Mapping;
+    PyObject **CPyStatic_types___Sequence;
+    PyObject **CPyStatic_types___Number;
+    tuple_T2OO *CPyStatic_types___bytes_types;
+    tuple_T1O *CPyStatic_types___integer_types;
+    tuple_T1O *CPyStatic_types___text_types;
+    tuple_T3OOO *CPyStatic_types___string_types;
     char (*CPyDef_types___is_integer)(PyObject *cpy_r_value);
     char (*CPyDef_types___is_bytes)(PyObject *cpy_r_value);
     char (*CPyDef_types___is_text)(PyObject *cpy_r_value);
