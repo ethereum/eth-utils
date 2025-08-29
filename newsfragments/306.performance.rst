@@ -1,0 +1,1 @@
+optimize apply_formatter_at_index
