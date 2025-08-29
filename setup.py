@@ -55,6 +55,7 @@ setup(
     url="https://github.com/ethereum/eth-utils",
     include_package_data=True,
     install_requires=[
+        "typing_extensions",
         "eth-hash>=0.3.1",
         "eth-typing>=5.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",
