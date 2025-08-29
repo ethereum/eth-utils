@@ -1,5 +1,6 @@
 import functools
 import itertools
+import os
 from typing import (
     Any,
     Callable,
@@ -75,6 +76,8 @@ def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]
     - Kwarg must be 'primitive' 'hexstr' or 'text'
     - If it is 'hexstr' or 'text' that it is a text type
     """
+    if os.environ.get("ETH_UTILS_NOVALIDATE"):
+        return to_wrap
 
     @functools.wraps(to_wrap)
     def wrapper(*args: Any, **kwargs: Any) -> T:
