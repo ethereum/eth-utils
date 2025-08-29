@@ -4,10 +4,8 @@ from eth_utils.types import (
     is_boolean,
     is_dict,
     is_integer,
-    is_list,
     is_list_like,
     is_string,
-    is_tuple,
 )
 
 
@@ -98,55 +96,3 @@ def test_is_boolean(value, expected):
 )
 def test_is_list_like(value, expected):
     assert is_list_like(value) == expected
-
-
-@pytest.mark.parametrize(
-    "value,expected",
-    [
-        (lambda: None, False),
-        (3, False),
-        (None, False),
-        ("3", False),
-        ("0x3", False),
-        ([], True),
-        ([3], True),
-        ([3, 3], True),
-        ([None], True),
-        ([tuple()], True),
-        ([(1, 2)], True),
-        (tuple(), False),
-        ((3,), False),
-        ((3, 3), False),
-        ((None,), False),
-        ((tuple(),), False),
-        (((1, 2),), False),
-    ],
-)
-def test_is_list(value, expected):
-    assert is_list(value) == expected
-
-
-@pytest.mark.parametrize(
-    "value,expected",
-    [
-        (lambda: None, False),
-        (3, False),
-        (None, False),
-        ("3", False),
-        ("0x3", False),
-        ([], False),
-        ([3], False),
-        ([3, 3], False),
-        ([None], False),
-        ([tuple()], False),
-        ([(1, 2)], False),
-        (tuple(), True),
-        ((3,), True),
-        ((3, 3), True),
-        ((None,), True),
-        ((tuple(),), True),
-        (((1, 2),), True),
-    ],
-)
-def test_is_tuple(value, expected):
-    assert is_tuple(value) == expected

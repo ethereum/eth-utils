@@ -17,6 +17,12 @@ Bugfixes
 eth-utils v5.3.0 (2025-04-14)
 -----------------------------
 
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- Removes ``is_list`` and ``is_tuple`` from the types module.
+
+
 Bugfixes
 ~~~~~~~~
 
