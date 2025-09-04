@@ -23,7 +23,7 @@ else:
             "faster_eth_utils/hexadecimal.py",
             "faster_eth_utils/humanize.py",
             "faster_eth_utils/module_loading.py",
-            # "faster_eth_utils/network.py", compiled module has no __file__
+            "faster_eth_utils/network.py",
             "faster_eth_utils/types.py",
             "faster_eth_utils/units.py",
             "--pretty",

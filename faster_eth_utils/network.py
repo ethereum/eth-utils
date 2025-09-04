@@ -3,7 +3,12 @@ from dataclasses import (
 )
 import json
 import os
+import sys
+from pathlib import (
+    Path,
+)
 from typing import (
+    Final,
     List,
 )
 
@@ -14,6 +19,9 @@ from eth_typing import (
 from faster_eth_utils import (
     ValidationError,
 )
+
+
+FASTER_ETH_UTILS_FOLDER: Final = Path(sys.modules["faster_eth_utils"].__file__).parent  # type: ignore [arg-type]
 
 
 @dataclass
@@ -28,7 +36,7 @@ def initialize_network_objects() -> List[Network]:
     networks_obj = []
 
     networks_json_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "__json")
+        os.path.join(str(FASTER_ETH_UTILS_FOLDER), "__json")
     )
     with open(
         os.path.join(networks_json_path, "eth_networks.json"),
