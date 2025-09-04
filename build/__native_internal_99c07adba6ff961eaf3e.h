@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_a12de8d4beb198db8e1f_H
-#define MYPYC_NATIVE_INTERNAL_a12de8d4beb198db8e1f_H
+#ifndef MYPYC_NATIVE_INTERNAL_99c07adba6ff961eaf3e_H
+#define MYPYC_NATIVE_INTERNAL_99c07adba6ff961eaf3e_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_a12de8d4beb198db8e1f.h"
+#include "__native_99c07adba6ff961eaf3e.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[527];
+extern PyObject *CPyStatics[596];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -45,6 +45,7 @@ extern CPyModule *CPyModule_faster_eth_utils___decorators;
 extern CPyModule *CPyModule_faster_eth_utils___functional_internal;
 extern CPyModule *CPyModule_faster_eth_utils___functional;
 extern CPyModule *CPyModule_faster_eth_utils___pydantic;
+extern CPyModule *CPyModule_faster_eth_utils___toolz_internal;
 extern CPyModule *CPyModule_faster_eth_utils___toolz;
 extern PyObject *CPyStatic_conversions___globals;
 extern CPyModule *CPyModule_faster_eth_utils___encoding_internal;
@@ -93,6 +94,9 @@ extern CPyModule *CPyModule_faster_eth_utils___numeric;
 extern PyObject *CPyStatic_numeric___globals;
 extern CPyModule *CPyModule_abc;
 extern CPyModule *CPyModule_numbers;
+extern PyObject *CPyStatic_toolz___globals;
+extern CPyModule *CPyModule_cytoolz;
+extern CPyModule *CPyModule_toolz;
 extern PyObject *CPyStatic_types___globals;
 extern CPyModule *CPyModule_collections___abc;
 extern PyObject *CPyStatic_units___globals;
@@ -573,6 +577,7 @@ extern PyObject *CPyPy_numeric___Comparable_____gt__(PyObject *self, PyObject *c
 extern PyObject *CPyDef_numeric___clamp(PyObject *cpy_r_lower_bound, PyObject *cpy_r_upper_bound, PyObject *cpy_r_value);
 extern PyObject *CPyPy_numeric___clamp(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_numeric_____top_level__(void);
+extern char CPyDef_toolz_____top_level__(void);
 extern PyObject *CPyStatic_types___Mapping;
 extern PyObject *CPyStatic_types___Sequence;
 extern PyObject *CPyStatic_types___Number;

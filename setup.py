@@ -26,6 +26,7 @@ else:
             "faster_eth_utils/module_loading.py",
             "faster_eth_utils/network.py",
             "faster_eth_utils/numeric.py",
+            "faster_eth_utils/toolz.py",
             "faster_eth_utils/types.py",
             "faster_eth_utils/units.py",
             "--pretty",
