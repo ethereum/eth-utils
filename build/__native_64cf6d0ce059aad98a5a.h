@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_57d634643bbc0ed4f613_H
-#define MYPYC_NATIVE_57d634643bbc0ed4f613_H
+#ifndef MYPYC_NATIVE_64cf6d0ce059aad98a5a_H
+#define MYPYC_NATIVE_64cf6d0ce059aad98a5a_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T2OO
@@ -24,6 +24,23 @@ typedef struct tuple_T3OOO {
     PyObject *f1;
     PyObject *f2;
 } tuple_T3OOO;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T1T2OO
+#define MYPYC_DECLARED_tuple_T1T2OO
+typedef struct tuple_T1T2OO {
+    tuple_T2OO f0;
+} tuple_T1T2OO;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T4CIOO
+#define MYPYC_DECLARED_tuple_T4CIOO
+typedef struct tuple_T4CIOO {
+    char f0;
+    CPyTagged f1;
+    PyObject *f2;
+    PyObject *f3;
+} tuple_T4CIOO;
 #endif
 
 #ifndef MYPYC_DECLARED_tuple_T4OOOO
@@ -95,6 +112,84 @@ typedef struct {
     vectorcallfunc vectorcall;
     PyObject *___mypyc_env__;
 } faster_eth_utils___abi_____mypyc_lambda__0_get_normalized_abi_inputs_objObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *_formatter;
+    CPyTagged _at_index;
+    PyObject *_value;
+    int32_t ___mypyc_next_label__;
+    PyObject *_item;
+    tuple_T3OOO ___mypyc_temp__0;
+    PyObject *___mypyc_temp__1;
+    tuple_T3OOO ___mypyc_temp__2;
+    PyObject *___mypyc_temp__3;
+    tuple_T3OOO ___mypyc_temp__4;
+} faster_eth_utils___applicators___apply_formatter_at_index_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *_formatters;
+    PyObject *_sequence;
+    int32_t ___mypyc_next_label__;
+    PyObject *___mypyc_temp__5;
+    CPyTagged ___mypyc_temp__6;
+    PyObject *___mypyc_temp__7;
+    CPyTagged ___mypyc_temp__8;
+    PyObject *_formatter;
+    PyObject *_item;
+} faster_eth_utils___applicators___apply_formatters_to_sequence_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *_formatters;
+    PyObject *_value;
+    char _unaliased;
+    int32_t ___mypyc_next_label__;
+    PyObject *___mypyc_temp__9;
+    PyObject *___mypyc_temp__10;
+    PyObject *_key;
+    PyObject *_item;
+    tuple_T3OOO ___mypyc_temp__11;
+    PyObject *_exc;
+    PyObject *_new_error_message;
+} faster_eth_utils___applicators___apply_formatters_to_dict_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *_formatter;
+    PyObject *_value;
+    int32_t ___mypyc_next_label__;
+    PyObject *___mypyc_temp__12;
+    CPyTagged ___mypyc_temp__13;
+    PyObject *_item;
+} faster_eth_utils___applicators___apply_formatter_to_array_genObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    PyObject *_key_mappings;
+    PyObject *_value;
+    int32_t ___mypyc_next_label__;
+    PyObject *___mypyc_temp__14;
+    PyObject *___mypyc_temp__15;
+    CPyTagged ___mypyc_temp__16;
+    CPyTagged ___mypyc_temp__17;
+    PyObject *___mypyc_temp__18;
+    PyObject *_k;
+    PyObject *_v;
+    PyObject *_key_conflicts;
+    PyObject *___mypyc_temp__19;
+    CPyTagged ___mypyc_temp__20;
+    CPyTagged ___mypyc_temp__21;
+    PyObject *___mypyc_temp__22;
+    PyObject *_key;
+    PyObject *_item;
+} faster_eth_utils___applicators___apply_key_map_genObject;
 
 typedef struct {
     PyObject_HEAD
@@ -390,7 +485,7 @@ typedef struct {
 } faster_eth_utils___network___NetworkObject;
 
 
-struct export_table_57d634643bbc0ed4f613 {
+struct export_table_64cf6d0ce059aad98a5a {
     PyTypeObject **CPyType_abi___get_normalized_abi_inputs_env;
     PyObject *(*CPyDef_abi___get_normalized_abi_inputs_env)(void);
     PyTypeObject **CPyType_abi_____mypyc_lambda__0_get_normalized_abi_inputs_obj;
@@ -432,6 +527,55 @@ struct export_table_57d634643bbc0ed4f613 {
     char (*CPyDef_address____is_checksum_formatted)(PyObject *cpy_r_value);
     char (*CPyDef_address___is_checksum_formatted_address)(PyObject *cpy_r_value);
     char (*CPyDef_address_____top_level__)(void);
+    PyTypeObject **CPyType_applicators___apply_formatter_at_index_gen;
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen)(void);
+    PyTypeObject **CPyType_applicators___apply_formatters_to_sequence_gen;
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen)(void);
+    PyTypeObject **CPyType_applicators___apply_formatters_to_dict_gen;
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen)(void);
+    PyTypeObject **CPyType_applicators___apply_formatter_to_array_gen;
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen)(void);
+    PyTypeObject **CPyType_applicators___apply_key_map_gen;
+    PyObject *(*CPyDef_applicators___apply_key_map_gen)(void);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatter_at_index)(PyObject *cpy_r_formatter, CPyTagged cpy_r_at_index, PyObject *cpy_r_value);
+    PyObject *(*CPyDef_applicators___combine_argument_formatters)(PyObject *cpy_r_formatters);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_sequence)(PyObject *cpy_r_formatters, PyObject *cpy_r_sequence);
+    PyObject *(*CPyDef_applicators___apply_formatter_if)(PyObject *cpy_r_condition, PyObject *cpy_r_formatter, PyObject *cpy_r_value);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatters_to_dict)(PyObject *cpy_r_formatters, PyObject *cpy_r_value, char cpy_r_unaliased);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_formatter_to_array)(PyObject *cpy_r_formatter, PyObject *cpy_r_value);
+    PyObject *(*CPyDef_applicators___apply_one_of_formatters)(tuple_T1T2OO cpy_r_formatter_condition_pairs, PyObject *cpy_r_value);
+    PyObject *(*CPyDef_applicators___apply_key_map_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_key_map_gen_____next__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_key_map_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);
+    PyObject *(*CPyDef_applicators___apply_key_map_gen_____iter__)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_key_map_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
+    PyObject *(*CPyDef_applicators___apply_key_map_gen___close)(PyObject *cpy_r___mypyc_self__);
+    PyObject *(*CPyDef_applicators___apply_key_map)(PyObject *cpy_r_key_mappings, PyObject *cpy_r_value);
+    char (*CPyDef_applicators_____top_level__)(void);
     PyObject *(*CPyDef_conversions___to_hex)(PyObject *cpy_r_primitive, PyObject *cpy_r_hexstr, PyObject *cpy_r_text);
     CPyTagged (*CPyDef_conversions___to_int)(PyObject *cpy_r_primitive, PyObject *cpy_r_hexstr, PyObject *cpy_r_text);
     PyObject *(*CPyDef_conversions___to_bytes)(PyObject *cpy_r_primitive, PyObject *cpy_r_hexstr, PyObject *cpy_r_text);

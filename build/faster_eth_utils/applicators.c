@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit_applicators(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("2d40105c8a25df98ee50__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("64cf6d0ce059aad98a5a__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_faster_eth_utils___applicators");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "2d40105c8a25df98ee50__mypyc.init_faster_eth_utils___applicators");
+    void *init_func = PyCapsule_GetPointer(capsule, "64cf6d0ce059aad98a5a__mypyc.init_faster_eth_utils___applicators");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;
