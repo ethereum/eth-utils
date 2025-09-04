@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit_network(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("64cf6d0ce059aad98a5a__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("0c9a7842e0a0cfa13326__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_faster_eth_utils___network");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "64cf6d0ce059aad98a5a__mypyc.init_faster_eth_utils___network");
+    void *init_func = PyCapsule_GetPointer(capsule, "0c9a7842e0a0cfa13326__mypyc.init_faster_eth_utils___network");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;

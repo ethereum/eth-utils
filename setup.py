@@ -14,6 +14,7 @@ else:
             "faster_eth_utils/address.py",
             "faster_eth_utils/applicators.py",
             "faster_eth_utils/conversions.py",
+            "faster_eth_utils/crypto.py",
             "faster_eth_utils/currency.py",
             "faster_eth_utils/debug.py",
             "faster_eth_utils/decorators.py",

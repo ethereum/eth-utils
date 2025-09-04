@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_64cf6d0ce059aad98a5a_H
-#define MYPYC_NATIVE_64cf6d0ce059aad98a5a_H
+#ifndef MYPYC_NATIVE_0c9a7842e0a0cfa13326_H
+#define MYPYC_NATIVE_0c9a7842e0a0cfa13326_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T2OO
@@ -485,7 +485,7 @@ typedef struct {
 } faster_eth_utils___network___NetworkObject;
 
 
-struct export_table_64cf6d0ce059aad98a5a {
+struct export_table_0c9a7842e0a0cfa13326 {
     PyTypeObject **CPyType_abi___get_normalized_abi_inputs_env;
     PyObject *(*CPyDef_abi___get_normalized_abi_inputs_env)(void);
     PyTypeObject **CPyType_abi_____mypyc_lambda__0_get_normalized_abi_inputs_obj;
@@ -583,6 +583,8 @@ struct export_table_64cf6d0ce059aad98a5a {
     PyObject *(*CPyDef_conversions___text_if_str)(PyObject *cpy_r_to_type, PyObject *cpy_r_text_or_primitive);
     PyObject *(*CPyDef_conversions___hexstr_if_str)(PyObject *cpy_r_to_type, PyObject *cpy_r_hexstr_or_primitive);
     char (*CPyDef_conversions_____top_level__)(void);
+    PyObject *(*CPyDef_crypto___keccak)(PyObject *cpy_r_primitive, PyObject *cpy_r_hexstr, PyObject *cpy_r_text);
+    char (*CPyDef_crypto_____top_level__)(void);
     CPyTagged *CPyStatic_currency___denoms___wei;
     CPyTagged *CPyStatic_currency___denoms___kwei;
     CPyTagged *CPyStatic_currency___denoms___babbage;

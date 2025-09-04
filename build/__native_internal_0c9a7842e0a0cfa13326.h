@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_64cf6d0ce059aad98a5a_H
-#define MYPYC_NATIVE_INTERNAL_64cf6d0ce059aad98a5a_H
+#ifndef MYPYC_NATIVE_INTERNAL_0c9a7842e0a0cfa13326_H
+#define MYPYC_NATIVE_INTERNAL_0c9a7842e0a0cfa13326_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_64cf6d0ce059aad98a5a.h"
+#include "__native_0c9a7842e0a0cfa13326.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[509];
+extern PyObject *CPyStatics[514];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -26,6 +26,7 @@ extern CPyModule *CPyModule_typing;
 extern CPyModule *CPyModule_eth_typing;
 extern CPyModule *CPyModule_faster_eth_utils___types_internal;
 extern CPyModule *CPyModule_faster_eth_utils___types;
+extern CPyModule *CPyModule_faster_eth_utils___crypto_internal;
 extern CPyModule *CPyModule_faster_eth_utils___crypto;
 extern CPyModule *CPyModule_faster_eth_utils___address_internal;
 extern CPyModule *CPyModule_faster_eth_utils___address;
@@ -48,6 +49,8 @@ extern CPyModule *CPyModule_faster_eth_utils___toolz;
 extern PyObject *CPyStatic_conversions___globals;
 extern CPyModule *CPyModule_faster_eth_utils___encoding_internal;
 extern CPyModule *CPyModule_faster_eth_utils___encoding;
+extern PyObject *CPyStatic_crypto___globals;
+extern CPyModule *CPyModule_eth_hash___auto;
 extern CPyModule *CPyModule_faster_eth_utils___currency_internal;
 extern CPyModule *CPyModule_faster_eth_utils___currency;
 extern PyObject *CPyStatic_currency___globals;
@@ -259,6 +262,9 @@ extern PyObject *CPyPy_conversions___text_if_str(PyObject *self, PyObject *const
 extern PyObject *CPyDef_conversions___hexstr_if_str(PyObject *cpy_r_to_type, PyObject *cpy_r_hexstr_or_primitive);
 extern PyObject *CPyPy_conversions___hexstr_if_str(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_conversions_____top_level__(void);
+extern PyObject *CPyDef_crypto___keccak(PyObject *cpy_r_primitive, PyObject *cpy_r_hexstr, PyObject *cpy_r_text);
+extern PyObject *CPyPy_crypto___keccak(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern char CPyDef_crypto_____top_level__(void);
 extern CPyTagged CPyStatic_currency___denoms___wei;
 extern CPyTagged CPyStatic_currency___denoms___kwei;
 extern CPyTagged CPyStatic_currency___denoms___babbage;
