@@ -1,12 +1,12 @@
-#ifndef MYPYC_NATIVE_INTERNAL_0c9a7842e0a0cfa13326_H
-#define MYPYC_NATIVE_INTERNAL_0c9a7842e0a0cfa13326_H
+#ifndef MYPYC_NATIVE_INTERNAL_a12de8d4beb198db8e1f_H
+#define MYPYC_NATIVE_INTERNAL_a12de8d4beb198db8e1f_H
 #include <Python.h>
 #include <CPy.h>
-#include "__native_0c9a7842e0a0cfa13326.h"
+#include "__native_a12de8d4beb198db8e1f.h"
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[514];
+extern PyObject *CPyStatics[527];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -88,9 +88,13 @@ extern PyObject *CPyStatic_network___globals;
 extern CPyModule *CPyModule_dataclasses;
 extern CPyModule *CPyModule_json;
 extern CPyModule *CPyModule_pathlib;
+extern CPyModule *CPyModule_faster_eth_utils___numeric_internal;
+extern CPyModule *CPyModule_faster_eth_utils___numeric;
+extern PyObject *CPyStatic_numeric___globals;
+extern CPyModule *CPyModule_abc;
+extern CPyModule *CPyModule_numbers;
 extern PyObject *CPyStatic_types___globals;
 extern CPyModule *CPyModule_collections___abc;
-extern CPyModule *CPyModule_numbers;
 extern PyObject *CPyStatic_units___globals;
 extern PyTypeObject *CPyType_abi___get_normalized_abi_inputs_env;
 extern PyObject *CPyDef_abi___get_normalized_abi_inputs_env(void);
@@ -560,6 +564,15 @@ extern PyObject *CPyPy_network___name_from_chain_id(PyObject *self, PyObject *co
 extern PyObject *CPyDef_network___short_name_from_chain_id(CPyTagged cpy_r_chain_id);
 extern PyObject *CPyPy_network___short_name_from_chain_id(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_network_____top_level__(void);
+extern PyTypeObject *CPyType_numeric___Comparable;
+extern PyObject *CPyDef_numeric___Comparable(void);
+extern PyObject *CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
+extern PyObject *CPyPy_numeric___Comparable_____lt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
+extern PyObject *CPyPy_numeric___Comparable_____gt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_numeric___clamp(PyObject *cpy_r_lower_bound, PyObject *cpy_r_upper_bound, PyObject *cpy_r_value);
+extern PyObject *CPyPy_numeric___clamp(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern char CPyDef_numeric_____top_level__(void);
 extern PyObject *CPyStatic_types___Mapping;
 extern PyObject *CPyStatic_types___Sequence;
 extern PyObject *CPyStatic_types___Number;

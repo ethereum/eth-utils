@@ -1,5 +1,5 @@
-#ifndef MYPYC_NATIVE_0c9a7842e0a0cfa13326_H
-#define MYPYC_NATIVE_0c9a7842e0a0cfa13326_H
+#ifndef MYPYC_NATIVE_a12de8d4beb198db8e1f_H
+#define MYPYC_NATIVE_a12de8d4beb198db8e1f_H
 #include <Python.h>
 #include <CPy.h>
 #ifndef MYPYC_DECLARED_tuple_T2OO
@@ -80,6 +80,17 @@ typedef struct tuple_T2II {
     CPyTagged f0;
     CPyTagged f1;
 } tuple_T2II;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T5OOOOO
+#define MYPYC_DECLARED_tuple_T5OOOOO
+typedef struct tuple_T5OOOOO {
+    PyObject *f0;
+    PyObject *f1;
+    PyObject *f2;
+    PyObject *f3;
+    PyObject *f4;
+} tuple_T5OOOOO;
 #endif
 
 #ifndef MYPYC_DECLARED_tuple_T1O
@@ -484,8 +495,13 @@ typedef struct {
     PyObject *_symbol;
 } faster_eth_utils___network___NetworkObject;
 
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+} faster_eth_utils___numeric___ComparableObject;
 
-struct export_table_0c9a7842e0a0cfa13326 {
+
+struct export_table_a12de8d4beb198db8e1f {
     PyTypeObject **CPyType_abi___get_normalized_abi_inputs_env;
     PyObject *(*CPyDef_abi___get_normalized_abi_inputs_env)(void);
     PyTypeObject **CPyType_abi_____mypyc_lambda__0_get_normalized_abi_inputs_obj;
@@ -786,6 +802,12 @@ struct export_table_0c9a7842e0a0cfa13326 {
     PyObject *(*CPyDef_network___name_from_chain_id)(CPyTagged cpy_r_chain_id);
     PyObject *(*CPyDef_network___short_name_from_chain_id)(CPyTagged cpy_r_chain_id);
     char (*CPyDef_network_____top_level__)(void);
+    PyTypeObject **CPyType_numeric___Comparable;
+    PyObject *(*CPyDef_numeric___Comparable)(void);
+    PyObject *(*CPyDef_numeric___Comparable_____lt__)(PyObject *cpy_r_self, PyObject *cpy_r_other);
+    PyObject *(*CPyDef_numeric___Comparable_____gt__)(PyObject *cpy_r_self, PyObject *cpy_r_other);
+    PyObject *(*CPyDef_numeric___clamp)(PyObject *cpy_r_lower_bound, PyObject *cpy_r_upper_bound, PyObject *cpy_r_value);
+    char (*CPyDef_numeric_____top_level__)(void);
     PyObject **CPyStatic_types___Mapping;
     PyObject **CPyStatic_types___Sequence;
     PyObject **CPyStatic_types___Number;
