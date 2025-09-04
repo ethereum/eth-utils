@@ -47,7 +47,7 @@ def apply_formatter_at_index(
     yield from value[at_index + 1 :]
 
 
-def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Formatters:
+def combine_argument_formatters(*formatters: Callable[..., Any]) -> Formatters:
     warnings.warn(
         DeprecationWarning(
             "combine_argument_formatters(formatter1, formatter2)([item1, item2])"
