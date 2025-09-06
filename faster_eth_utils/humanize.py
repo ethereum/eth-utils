@@ -23,17 +23,13 @@ from faster_eth_utils.currency import (
 from . import toolz
 
 
-sliding_window: Final = toolz.sliding_window
-take: Final = toolz.take
-
-
 def humanize_seconds(seconds: Union[float, int]) -> str:
     if int(seconds) == 0:
         return "0s"
 
     unit_values = _consume_leading_zero_units(_humanize_seconds(int(seconds)))
 
-    return "".join((f"{amount}{unit}" for amount, unit in take(3, unit_values)))
+    return "".join((f"{amount}{unit}" for amount, unit in toolz.take(3, unit_values)))
 
 
 SECOND: Final = 1
@@ -146,7 +142,7 @@ def _is_CIDv0_ipfs_hash(ipfs_hash: str) -> bool:
 
 def _find_breakpoints(values: Tuple[int, ...]) -> Iterator[int]:
     yield 0
-    for index, (left, right) in enumerate(sliding_window(2, values), 1):
+    for index, (left, right) in enumerate(toolz.sliding_window(2, values), 1):
         if left + 1 == right:
             continue
         else:
@@ -164,7 +160,7 @@ def _extract_integer_ranges(values: Tuple[int, ...]) -> Iterator[Tuple[int, int]
     - fn(1, 2, 3, 7, 8, 9) -> ((1, 3), (7, 9))
     - fn(1, 7, 8, 9) -> ((1, 1), (7, 9))
     """
-    for left, right in sliding_window(2, _find_breakpoints(values)):
+    for left, right in toolz.sliding_window(2, _find_breakpoints(values)):
         chunk = values[left:right]
         yield chunk[0], chunk[-1]
 
