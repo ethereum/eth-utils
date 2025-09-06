@@ -26,13 +26,6 @@ typedef struct tuple_T3OOO {
 } tuple_T3OOO;
 #endif
 
-#ifndef MYPYC_DECLARED_tuple_T1T2OO
-#define MYPYC_DECLARED_tuple_T1T2OO
-typedef struct tuple_T1T2OO {
-    tuple_T2OO f0;
-} tuple_T1T2OO;
-#endif
-
 #ifndef MYPYC_DECLARED_tuple_T4CIOO
 #define MYPYC_DECLARED_tuple_T4CIOO
 typedef struct tuple_T4CIOO {
@@ -583,7 +576,7 @@ struct export_table_99c07adba6ff961eaf3e {
     PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen___throw)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback);
     PyObject *(*CPyDef_applicators___apply_formatter_to_array_gen___close)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_applicators___apply_formatter_to_array)(PyObject *cpy_r_formatter, PyObject *cpy_r_value);
-    PyObject *(*CPyDef_applicators___apply_one_of_formatters)(tuple_T1T2OO cpy_r_formatter_condition_pairs, PyObject *cpy_r_value);
+    PyObject *(*CPyDef_applicators___apply_one_of_formatters)(PyObject *cpy_r_formatter_condition_pairs, PyObject *cpy_r_value);
     PyObject *(*CPyDef_applicators___apply_key_map_gen_____mypyc_generator_helper__)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
     PyObject *(*CPyDef_applicators___apply_key_map_gen_____next__)(PyObject *cpy_r___mypyc_self__);
     PyObject *(*CPyDef_applicators___apply_key_map_gen___send)(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_arg);

@@ -241,7 +241,7 @@ extern PyObject *CPyDef_applicators___apply_formatter_to_array_gen___close(PyObj
 extern PyObject *CPyPy_applicators___apply_formatter_to_array_gen___close(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_applicators___apply_formatter_to_array(PyObject *cpy_r_formatter, PyObject *cpy_r_value);
 extern PyObject *CPyPy_applicators___apply_formatter_to_array(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_applicators___apply_one_of_formatters(tuple_T1T2OO cpy_r_formatter_condition_pairs, PyObject *cpy_r_value);
+extern PyObject *CPyDef_applicators___apply_one_of_formatters(PyObject *cpy_r_formatter_condition_pairs, PyObject *cpy_r_value);
 extern PyObject *CPyPy_applicators___apply_one_of_formatters(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_applicators___apply_key_map_gen_____mypyc_generator_helper__(PyObject *cpy_r___mypyc_self__, PyObject *cpy_r_type, PyObject *cpy_r_value, PyObject *cpy_r_traceback, PyObject *cpy_r_arg);
 extern PyObject *CPyDef_applicators___apply_key_map_gen_____next__(PyObject *cpy_r___mypyc_self__);
