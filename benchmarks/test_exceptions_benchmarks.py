@@ -1,4 +1,5 @@
-from typing import Any, Callable
+# mypy: disable-error-code=misc
+from typing import Any, Type
 
 import eth_utils
 import pytest
@@ -6,10 +7,12 @@ from pytest_codspeed import BenchmarkFixture
 
 import faster_eth_utils
 
-
-def _batch(i: int, fn: Callable[..., Any], *inputs: Any) -> None:
+def _batch(i: int, exc: Type[Exception], *inputs: Any) -> None:
     for _ in range(i):
-        fn(*inputs)
+        try:
+            raise exc(*inputs)
+        except exc:
+            pass
 
 
 @pytest.mark.benchmark(group="ValidationError")
