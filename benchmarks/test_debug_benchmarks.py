@@ -1,3 +1,4 @@
+# mypy: disable-error-code=misc
 from typing import Any, Callable
 
 import eth_utils.debug
