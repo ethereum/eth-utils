@@ -5,7 +5,7 @@ Compares the two implementations in each benchmark group from a pytest-benchmark
 grouped by submodule.
 For each submodule and group (e.g., "abi_to_signature"), finds both implementations
 (e.g., "test_abi_to_signature" and "test_faster_abi_to_signature"), computes the percent change
-in mean execution time, and writes a diff JSON file summarizing the results.
+in mean execution time, speedup percent, and x factor, and writes a diff JSON file summarizing the results.
 
 Usage:
     python compare_benchmark_results.py <results.json> [output.json]
@@ -45,11 +45,15 @@ def compare_group(group_results: Dict[str, Any]) -> Dict[str, Any]:
     if ref and fast:
         mean_ref = ref["mean"]
         mean_fast = fast["mean"]
-        percent = ((mean_ref - mean_fast) / mean_ref) * 100 if mean_ref != 0 else 0.0
+        percent_change = ((mean_ref - mean_fast) / mean_ref) * 100 if mean_ref != 0 else 0.0
+        speedup_x = mean_ref / mean_fast if mean_fast != 0 else float('inf')
+        speedup_percent = (speedup_x - 1) * 100 if speedup_x != float('inf') else float('inf')
         return {
             "reference_mean": mean_ref,
             "faster_mean": mean_fast,
-            "percent_change": percent,
+            "percent_change": percent_change,
+            "speedup_percent": speedup_percent,
+            "speedup_x": speedup_x,
             "reference": ref_name,
             "faster": fast_name,
         }

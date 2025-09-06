@@ -64,16 +64,22 @@ jobs:
               const submoduleUrl = `https://github.com/${repo}/blob/${branch}/${submoduleFile}`;
               const benchmarkUrl = `https://github.com/${repo}/blob/${branch}/${benchmarkFile}`;
               body += `#### [${submodule}](${submoduleUrl}) - [view benchmarks](${benchmarkUrl})\n`;
-              body += '| Function | Reference Mean | Faster Mean | % Change | Faster |\n';
-              body += '|----------|---------------|-------------|----------|--------|\n';
+              body += '| Function | Reference Mean | Faster Mean | % Change | Speedup (%) | x Faster | Faster |\n';
+              body += '|----------|---------------|-------------|----------|-------------|----------|--------|\n';
               for (const [group, data] of Object.entries(groupDiffs).sort(([a], [b]) => a.localeCompare(b))) {
                 if (data.percent_change !== null && data.percent_change !== undefined) {
                   let emoji = '➖';
                   if (data.percent_change > 0) emoji = '✅';
                   else if (data.percent_change < 0) emoji = '❌';
-                  body += `| \`${group}\` | ${data.reference_mean} | ${data.faster_mean} | ${data.percent_change.toFixed(2)}% | ${emoji} |\n`;
+                  const percentChange = data.percent_change !== undefined && data.percent_change !== null
+                    ? `${data.percent_change.toFixed(2)}%` : '';
+                  const speedupPercent = data.speedup_percent !== undefined && data.speedup_percent !== null
+                    ? `${data.speedup_percent.toFixed(2)}%` : '';
+                  const speedupX = data.speedup_x !== undefined && data.speedup_x !== null && isFinite(data.speedup_x)
+                    ? `${data.speedup_x.toFixed(2)}x` : '';
+                  body += `| \`${group}\` | ${data.reference_mean} | ${data.faster_mean} | ${percentChange} | ${speedupPercent} | ${speedupX} | ${emoji} |\n`;
                 } else if (data.note) {
-                  body += `| \`${group}\` |  |  |  | ➖ |\n`;
+                  body += `| \`${group}\` |  |  |  |  |  | ➖ |\n`;
                 }
               }
               body += '\n';
