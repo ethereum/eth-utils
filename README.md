@@ -8,7 +8,7 @@
 
 ##### You can find the compiled C code on faster-eth-utils [master](https://github.com/BobTheBuidler/eth-utils/tree/master) branch.
 
-##### We benchmark `faster-eth-utils` against the original `eth-utils` for your convenience. [See results](https://github.com/BobTheBuidler/eth-utils/tree/master).
+##### We benchmark `faster-eth-utils` against the original `eth-utils` for your convenience. [See results](https://github.com/BobTheBuidler/faster-eth-utils/tree/master/benchmarks/results).
 
 ##### The original eth-utils readme is below:
 
