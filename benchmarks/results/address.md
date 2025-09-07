@@ -1,0 +1,52 @@
+#### [faster_eth_utils.address](https://github.com/BobTheBuidler/faster-eth-utils/blob/results/faster_eth_utils/address.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/results/benchmarks/test_address_benchmarks.py)
+
+| Function | Reference Mean | Faster Mean | % Change | Speedup (%) | x Faster | Faster |
+|----------|---------------|-------------|----------|-------------|----------|--------|
+| `is_address[empty0]` | 4.107060536365591e-05 | 2.928583113711636e-05 | 28.69% | 40.24% | 1.40x | ✅ |
+| `is_address[empty1]` | 2.354375921278498e-05 | 1.2283891622016354e-05 | 47.83% | 91.66% | 1.92x | ✅ |
+| `is_address[invalid-hex]` | 5.171844292368511e-05 | 4.0036178275794186e-05 | 22.59% | 29.18% | 1.29x | ✅ |
+| `is_address[not-20-bytes]` | 2.3052359698416704e-05 | 1.2153541125288357e-05 | 47.28% | 89.68% | 1.90x | ✅ |
+| `is_address[not-hex]` | 4.118288375381772e-05 | 2.8921370476122734e-05 | 29.77% | 42.40% | 1.42x | ✅ |
+| `is_address[too-long]` | 2.2985450995693452e-05 | 1.2109207082956013e-05 | 47.32% | 89.82% | 1.90x | ✅ |
+| `is_address[too-short0]` | 4.0420525283609716e-05 | 2.9145248437945248e-05 | 27.89% | 38.69% | 1.39x | ✅ |
+| `is_address[too-short1]` | 2.3070482915871098e-05 | 1.2107685629613108e-05 | 47.52% | 90.54% | 1.91x | ✅ |
+| `is_address[valid-checksummed0]` | 7.211827658927498e-05 | 6.092571649929738e-05 | 15.52% | 18.37% | 1.18x | ✅ |
+| `is_address[valid-checksummed1]` | 2.2716413141301346e-05 | 1.2212306324931837e-05 | 46.24% | 86.01% | 1.86x | ✅ |
+| `is_address[valid-lower0]` | 7.112755227219854e-05 | 6.163382902192755e-05 | 13.35% | 15.40% | 1.15x | ✅ |
+| `is_address[valid-lower1]` | 2.282025366597e-05 | 1.2233125176422997e-05 | 46.39% | 86.54% | 1.87x | ✅ |
+| `is_binary_address[empty]` | 1.126820789147676e-05 | 8.165557057534573e-06 | 27.53% | 38.00% | 1.38x | ✅ |
+| `is_binary_address[not-20-bytes]` | 1.0590359053315072e-05 | 8.358946126290567e-06 | 21.07% | 26.69% | 1.27x | ✅ |
+| `is_binary_address[too-long]` | 1.0617439311356925e-05 | 8.423254959167338e-06 | 20.67% | 26.05% | 1.26x | ✅ |
+| `is_binary_address[too-short]` | 1.0799456077683027e-05 | 8.333132565891757e-06 | 22.84% | 29.60% | 1.30x | ✅ |
+| `is_binary_address[valid-checksummed]` | 1.08335280285008e-05 | 8.354876572445995e-06 | 22.88% | 29.67% | 1.30x | ✅ |
+| `is_binary_address[valid-lower]` | 1.0746901346609995e-05 | 8.373710235235307e-06 | 22.08% | 28.34% | 1.28x | ✅ |
+| `is_canonical_address[empty]` | 5.7747182404247574e-06 | 4.284107720590936e-06 | 25.81% | 34.79% | 1.35x | ✅ |
+| `is_canonical_address[not-20-bytes]` | 5.553142014786173e-06 | 4.246195506096418e-06 | 23.54% | 30.78% | 1.31x | ✅ |
+| `is_canonical_address[too-long]` | 5.695920546098007e-06 | 4.302435135069471e-06 | 24.46% | 32.39% | 1.32x | ✅ |
+| `is_canonical_address[too-short]` | 5.6997823041235535e-06 | 4.3594521490888736e-06 | 23.52% | 30.75% | 1.31x | ✅ |
+| `is_canonical_address[valid-checksummed]` | 0.0002172703133844594 | 8.700547587605579e-05 | 59.96% | 149.72% | 2.50x | ✅ |
+| `is_canonical_address[valid-lower]` | 0.00021772079090168697 | 8.795637640101437e-05 | 59.60% | 147.53% | 2.48x | ✅ |
+| `is_checksum_address[invalid-false]` | 3.4743391336460137e-06 | 2.001753399419757e-06 | 42.38% | 73.56% | 1.74x | ✅ |
+| `is_checksum_address[not-checksum-false]` | 0.00025487880775887796 | 0.0001413142870153379 | 44.56% | 80.36% | 1.80x | ✅ |
+| `is_checksum_address[valid-checksum-true]` | 0.00026150959817744415 | 0.00014403887249145843 | 44.92% | 81.55% | 1.82x | ✅ |
+| `is_checksum_formatted_address[invalid-false]` | 1.288384588886477e-05 | 7.925146605012445e-06 | 38.49% | 62.57% | 1.63x | ✅ |
+| `is_checksum_formatted_address[lower-false]` | 6.966326738281043e-05 | 4.8606375472725775e-05 | 30.23% | 43.32% | 1.43x | ✅ |
+| `is_checksum_formatted_address[mixed-case-true]` | 7.496251607408233e-05 | 5.756461229176132e-05 | 23.21% | 30.22% | 1.30x | ✅ |
+| `is_checksum_formatted_address[upper-false]` | 7.511283159225303e-05 | 5.8241306550943484e-05 | 22.46% | 28.97% | 1.29x | ✅ |
+| `is_hex_address[empty]` | 2.475219040206854e-05 | 1.7458696248409263e-05 | 29.47% | 41.78% | 1.42x | ✅ |
+| `is_hex_address[invalid-hex]` | 3.481949075257866e-05 | 2.8590061124131305e-05 | 17.89% | 21.79% | 1.22x | ✅ |
+| `is_hex_address[not-hex]` | 2.515385525422377e-05 | 1.7332237717266444e-05 | 31.10% | 45.13% | 1.45x | ✅ |
+| `is_hex_address[too-short]` | 2.442014094433513e-05 | 1.7620524303091466e-05 | 27.84% | 38.59% | 1.39x | ✅ |
+| `is_hex_address[valid-checksummed]` | 6.932171381972242e-05 | 5.9054317039008796e-05 | 14.81% | 17.39% | 1.17x | ✅ |
+| `is_hex_address[valid-lower]` | 7.016693754297477e-05 | 6.220070395858491e-05 | 11.35% | 12.81% | 1.13x | ✅ |
+| `is_normalized_address[normalized-true]` | 0.0002802659411934302 | 0.00010629340542493027 | 62.07% | 163.67% | 2.64x | ✅ |
+| `is_normalized_address[not-an-address-false]` | 2.0079054577611272e-05 | 1.3306908643527798e-05 | 33.73% | 50.89% | 1.51x | ✅ |
+| `is_normalized_address[not-normalized-false]` | 0.0002734414716013297 | 0.00010545974011111718 | 61.43% | 159.29% | 2.59x | ✅ |
+| `is_same_address[different-address]` | 0.00011381075292029841 | 4.475531301056254e-05 | 60.68% | 154.30% | 2.54x | ✅ |
+| `is_same_address[same-address]` | 0.00011146596358385296 | 4.451805074417272e-05 | 60.06% | 150.38% | 2.50x | ✅ |
+| `to_canonical_address[valid-checksummed]` | 0.00027381910882211556 | 8.792595078229546e-05 | 67.89% | 211.42% | 3.11x | ✅ |
+| `to_canonical_address[valid-lower]` | 0.0002727469321879014 | 9.011042786025084e-05 | 66.96% | 202.68% | 3.03x | ✅ |
+| `to_checksum_address[valid-checksummed]` | 0.0002468265386340583 | 0.00013566677155276455 | 45.04% | 81.94% | 1.82x | ✅ |
+| `to_checksum_address[valid-lower]` | 0.0002456630013862118 | 0.00013219784690918874 | 46.19% | 85.83% | 1.86x | ✅ |
+| `to_normalized_address[valid-checksummed]` | 0.00023482354923083822 | 7.318847048066473e-05 | 68.83% | 220.85% | 3.21x | ✅ |
+| `to_normalized_address[valid-lower]` | 0.00023806179887206867 | 7.160081958933121e-05 | 69.92% | 232.48% | 3.32x | ✅ |

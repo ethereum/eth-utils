@@ -37,6 +37,29 @@ jobs:
         run: python scripts/benchmark/parse_benchmark_output.py benchmark.json pytest_benchmark_results.json
       - name: Compare Pytest Benchmark Results
         run: python scripts/benchmark/compare_benchmark_results.py pytest_benchmark_results.json pytest_benchmark_diff.json
+      - name: Generate Markdown Benchmark Results
+        run: python scripts/benchmark/generate_benchmark_markdown.py
+      - name: Commit and Push Markdown Benchmark Results
+        continue-on-error: true
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin ${{ github.head_ref || github.ref_name }}
+          git checkout ${{ github.head_ref || github.ref_name }}
+          git add benchmarks/results/*.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update benchmark results [skip ci]"
+            git push origin HEAD:${{ github.head_ref || github.ref_name }}
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Markdown Benchmark Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: markdown-benchmark-results
+          path: benchmarks/results/*.md
       - name: Upload Pytest Benchmark Diff
         uses: actions/upload-artifact@v4
         with:
