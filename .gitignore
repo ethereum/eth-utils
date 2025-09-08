@@ -10,6 +10,7 @@
 dist
 build/**/*.py
 build/**/*.typed
+build/**/*.json
 build/ops.txt
 .build
 eggs

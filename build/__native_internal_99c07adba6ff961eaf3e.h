@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[602];
+extern PyObject *CPyStatics[601];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -568,9 +568,9 @@ extern PyObject *CPyPy_network___short_name_from_chain_id(PyObject *self, PyObje
 extern char CPyDef_network_____top_level__(void);
 extern PyTypeObject *CPyType_numeric___Comparable;
 extern PyObject *CPyDef_numeric___Comparable(void);
-extern PyObject *CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
+extern char CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
 extern PyObject *CPyPy_numeric___Comparable_____lt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
+extern char CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
 extern PyObject *CPyPy_numeric___Comparable_____gt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern PyObject *CPyDef_numeric___clamp(PyObject *cpy_r_lower_bound, PyObject *cpy_r_upper_bound, PyObject *cpy_r_value);
 extern PyObject *CPyPy_numeric___clamp(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
