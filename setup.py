@@ -92,6 +92,7 @@ setup(
     url="https://github.com/BobTheBuidler/eth-utils",
     include_package_data=True,
     install_requires=[
+        "cchecksum>=0.0.3",
         "eth-hash>=0.3.1",
         "eth-typing>=5.0.0",
         "toolz>0.8.2;implementation_name=='pypy'",

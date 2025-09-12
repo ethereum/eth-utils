@@ -6,7 +6,7 @@
 
 int CPyGlobalsInit(void);
 
-extern PyObject *CPyStatics[598];
+extern PyObject *CPyStatics[601];
 extern const char * const CPyLit_Str[];
 extern const char * const CPyLit_Bytes[];
 extern const char * const CPyLit_Int[];
@@ -31,6 +31,7 @@ extern CPyModule *CPyModule_faster_eth_utils___crypto;
 extern CPyModule *CPyModule_faster_eth_utils___address__internal;
 extern CPyModule *CPyModule_faster_eth_utils___address;
 extern PyObject *CPyStatic_address___globals;
+extern CPyModule *CPyModule_cchecksum;
 extern CPyModule *CPyModule_typing_extensions;
 extern CPyModule *CPyModule_faster_eth_utils___conversions__internal;
 extern CPyModule *CPyModule_faster_eth_utils___conversions;
@@ -152,6 +153,7 @@ extern PyObject *CPyDef_abi___event_abi_to_log_topic(PyObject *cpy_r_event_abi);
 extern PyObject *CPyPy_abi___event_abi_to_log_topic(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_abi_____top_level__(void);
 extern PyObject *CPyStatic_address____HEX_ADDRESS_REGEXP;
+extern PyObject *CPyStatic_address___to_checksum_address;
 extern char CPyDef_address___is_hex_address(PyObject *cpy_r_value);
 extern PyObject *CPyPy_address___is_hex_address(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_address___is_binary_address(PyObject *cpy_r_value);
@@ -168,8 +170,6 @@ extern char CPyDef_address___is_canonical_address(PyObject *cpy_r_address);
 extern PyObject *CPyPy_address___is_canonical_address(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_address___is_same_address(PyObject *cpy_r_left, PyObject *cpy_r_right);
 extern PyObject *CPyPy_address___is_same_address(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-extern PyObject *CPyDef_address___to_checksum_address(PyObject *cpy_r_value);
-extern PyObject *CPyPy_address___to_checksum_address(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_address___is_checksum_address(PyObject *cpy_r_value);
 extern PyObject *CPyPy_address___is_checksum_address(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_address____is_checksum_formatted(PyObject *cpy_r_value);

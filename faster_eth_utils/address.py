@@ -5,6 +5,7 @@ from typing import (
     Union,
 )
 
+import cchecksum
 from eth_typing import (
     Address,
     AnyAddress,
@@ -35,6 +36,13 @@ from .types import (
 )
 
 _HEX_ADDRESS_REGEXP: Final = re.compile("(0x)?[0-9a-f]{40}", re.IGNORECASE | re.ASCII)
+
+
+to_checksum_address: Final = cchecksum.to_checksum_address
+"""
+Makes a checksum address given a supported format.
+We use the `cchecksum` implementation for max speed.
+"""
 
 
 def is_hex_address(value: Any) -> TypeGuard[HexAddress]:
@@ -116,28 +124,6 @@ def is_same_address(
         raise ValueError("Both values must be valid addresses")
     else:
         return to_normalized_address(left) == to_normalized_address(right)
-
-
-def to_checksum_address(value: Union[AnyAddress, str, bytes]) -> ChecksumAddress:
-    """
-    Makes a checksum address given a supported format.
-    """
-    norm_address = to_normalized_address(value)
-    address_hash = encode_hex(keccak(text=remove_0x_prefix(HexStr(norm_address))))
-
-    checksum_address = add_0x_prefix(
-        HexStr(
-            "".join(
-                (
-                    norm_address[i].upper()
-                    if int(address_hash[i], 16) > 7
-                    else norm_address[i]
-                )
-                for i in range(2, 42)
-            )
-        )
-    )
-    return ChecksumAddress(HexAddress(checksum_address))
 
 
 def is_checksum_address(value: Any) -> TypeGuard[ChecksumAddress]:
