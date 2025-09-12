@@ -2,10 +2,11 @@
 requires = [
   "setuptools",
   "wheel",
-  "mypy[mypyc]>=1.14.1,<1.17.1",
+  "mypy[mypyc]>=1.14.1,<1.18.2",
   "eth-hash>=0.3.1",
   "eth-typing>=5.0.0",
 ]
+build-backend = "setuptools.build_meta"
 
 [tool.autoflake]
 exclude = "__init__.py"
