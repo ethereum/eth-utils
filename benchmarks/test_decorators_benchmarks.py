@@ -48,9 +48,9 @@ re_func_lookup: Dict[str, Callable[[], Any]] = {
     "no_raise": no_raise,
 }
 re_cases = [
-    ("raise_value_error", {ValueError: RuntimeError}),  # mapped
-    ("raise_type_error", {ValueError: RuntimeError}),   # unmapped (should raise TypeError)
-    ("no_raise", {ValueError: RuntimeError}),           # no exception
+    "raise_value_error",  # mapped
+    "raise_type_error",   # unmapped (should raise TypeError)
+    "no_raise",           # no exception
 ]
 re_ids = [
     "mapped-exception",
@@ -83,23 +83,21 @@ def test_faster_return_arg_type(
     benchmark(_batch, 10, decorated, *args)
 
 @pytest.mark.benchmark(group="replace_exceptions")
-@pytest.mark.parametrize("func_key,exc_map", re_cases, ids=re_ids)
+@pytest.mark.parametrize("func_key", re_cases, ids=re_ids)
 def test_replace_exceptions(
     benchmark: BenchmarkFixture,
-    func_key: str,
-    exc_map: dict
+    func_key: str
 ) -> None:
     fn = re_func_lookup[func_key]
-    decorated = eth_utils.replace_exceptions(exc_map)(fn)
+    decorated = eth_utils.replace_exceptions({ValueError: RuntimeError})(fn)
     benchmark(_batch, 10, decorated)
 
 @pytest.mark.benchmark(group="replace_exceptions")
-@pytest.mark.parametrize("func_key,exc_map", re_cases, ids=re_ids)
+@pytest.mark.parametrize("func_key", re_cases, ids=re_ids)
 def test_faster_replace_exceptions(
     benchmark: BenchmarkFixture,
-    func_key: str,
-    exc_map: dict
+    func_key: str
 ) -> None:
     fn = re_func_lookup[func_key]
-    decorated = faster_eth_utils.replace_exceptions(exc_map)(fn)
+    decorated = faster_eth_utils.replace_exceptions({ValueError: RuntimeError})(fn)
     benchmark(_batch, 10, decorated)
