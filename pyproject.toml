@@ -2,7 +2,7 @@
 requires = [
   "setuptools",
   "wheel",
-  "mypy[mypyc]>=1.14.1,<1.18.2",
+  "mypy[mypyc]>=1.14.1,<1.18.3",
   "cchecksum>=0.0.3",
   "eth-hash>=0.3.1",
   "eth-typing>=5.0.0",
