@@ -26,12 +26,9 @@ jobs:
           python-version: "3.13"
         
       - name: Install Mypyc
-        run: pip install mypy[mypyc]==1.18.1 .
-        
-      - name: Run Mypyc
         env:
           MYPYC_STRICT_DUNDER_TYPING: 1
-        run: make compile
+        run: pip install .
 
       - name: Check for changes
         run: |
