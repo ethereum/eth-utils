@@ -141,7 +141,7 @@ typedef struct {
     PyObject *___mypyc_temp__5;
     int64_t ___mypyc_temp__6;
     PyObject *___mypyc_temp__7;
-    int64_t ___mypyc_temp__8;
+    PyObject *___mypyc_temp__8;
     PyObject *___mypyc_generator_attribute__formatter;
     PyObject *___mypyc_generator_attribute__item;
 } faster_eth_utils___applicators___apply_formatters_to_sequence_genObject;

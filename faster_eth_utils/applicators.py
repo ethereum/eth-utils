@@ -73,8 +73,8 @@ def combine_argument_formatters(*formatters: Callable[..., Any]) -> Formatters:
 
 @return_arg_type(1)
 def apply_formatters_to_sequence(
-    formatters: List[Any], sequence: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatters: List[Callable[[Any], TReturn]], sequence: Sequence[Any]
+) -> Generator[TReturn, None, None]:
     if len(formatters) == len(sequence):
         for formatter, item in zip(formatters, sequence):
             yield formatter(item)
