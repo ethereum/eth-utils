@@ -781,7 +781,7 @@ def test_filter_abi_by_type_raises_for_invalid_abi_type() -> None:
         ValueError,
         match=re.escape("Unsupported ABI type: typing.Literal['notanabitype']"),
     ):
-        filter_abi_by_type(Literal["notanabitype"], contract_abi)  # type: ignore
+        filter_abi_by_type(notanabitype, contract_abi)
 
 
 @pytest.mark.parametrize(
