@@ -7,5 +7,5 @@ from faster_eth_utils.module_loading import (
 
 
 def test_import_string():
-    imported_combomethod = import_string("eth_utils.decorators.combomethod")
+    imported_combomethod = import_string("faster_eth_utils.decorators.combomethod")
     assert imported_combomethod is combomethod
