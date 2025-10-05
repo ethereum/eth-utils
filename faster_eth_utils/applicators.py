@@ -139,7 +139,7 @@ def apply_formatters_to_dict(
 
 @return_arg_type(1)
 def apply_formatter_to_array(
-    formatter: Callable[[TArg], TReturn], value: List[TArg]
+    formatter: Callable[[TArg], TReturn], value: Sequence[TArg]
 ) -> Generator[TReturn, None, None]:
     for item in value:
         yield formatter(item)

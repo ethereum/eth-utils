@@ -169,7 +169,7 @@ typedef struct {
     PyObject *___mypyc_generator_attribute__value;
     int32_t ___mypyc_next_label__;
     PyObject *___mypyc_temp__12;
-    int64_t ___mypyc_temp__13;
+    PyObject *___mypyc_temp__13;
     PyObject *___mypyc_generator_attribute__item;
 } faster_eth_utils___applicators___apply_formatter_to_array_genObject;
 
