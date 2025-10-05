@@ -4,9 +4,11 @@ from typing import (
     Dict,
     Generator,
     List,
+    Sequence,
     Tuple,
     TypeVar,
     Union,
+    cast,
 )
 import warnings
 
@@ -26,14 +28,15 @@ from .toolz import (
 
 TArg = TypeVar("TArg")
 TReturn = TypeVar("TReturn")
+TOther = TypeVar("TOther")
 
 Formatters = Callable[[List[Any]], List[Any]]
 
 
 @return_arg_type(2)
 def apply_formatter_at_index(
-    formatter: Callable[..., Any], at_index: int, value: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatter: Callable[[TArg], TReturn], at_index: int, value: Sequence[Union[TArg, TOther]]
+) -> Generator[Union[TOther, TReturn], None, None]:
     try:
         item = value[at_index]
     except IndexError:
@@ -43,7 +46,7 @@ def apply_formatter_at_index(
         ) from None
 
     yield from value[:at_index]
-    yield formatter(item)
+    yield formatter(cast(TArg, item))
     yield from value[at_index + 1 :]
 
 
