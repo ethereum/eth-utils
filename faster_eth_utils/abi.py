@@ -274,7 +274,7 @@ def filter_abi_by_name(abi_name: str, contract_abi: ABI) -> Sequence[ABIElement]
         abi
         for abi in contract_abi
         if abi["type"] in ["function", "event", "error"]
-        and abi["name"] == abi_name
+        and abi["name"] == abi_name  # type: ignore [typeddict-item]
     ]
 
 
