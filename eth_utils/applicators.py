@@ -28,8 +28,8 @@ Formatters = Callable[[List[Any]], List[Any]]
 
 @return_arg_type(2)
 def apply_formatter_at_index(
-    formatter: Callable[..., Any], at_index: int, value: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatter: Callable[..., Any], at_index: int, value: Sequence[Any]
+) -> Generator[Any, None, None]:
     try:
         item = value[at_index]
     except IndexError:
