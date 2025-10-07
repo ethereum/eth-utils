@@ -1,9 +1,9 @@
-#### [faster_eth_utils.numeric](https://github.com/BobTheBuidler/faster-eth-utils/blob/master/faster_eth_utils/numeric.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/master/benchmarks/test_numeric_benchmarks.py)
+#### [faster_eth_utils.numeric](https://github.com/BobTheBuidler/faster-eth-utils/blob/BobTheBuidler-patch-2/faster_eth_utils/numeric.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/BobTheBuidler-patch-2/benchmarks/test_numeric_benchmarks.py)
 
 | Function | Reference Mean | Faster Mean | % Change | Speedup (%) | x Faster | Faster |
 |----------|---------------|-------------|----------|-------------|----------|--------|
-| `clamp[above-upper]` | 8.225081937696702e-07 | 8.466350206466003e-07 | -2.93% | -2.85% | 0.97x | ❌ |
-| `clamp[at-lower]` | 8.051603296439752e-07 | 8.440347858616941e-07 | -4.83% | -4.61% | 0.95x | ❌ |
-| `clamp[at-upper]` | 8.299483051521816e-07 | 8.306221365455628e-07 | -0.08% | -0.08% | 1.00x | ❌ |
-| `clamp[below-lower]` | 7.435570545562785e-07 | 8.707691691702668e-07 | -17.11% | -14.61% | 0.85x | ❌ |
-| `clamp[within-bounds]` | 8.286139332616395e-07 | 8.697048089499918e-07 | -4.96% | -4.72% | 0.95x | ❌ |
+| `clamp[above-upper]` | 7.15440873392229e-07 | 7.492590116549814e-07 | -4.73% | -4.51% | 0.95x | ❌ |
+| `clamp[at-lower]` | 7.157588222745163e-07 | 7.494084336998119e-07 | -4.70% | -4.49% | 0.96x | ❌ |
+| `clamp[at-upper]` | 7.145680407743865e-07 | 7.474911165093902e-07 | -4.61% | -4.40% | 0.96x | ❌ |
+| `clamp[below-lower]` | 6.425672678134726e-07 | 7.977622580263819e-07 | -24.15% | -19.45% | 0.81x | ❌ |
+| `clamp[within-bounds]` | 7.144899874247044e-07 | 7.846402943620272e-07 | -9.82% | -8.94% | 0.91x | ❌ |
