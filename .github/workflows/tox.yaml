@@ -5,6 +5,11 @@ on:
     branches:
       - master
       - faster-4.1.1
+    paths:
+      - '**.py'
+      - '.github/workflows/tox.yaml'
+      - 'pyproject.toml'
+      - 'setup.py'
   schedule:
     - cron: '0 12 * * 1-5'  # Weekdays 12:00 UTC
 
