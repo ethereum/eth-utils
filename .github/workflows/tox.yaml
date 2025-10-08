@@ -42,7 +42,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          pyversion: ${{ matrix.pyversion }}
+          python-version: ${{ matrix.pyversion }}
           cache: pip
           cache-dependency-path: |
             setup.py
