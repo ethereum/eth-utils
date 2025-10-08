@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 from setuptools import (
     find_packages,
     setup,
@@ -40,7 +41,7 @@ else:
         ],
     )
 
-MYPY_REQUIREMENT = "mypy==1.17.1"
+MYPY_REQUIREMENT = f"mypy=={'1.14.1' if sys.version_info < (3, 9) else '1.18.2'}"
 
 extras_require = {
     "dev": [
