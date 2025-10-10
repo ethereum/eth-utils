@@ -50,9 +50,9 @@ def apply_formatter_at_index(
             f"Need: {at_index + 1}"
         ) from None
 
-    yield from value[:at_index]
+    yield from cast(Sequence[TOther], value[:at_index])
     yield formatter(cast(TArg, item))
-    yield from value[at_index + 1 :]
+    yield from cast(Sequence[TOther], value[at_index + 1 :])
 
 
 def combine_argument_formatters(*formatters: Callable[..., Any]) -> Formatters:
@@ -105,8 +105,8 @@ def apply_formatter_if(
     condition: Callable[[TArg], bool], formatter: Callable[[TArg], TReturn], value: TArg
 ) -> Union[TArg, TReturn]: ...
 
-def apply_formatter_if(
-    condition: Union[Callable[[TArg], TypeGuard[TOther]], Callable[[Any], TypeGuard[TOther]], Callable[[TArg], bool]],
+def apply_formatter_if(  # type: ignore [misc]
+    condition: Union[Callable[[TArg], TypeGuard[TOther]], Callable[[TArg], bool]],
     formatter: Union[Callable[[TOther], TReturn], Callable[[TArg], TReturn]],
     value: TArg,
 ) -> Union[TArg, TReturn]:
