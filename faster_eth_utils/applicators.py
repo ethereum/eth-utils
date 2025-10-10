@@ -9,8 +9,13 @@ from typing import (
     TypeVar,
     Union,
     cast,
+    overload,
 )
 import warnings
+
+from typing_extensions import (
+    TypeGuard,
+)
 
 from .decorators import (
     return_arg_type,
@@ -90,11 +95,23 @@ def apply_formatters_to_sequence(
         )
 
 
+@overload
+def apply_formatter_if(
+    condition: Callable[[TArg], TypeGuard[TOther]], formatter: Callable[[TOther], TReturn], value: TArg
+) -> Union[TArg, TReturn]: ...
+
+@overload
 def apply_formatter_if(
     condition: Callable[[TArg], bool], formatter: Callable[[TArg], TReturn], value: TArg
+) -> Union[TArg, TReturn]: ...
+
+def apply_formatter_if(
+    condition: Union[Callable[[TArg], TypeGuard[TOther]], Callable[[Any], TypeGuard[TOther]], Callable[[TArg], bool]],
+    formatter: Union[Callable[[TOther], TReturn], Callable[[TArg], TReturn]],
+    value: TArg,
 ) -> Union[TArg, TReturn]:
     if condition(value):
-        return formatter(value)
+        return formatter(value)  # type: ignore [arg-type]
     else:
         return value
 
