@@ -210,5 +210,10 @@ def test_to_hex_cleanup_only(val, expected):
 
 
 def test_to_hex_exception():
-    with pytest.raises(TypeError, match="Unsupported type: The primitive argument"):
+    with pytest.raises(
+        TypeError,
+        # NOTE The `match` arg was commented out because faster-eth-utils might not raise
+        # the same exception, but we should still test that it raises a TypeError like eth-utils
+        # match="Unsupported type: The primitive argument",
+    ):
         to_hex(primitive="string")
