@@ -7,6 +7,7 @@ import re
 from typing import (
     Any,
     Dict,
+    Final,
     Iterable,
     List,
     Literal,
@@ -38,6 +39,9 @@ from faster_eth_utils.types import (
 from .crypto import (
     keccak,
 )
+
+
+ABIType = Literal["function", "constructor", "fallback", "receive", "event", "error"]
 
 
 def _align_abi_input(
@@ -278,6 +282,16 @@ def filter_abi_by_name(abi_name: str, contract_abi: ABI) -> Sequence[ABIElement]
     ]
 
 
+__ABI_TYPE_LITERALS: Final  = {
+    Literal["function"]: "function",
+    Literal["constructor"]: "constructor",
+    Literal["fallback"]: "fallback",
+    Literal["receive"]: "receive",
+    Literal["event"]: "event",
+    Literal["error"]: "error",
+}
+
+
 @overload
 def filter_abi_by_type(
     abi_type: Literal["function"],
@@ -327,9 +341,7 @@ def filter_abi_by_type(
 
 
 def filter_abi_by_type(
-    abi_type: Literal[
-        "function", "constructor", "fallback", "receive", "event", "error"
-    ],
+    abi_type: ABIType,
     contract_abi: ABI,
 ) -> Union[
     List[ABIFunction], List[ABIConstructor], List[ABIFallback], List[ABIReceive], List[ABIEvent], List[ABIError]
@@ -361,20 +373,12 @@ ABIEvent, ABIError]]`
         [{'type': 'function', 'name': 'myFunction', 'inputs': [], 'outputs': []}, \
 {'type': 'function', 'name': 'myFunction2', 'inputs': [], 'outputs': []}]
     """
-    if abi_type == Literal["function"] or abi_type == "function":
-        return [abi for abi in contract_abi if abi["type"] == "function"]
-    elif abi_type == Literal["constructor"] or abi_type == "constructor":
-        return [abi for abi in contract_abi if abi["type"] == "constructor"]
-    elif abi_type == Literal["fallback"] or abi_type == "fallback":
-        return [abi for abi in contract_abi if abi["type"] == "fallback"]
-    elif abi_type == Literal["receive"] or abi_type == "receive":
-        return [abi for abi in contract_abi if abi["type"] == "receive"]
-    elif abi_type == Literal["event"] or abi_type == "event":
-        return [abi for abi in contract_abi if abi["type"] == "event"]
-    elif abi_type == Literal["error"] or abi_type == "error":
-        return [abi for abi in contract_abi if abi["type"] == "error"]
-    else:
+    if abi_type in ("function", "constructor", "fallback", "receive", "event", "error"):
+        return [abi for abi in contract_abi if abi["type"] == abi_type]  # type: ignore [return-value]
+    abi_type_string: Optional[ABIType] = __ABI_TYPE_LITERALS.get(abi_type)  # type: ignore [call-overload]
+    if abi_type_string is None:
         raise ValueError(f"Unsupported ABI type: {abi_type}")
+    return [abi for abi in contract_abi if abi["type"] == abi_type_string]  # type: ignore [return-value]    
 
 
 def get_all_function_abis(contract_abi: ABI) -> Sequence[ABIFunction]:
