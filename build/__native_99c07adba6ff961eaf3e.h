@@ -161,18 +161,19 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__formatters;
-    PyObject *___mypyc_generator_attribute__value;
-    char ___mypyc_generator_attribute__unaliased;
-    int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_temp__9;
-    PyObject *___mypyc_temp__10;
-    PyObject *___mypyc_generator_attribute__key;
-    PyObject *___mypyc_generator_attribute__item;
-    tuple_T3OOO ___mypyc_temp__11;
-    PyObject *___mypyc_generator_attribute__exc;
-    PyObject *___mypyc_generator_attribute__new_error_message;
-} faster_eth_utils___applicators___apply_formatters_to_dict_genObject;
+    PyObject *___mypyc_self__;
+    PyObject *_formatters;
+    PyObject *_get_value;
+    PyObject *_value;
+    char _unaliased;
+} faster_eth_utils___applicators___apply_formatters_to_dict_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___applicators___get_value_apply_formatters_to_dict_objObject;
 
 typedef struct {
     PyObject_HEAD
@@ -180,32 +181,29 @@ typedef struct {
     PyObject *___mypyc_generator_attribute__formatter;
     PyObject *___mypyc_generator_attribute__value;
     int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_temp__12;
-    PyObject *___mypyc_temp__13;
+    PyObject *___mypyc_temp__9;
+    PyObject *___mypyc_temp__10;
     PyObject *___mypyc_generator_attribute__item;
 } faster_eth_utils___applicators___apply_formatter_to_array_genObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__key_mappings;
-    PyObject *___mypyc_generator_attribute__value;
-    int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_temp__14;
-    PyObject *___mypyc_temp__15;
-    CPyTagged ___mypyc_temp__16;
-    int64_t ___mypyc_temp__17;
-    PyObject *___mypyc_temp__18;
-    PyObject *___mypyc_generator_attribute__k;
-    PyObject *___mypyc_generator_attribute__v;
-    PyObject *___mypyc_generator_attribute__key_conflicts;
-    PyObject *___mypyc_temp__19;
-    CPyTagged ___mypyc_temp__20;
-    int64_t ___mypyc_temp__21;
-    PyObject *___mypyc_temp__22;
-    PyObject *___mypyc_generator_attribute__key;
-    PyObject *___mypyc_generator_attribute__item;
-} faster_eth_utils___applicators___apply_key_map_genObject;
+    PyObject *___mypyc_self__;
+    PyObject *_key_mappings;
+    PyObject *_get_key;
+    PyObject *_value;
+    PyObject *_k;
+    PyObject *_v;
+    PyObject *_key_conflicts;
+} faster_eth_utils___applicators___apply_key_map_envObject;
+
+typedef struct {
+    PyObject_HEAD
+    CPyVTableItem *vtable;
+    vectorcallfunc vectorcall;
+    PyObject *___mypyc_env__;
+} faster_eth_utils___applicators___get_key_apply_key_map_objObject;
 
 typedef struct {
     PyObject_HEAD

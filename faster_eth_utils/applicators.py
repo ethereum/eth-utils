@@ -116,12 +116,11 @@ def apply_formatter_if(  # type: ignore [misc]
         return value
 
 
-@to_dict
 def apply_formatters_to_dict(
     formatters: Dict[Any, Any],
     value: Union[Dict[Any, Any], CamelModel],
     unaliased: bool = False,
-) -> Generator[Tuple[Any, Any], None, None]:
+) -> Dict[Any, Any]:
     """
     Apply formatters to a dictionary of values. If the value is a pydantic model,
     it will be serialized to a dictionary first, taking into account the
@@ -136,22 +135,24 @@ def apply_formatters_to_dict(
     if isinstance(value, CamelModel):
         value = value.model_dump(by_alias=not unaliased)
 
-    for key, item in value.items():
-        if key in formatters:
-            try:
-                yield key, formatters[key](item)
-            except ValueError as exc:
-                new_error_message = (
-                    f"Could not format invalid value {repr(item)} as field {repr(key)}"
-                )
-                raise ValueError(new_error_message) from exc
-            except TypeError as exc:
-                new_error_message = (
-                    f"Could not format invalid type {repr(item)} as field {repr(key)}"
-                )
-                raise TypeError(new_error_message) from exc
-        else:
-            yield key, item
+    def get_value(key: Any, item: Any) -> Any:
+        if key not in formatters:
+            return item
+        try:
+            return formatters[key](item)
+        except ValueError as exc:
+            raise ValueError(
+                f"Could not format invalid value {repr(item)} as field {repr(key)}"
+            ) from exc
+        except TypeError as exc:
+            raise TypeError(
+                f"Could not format invalid type {repr(item)} as field {repr(key)}"
+            ) from exc
+
+    return {
+        key: get_value(key, item) if key in formatters else key
+        for key, item in value.items()
+    }
 
 
 @return_arg_type(1)
@@ -175,10 +176,9 @@ def apply_one_of_formatters(
         )
 
 
-@to_dict
 def apply_key_map(
     key_mappings: Dict[Any, Any], value: Dict[Any, Any]
-) -> Generator[Tuple[Any, Any], None, None]:
+) -> Dict[Any, Any]:
     key_conflicts = (
         set(value.keys())
         .difference(key_mappings.keys())
@@ -189,8 +189,7 @@ def apply_key_map(
             f"Could not apply key map due to conflicting key(s): {key_conflicts}"
         )
 
-    for key, item in value.items():
-        if key in key_mappings:
-            yield key_mappings[key], item
-        else:
-            yield key, item
+    def get_key(key: Any) -> Any:
+        return key_mappings[key] if key in key_mappings else key
+
+    return {get_key(key): item for key, item in value.items()}
