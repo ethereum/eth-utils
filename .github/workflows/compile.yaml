@@ -31,6 +31,12 @@ jobs:
           cache-dependency-path: |
             setup.py
             pyproject.toml
+            
+      - name: Cache .mypy_cache
+        uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: mypy-cache-${{ runner.os }}-x64-${{ hashFiles('**/*.py', 'pyproject.toml') }}
         
       - name: Install Mypyc
         env:
