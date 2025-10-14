@@ -33,6 +33,7 @@ jobs:
           # Exclude x86 (32-bit) builds for macos, which doesn't support 32-bit at all
           - os: macos-latest
             architecture: x86
+      max-parallel: ${{ github.event_name == 'schedule' && 4 || 20 }}
     env:
       TOXENV: py${{ matrix.pyversion }}-${{ matrix.jobtype }}
       TOX_RECREATE_FLAG: ${{ github.event_name == 'schedule' && '-r' || '' }}
