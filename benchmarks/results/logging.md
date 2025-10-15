@@ -1,7 +1,7 @@
-#### [faster_eth_utils.logging](https://github.com/BobTheBuidler/faster-eth-utils/blob/strict-dunder-typing/faster_eth_utils/logging.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/strict-dunder-typing/benchmarks/test_logging_benchmarks.py)
+#### [faster_eth_utils.logging](https://github.com/BobTheBuidler/faster-eth-utils/blob/master/faster_eth_utils/logging.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/master/benchmarks/test_logging_benchmarks.py)
 
 | Function | Reference Mean | Faster Mean | % Change | Speedup (%) | x Faster | Faster |
 |----------|---------------|-------------|----------|-------------|----------|--------|
-| `get_extended_debug_logger` | 0.00024029684200180734 | 0.00024035992074632548 | -0.03% | -0.03% | 1.00x | ❌ |
-| `get_logger` | 5.315076441083198e-05 | 5.372668165862952e-05 | -1.08% | -1.07% | 0.99x | ❌ |
-| `setup_DEBUG2_logging` | 1.186086257929195e-06 | 1.070490526709892e-06 | 9.75% | 10.80% | 1.11x | ✅ |
+| `get_extended_debug_logger` | 0.0002392968924284183 | 0.00023940785949326166 | -0.05% | -0.05% | 1.00x | ❌ |
+| `get_logger` | 5.301735593181095e-05 | 5.241616807189123e-05 | 1.13% | 1.15% | 1.01x | ✅ |
+| `setup_DEBUG2_logging` | 1.1613477666389314e-06 | 1.083064516629683e-06 | 6.74% | 7.23% | 1.07x | ✅ |
