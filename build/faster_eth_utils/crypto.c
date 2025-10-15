@@ -4,11 +4,11 @@ PyMODINIT_FUNC
 PyInit_crypto(void)
 {
     PyObject *tmp;
-    if (!(tmp = PyImport_ImportModule("99c07adba6ff961eaf3e__mypyc"))) return NULL;
+    if (!(tmp = PyImport_ImportModule("faster_eth_utils__mypyc"))) return NULL;
     PyObject *capsule = PyObject_GetAttrString(tmp, "init_faster_eth_utils___crypto");
     Py_DECREF(tmp);
     if (capsule == NULL) return NULL;
-    void *init_func = PyCapsule_GetPointer(capsule, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___crypto");
+    void *init_func = PyCapsule_GetPointer(capsule, "faster_eth_utils__mypyc.init_faster_eth_utils___crypto");
     Py_DECREF(capsule);
     if (!init_func) {
         return NULL;

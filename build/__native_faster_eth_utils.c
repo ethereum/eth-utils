@@ -16,8 +16,8 @@
 #include "misc_ops.c"
 #include "generic_ops.c"
 #include "pythonsupport.c"
-#include "__native_99c07adba6ff961eaf3e.h"
-#include "__native_internal_99c07adba6ff961eaf3e.h"
+#include "__native_faster_eth_utils.h"
+#include "__native_internal_faster_eth_utils.h"
 
 PyObject *CPyDef_abi_____mypyc__get_normalized_abi_inputs_env_setup(PyObject *cpy_r_type);
 PyObject *CPyDef_abi___get_normalized_abi_inputs_env(void);
@@ -49316,14 +49316,14 @@ PyObject *CPyPy_types___is_number(PyObject *self, PyObject *const *args, size_t 
 char CPyDef_types_____top_level__(void);
 char CPyDef_units_____top_level__(void);
 
-static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
+static int exec_faster_eth_utils__mypyc(PyObject *module)
 {
     int res;
     PyObject *capsule;
     PyObject *tmp;
     
     extern PyObject *CPyInit_faster_eth_utils___abi(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___abi, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___abi", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___abi, "faster_eth_utils__mypyc.init_faster_eth_utils___abi", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49334,7 +49334,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___address(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___address, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___address", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___address, "faster_eth_utils__mypyc.init_faster_eth_utils___address", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49345,7 +49345,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___applicators(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___applicators, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___applicators", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___applicators, "faster_eth_utils__mypyc.init_faster_eth_utils___applicators", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49356,7 +49356,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___conversions(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___conversions, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___conversions", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___conversions, "faster_eth_utils__mypyc.init_faster_eth_utils___conversions", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49367,7 +49367,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___crypto(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___crypto, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___crypto", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___crypto, "faster_eth_utils__mypyc.init_faster_eth_utils___crypto", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49378,7 +49378,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___currency(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___currency, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___currency", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___currency, "faster_eth_utils__mypyc.init_faster_eth_utils___currency", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49389,7 +49389,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___debug(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___debug, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___debug", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___debug, "faster_eth_utils__mypyc.init_faster_eth_utils___debug", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49400,7 +49400,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___decorators(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___decorators, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___decorators", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___decorators, "faster_eth_utils__mypyc.init_faster_eth_utils___decorators", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49411,7 +49411,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___encoding(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___encoding, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___encoding", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___encoding, "faster_eth_utils__mypyc.init_faster_eth_utils___encoding", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49422,7 +49422,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___exceptions(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___exceptions, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___exceptions", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___exceptions, "faster_eth_utils__mypyc.init_faster_eth_utils___exceptions", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49433,7 +49433,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___functional(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___functional, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___functional", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___functional, "faster_eth_utils__mypyc.init_faster_eth_utils___functional", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49444,7 +49444,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___hexadecimal(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___hexadecimal, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___hexadecimal", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___hexadecimal, "faster_eth_utils__mypyc.init_faster_eth_utils___hexadecimal", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49455,7 +49455,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___humanize(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___humanize, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___humanize", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___humanize, "faster_eth_utils__mypyc.init_faster_eth_utils___humanize", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49466,7 +49466,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___module_loading(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___module_loading, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___module_loading", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___module_loading, "faster_eth_utils__mypyc.init_faster_eth_utils___module_loading", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49477,7 +49477,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___network(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___network, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___network", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___network, "faster_eth_utils__mypyc.init_faster_eth_utils___network", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49488,7 +49488,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___numeric(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___numeric, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___numeric", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___numeric, "faster_eth_utils__mypyc.init_faster_eth_utils___numeric", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49499,7 +49499,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___toolz(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___toolz, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___toolz", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___toolz, "faster_eth_utils__mypyc.init_faster_eth_utils___toolz", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49510,7 +49510,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___types(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___types, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___types", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___types, "faster_eth_utils__mypyc.init_faster_eth_utils___types", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49521,7 +49521,7 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     }
     
     extern PyObject *CPyInit_faster_eth_utils___units(void);
-    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___units, "99c07adba6ff961eaf3e__mypyc.init_faster_eth_utils___units", NULL);
+    capsule = PyCapsule_New((void *)CPyInit_faster_eth_utils___units, "faster_eth_utils__mypyc.init_faster_eth_utils___units", NULL);
     if (!capsule) {
         goto fail;
     }
@@ -49535,24 +49535,24 @@ static int exec_99c07adba6ff961eaf3e__mypyc(PyObject *module)
     fail:
     return -1;
 }
-static PyModuleDef module_def_99c07adba6ff961eaf3e__mypyc = {
+static PyModuleDef module_def_faster_eth_utils__mypyc = {
     PyModuleDef_HEAD_INIT,
-    .m_name = "99c07adba6ff961eaf3e__mypyc",
+    .m_name = "faster_eth_utils__mypyc",
     .m_doc = NULL,
     .m_size = -1,
     .m_methods = NULL,
 };
-PyMODINIT_FUNC PyInit_99c07adba6ff961eaf3e__mypyc(void) {
+PyMODINIT_FUNC PyInit_faster_eth_utils__mypyc(void) {
     static PyObject *module = NULL;
     if (module) {
         Py_INCREF(module);
         return module;
     }
-    module = PyModule_Create(&module_def_99c07adba6ff961eaf3e__mypyc);
+    module = PyModule_Create(&module_def_faster_eth_utils__mypyc);
     if (!module) {
         return NULL;
     }
-    if (exec_99c07adba6ff961eaf3e__mypyc(module) < 0) {
+    if (exec_faster_eth_utils__mypyc(module) < 0) {
         Py_DECREF(module);
         return NULL;
     }

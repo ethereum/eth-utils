@@ -47,6 +47,7 @@ else:
             "--disable-error-code=misc",
             "--disable-error-code=unused-ignore",
         ],
+        group_name="faster_eth_utils",
         strict_dunder_typing=True,
     )
 
