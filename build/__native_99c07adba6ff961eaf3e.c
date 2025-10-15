@@ -1921,7 +1921,7 @@ PyObject *CPyDef_abi___abi_to_signature(PyObject *cpy_r_abi_element) {
         CPy_AddTraceback("faster_eth_utils/abi.py", "abi_to_signature", DIFFCHECK_PLACEHOLDER, CPyStatic_abi___globals);
         goto CPyL18;
     }
-    cpy_r_r5 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'receive', 'fallback'}) */
+    cpy_r_r5 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'fallback', 'receive'}) */
     cpy_r_r6 = PySet_Contains(cpy_r_r5, cpy_r_r4);
     cpy_r_r7 = cpy_r_r6 >= 0;
     if (unlikely(!cpy_r_r7)) {
@@ -39585,7 +39585,13 @@ static PyObject *CPyDunder__RichCompare_numeric___Comparable(PyObject *obj_lhs, 
                 return NULL;
             }
             PyObject *arg_rhs = obj_rhs;
-            return CPyDef_numeric___Comparable_____gt__(arg_lhs, arg_rhs);
+            char retval = CPyDef_numeric___Comparable_____gt__(arg_lhs, arg_rhs);
+            if (retval == 2) {
+                return NULL;
+            }
+            PyObject *retbox = retval ? Py_True : Py_False;
+            CPy_INCREF(retbox);
+            return retbox;
         }
         case Py_LT: {
             PyObject *arg_lhs;
@@ -39596,7 +39602,13 @@ static PyObject *CPyDunder__RichCompare_numeric___Comparable(PyObject *obj_lhs, 
                 return NULL;
             }
             PyObject *arg_rhs = obj_rhs;
-            return CPyDef_numeric___Comparable_____lt__(arg_lhs, arg_rhs);
+            char retval = CPyDef_numeric___Comparable_____lt__(arg_lhs, arg_rhs);
+            if (retval == 2) {
+                return NULL;
+            }
+            PyObject *retbox = retval ? Py_True : Py_False;
+            CPy_INCREF(retbox);
+            return retbox;
         }
     }
     Py_INCREF(Py_NotImplemented);
@@ -39757,12 +39769,10 @@ PyObject *CPyInit_faster_eth_utils___numeric(void)
     return NULL;
 }
 
-PyObject *CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other) {
+char CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other) {
     PyObject *cpy_r_r0;
-    PyObject *cpy_r_r1;
     cpy_r_r0 = (PyObject *)&_Py_EllipsisObject;
-    cpy_r_r1 = Py_None;
-    return cpy_r_r1;
+    CPy_Unreachable();
 }
 
 PyObject *CPyPy_numeric___Comparable_____lt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
@@ -39781,19 +39791,22 @@ PyObject *CPyPy_numeric___Comparable_____lt__(PyObject *self, PyObject *const *a
         goto fail;
     }
     PyObject *arg_other = obj_other;
-    PyObject *retval = CPyDef_numeric___Comparable_____lt__(arg_self, arg_other);
-    return retval;
+    char retval = CPyDef_numeric___Comparable_____lt__(arg_self, arg_other);
+    if (retval == 2) {
+        return NULL;
+    }
+    PyObject *retbox = retval ? Py_True : Py_False;
+    CPy_INCREF(retbox);
+    return retbox;
 fail: ;
     CPy_AddTraceback("faster_eth_utils/numeric.py", "__lt__", DIFFCHECK_PLACEHOLDER, CPyStatic_numeric___globals);
     return NULL;
 }
 
-PyObject *CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other) {
+char CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other) {
     PyObject *cpy_r_r0;
-    PyObject *cpy_r_r1;
     cpy_r_r0 = (PyObject *)&_Py_EllipsisObject;
-    cpy_r_r1 = Py_None;
-    return cpy_r_r1;
+    CPy_Unreachable();
 }
 
 PyObject *CPyPy_numeric___Comparable_____gt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames) {
@@ -39812,8 +39825,13 @@ PyObject *CPyPy_numeric___Comparable_____gt__(PyObject *self, PyObject *const *a
         goto fail;
     }
     PyObject *arg_other = obj_other;
-    PyObject *retval = CPyDef_numeric___Comparable_____gt__(arg_self, arg_other);
-    return retval;
+    char retval = CPyDef_numeric___Comparable_____gt__(arg_self, arg_other);
+    if (retval == 2) {
+        return NULL;
+    }
+    PyObject *retbox = retval ? Py_True : Py_False;
+    CPy_INCREF(retbox);
+    return retbox;
 fail: ;
     CPy_AddTraceback("faster_eth_utils/numeric.py", "__gt__", DIFFCHECK_PLACEHOLDER, CPyStatic_numeric___globals);
     return NULL;
@@ -48601,7 +48619,7 @@ const int CPyLit_Tuple[] = {
     75, 1, 397, 1, 68, 3, 398, 398, 398, 1, 594, 3, 329, 329, 329, 1, 596,
     3, 471, 61, 61, 2, 598, 589, 6, 66, 68, 70, 71, 74, 75
 };
-const int CPyLit_FrozenSet[] = {1, 2, 26, 25};
+const int CPyLit_FrozenSet[] = {1, 2, 25, 26};
 CPyModule *CPyModule_faster_eth_utils___abi__internal = NULL;
 CPyModule *CPyModule_faster_eth_utils___abi;
 PyObject *CPyStatic_abi___globals;
@@ -49184,9 +49202,9 @@ PyObject *CPyPy_network___short_name_from_chain_id(PyObject *self, PyObject *con
 char CPyDef_network_____top_level__(void);
 PyTypeObject *CPyType_numeric___Comparable;
 PyObject *CPyDef_numeric___Comparable(void);
-PyObject *CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
+char CPyDef_numeric___Comparable_____lt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
 PyObject *CPyPy_numeric___Comparable_____lt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
-PyObject *CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
+char CPyDef_numeric___Comparable_____gt__(PyObject *cpy_r_self, PyObject *cpy_r_other);
 PyObject *CPyPy_numeric___Comparable_____gt__(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 PyObject *CPyDef_numeric___clamp(PyObject *cpy_r_lower_bound, PyObject *cpy_r_upper_bound, PyObject *cpy_r_value);
 PyObject *CPyPy_numeric___clamp(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);

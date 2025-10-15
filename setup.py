@@ -47,6 +47,7 @@ else:
             "--disable-error-code=misc",
             "--disable-error-code=unused-ignore",
         ],
+        strict_dunder_typing=True,
     )
 
 MYPY_REQUIREMENT = f"mypy=={'1.14.1' if sys.version_info < (3, 9) else '1.18.2'}"
