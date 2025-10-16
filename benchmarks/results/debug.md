@@ -1,8 +1,8 @@
-#### [faster_eth_utils.debug](https://github.com/BobTheBuidler/faster-eth-utils/blob/master/faster_eth_utils/debug.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/master/benchmarks/test_debug_benchmarks.py)
+#### [faster_eth_utils.debug](https://github.com/BobTheBuidler/faster-eth-utils/blob/renovate/actions-github-script-8.x/faster_eth_utils/debug.py) - [view benchmarks](https://github.com/BobTheBuidler/faster-eth-utils/blob/renovate/actions-github-script-8.x/benchmarks/test_debug_benchmarks.py)
 
 | Function | Reference Mean | Faster Mean | % Change | Speedup (%) | x Faster | Faster |
 |----------|---------------|-------------|----------|-------------|----------|--------|
-| `get_environment_summary` | 0.29108064239999293 | 0.28755624979999084 | 1.21% | 1.23% | 1.01x | ✅ |
-| `pip_freeze` | 0.2875324352000007 | 0.28875984519999065 | -0.43% | -0.43% | 1.00x | ❌ |
-| `platform_info` | 2.7666264450131104e-06 | 3.3726318782111983e-06 | -21.90% | -17.97% | 0.82x | ❌ |
-| `python_version` | 1.0167221348060401e-06 | 1.2150108139701917e-06 | -19.50% | -16.32% | 0.84x | ❌ |
+| `get_environment_summary` | 0.292640222600005 | 0.2912914849999993 | 0.46% | 0.46% | 1.00x | ✅ |
+| `pip_freeze` | 0.29072801520002256 | 0.29111672780001074 | -0.13% | -0.13% | 1.00x | ❌ |
+| `platform_info` | 2.532555556064211e-06 | 3.0192110278683575e-06 | -19.22% | -16.12% | 0.84x | ❌ |
+| `python_version` | 9.992667142521192e-07 | 1.3393699723390816e-06 | -34.04% | -25.39% | 0.75x | ❌ |
