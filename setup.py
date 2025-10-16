@@ -69,7 +69,7 @@ extras_require = {
         "sphinx>=6.0.0",
         "sphinx-autobuild>=2021.3.14",
         "sphinx_rtd_theme>=1.0.0",
-        "towncrier>=24,<25",
+        "towncrier>=25,<26",
     ],
     "test": [
         "hypothesis>=4.43.0",
