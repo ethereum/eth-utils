@@ -7,8 +7,8 @@ from pytest_codspeed import BenchmarkFixture
 
 import faster_eth_utils
 
-def _batch(i: int, fn: Callable[..., Any], *inputs: Any) -> None:
-    for _ in range(i):
+def run_1000(fn: Callable[..., Any], *inputs: Any) -> None:
+    for _ in range(1000):
         fn(*inputs)
 
 clamp_cases = [
@@ -29,9 +29,9 @@ clamp_ids = [
 @pytest.mark.benchmark(group="clamp")
 @pytest.mark.parametrize("lower,upper,value", clamp_cases, ids=clamp_ids)
 def test_clamp(benchmark: BenchmarkFixture, lower: int, upper: int, value: int) -> None:
-    benchmark(_batch, 10, eth_utils.clamp, lower, upper, value)
+    benchmark(run_1000, eth_utils.clamp, lower, upper, value)
 
 @pytest.mark.benchmark(group="clamp")
 @pytest.mark.parametrize("lower,upper,value", clamp_cases, ids=clamp_ids)
 def test_faster_clamp(benchmark: BenchmarkFixture, lower: int, upper: int, value: int) -> None:
-    benchmark(_batch, 10, faster_eth_utils.clamp, lower, upper, value)
+    benchmark(run_1000, faster_eth_utils.clamp, lower, upper, value)
