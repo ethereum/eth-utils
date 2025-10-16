@@ -50,6 +50,7 @@ jobs:
           pip install pytest-codspeed eth-utils "eth-hash[pycryptodome]"
           
       - name: Run CodSpeed
-        uses: CodSpeedHQ/action@v3
+        uses: CodSpeedHQ/action@v4
         with:
+          mode: instrumentation
           run: pytest --codspeed -k "test_faster_" benchmarks/
