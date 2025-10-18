@@ -6,6 +6,7 @@ requires = [
   "cchecksum>=0.0.3",
   "eth-hash>=0.3.1",
   "eth-typing>=5.0.0",
+  "eth-utils>=5.2.0,<6",
 ]
 build-backend = "setuptools.build_meta"
 

@@ -6,9 +6,13 @@
 
 ##### This fork will be kept up-to-date with [eth-utils](https://github.com/ethereum/eth-utils). I will pull updates as they are released and push new [faster-eth-utils](https://github.com/BobTheBuidler/faster-eth-utils) releases to [PyPI](https://pypi.org/project/faster-eth-utils/).
 
-##### You can find the compiled C code on faster-eth-utils [master](https://github.com/BobTheBuidler/eth-utils/tree/master) branch.
+##### Starting in v5.3.11, all `faster-eth-utils` Exception classes inherit from the matching Exception class in `eth-utils`, so porting to `faster-eth-utils` does not require any change to your existing exception handlers. All existing exception handling in your codebase will continue to work as it did when originaly implemented.
 
 ##### We benchmark `faster-eth-utils` against the original `eth-utils` for your convenience. [See results](https://github.com/BobTheBuidler/faster-eth-utils/tree/master/benchmarks/results).
+
+##### You can find the compiled C code on faster-eth-utils [master](https://github.com/BobTheBuidler/eth-utils/tree/master) branch.
+
+###### You may also be interested in: [faster-web3.py](https://github.com/BobTheBuidler/faster-web3.py/), [faster-eth-abi](https://github.com/BobTheBuidler/faster-eth-abi/), and [faster-hexbytes](https://github.com/BobTheBuidler/faster-hexbytes/)
 
 ##### The original eth-utils readme is below:
 

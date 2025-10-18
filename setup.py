@@ -109,6 +109,7 @@ setup(
         "cchecksum>=0.0.3",
         "eth-hash>=0.3.1",
         "eth-typing>=5.0.0",
+        "eth-utils>=5.2.0,<6",
         "toolz>0.8.2;implementation_name=='pypy'",
         "cytoolz>=0.10.1;implementation_name=='cpython'",
         "pydantic>=2.0.0,<3",
