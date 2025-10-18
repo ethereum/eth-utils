@@ -5,6 +5,7 @@ on:
     branches:
       - master
     types: [published]
+  workflow_dispatch:
 
 jobs:
   build_wheels:
@@ -198,6 +199,7 @@ jobs:
       # Publish all built artifacts to PyPI
       # ----------------------------------------------------
       - name: Publish sdist and wheels to PyPI
+        if: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
