@@ -88,6 +88,7 @@ class CamelModel(BaseModel):
         # default to ``OmitJsonSchema`` to prevent errors from excluded fields
         schema_generator: Type[GenerateJsonSchema] = OmitJsonSchema,
         mode: JsonSchemaMode = "validation",
+        **kwargs: Any,
     ) -> Dict[str, Any]:
         """
         Omits excluded fields from the JSON schema, preventing errors that would
@@ -98,4 +99,5 @@ class CamelModel(BaseModel):
             ref_template=ref_template,
             schema_generator=schema_generator,
             mode=mode,
+            **kwargs,
         )
