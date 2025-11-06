@@ -138,7 +138,9 @@ def apply_formatter_to_array(
 
 
 def apply_one_of_formatters(
-    formatter_condition_pairs: Tuple[Tuple[Callable[..., Any], Callable[..., Any]]],
+    formatter_condition_pairs: Tuple[
+        Tuple[Callable[..., Any], Callable[..., Any]], ...
+    ],
     value: Any,
 ) -> Any:
     for condition, formatter in formatter_condition_pairs:
