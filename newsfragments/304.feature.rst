@@ -1,0 +1,3 @@
+add ETH_UTILS_NOVALIDATE env var for optimized production deployments
+
+this env will instruct eth-utils to skip some extra steps that validate its functions are being used correctly, to be used when you're already sure this is true
