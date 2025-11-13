@@ -16,7 +16,7 @@ extras_require = {
         "pre-commit>=3.4.0",
         "tox>=4.0.0",
         "twine",
-        "wheel",
+        "wheel>=0.38.1",
     ],
     "docs": [
         "sphinx>=6.0.0",

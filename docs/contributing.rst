@@ -90,7 +90,7 @@ Releases are typically done from the ``main`` branch, except when releasing a be
 which case the beta is released from ``main``, and the previous stable branch is
 released from said branch).
 
-Final test before each release
+Final review before each release
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Before releasing a new version, build and test the package that will be released:
@@ -103,11 +103,17 @@ Before releasing a new version, build and test the package that will be released
 This will build the package and install it in a temporary virtual environment. Follow
 the instructions to activate the venv and test whatever you think is important.
 
-You can also preview the release notes:
+Review the documentation that will get published:
 
 .. code:: sh
 
-    towncrier --draft
+    make docs
+
+Validate and preview the release notes:
+
+.. code:: sh
+
+    make validate-newsfragments
 
 Build the release notes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
