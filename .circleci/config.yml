@@ -123,18 +123,6 @@ jobs:
         environment:
           TOXENV: docs
 
-  py38-core:
-    <<: *common
-    docker:
-      - image: cimg/python:3.8
-        environment:
-          TOXENV: py38-core
-  py39-core:
-    <<: *common
-    docker:
-      - image: cimg/python:3.9
-        environment:
-          TOXENV: py39-core
   py310-core:
     <<: *common
     docker:
@@ -159,19 +147,13 @@ jobs:
       - image: cimg/python:3.13
         environment:
           TOXENV: py313-core
+  py314-core:
+    <<: *common
+    docker:
+      - image: cimg/python:3.14
+        environment:
+          TOXENV: py314-core
 
-  py38-lint:
-    <<: *common
-    docker:
-      - image: cimg/python:3.8
-        environment:
-          TOXENV: py38-lint
-  py39-lint:
-    <<: *common
-    docker:
-      - image: cimg/python:3.9
-        environment:
-          TOXENV: py39-lint
   py310-lint:
     <<: *common
     docker:
@@ -196,19 +178,13 @@ jobs:
       - image: cimg/python:3.13
         environment:
           TOXENV: py313-lint
+  py314-lint:
+    <<: *common
+    docker:
+      - image: cimg/python:3.14
+        environment:
+          TOXENV: py314-lint
 
-  py38-wheel:
-    <<: *common
-    docker:
-      - image: cimg/python:3.8
-        environment:
-          TOXENV: py38-wheel
-  py39-wheel:
-    <<: *common
-    docker:
-      - image: cimg/python:3.9
-        environment:
-          TOXENV: py39-wheel
   py310-wheel:
     <<: *common
     docker:
@@ -233,6 +209,12 @@ jobs:
       - image: cimg/python:3.13
         environment:
           TOXENV: py313-wheel
+  py314-wheel:
+    <<: *common
+    docker:
+      - image: cimg/python:3.14
+        environment:
+          TOXENV: py314-wheel
 
   py311-windows-wheel:
     <<: *windows-wheel-setup
@@ -246,7 +228,6 @@ jobs:
       - <<: *install-latest-python-step
       - <<: *run-tox-step
       - <<: *save-cache-step
-
   py312-windows-wheel:
     <<: *windows-wheel-setup
     steps:
@@ -259,7 +240,6 @@ jobs:
       - <<: *install-latest-python-step
       - <<: *run-tox-step
       - <<: *save-cache-step
-
   py313-windows-wheel:
     <<: *windows-wheel-setup
     steps:
@@ -272,30 +252,40 @@ jobs:
       - <<: *install-latest-python-step
       - <<: *run-tox-step
       - <<: *save-cache-step
+  py314-windows-wheel:
+    <<: *windows-wheel-setup
+    steps:
+      - checkout
+      - <<: *restore-cache-step
+      - <<: *install-pyenv-step
+      - run:
+          name: set minor version
+          command: echo "export MINOR_VERSION='3.14'" >> $BASH_ENV
+      - <<: *install-latest-python-step
+      - <<: *run-tox-step
+      - <<: *save-cache-step
 
 define: &all_jobs
   - docs
-  - py38-core
-  - py39-core
   - py310-core
   - py311-core
   - py312-core
   - py313-core
-  - py38-lint
-  - py39-lint
+  - py314-core
   - py310-lint
   - py311-lint
   - py312-lint
   - py313-lint
-  - py38-wheel
-  - py39-wheel
+  - py314-lint
   - py310-wheel
   - py311-wheel
   - py312-wheel
   - py313-wheel
+  - py314-wheel
   - py311-windows-wheel
   - py312-windows-wheel
   - py313-windows-wheel
+  - py314-windows-wheel
 
 workflows:
   version: 2
