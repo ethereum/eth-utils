@@ -1,7 +1,3 @@
-from typing import (
-    List,
-)
-
 from eth_utils.curried import (  # noqa: F401
     ExtendedDebugLogger,
     HasExtendedDebugLogger,
@@ -87,7 +83,7 @@ from eth_utils.curried import (  # noqa: F401
 )
 
 
-def i_put_my_thing_down_flip_it_and_reverse_it(lyric: List[str]) -> str:
+def i_put_my_thing_down_flip_it_and_reverse_it(lyric: list[str]) -> str:
     return "".join(reversed(lyric))
 
 

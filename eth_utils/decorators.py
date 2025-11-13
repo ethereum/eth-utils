@@ -1,11 +1,10 @@
+from collections.abc import (
+    Callable,
+)
 import functools
 import itertools
 from typing import (
     Any,
-    Callable,
-    Dict,
-    Optional,
-    Type,
     TypeVar,
 )
 
@@ -21,7 +20,7 @@ class combomethod:
         self.method = method
 
     def __get__(
-        self, obj: Optional[T] = None, objtype: Optional[Type[T]] = None
+        self, obj: T | None = None, objtype: type[T] | None = None
     ) -> Callable[..., Any]:
         @functools.wraps(self.method)
         def _wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -107,7 +106,7 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
 
 def replace_exceptions(
-    old_to_new_exceptions: Dict[Type[BaseException], Type[BaseException]]
+    old_to_new_exceptions: dict[type[BaseException], type[BaseException]]
 ) -> Callable[[Callable[..., T]], Callable[..., T]]:
     """
     Replaces old exceptions with new exceptions to be raised in their place.

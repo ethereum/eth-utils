@@ -1,6 +1,7 @@
-from typing import (
+from collections.abc import (
     Callable,
-    Optional,
+)
+from typing import (
     TypeVar,
     Union,
     cast,
@@ -38,9 +39,9 @@ BytesLike = Union[Primitives, bytearray, memoryview]
 
 @validate_conversion_arguments
 def to_hex(
-    primitive: Optional[BytesLike] = None,
-    hexstr: Optional[HexStr] = None,
-    text: Optional[str] = None,
+    primitive: BytesLike | None = None,
+    hexstr: HexStr | None = None,
+    text: str | None = None,
 ) -> HexStr:
     """
     Auto converts any supported value into its hex representation.
@@ -79,9 +80,9 @@ def to_hex(
 
 @validate_conversion_arguments
 def to_int(
-    primitive: Optional[BytesLike] = None,
-    hexstr: Optional[HexStr] = None,
-    text: Optional[str] = None,
+    primitive: BytesLike | None = None,
+    hexstr: HexStr | None = None,
+    text: str | None = None,
 ) -> int:
     """
     Converts value to its integer representation.
@@ -116,9 +117,9 @@ def to_int(
 
 @validate_conversion_arguments
 def to_bytes(
-    primitive: Optional[BytesLike] = None,
-    hexstr: Optional[HexStr] = None,
-    text: Optional[str] = None,
+    primitive: BytesLike | None = None,
+    hexstr: HexStr | None = None,
+    text: str | None = None,
 ) -> bytes:
     if is_boolean(primitive):
         return b"\x01" if primitive else b"\x00"
@@ -142,9 +143,9 @@ def to_bytes(
 
 @validate_conversion_arguments
 def to_text(
-    primitive: Optional[BytesLike] = None,
-    hexstr: Optional[HexStr] = None,
-    text: Optional[str] = None,
+    primitive: BytesLike | None = None,
+    hexstr: HexStr | None = None,
+    text: str | None = None,
 ) -> str:
     if hexstr is not None:
         return to_bytes(hexstr=hexstr).decode("utf-8")
@@ -162,9 +163,7 @@ def to_text(
     raise TypeError("Expected an int, bytes, bytearray or hexstr.")
 
 
-def text_if_str(
-    to_type: Callable[..., T], text_or_primitive: Union[bytes, int, str]
-) -> T:
+def text_if_str(to_type: Callable[..., T], text_or_primitive: bytes | int | str) -> T:
     """
     Convert to a type, assuming that strings can be only unicode text (not a hexstr).
 
@@ -179,7 +178,7 @@ def text_if_str(
 
 
 def hexstr_if_str(
-    to_type: Callable[..., T], hexstr_or_primitive: Union[bytes, int, str]
+    to_type: Callable[..., T], hexstr_or_primitive: bytes | int | str
 ) -> T:
     """
     Convert to a type, assuming that strings can be only hexstr (not unicode text).

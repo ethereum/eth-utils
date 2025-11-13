@@ -1,13 +1,15 @@
 import collections
+from collections.abc import (
+    Callable,
+    Iterable,
+    Mapping,
+)
 import functools
 import itertools
 from typing import (  # noqa: F401
     Any,
-    Callable,
     Dict,
-    Iterable,
     List,
-    Mapping,
     Set,
     Tuple,
     TypeVar,
@@ -53,21 +55,23 @@ def apply_to_return_value(
 
 TVal = TypeVar("TVal")
 TKey = TypeVar("TKey")
-to_tuple = apply_to_return_value(
-    tuple
-)  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., Tuple[TVal, ...]]]  # noqa: E501
-to_list = apply_to_return_value(
-    list
-)  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., List[TVal]]]  # noqa: E501
-to_set = apply_to_return_value(
-    set
-)  # type: Callable[[Callable[..., Iterable[TVal]]], Callable[..., Set[TVal]]]  # noqa: E501
-to_dict = apply_to_return_value(
-    dict
-)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TKey, TVal], Tuple[TKey, TVal]]]]], Callable[..., Dict[TKey, TVal]]]  # noqa: E501
-to_ordered_dict = apply_to_return_value(
-    collections.OrderedDict
-)  # type: Callable[[Callable[..., Iterable[Union[Mapping[TKey, TVal], Tuple[TKey, TVal]]]]], Callable[..., collections.OrderedDict[TKey, TVal]]]  # noqa: E501
+to_tuple: Callable[
+    [Callable[..., Iterable[TVal]]], Callable[..., tuple[TVal, ...]]
+] = apply_to_return_value(tuple)
+to_list: Callable[
+    [Callable[..., Iterable[TVal]]], Callable[..., list[TVal]]
+] = apply_to_return_value(list)
+to_set: Callable[
+    [Callable[..., Iterable[TVal]]], Callable[..., set[TVal]]
+] = apply_to_return_value(set)
+to_dict: Callable[
+    [Callable[..., Iterable[Mapping[TKey, TVal] | tuple[TKey, TVal]]]],
+    Callable[..., dict[TKey, TVal]],
+] = apply_to_return_value(dict)
+to_ordered_dict: Callable[
+    [Callable[..., Iterable[Mapping[TKey, TVal] | tuple[TKey, TVal]]]],
+    Callable[..., collections.OrderedDict[TKey, TVal]],
+] = apply_to_return_value(collections.OrderedDict)
 sort_return = _compose(to_tuple, apply_to_return_value(sorted))
 flatten_return = _compose(
     to_tuple, apply_to_return_value(itertools.chain.from_iterable)

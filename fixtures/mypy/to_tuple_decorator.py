@@ -1,14 +1,10 @@
-from typing import (
-    List,
-)
-
 from eth_utils import (
     to_tuple,
 )
 
 
 @to_tuple
-def return_value() -> List[int]:
+def return_value() -> list[int]:
     return [1, 2]
 
 

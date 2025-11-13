@@ -1,12 +1,10 @@
+from collections.abc import (
+    Iterable,
+)
 import decimal
 from typing import (
     TYPE_CHECKING,
-    Dict,
-    Iterable,
-    List,
     NoReturn,
-    Set,
-    Tuple,
 )
 
 from eth_utils import (
@@ -31,7 +29,7 @@ def typing_to_tuple() -> Iterable[int]:
     yield 3
 
 
-v_tuple: Tuple[int, ...] = typing_to_tuple()
+v_tuple: tuple[int, ...] = typing_to_tuple()
 
 
 @to_list
@@ -41,7 +39,7 @@ def typing_to_list() -> Iterable[int]:
     yield 3
 
 
-v_list: List[int] = typing_to_list()
+v_list: list[int] = typing_to_list()
 
 
 @to_set
@@ -51,21 +49,21 @@ def typing_to_set() -> Iterable[int]:
     yield 3
 
 
-v_set: Set[int] = typing_to_set()
+v_set: set[int] = typing_to_set()
 
 
 @to_dict
-def typing_to_dict() -> Iterable[Tuple[str, int]]:
+def typing_to_dict() -> Iterable[tuple[str, int]]:
     yield ("a", 1)
     yield ("b", 2)
     yield ("c", 3)
 
 
-v_dict: Dict[str, int] = typing_to_dict()
+v_dict: dict[str, int] = typing_to_dict()
 
 
 @to_ordered_dict
-def typing_to_ordered_dict() -> Iterable[Tuple[str, int]]:
+def typing_to_ordered_dict() -> Iterable[tuple[str, int]]:
     yield ("a", 1)
     yield ("b", 2)
     yield ("c", 3)

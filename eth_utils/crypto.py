@@ -1,8 +1,3 @@
-from typing import (
-    Optional,
-    Union,
-)
-
 from eth_hash.auto import (
     keccak as keccak_256,
 )
@@ -13,8 +8,8 @@ from .conversions import (
 
 
 def keccak(
-    primitive: Optional[Union[bytes, int, bool]] = None,
-    hexstr: Optional[str] = None,
-    text: Optional[str] = None,
+    primitive: bytes | int | bool | None = None,
+    hexstr: str | None = None,
+    text: str | None = None,
 ) -> bytes:
     return bytes(keccak_256(to_bytes(primitive, hexstr, text)))

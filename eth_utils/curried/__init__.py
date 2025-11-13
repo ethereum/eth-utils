@@ -1,11 +1,11 @@
+from collections.abc import (
+    Callable,
+    Generator,
+    Sequence,
+)
 from typing import (
     Any,
-    Callable,
-    Dict,
-    Generator,
     Optional,
-    Sequence,
-    Tuple,
     TypeVar,
     Union,
     overload,
@@ -125,42 +125,42 @@ TValue = TypeVar("TValue")
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool],
-) -> Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]]:
+) -> Callable[[Callable[..., TReturn]], Callable[[TValue], TReturn | TValue]]:
     pass
 
 
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool], formatter: Callable[..., TReturn]
-) -> Callable[[TValue], Union[TReturn, TValue]]:
+) -> Callable[[TValue], TReturn | TValue]:
     pass
 
 
 @overload
 def apply_formatter_if(
     condition: Callable[..., bool], formatter: Callable[..., TReturn], value: TValue
-) -> Union[TReturn, TValue]:
+) -> TReturn | TValue:
     pass
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def apply_formatter_if(  # type: ignore
     condition: Callable[..., bool],
-    formatter: Optional[Callable[..., TReturn]] = None,
-    value: Optional[TValue] = None,
-) -> Union[
-    Callable[[Callable[..., TReturn]], Callable[[TValue], Union[TReturn, TValue]]],
-    Callable[[TValue], Union[TReturn, TValue]],
-    TReturn,
-    TValue,
-]:
+    formatter: Callable[..., TReturn] | None = None,
+    value: TValue | None = None,
+) -> (
+    Callable[[Callable[..., TReturn]], Callable[[TValue], TReturn | TValue]]
+    | Callable[[TValue], TReturn | TValue]
+    | TReturn
+    | TValue
+):
     pass
 
 
 @overload
 def apply_one_of_formatters(
     formatter_condition_pairs: Sequence[
-        Tuple[Callable[..., bool], Callable[..., TReturn]]
+        tuple[Callable[..., bool], Callable[..., TReturn]]
     ],
 ) -> Callable[[TValue], TReturn]:
     ...
@@ -169,7 +169,7 @@ def apply_one_of_formatters(
 @overload
 def apply_one_of_formatters(
     formatter_condition_pairs: Sequence[
-        Tuple[Callable[..., bool], Callable[..., TReturn]]
+        tuple[Callable[..., bool], Callable[..., TReturn]]
     ],
     value: TValue,
 ) -> TReturn:
@@ -179,9 +179,9 @@ def apply_one_of_formatters(
 # This is just a stub to appease mypy, it gets overwritten later
 def apply_one_of_formatters(  # type: ignore
     formatter_condition_pairs: Sequence[
-        Tuple[Callable[..., bool], Callable[..., TReturn]]
+        tuple[Callable[..., bool], Callable[..., TReturn]]
     ],
-    value: Optional[TValue] = None,
+    value: TValue | None = None,
 ) -> TReturn:
     ...
 
@@ -189,20 +189,20 @@ def apply_one_of_formatters(  # type: ignore
 @overload
 def hexstr_if_str(
     to_type: Callable[..., TReturn],
-) -> Callable[[Union[bytes, int, str]], TReturn]:
+) -> Callable[[bytes | int | str], TReturn]:
     ...
 
 
 @overload
 def hexstr_if_str(
-    to_type: Callable[..., TReturn], to_format: Union[bytes, int, str]
+    to_type: Callable[..., TReturn], to_format: bytes | int | str
 ) -> TReturn:
     ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def hexstr_if_str(  # type: ignore
-    to_type: Callable[..., TReturn], to_format: Optional[Union[bytes, int, str]] = None
+    to_type: Callable[..., TReturn], to_format: bytes | int | str | None = None
 ) -> TReturn:
     ...
 
@@ -210,13 +210,13 @@ def hexstr_if_str(  # type: ignore
 @overload
 def text_if_str(
     to_type: Callable[..., TReturn],
-) -> Callable[[Union[bytes, int, str]], TReturn]:
+) -> Callable[[bytes | int | str], TReturn]:
     ...
 
 
 @overload
 def text_if_str(
-    to_type: Callable[..., TReturn], text_or_primitive: Union[bytes, int, str]
+    to_type: Callable[..., TReturn], text_or_primitive: bytes | int | str
 ) -> TReturn:
     ...
 
@@ -224,31 +224,31 @@ def text_if_str(
 # This is just a stub to appease mypy, it gets overwritten later
 def text_if_str(  # type: ignore
     to_type: Callable[..., TReturn],
-    text_or_primitive: Optional[Union[bytes, int, str]] = None,
+    text_or_primitive: bytes | int | str | None = None,
 ) -> TReturn:
     ...
 
 
 @overload
 def apply_formatters_to_dict(
-    formatters: Dict[Any, Any], unaliased: bool = False
-) -> Callable[[Dict[Any, Any]], TReturn]:
+    formatters: dict[Any, Any], unaliased: bool = False
+) -> Callable[[dict[Any, Any]], TReturn]:
     ...
 
 
 @overload
 def apply_formatters_to_dict(
-    formatters: Dict[Any, Any], value: Union[Dict[Any, Any], CamelModel]
-) -> Dict[Any, Any]:
+    formatters: dict[Any, Any], value: dict[Any, Any] | CamelModel
+) -> dict[Any, Any]:
     ...
 
 
 # This is just a stub to appease mypy, it gets overwritten later
 def apply_formatters_to_dict(  # type: ignore
-    formatters: Dict[Any, Any],
-    value: Optional[Union[Dict[Any, Any], CamelModel]] = None,
+    formatters: dict[Any, Any],
+    value: dict[Any, Any] | CamelModel | None = None,
     unaliased: bool = False,
-) -> Dict[Any, Any]:
+) -> dict[Any, Any]:
     ...
 
 
@@ -279,13 +279,11 @@ clamp = curry(clamp)
 # `from eth_utils.curried import *`
 del Any
 del Callable
-del Dict
 del Generator
 del Optional
 del Sequence
 del TReturn
 del TValue
-del Tuple
 del TypeVar
 del Union
 del curry

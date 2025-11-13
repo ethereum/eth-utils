@@ -1,11 +1,9 @@
+from collections.abc import (
+    Callable,
+    Generator,
+)
 from typing import (
     Any,
-    Callable,
-    Dict,
-    Generator,
-    List,
-    Tuple,
-    Union,
 )
 import warnings
 
@@ -23,13 +21,13 @@ from .toolz import (
     curry,
 )
 
-Formatters = Callable[[List[Any]], List[Any]]
+Formatters = Callable[[list[Any]], list[Any]]
 
 
 @return_arg_type(2)
 def apply_formatter_at_index(
-    formatter: Callable[..., Any], at_index: int, value: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatter: Callable[..., Any], at_index: int, value: list[Any]
+) -> Generator[list[Any], None, None]:
     if at_index + 1 > len(value):
         raise IndexError(
             f"Not enough values in iterable to apply formatter. Got: {len(value)}. "
@@ -42,7 +40,7 @@ def apply_formatter_at_index(
             yield item
 
 
-def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Formatters:
+def combine_argument_formatters(*formatters: list[Callable[..., Any]]) -> Formatters:
     warnings.warn(
         DeprecationWarning(
             "combine_argument_formatters(formatter1, formatter2)([item1, item2])"
@@ -65,8 +63,8 @@ def combine_argument_formatters(*formatters: List[Callable[..., Any]]) -> Format
 
 @return_arg_type(1)
 def apply_formatters_to_sequence(
-    formatters: List[Any], sequence: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatters: list[Any], sequence: list[Any]
+) -> Generator[list[Any], None, None]:
     if len(formatters) == len(sequence):
         for formatter, item in zip(formatters, sequence):
             yield formatter(item)
@@ -93,10 +91,10 @@ def apply_formatter_if(
 
 @to_dict
 def apply_formatters_to_dict(
-    formatters: Dict[Any, Any],
-    value: Union[Dict[Any, Any], CamelModel],
+    formatters: dict[Any, Any],
+    value: dict[Any, Any] | CamelModel,
     unaliased: bool = False,
-) -> Generator[Tuple[Any, Any], None, None]:
+) -> Generator[tuple[Any, Any], None, None]:
     """
     Apply formatters to a dictionary of values. If the value is a pydantic model,
     it will be serialized to a dictionary first, taking into account the
@@ -131,14 +129,14 @@ def apply_formatters_to_dict(
 
 @return_arg_type(1)
 def apply_formatter_to_array(
-    formatter: Callable[..., Any], value: List[Any]
-) -> Generator[List[Any], None, None]:
+    formatter: Callable[..., Any], value: list[Any]
+) -> Generator[list[Any], None, None]:
     for item in value:
         yield formatter(item)
 
 
 def apply_one_of_formatters(
-    formatter_condition_pairs: Tuple[Tuple[Callable[..., Any], Callable[..., Any]]],
+    formatter_condition_pairs: tuple[tuple[Callable[..., Any], Callable[..., Any]]],
     value: Any,
 ) -> Any:
     for condition, formatter in formatter_condition_pairs:
@@ -152,8 +150,8 @@ def apply_one_of_formatters(
 
 @to_dict
 def apply_key_map(
-    key_mappings: Dict[Any, Any], value: Dict[Any, Any]
-) -> Generator[Tuple[Any, Any], None, None]:
+    key_mappings: dict[Any, Any], value: dict[Any, Any]
+) -> Generator[tuple[Any, Any], None, None]:
     key_conflicts = (
         set(value.keys())
         .difference(key_mappings.keys())

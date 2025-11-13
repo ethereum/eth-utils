@@ -1,3 +1,6 @@
+from collections.abc import (
+    Iterator,
+)
 import contextlib
 from functools import (
     cached_property,
@@ -5,12 +8,7 @@ from functools import (
 import logging
 from typing import (
     Any,
-    Dict,
-    Iterator,
-    Tuple,
-    Type,
     TypeVar,
-    Union,
     cast,
 )
 
@@ -41,7 +39,7 @@ class ExtendedDebugLogger(logging.Logger):
             # lambda to further speed up
             self.__dict__["debug2"] = lambda message, *args, **kwargs: None
 
-    def __reduce__(self) -> Tuple[Any, ...]:
+    def __reduce__(self) -> tuple[Any, ...]:
         # This is needed because our parent's implementation could
         # cause us to become a regular Logger on unpickling.
         return get_extended_debug_logger, (self.name,)
@@ -57,7 +55,7 @@ def setup_DEBUG2_logging() -> None:
 
 
 @contextlib.contextmanager
-def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
+def _use_logger_class(logger_class: type[logging.Logger]) -> Iterator[None]:
     original_logger_class = logging.getLoggerClass()
     logging.setLoggerClass(logger_class)
     try:
@@ -66,7 +64,7 @@ def _use_logger_class(logger_class: Type[logging.Logger]) -> Iterator[None]:
         logging.setLoggerClass(original_logger_class)
 
 
-def get_logger(name: str, logger_class: Union[Type[TLogger], None] = None) -> TLogger:
+def get_logger(name: str, logger_class: type[TLogger] | None = None) -> TLogger:
     if logger_class is None:
         return cast(TLogger, logging.getLogger(name))
     else:
@@ -104,10 +102,10 @@ class HasLoggerMeta(type):
     logger_class = logging.Logger
 
     def __new__(
-        mcls: Type[THasLoggerMeta],
+        mcls: type[THasLoggerMeta],
         name: str,
-        bases: Tuple[Type[Any]],
-        namespace: Dict[str, Any],
+        bases: tuple[type[Any]],
+        namespace: dict[str, Any],
     ) -> THasLoggerMeta:
         if "logger" in namespace:
             # If a logger was explicitly declared we shouldn't do anything to
@@ -123,14 +121,14 @@ class HasLoggerMeta(type):
 
     @classmethod
     def replace_logger_class(
-        mcls: Type[THasLoggerMeta], value: Type[logging.Logger]
-    ) -> Type[THasLoggerMeta]:
+        mcls: type[THasLoggerMeta], value: type[logging.Logger]
+    ) -> type[THasLoggerMeta]:
         return type(mcls.__name__, (mcls,), {"logger_class": value})
 
     @classmethod
     def meta_compat(
-        mcls: Type[THasLoggerMeta], other: Type[type]
-    ) -> Type[THasLoggerMeta]:
+        mcls: type[THasLoggerMeta], other: type[type]
+    ) -> type[THasLoggerMeta]:
         return type(mcls.__name__, (mcls, other), {})
 
 

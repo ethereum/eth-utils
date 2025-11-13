@@ -1,7 +1,6 @@
 import re
 from typing import (
     Any,
-    Union,
     cast,
 )
 
@@ -65,7 +64,7 @@ def is_address(value: Any) -> bool:
     return False
 
 
-def to_normalized_address(value: Union[AnyAddress, str, bytes]) -> HexAddress:
+def to_normalized_address(value: AnyAddress | str | bytes) -> HexAddress:
     """
     Converts an address to its normalized hexadecimal representation.
     """
@@ -93,7 +92,7 @@ def is_normalized_address(value: Any) -> bool:
         return cast(bool, is_equal)
 
 
-def to_canonical_address(address: Union[AnyAddress, str, bytes]) -> Address:
+def to_canonical_address(address: AnyAddress | str | bytes) -> Address:
     """
     Convert a valid address to its canonical form (20-length bytes).
     """
@@ -111,7 +110,7 @@ def is_canonical_address(address: Any) -> bool:
 
 
 def is_same_address(
-    left: Union[AnyAddress, str, bytes], right: Union[AnyAddress, str, bytes]
+    left: AnyAddress | str | bytes, right: AnyAddress | str | bytes
 ) -> bool:
     """
     Checks if both addresses are same or not.
@@ -122,7 +121,7 @@ def is_same_address(
         return bool(to_normalized_address(left) == to_normalized_address(right))
 
 
-def to_checksum_address(value: Union[AnyAddress, str, bytes]) -> ChecksumAddress:
+def to_checksum_address(value: AnyAddress | str | bytes) -> ChecksumAddress:
     """
     Makes a checksum address given a supported format.
     """
