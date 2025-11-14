@@ -64,7 +64,6 @@ setup(
     python_requires=">=3.10, <4",
     extras_require=extras_require,
     py_modules=["eth_utils"],
-    license="MIT",
     zip_safe=False,
     keywords="ethereum",
     packages=find_packages(exclude=["scripts", "scripts.*", "tests", "tests.*"]),
