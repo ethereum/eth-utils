@@ -4,7 +4,7 @@ from setuptools import (
     setup,
 )
 
-MYPY_REQUIREMENT = "mypy==1.10.0"
+MYPY_REQUIREMENT = "mypy==1.18.2"
 
 extras_require = {
     "dev": [
