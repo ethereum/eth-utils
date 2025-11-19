@@ -3,9 +3,6 @@ from dataclasses import (
 )
 import json
 import os
-from typing import (
-    List,
-)
 
 from eth_typing import (
     ChainId,
@@ -24,7 +21,7 @@ class Network:
     symbol: ChainId
 
 
-def initialize_network_objects() -> List[Network]:
+def initialize_network_objects() -> list[Network]:
     networks_obj = []
 
     networks_json_path = os.path.abspath(

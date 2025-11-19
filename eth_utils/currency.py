@@ -47,7 +47,7 @@ MAX_WEI = 2**256 - 1
 _NumberType = Union[int, float, str, decimal.Decimal]
 
 
-def _from_wei(number: int, unit_value: decimal.Decimal) -> Union[int, decimal.Decimal]:
+def _from_wei(number: int, unit_value: decimal.Decimal) -> int | decimal.Decimal:
     if number == 0:
         return 0
 
@@ -94,7 +94,7 @@ def _to_wei(number: _NumberType, unit_value: decimal.Decimal) -> int:
     return int(result_value)
 
 
-def from_wei(number: int, unit: str) -> Union[int, decimal.Decimal]:
+def from_wei(number: int, unit: str) -> int | decimal.Decimal:
     """
     Takes a number of wei and converts it to any other ether unit.
     """
@@ -118,7 +118,7 @@ def to_wei(number: _NumberType, unit: str) -> int:
     return _to_wei(number, unit_value)
 
 
-def from_wei_decimals(number: int, decimals: int) -> Union[int, decimal.Decimal]:
+def from_wei_decimals(number: int, decimals: int) -> int | decimal.Decimal:
     """
     Takes a number of wei and converts it to a decimal with the specified
     number of decimals.

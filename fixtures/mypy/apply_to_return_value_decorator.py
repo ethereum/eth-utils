@@ -1,13 +1,9 @@
-from typing import (
-    List,
-)
-
 from eth_utils import (
     apply_to_return_value,
 )
 
 
-def wrap_as_list(value: int) -> List[int]:
+def wrap_as_list(value: int) -> list[int]:
     return [value]
 
 

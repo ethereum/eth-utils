@@ -1,5 +1,5 @@
 # no-unused-vars
-from typing import (
+from collections.abc import (
     Sequence,
 )
 

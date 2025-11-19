@@ -4,7 +4,7 @@ from setuptools import (
     setup,
 )
 
-MYPY_REQUIREMENT = "mypy==1.10.0"
+MYPY_REQUIREMENT = "mypy==1.18.2"
 
 extras_require = {
     "dev": [
@@ -16,7 +16,7 @@ extras_require = {
         "pre-commit>=3.4.0",
         "tox>=4.0.0",
         "twine",
-        "wheel",
+        "wheel>=0.38.1",
     ],
     "docs": [
         "sphinx>=6.0.0",
@@ -61,10 +61,9 @@ setup(
         "cytoolz>=0.10.1;implementation_name=='cpython'",
         "pydantic>=2.0.0,<3",
     ],
-    python_requires=">=3.8, <4",
+    python_requires=">=3.10, <4",
     extras_require=extras_require,
     py_modules=["eth_utils"],
-    license="MIT",
     zip_safe=False,
     keywords="ethereum",
     packages=find_packages(exclude=["scripts", "scripts.*", "tests", "tests.*"]),
@@ -74,11 +73,10 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
     ],
 )
