@@ -1,1 +1,0 @@
-Pin Pyupgrade to 3.21.2 in pre-commit config

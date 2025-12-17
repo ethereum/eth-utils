@@ -1,1 +1,0 @@
-optimize apply_formatters_to_sequence
