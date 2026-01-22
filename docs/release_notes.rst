@@ -48,13 +48,15 @@ eth-utils v5.3.0 (2025-04-14)
 Bugfixes
 ~~~~~~~~
 
-- Replace ``arg["name"]`` with ``arg.get("name")`` to correctly handle optional names. (`#299 <https://github.com/ethereum/eth-utils/issues/299>`__)
+- Fix length check in ``remove_0x_prefix`` for odd-length hex strings.
+- Support odd-length hex strings in ``decode_hex`` by left-padding with a ``0``. (`#300 <https://github.com/ethereum/eth-utils/issues/300>`__)
+- Use ``eth-typing`` ``HexStr`` for formatting utilities. (`#301 <https://github.com/ethereum/eth-utils/issues/301>`__)
 
 
 Features
 ~~~~~~~~
 
-- Add new methods: ``to_wei_decimals``, and ``from_wei_decimals`` which take a number instead of a string (`#302 <https://github.com/ethereum/eth-utils/issues/302>`__)
+- Add helpers ``to_wei_decimals``, ``from_wei_decimals`` which take a number instead of a string (`#302 <https://github.com/ethereum/eth-utils/issues/302>`__)
 - Add ``CamelModel`` pydantic model for validating objects and serializing to camelCase when used with ``by_alias=True``, with the general expectation of a well-formed JSON-RPC object. (`#303 <https://github.com/ethereum/eth-utils/issues/303>`__)
 
 
