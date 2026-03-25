@@ -1,0 +1,2 @@
+Added the ``eth_utils.curried.toolz`` compatibility module so curried toolz
+helpers can be imported through ``eth-utils``.
