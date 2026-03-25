@@ -5,6 +5,12 @@ Read up on all the latest improvements.
 
 .. towncrier release notes start
 
+eth-utils v6.0.0 (2026-03-25)
+-----------------------------
+
+No significant changes.
+
+
 eth-utils v6.0.0-beta.1 (2025-12-17)
 ------------------------------------
 
