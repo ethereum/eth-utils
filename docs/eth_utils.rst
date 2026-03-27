@@ -8,7 +8,6 @@ Subpackages
    :maxdepth: 4
 
    eth_utils.curried
-   eth_utils.typing
 
 Submodules
 ----------
