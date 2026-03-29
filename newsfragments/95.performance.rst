@@ -1,0 +1,3 @@
+Reduced ``keccak()`` overhead for raw ``bytes``-like inputs by bypassing
+the generic conversion path when no ``hexstr`` or ``text`` argument is
+provided.
