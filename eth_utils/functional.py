@@ -2,7 +2,6 @@ import collections
 from collections.abc import (
     Callable,
     Iterable,
-    Mapping,
 )
 import functools
 import itertools
@@ -10,6 +9,7 @@ from typing import (  # noqa: F401
     Any,
     Dict,
     List,
+    ParamSpec,
     Set,
     Tuple,
     TypeVar,
@@ -21,6 +21,8 @@ from .toolz import (
 )
 
 T = TypeVar("T")
+TReturn = TypeVar("TReturn")
+P = ParamSpec("P")
 
 
 def identity(value: T) -> T:
@@ -39,13 +41,11 @@ def combine(
 
 
 def apply_to_return_value(
-    callback: Callable[..., T]
-) -> Callable[..., Callable[..., T]]:
-    def outer(fn: Callable[..., T]) -> Callable[..., T]:
-        # We would need to type annotate *args and **kwargs but doing so segfaults
-        # the PyPy builds. We ignore instead.
+    callback: Callable[[T], TReturn],
+) -> Callable[[Callable[P, T]], Callable[P, TReturn]]:
+    def outer(fn: Callable[P, T]) -> Callable[P, TReturn]:
         @functools.wraps(fn)
-        def inner(*args, **kwargs) -> T:  # type: ignore
+        def inner(*args: P.args, **kwargs: P.kwargs) -> TReturn:
             return callback(fn(*args, **kwargs))
 
         return inner
@@ -55,23 +55,52 @@ def apply_to_return_value(
 
 TVal = TypeVar("TVal")
 TKey = TypeVar("TKey")
-to_tuple: Callable[
-    [Callable[..., Iterable[TVal]]], Callable[..., tuple[TVal, ...]]
-] = apply_to_return_value(tuple)
-to_list: Callable[
-    [Callable[..., Iterable[TVal]]], Callable[..., list[TVal]]
-] = apply_to_return_value(list)
-to_set: Callable[
-    [Callable[..., Iterable[TVal]]], Callable[..., set[TVal]]
-] = apply_to_return_value(set)
-to_dict: Callable[
-    [Callable[..., Iterable[Mapping[TKey, TVal] | tuple[TKey, TVal]]]],
-    Callable[..., dict[TKey, TVal]],
-] = apply_to_return_value(dict)
-to_ordered_dict: Callable[
-    [Callable[..., Iterable[Mapping[TKey, TVal] | tuple[TKey, TVal]]]],
-    Callable[..., collections.OrderedDict[TKey, TVal]],
-] = apply_to_return_value(collections.OrderedDict)
+
+
+def to_tuple(fn: Callable[P, Iterable[TVal]]) -> Callable[P, tuple[TVal, ...]]:
+    @functools.wraps(fn)
+    def inner(*args: P.args, **kwargs: P.kwargs) -> tuple[TVal, ...]:
+        return tuple(fn(*args, **kwargs))
+
+    return inner
+
+
+def to_list(fn: Callable[P, Iterable[TVal]]) -> Callable[P, list[TVal]]:
+    @functools.wraps(fn)
+    def inner(*args: P.args, **kwargs: P.kwargs) -> list[TVal]:
+        return list(fn(*args, **kwargs))
+
+    return inner
+
+
+def to_set(fn: Callable[P, Iterable[TVal]]) -> Callable[P, set[TVal]]:
+    @functools.wraps(fn)
+    def inner(*args: P.args, **kwargs: P.kwargs) -> set[TVal]:
+        return set(fn(*args, **kwargs))
+
+    return inner
+
+
+def to_dict(
+    fn: Callable[P, Iterable[tuple[TKey, TVal]]],
+) -> Callable[P, dict[TKey, TVal]]:
+    @functools.wraps(fn)
+    def inner(*args: P.args, **kwargs: P.kwargs) -> dict[TKey, TVal]:
+        return dict(fn(*args, **kwargs))
+
+    return inner
+
+
+def to_ordered_dict(
+    fn: Callable[P, Iterable[tuple[TKey, TVal]]],
+) -> Callable[P, collections.OrderedDict[TKey, TVal]]:
+    @functools.wraps(fn)
+    def inner(*args: P.args, **kwargs: P.kwargs) -> collections.OrderedDict[TKey, TVal]:
+        return collections.OrderedDict(fn(*args, **kwargs))
+
+    return inner
+
+
 sort_return = _compose(to_tuple, apply_to_return_value(sorted))
 flatten_return = _compose(
     to_tuple, apply_to_return_value(itertools.chain.from_iterable)
