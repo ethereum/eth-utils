@@ -1,9 +1,13 @@
 from collections.abc import (
     Callable,
     Generator,
+    Sequence,
 )
 from typing import (
     Any,
+    TypeGuard,
+    TypeVar,
+    overload,
 )
 import warnings
 
@@ -22,12 +26,15 @@ from .toolz import (
 )
 
 Formatters = Callable[[list[Any]], list[Any]]
+TArgument = TypeVar("TArgument")
+TOther = TypeVar("TOther")
+TReturn = TypeVar("TReturn")
 
 
 @return_arg_type(2)
 def apply_formatter_at_index(
-    formatter: Callable[..., Any], at_index: int, value: list[Any]
-) -> Generator[list[Any], None, None]:
+    formatter: Callable[[Any], TReturn], at_index: int, value: Sequence[Any]
+) -> Generator[Any | TReturn, None, None]:
     if at_index + 1 > len(value):
         raise IndexError(
             f"Not enough values in iterable to apply formatter. Got: {len(value)}. "
@@ -40,7 +47,7 @@ def apply_formatter_at_index(
             yield item
 
 
-def combine_argument_formatters(*formatters: list[Callable[..., Any]]) -> Formatters:
+def combine_argument_formatters(*formatters: Callable[[Any], Any]) -> Formatters:
     warnings.warn(
         DeprecationWarning(
             "combine_argument_formatters(formatter1, formatter2)([item1, item2])"
@@ -63,8 +70,8 @@ def combine_argument_formatters(*formatters: list[Callable[..., Any]]) -> Format
 
 @return_arg_type(1)
 def apply_formatters_to_sequence(
-    formatters: list[Any], sequence: list[Any]
-) -> Generator[list[Any], None, None]:
+    formatters: Sequence[Callable[[Any], TReturn]], sequence: Sequence[Any]
+) -> Generator[TReturn, None, None]:
     if len(formatters) == len(sequence):
         for formatter, item in zip(formatters, sequence):
             yield formatter(item)
@@ -80,9 +87,29 @@ def apply_formatters_to_sequence(
         )
 
 
+@overload
 def apply_formatter_if(
-    condition: Callable[..., bool], formatter: Callable[..., Any], value: Any
-) -> Any:
+    condition: Callable[[TArgument], TypeGuard[TOther]],
+    formatter: Callable[[TOther], TReturn],
+    value: TArgument,
+) -> TArgument | TReturn:
+    ...
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[[TArgument], bool],
+    formatter: Callable[[TArgument], TReturn],
+    value: TArgument,
+) -> TArgument | TReturn:
+    ...
+
+
+def apply_formatter_if(
+    condition: Callable[[TArgument], bool],
+    formatter: Callable[[Any], TReturn],
+    value: TArgument,
+) -> TArgument | TReturn:
     if condition(value):
         return formatter(value)
     else:
@@ -129,16 +156,18 @@ def apply_formatters_to_dict(
 
 @return_arg_type(1)
 def apply_formatter_to_array(
-    formatter: Callable[..., Any], value: list[Any]
-) -> Generator[list[Any], None, None]:
+    formatter: Callable[[TArgument], TReturn], value: Sequence[TArgument]
+) -> Generator[TReturn, None, None]:
     for item in value:
         yield formatter(item)
 
 
 def apply_one_of_formatters(
-    formatter_condition_pairs: tuple[tuple[Callable[..., Any], Callable[..., Any]]],
-    value: Any,
-) -> Any:
+    formatter_condition_pairs: Sequence[
+        tuple[Callable[[TArgument], bool], Callable[[TArgument], TReturn]]
+    ],
+    value: TArgument,
+) -> TReturn:
     for condition, formatter in formatter_condition_pairs:
         if condition(value):
             return formatter(value)

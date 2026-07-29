@@ -6,6 +6,7 @@ from collections.abc import (
 from typing import (
     Any,
     Optional,
+    TypeGuard,
     TypeVar,
     Union,
     overload,
@@ -119,27 +120,58 @@ from eth_utils.toolz import (
 )
 
 TReturn = TypeVar("TReturn")
-TValue = TypeVar("TValue")
+TArgument = TypeVar("TArgument")
+TOther = TypeVar("TOther")
 
 
 @overload
 def apply_formatter_if(
-    condition: Callable[..., bool],
-) -> Callable[[Callable[..., TReturn]], Callable[[TValue], TReturn | TValue]]:
+    condition: Callable[[TArgument], TypeGuard[TOther]],
+) -> Callable[
+    [Callable[[TOther], TReturn]], Callable[[TArgument], TArgument | TReturn]
+]:
     pass
 
 
 @overload
 def apply_formatter_if(
-    condition: Callable[..., bool], formatter: Callable[..., TReturn]
-) -> Callable[[TValue], TReturn | TValue]:
+    condition: Callable[[TArgument], bool],
+) -> Callable[
+    [Callable[[TArgument], TReturn]], Callable[[TArgument], TArgument | TReturn]
+]:
     pass
 
 
 @overload
 def apply_formatter_if(
-    condition: Callable[..., bool], formatter: Callable[..., TReturn], value: TValue
-) -> TReturn | TValue:
+    condition: Callable[[TArgument], TypeGuard[TOther]],
+    formatter: Callable[[TOther], TReturn],
+) -> Callable[[TArgument], TArgument | TReturn]:
+    pass
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[[TArgument], bool], formatter: Callable[[TArgument], TReturn]
+) -> Callable[[TArgument], TArgument | TReturn]:
+    pass
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[[TArgument], TypeGuard[TOther]],
+    formatter: Callable[[TOther], TReturn],
+    value: TArgument,
+) -> TArgument | TReturn:
+    pass
+
+
+@overload
+def apply_formatter_if(
+    condition: Callable[[TArgument], bool],
+    formatter: Callable[[TArgument], TReturn],
+    value: TArgument,
+) -> TArgument | TReturn:
     pass
 
 
@@ -147,12 +179,12 @@ def apply_formatter_if(
 def apply_formatter_if(  # type: ignore
     condition: Callable[..., bool],
     formatter: Callable[..., TReturn] | None = None,
-    value: TValue | None = None,
+    value: TArgument | None = None,
 ) -> (
-    Callable[[Callable[..., TReturn]], Callable[[TValue], TReturn | TValue]]
-    | Callable[[TValue], TReturn | TValue]
+    Callable[[Callable[..., TReturn]], Callable[[TArgument], TReturn | TArgument]]
+    | Callable[[TArgument], TReturn | TArgument]
     | TReturn
-    | TValue
+    | TArgument
 ):
     pass
 
@@ -160,18 +192,18 @@ def apply_formatter_if(  # type: ignore
 @overload
 def apply_one_of_formatters(
     formatter_condition_pairs: Sequence[
-        tuple[Callable[..., bool], Callable[..., TReturn]]
+        tuple[Callable[[TArgument], bool], Callable[[TArgument], TReturn]]
     ],
-) -> Callable[[TValue], TReturn]:
+) -> Callable[[TArgument], TReturn]:
     ...
 
 
 @overload
 def apply_one_of_formatters(
     formatter_condition_pairs: Sequence[
-        tuple[Callable[..., bool], Callable[..., TReturn]]
+        tuple[Callable[[TArgument], bool], Callable[[TArgument], TReturn]]
     ],
-    value: TValue,
+    value: TArgument,
 ) -> TReturn:
     ...
 
@@ -179,9 +211,9 @@ def apply_one_of_formatters(
 # This is just a stub to appease mypy, it gets overwritten later
 def apply_one_of_formatters(  # type: ignore
     formatter_condition_pairs: Sequence[
-        tuple[Callable[..., bool], Callable[..., TReturn]]
+        tuple[Callable[[TArgument], bool], Callable[[TArgument], TReturn]]
     ],
-    value: TValue | None = None,
+    value: TArgument | None = None,
 ) -> TReturn:
     ...
 
@@ -282,8 +314,10 @@ del Callable
 del Generator
 del Optional
 del Sequence
+del TArgument
+del TOther
 del TReturn
-del TValue
+del TypeGuard
 del TypeVar
 del Union
 del curry
