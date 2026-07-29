@@ -117,8 +117,9 @@ def is_same_address(
     """
     if not is_address(left) or not is_address(right):
         raise ValueError("Both values must be valid addresses")
-    else:
-        return bool(to_normalized_address(left) == to_normalized_address(right))
+    if left == right:
+        return True
+    return bool(to_normalized_address(left) == to_normalized_address(right))
 
 
 def to_checksum_address(value: AnyAddress | str | bytes) -> ChecksumAddress:

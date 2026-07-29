@@ -244,6 +244,11 @@ def test_to_checksum_address(value, expected):
     "address1,address2,expected",
     (
         (
+            "0x52908400098527886E0F7030069857D2E4169EE7",
+            "0x52908400098527886E0F7030069857D2E4169EE7",
+            True,
+        ),
+        (
             "0xc6d9d2cd449a754c494264e1809c50e34d64562b",
             "0xc6d9d2cD449A754c494264e1809c50e34D64562b",
             True,
