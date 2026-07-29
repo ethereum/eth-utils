@@ -1220,6 +1220,12 @@ def test_collapse_if_tuple_raises_for_invalid_component(
             (1, 2, 3),
         ),
         (
+            ABI_FUNCTION_FOUR_NAMED_ARGS,
+            (1, 2),
+            {"d": 4, "c": 3},
+            (1, 2, 3, 4),
+        ),
+        (
             ABI_ERROR_INVALID,
             (
                 "0x1234567890123456789012345678901234567890",
