@@ -5,7 +5,10 @@ import functools
 import itertools
 from typing import (
     Any,
+    Final,
+    TypeAlias,
     TypeVar,
+    cast,
 )
 
 from .types import (
@@ -13,6 +16,14 @@ from .types import (
 )
 
 T = TypeVar("T")
+
+Decorator: TypeAlias = Callable[[Callable[..., Any]], Callable[..., Any]]
+ExcType: TypeAlias = type[BaseException]
+ExceptionMap: TypeAlias = dict[ExcType, ExcType]
+ExceptionMapCacheKey: TypeAlias = tuple[int, tuple[tuple[ExcType, ExcType], ...]]
+
+_RETURN_ARG_TYPE_CACHE: Final[dict[int, Decorator]] = {}
+_REPLACE_EXCEPTIONS_CACHE: Final[dict[ExceptionMapCacheKey, Decorator]] = {}
 
 
 class combomethod:
@@ -92,6 +103,10 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
     """
     Wrap the return value with the result of `type(args[at_position])`.
     """
+    if at_position in _RETURN_ARG_TYPE_CACHE:
+        return cast(
+            Callable[..., Callable[..., T]], _RETURN_ARG_TYPE_CACHE[at_position]
+        )
 
     def decorator(to_wrap: Callable[..., Any]) -> Callable[..., T]:
         @functools.wraps(to_wrap)
@@ -102,15 +117,29 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
         return wrapper
 
+    _RETURN_ARG_TYPE_CACHE[at_position] = decorator
     return decorator
 
 
+def _make_exception_map_cache_key(
+    old_to_new_exceptions: ExceptionMap,
+) -> ExceptionMapCacheKey:
+    return (id(old_to_new_exceptions), tuple(old_to_new_exceptions.items()))
+
+
 def replace_exceptions(
-    old_to_new_exceptions: dict[type[BaseException], type[BaseException]]
+    old_to_new_exceptions: ExceptionMap,
 ) -> Callable[[Callable[..., T]], Callable[..., T]]:
     """
     Replaces old exceptions with new exceptions to be raised in their place.
     """
+    cache_key = _make_exception_map_cache_key(old_to_new_exceptions)
+    if cache_key in _REPLACE_EXCEPTIONS_CACHE:
+        return cast(
+            Callable[[Callable[..., T]], Callable[..., T]],
+            _REPLACE_EXCEPTIONS_CACHE[cache_key],
+        )
+
     old_exceptions = tuple(old_to_new_exceptions.keys())
 
     def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
@@ -128,4 +157,5 @@ def replace_exceptions(
 
         return wrapped
 
+    _REPLACE_EXCEPTIONS_CACHE[cache_key] = decorator
     return decorator
