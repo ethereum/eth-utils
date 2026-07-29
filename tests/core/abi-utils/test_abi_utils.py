@@ -1353,6 +1353,21 @@ GET_ABI_INPUTS_OUTPUT = (
     ),
 )
 
+FIXED_TUPLE_ARRAY_INPUT = [
+    {"anAddress": "0x1", "anInt": 1, "someBytes": b"\x01"},
+    {"anAddress": "0x2", "anInt": 2, "someBytes": b"\x02"},
+    {"anAddress": "0x3", "anInt": 3, "someBytes": b"\x03"},
+    {"anAddress": "0x4", "anInt": 4, "someBytes": b"\x04"},
+    {"anAddress": "0x5", "anInt": 5, "someBytes": b"\x05"},
+]
+FIXED_TUPLE_ARRAY_OUTPUT = [
+    ("0x1", 1, b"\x01"),
+    ("0x2", 2, b"\x02"),
+    ("0x3", 3, b"\x03"),
+    ("0x4", 4, b"\x04"),
+    ("0x5", 5, b"\x05"),
+]
+
 
 @pytest.mark.parametrize(
     "abi_element,args,expected",
@@ -1447,6 +1462,14 @@ GET_ABI_INPUTS_OUTPUT = (
                 ],
             },
             GET_ABI_INPUTS_OUTPUT,
+        ),
+        (
+            ABI_FUNCTION_FIXED_ARRAY_OF_TUPLES,
+            (FIXED_TUPLE_ARRAY_INPUT,),
+            (
+                ("(address,uint256,bytes)[5]",),
+                (FIXED_TUPLE_ARRAY_OUTPUT,),
+            ),
         ),
         (
             ABI_EVENT_LOG_SINGLE_ARG,

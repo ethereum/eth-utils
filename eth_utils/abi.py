@@ -11,6 +11,7 @@ import itertools
 import re
 from typing import (
     Any,
+    Final,
     Literal,
     cast,
     overload,
@@ -35,6 +36,8 @@ from eth_utils.types import (
 from .crypto import (
     keccak,
 )
+
+_TUPLE_TYPE_STR_RE: Final = re.compile(r"^(tuple)((\[([1-9]\d*\b)?])*)??$")
 
 
 def _align_abi_input(
@@ -91,8 +94,7 @@ def _get_tuple_type_str_and_dims(s: str) -> tuple[str, str | None] | None:
     Takes a JSON ABI type string.  For tuple type strings, returns the separated
     prefix and array dimension parts.  For all other strings, returns ``None``.
     """
-    tuple_type_str_re = "^(tuple)((\\[([1-9]\\d*\b)?])*)??$"
-    match = re.compile(tuple_type_str_re).match(s)
+    match = _TUPLE_TYPE_STR_RE.match(s)
 
     if match is not None:
         tuple_prefix = match.group(1)
