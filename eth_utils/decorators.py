@@ -5,6 +5,7 @@ import functools
 import itertools
 from typing import (
     Any,
+    ParamSpec,
     TypeVar,
 )
 
@@ -13,6 +14,7 @@ from .types import (
 )
 
 T = TypeVar("T")
+P = ParamSpec("P")
 
 
 class combomethod:
@@ -107,15 +109,15 @@ def return_arg_type(at_position: int) -> Callable[..., Callable[..., T]]:
 
 def replace_exceptions(
     old_to_new_exceptions: dict[type[BaseException], type[BaseException]]
-) -> Callable[[Callable[..., T]], Callable[..., T]]:
+) -> Callable[[Callable[P, T]], Callable[P, T]]:
     """
     Replaces old exceptions with new exceptions to be raised in their place.
     """
     old_exceptions = tuple(old_to_new_exceptions.keys())
 
-    def decorator(to_wrap: Callable[..., T]) -> Callable[..., T]:
+    def decorator(to_wrap: Callable[P, T]) -> Callable[P, T]:
         @functools.wraps(to_wrap)
-        def wrapped(*args: Any, **kwargs: Any) -> T:
+        def wrapped(*args: P.args, **kwargs: P.kwargs) -> T:
             try:
                 return to_wrap(*args, **kwargs)
             except old_exceptions as err:

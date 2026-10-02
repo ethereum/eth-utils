@@ -1,0 +1,1 @@
+Preserve wrapped argument types in ``replace_exceptions`` so type checkers reject invalid calls to decorated functions and methods.
