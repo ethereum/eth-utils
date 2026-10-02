@@ -1,3 +1,7 @@
+from typing_extensions import (
+    assert_type,
+)
+
 from eth_utils import (
     to_tuple,
 )
@@ -9,4 +13,4 @@ def return_value() -> list[int]:
 
 
 x = return_value()
-reveal_type(x)  # noqa: F821
+assert_type(x, tuple[int, ...])

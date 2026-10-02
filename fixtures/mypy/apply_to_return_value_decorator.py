@@ -1,3 +1,7 @@
+from typing_extensions import (
+    assert_type,
+)
+
 from eth_utils import (
     apply_to_return_value,
 )
@@ -13,4 +17,4 @@ def return_value() -> int:
 
 
 x = return_value()
-reveal_type(x)  # noqa: F821
+assert_type(x, list[int])

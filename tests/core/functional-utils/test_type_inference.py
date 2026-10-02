@@ -4,7 +4,8 @@ from mypy import (
     api,
 )
 
-MYPY_ARGS = ["--ignore-missing-imports"]
+# Imported modules are checked separately by the library mypy lint job.
+MYPY_ARGS = ["--ignore-missing-imports", "--follow-imports=silent"]
 FIXTURE_DIR = "fixtures/mypy/"
 
 
@@ -25,48 +26,20 @@ def check_mypy_run(
     assert returncode == expected_returncode, returncode
 
 
-# The following tests all run code snippets through mypy that contain a
-# `reveal_type` statement, and then match the mypy output against our expectations
+# Assert inferred types in the fixtures instead of matching reveal_type formatting.
 @pytest.mark.parametrize(
-    "fixture,message",
+    "fixture",
     (
-        (
-            fixture_dir("to_tuple_decorator.py"),
-            fixture_dir(
-                'to_tuple_decorator.py:12: note: Revealed type is "builtins.tuple[builtins.int, ...]"\nSuccess: no issues found in 1 source file\n'  # noqa: E501
-            ),
-        ),
-        (
-            fixture_dir("to_list_decorator.py"),
-            fixture_dir(
-                'to_list_decorator.py:12: note: Revealed type is "builtins.list[builtins.int]"\nSuccess: no issues found in 1 source file\n'  # noqa: E501
-            ),
-        ),
-        (
-            fixture_dir("to_set_decorator.py"),
-            fixture_dir(
-                'to_set_decorator.py:12: note: Revealed type is "builtins.set[builtins.int]"\nSuccess: no issues found in 1 source file\n'  # noqa: E501
-            ),
-        ),
-        (
-            fixture_dir("to_dict_decorator.py"),
-            fixture_dir(
-                'to_dict_decorator.py:12: note: Revealed type is "builtins.dict[builtins.int, builtins.int]"\nSuccess: no issues found in 1 source file\n'  # noqa: E501
-            ),
-        ),
-        (
-            fixture_dir("to_ordered_dict_decorator.py"),
-            fixture_dir(
-                'to_ordered_dict_decorator.py:12: note: Revealed type is "collections.OrderedDict[builtins.int, builtins.int]"\nSuccess: no issues found in 1 source file\n'  # noqa: E501
-            ),
-        ),
-        (
-            fixture_dir("apply_to_return_value_decorator.py"),
-            fixture_dir(
-                'apply_to_return_value_decorator.py:16: note: Revealed type is "builtins.list[builtins.int]"\nSuccess: no issues found in 1 source file\n'  # noqa: E501
-            ),
-        ),
+        "to_tuple_decorator.py",
+        "to_list_decorator.py",
+        "to_set_decorator.py",
+        "to_dict_decorator.py",
+        "to_ordered_dict_decorator.py",
+        "apply_to_return_value_decorator.py",
     ),
 )
-def test_type_inference(fixture, message):
-    check_mypy_run(MYPY_ARGS + [fixture], message)
+def test_type_inference(fixture: str) -> None:
+    check_mypy_run(
+        MYPY_ARGS + [fixture_dir(fixture)],
+        "Success: no issues found in 1 source file\n",
+    )

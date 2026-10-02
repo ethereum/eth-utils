@@ -29,6 +29,7 @@ extras_require = {
         MYPY_REQUIREMENT,
         "pytest>=7.0.0",
         "pytest-xdist>=2.4.0",
+        "typing_extensions>=4.2.0",
     ],
 }
 

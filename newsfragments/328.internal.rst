@@ -1,0 +1,1 @@
+Assert decorator return types directly rather than comparing mypy diagnostic formatting.
