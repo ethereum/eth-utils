@@ -157,6 +157,13 @@ def apply_key_map(
         .difference(key_mappings.keys())
         .intersection(v for k, v in key_mappings.items() if v in value)
     )
+    mapped_keys: set[Any] = set()
+    for key in value:
+        if key in key_mappings:
+            mapped_key = key_mappings[key]
+            if mapped_key in mapped_keys:
+                key_conflicts.add(mapped_key)
+            mapped_keys.add(mapped_key)
     if key_conflicts:
         raise KeyError(
             f"Could not apply key map due to conflicting key(s): {key_conflicts}"

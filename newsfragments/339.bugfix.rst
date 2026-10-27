@@ -1,0 +1,1 @@
+Raise KeyError instead of silently overwriting values when multiple input keys are remapped to the same destination by apply_key_map.

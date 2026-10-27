@@ -265,6 +265,9 @@ interprets as camelCase keys.
 This function will rename keys from using the lookups provided in
 ``formatter_dict``. It will pass through any unspecified keys.
 
+It raises ``KeyError`` if multiple input keys would be renamed to the same key,
+or if a mapping destination conflicts with an unchanged input key.
+
 .. doctest::
 
     >>> from eth_utils.curried import apply_key_map
