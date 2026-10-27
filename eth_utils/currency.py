@@ -81,7 +81,7 @@ def _to_wei(number: _NumberType, unit_value: decimal.Decimal) -> int:
         with localcontext() as ctx:
             multiplier = len(s_number) - s_number.index(".") - 1
             ctx.prec = multiplier
-            d_number = decimal.Decimal(value=number, context=ctx) * 10**multiplier
+            d_number = d_number * 10**multiplier
         unit_value /= 10**multiplier
 
     with localcontext() as ctx:

@@ -1,0 +1,1 @@
+Preserve the decimal string representation of small floating-point amounts in ``to_wei`` and ``to_wei_decimals`` instead of reintroducing binary floating-point rounding during scaling.
