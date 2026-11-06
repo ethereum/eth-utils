@@ -133,7 +133,7 @@ def to_checksum_address(value: AnyAddress | str | bytes) -> ChecksumAddress:
             "".join(
                 (
                     norm_address[i].upper()
-                    if int(address_hash[i], 16) > 7
+                    if address_hash[i] > "7"
                     else norm_address[i]
                 )
                 for i in range(2, 42)
