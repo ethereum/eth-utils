@@ -1,0 +1,1 @@
+Speed up ``to_checksum_address`` by comparing digest characters directly instead of converting each one to an integer, and cache the checksum of up to 256 recently seen normalized addresses.
