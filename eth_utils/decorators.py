@@ -77,6 +77,20 @@ def validate_conversion_arguments(to_wrap: Callable[..., T]) -> Callable[..., T]
 
     @functools.wraps(to_wrap)
     def wrapper(*args: Any, **kwargs: Any) -> T:
+        # The common one-argument forms already satisfy the checks below.
+        if len(args) == 1 and args[0] is not None and not kwargs:
+            return to_wrap(*args, **kwargs)
+        if not args and len(kwargs) == 1:
+            key, value = next(iter(kwargs.items()))
+            if (
+                type(key) is str
+                and value is not None
+                and (
+                    key == "primitive" or (key in ("hexstr", "text") and is_text(value))
+                )
+            ):
+                return to_wrap(*args, **kwargs)
+
         _assert_one_val(*args, **kwargs)
         if kwargs:
             _validate_supported_kwarg(kwargs)
