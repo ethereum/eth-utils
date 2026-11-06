@@ -1,0 +1,1 @@
+Speed up conversion helpers such as ``to_bytes``, ``to_hex``, ``to_int`` and ``to_text`` when called with a single argument, while keeping the existing argument validation and error messages.
