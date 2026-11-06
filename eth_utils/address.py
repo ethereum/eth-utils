@@ -1,3 +1,6 @@
+from functools import (
+    lru_cache,
+)
 import re
 from typing import (
     Any,
@@ -126,21 +129,36 @@ def to_checksum_address(value: AnyAddress | str | bytes) -> ChecksumAddress:
     Makes a checksum address given a supported format.
     """
     norm_address = to_normalized_address(value)
+    if type(norm_address) is str:
+        return _cached_checksum_address(norm_address)
+    return _checksum_address(norm_address)
+
+
+def _checksum_address(norm_address: HexAddress) -> ChecksumAddress:
     address_hash = encode_hex(keccak(text=remove_0x_prefix(HexStr(norm_address))))
 
     checksum_address = add_0x_prefix(
         HexStr(
             "".join(
-                (
-                    norm_address[i].upper()
-                    if address_hash[i] > "7"
-                    else norm_address[i]
-                )
+                (norm_address[i].upper() if address_hash[i] > "7" else norm_address[i])
                 for i in range(2, 42)
             )
         )
     )
     return ChecksumAddress(HexAddress(checksum_address))
+
+
+@lru_cache(maxsize=256)
+def _cached_checksum_address(norm_address: HexAddress) -> ChecksumAddress:
+    address = norm_address[2:]
+    address_hash = keccak(text=address).hex()
+    checksum_address = "0x" + "".join(
+        [
+            char.upper() if nibble > "7" else char
+            for char, nibble in zip(address, address_hash)
+        ]
+    )
+    return ChecksumAddress(HexAddress(HexStr(checksum_address)))
 
 
 def is_checksum_address(value: Any) -> bool:
