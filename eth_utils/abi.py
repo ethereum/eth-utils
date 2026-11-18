@@ -54,7 +54,13 @@ def _align_abi_input(
     if tuple_dims is None:
         # normalized_arg is non-list tuple.  Each sub arg in `normalized_arg` will be
         # aligned according to its corresponding abi.
-        sub_abis = cast(Iterable[ABIComponent], arg_abi.get("components", []))
+        components = arg_abi.get("components", [])
+        if is_list_like(normalized_arg) and len(normalized_arg) != len(components):
+            raise TypeError(
+                f"Incorrect tuple component count. Expected {len(components)}, "
+                f"got {len(normalized_arg)}."
+            )
+        sub_abis: Iterable[ABIComponent] = components
     else:
         num_dims = tuple_dims.count("[")
 
@@ -559,6 +565,7 @@ def get_aligned_abi_inputs(
     ``normalized_args`` can be obtained by using
     :py:meth:`eth_utils.abi.get_normalized_abi_inputs`, which returns nested mappings
     or sequences corresponding to tuple-encoded values in ``abi``.
+    Each positional tuple value must contain one item per ABI component.
 
     :param abi_element: ABI element.
     :type abi_element: `ABIElement`
