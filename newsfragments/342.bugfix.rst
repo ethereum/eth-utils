@@ -1,0 +1,1 @@
+Reject positional ABI tuples with a different number of items from their declared components in ``get_aligned_abi_inputs``.
