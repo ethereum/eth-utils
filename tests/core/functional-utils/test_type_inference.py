@@ -70,3 +70,15 @@ def check_mypy_run(
 )
 def test_type_inference(fixture, message):
     check_mypy_run(MYPY_ARGS + [fixture], message)
+
+
+def test_to_tuple_preserves_generic_types_and_parameters():
+    check_mypy_run(
+        MYPY_ARGS
+        + [
+            "--follow-imports=silent",
+            "--warn-unused-ignores",
+            fixture_dir("to_tuple_generic_decorator.py"),
+        ],
+        "Success: no issues found in 1 source file\n",
+    )
