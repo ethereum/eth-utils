@@ -10,6 +10,7 @@ from typing import (  # noqa: F401
     Any,
     Dict,
     List,
+    ParamSpec,
     Set,
     Tuple,
     TypeVar,
@@ -55,9 +56,13 @@ def apply_to_return_value(
 
 TVal = TypeVar("TVal")
 TKey = TypeVar("TKey")
-to_tuple: Callable[
-    [Callable[..., Iterable[TVal]]], Callable[..., tuple[TVal, ...]]
-] = apply_to_return_value(tuple)
+P = ParamSpec("P")
+
+
+def to_tuple(fn: Callable[P, Iterable[TVal]]) -> Callable[P, tuple[TVal, ...]]:
+    return apply_to_return_value(tuple)(fn)
+
+
 to_list: Callable[
     [Callable[..., Iterable[TVal]]], Callable[..., list[TVal]]
 ] = apply_to_return_value(list)

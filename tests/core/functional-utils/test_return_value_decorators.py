@@ -1,4 +1,5 @@
 import collections
+import inspect
 
 from eth_utils import (
     flatten_return,
@@ -20,6 +21,20 @@ def test_to_tuple():
     fn = to_tuple(yield_things)
     actual = fn(1, 1, 2, 3, 5, 8)
     assert actual == (1, 1, 2, 3, 5, 8)
+
+
+def test_to_tuple_preserves_metadata_and_keyword_only_arguments():
+    def values(first, /, *, second):
+        """Yield the two arguments."""
+        yield first
+        yield second
+
+    wrapped = to_tuple(values)
+    assert wrapped(1, second=2) == (1, 2)
+    assert wrapped.__wrapped__ is values
+    assert wrapped.__name__ == values.__name__
+    assert wrapped.__doc__ == values.__doc__
+    assert inspect.signature(wrapped) == inspect.signature(values)
 
 
 def test_to_list():
