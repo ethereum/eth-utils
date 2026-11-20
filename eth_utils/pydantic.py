@@ -81,7 +81,7 @@ class CamelModel(BaseModel):
     @classmethod
     def model_json_schema(
         cls,
-        by_alias: bool = True,
+        by_alias: bool | None = True,
         ref_template: str = DEFAULT_REF_TEMPLATE,
         # default to ``OmitJsonSchema`` to prevent errors from excluded fields
         schema_generator: type[GenerateJsonSchema] = OmitJsonSchema,
@@ -92,8 +92,10 @@ class CamelModel(BaseModel):
         Omits excluded fields from the JSON schema, preventing errors that would
         otherwise be raised by the default schema generator.
         """
+        # Omitting the keyword lets each supported Pydantic version use its default.
+        if by_alias is not None:
+            kwargs["by_alias"] = by_alias
         return super().model_json_schema(
-            by_alias=by_alias,
             ref_template=ref_template,
             schema_generator=schema_generator,
             mode=mode,

@@ -76,3 +76,13 @@ def test_camel_model_json_schema():
     }
     # assert the reference to the nested model properties
     assert schema_nested["$defs"]["PydanticTestClass"]["properties"] == properties
+
+
+def test_camel_model_json_schema_alias_selection():
+    model = PydanticTestClass
+    native_schema = super(CamelModel, model).model_json_schema()
+    schema = model.model_json_schema(by_alias=None)
+    has_alias = "fieldFive" in native_schema["properties"]
+    assert ("fieldFive" in schema["properties"]) == has_alias
+    assert "fieldFive" in model.model_json_schema()["properties"]
+    assert "field_five" in model.model_json_schema(by_alias=False)["properties"]

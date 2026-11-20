@@ -1483,6 +1483,24 @@ def test_get_aligned_abi_inputs(
     "abi_element,args,error_type,message",
     (
         (
+            ABI_FUNCTION_TUPLE_INPUT_WITH_OUTPUTS,
+            ((),),
+            TypeError,
+            "Incorrect tuple component count. Expected 1, got 0.",
+        ),
+        (
+            ABI_FUNCTION_TUPLE_INPUT_WITH_OUTPUTS,
+            ((10, 20),),
+            TypeError,
+            "Incorrect tuple component count. Expected 1, got 2.",
+        ),
+        (
+            ABI_FUNCTION_ARRAY_OF_TUPLES,
+            ([("0x1", 10, b""), ("0x2", 20, b"", 30)],),
+            TypeError,
+            "Incorrect tuple component count. Expected 3, got 4.",
+        ),
+        (
             # raise TypeError, expects list of tuples for input 's.c'
             ABI_FUNCTION_MULTI_TUPLE_INPUTS,
             {
